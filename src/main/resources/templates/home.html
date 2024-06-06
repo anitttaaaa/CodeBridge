@@ -3,33 +3,38 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<!--    <meta charset=UTF-8"/>-->
+    <!--    <meta charset=UTF-8"/>-->
     <title>CodeBridge</title>
+    <link rel="stylesheet" type="text/css" href="css\style.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 
+<body class="body">
+<header class="header">
+    <nav class="navbar navbar-expand-lg navbar-light">
 
-<body style="background-color: #DDD5C4 ;">
-
-<div id="container">
-    <div id="logo">
-        <a href="/CodeBridge/">
-        <img th:src="@{/images/logo.png}" alt="Logo CodeBridge">
+        <a class="navbar-brand" href="/CodeBridge/">
+            <img th:src="@{/images/logo.png}" alt="Logo CodeBridge">
         </a>
-    </div>
-    <div id="JOB OFFERS">
-        <a href="/JobOffers/">
-        Job Offers
-        </a>
-    </div>
-    <div id="LOG IN">
-        <a href="/JobOffers/">
-        Login
-        </a>
-    </div>
 
-</div>
+        <div id="JOB_OFFERS">
+            <a href="/JobOffers/"class="nav-link btn btn-primary" target="_blank">Job Offers</a>
+        </div>
 
+        <div id="LOG_IN" class="ml-auto">
+            <a href="/login/" class="btn btn-primary" target="_blank">
+                Login
+            </a>
+        </div>
+    </nav>
+
+
+</header>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 
 </html>
