@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS employer CASCADE;
+DROP TABLE IF EXISTS candidate CASCADE;
+DROP TABLE IF EXISTS code_bridge_user CASCADE;
+DROP TABLE IF EXISTS code_bridge_role CASCADE;
+DROP TABLE IF EXISTS code_bridge_user_role CASCADE;
+DROP TABLE IF EXISTS flyway_schema_history CASCADE;
