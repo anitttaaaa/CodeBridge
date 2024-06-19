@@ -1,81 +1,64 @@
-body{
-background-color: #CCC3B1;
+body {
+background-color: #CCC3B1 ;
+}
+.navbar-brand {
+    margin-right: 100px !important;/* Możesz dostosować wartość odstępu według potrzeb */
 }
 
 .navbar {
     background-color: #E2DBD1;
     height: 100px;
-}
-
-.login-button.btn.btn-primary {
-    margin-left: 40px;
-    margin-right: 30px;
-    background-color: #a09b87;
-    border-color: #7d7862;
-}
-
-.navbar .container-fluid {
-    display: flex;
-    align-items: center; /* Ustawienie elementów na środku pionowo */
-}
-
-.navbar img {
-    margin-right: -800px; /* Dodaj odstęp między logo a elementami JOB OFFERS oraz CONTACT */
-}
-
-.navbar ul{
-    list-style-type: none;
-    display: flex;
-    margin-top: 25px;
-
-}
-
-.navbar ul a {
     color: #444444; /* Zmiana koloru tekstu */
     text-decoration: none; /* Usunięcie podkreślenia */
     font-weight: bold; /* Wytłuszczenie tekstu */
 }
-.navbar ul a:hover {
-    color: #8c8773; /* Zmiana koloru tekstu po najechaniu myszką */
+
+.navigation-buttons-employer{
+    margin-left: -400px;
+}
+.navigation-buttons-candidate{
+    margin-left: -850px;
+}
+.navigation-buttons-home{
+    margin-left: -750px;
 }
 
-.navbar li {
-    margin-right: 30px;
 
+.list-group-item {
+    white-space: nowrap; /* Zapobiega łamaniu tekstu na nowej linii */
+    padding: 15px 15px; /* Przykładowe wartości padding */
+    margin-right: 5px; /* Odległość między przyciskami */
+    border-right: 1px solid #A19A84; /* Pionowa linia oddzielająca przyciski */
 }
-.navbar ul li {
-    position: relative;
-}
-
-.navbar ul li::after {
-    content: '';
-    position: absolute;
-    height: 30px; /* Długość kreski */
-    width: 1px; /* Grubość kreski */
-    background-color: #b0ad9e; /* Kolor kreski */
-    right: -15px; /* Odległość od prawej strony elementu li */
-    top: 50%; /* Ustawienie kreski na środku pionowo */
-    transform: translateY(-50%); /* Wycentrowanie pionowo */
-}
-.navbar ul li:nth-of-type(1)::before {
-    content: '';
-    position: absolute;
-    height: 30px; /* Długość kreski */
-    width: 1px; /* Grubość kreski */
-    background-color: #b0ad9e; /* Kolor kreski */
-    left: -15px; /* Odległość od lewej strony elementu li */
-    top: 50%; /* Ustawienie kreski na środku pionowo */
-    transform: translateY(-50%); /* Wycentrowanie pionowo */
+.first-button{
+    border-left: 1px solid #A19A84;
 }
 
-#main{
-    margin-top: 110px;
+.list-group-item:hover {
+    color: #8c8773; /* Zmiana koloru tekstu po najechaniu myszką na jeden element */
 }
 
-.navbar a:hover {
-    color: #555555;
+.login-button {
+    margin-right: 50px;
+    background-color: #a09b87;
+    border-color: #7d7862;
+    }
 
+.login-button:hover {
+    background-color: #b2ad99;
+    border-color: #7d7862;
 }
+.login-button:focus {
+    outline: none; /* Usuwa domyślne obramowanie po kliknięciu */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Dodaje cień po kliknięciu */
+}
+.navigation-buttons-employer {
+    display: flex; /* Ustawienie elementów w linii */
+    gap: 20px; /* Odstęp między elementami */
+}
+
+
+
 
 
 

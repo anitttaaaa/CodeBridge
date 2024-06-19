@@ -17,7 +17,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
-public class SecurityConfiguration {
+public class SecurityConfiguration  {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -49,7 +49,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/", "/CodeBridge").permitAll()
                 .requestMatchers("/JobOffers").permitAll()
                 .requestMatchers("/candidate-portal/**").hasAnyAuthority("CANDIDATE")
-                .requestMatchers("/EmployerProfile/**").hasAnyAuthority("EMPLOYER")
+                .requestMatchers("/employer-portal/**").hasAnyAuthority("EMPLOYER")
                 .and()
                 .formLogin()
                 .permitAll()

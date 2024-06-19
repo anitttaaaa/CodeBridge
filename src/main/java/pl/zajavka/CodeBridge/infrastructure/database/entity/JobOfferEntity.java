@@ -44,14 +44,19 @@ public class JobOfferEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
-    private LocationEntity location;
+    private LocationEntity job_location;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "salary_id")
     private SalaryEntity salary;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "jobOffer")
-    private Set<JobOfferCategoryEntity> jobOfferCategory;
+    private Set<JobOfferCategoryEntity> jobOfferCategories;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "jobOffer")
+    private Set<JobOfferSkillEntity> jobOfferSkills;
 
 
 }
+

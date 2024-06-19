@@ -14,7 +14,8 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "job_category")
-public class JobCategoryEntity {
+public class CandidateEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "job_category_id")

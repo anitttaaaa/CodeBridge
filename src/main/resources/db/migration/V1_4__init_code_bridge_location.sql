@@ -1,4 +1,4 @@
-CREATE TABLE location
+CREATE TABLE job_location
 (
     location_id           SERIAL      NOT NULL,
     type                  VARCHAR(32)    NOT NULL,

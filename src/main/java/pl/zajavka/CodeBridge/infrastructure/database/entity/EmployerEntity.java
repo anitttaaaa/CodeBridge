@@ -35,7 +35,7 @@ public class EmployerEntity {
     private Integer userId;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employer")
-    private Set<JobOfferEntity> jobOffer;
+    private Set<JobOfferEntity> jobOffers;
 
 
 }

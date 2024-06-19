@@ -8,7 +8,7 @@ ADD FOREIGN KEY (user_id) REFERENCES code_bridge_user (user_id);
 
 insert into code_bridge_user (user_id, user_name, email, password, active) values (1, 'CodeSolutions', ' info@codesolutions.com', '$2a$12$TwQsp1IusXTDl7LwZqL0qeu49Ypr6vRdEzRq2vAsgb.zvOtrnzm5G', true);
 insert into code_bridge_user (user_id, user_name, email, password, active) values (2, 'TechInnovators', 'info@techinnovators.net', '$2a$12$TwQsp1IusXTDl7LwZqL0qeu49Ypr6vRdEzRq2vAsgb.zvOtrnzm5G', true);
-insert into code_bridge_user (user_id, user_name, email, password, active) values (3, 'DevMasters', 'info@devmasters.p', '$2a$12$TwQsp1IusXTDl7LwZqL0qeu49Ypr6vRdEzRq2vAsgb.zvOtrnzm5G', true);
+insert into code_bridge_user (user_id, user_name, email, password, active) values (3, 'DevMasters', 'info@devmasters.pl', '$2a$12$TwQsp1IusXTDl7LwZqL0qeu49Ypr6vRdEzRq2vAsgb.zvOtrnzm5G', true);
 insert into code_bridge_user (user_id, user_name, email, password, active) values (4, 'NextGenCoders', 'info@nextgencoders.com', '$2a$12$TwQsp1IusXTDl7LwZqL0qeu49Ypr6vRdEzRq2vAsgb.zvOtrnzm5G', true);
 
 insert into code_bridge_user (user_id, user_name, email, password, active) values (5, 'Anna_Nowak', 'annanowak@gmail.pl', '$2a$12$TwQsp1IusXTDl7LwZqL0qeu49Ypr6vRdEzRq2vAsgb.zvOtrnzm5G', true);
@@ -16,14 +16,14 @@ insert into code_bridge_user (user_id, user_name, email, password, active) value
 insert into code_bridge_user (user_id, user_name, email, password, active) values (7, 'Katarzyna_Matejko', 'katarzynamatejko@gmail.pl', '$2a$12$TwQsp1IusXTDl7LwZqL0qeu49Ypr6vRdEzRq2vAsgb.zvOtrnzm5G', true);
 
 
-UPDATE employer SET user_id = 1 WHERE nip = '1234563218';
-UPDATE employer SET user_id = 2 WHERE nip = '9876543210';
-UPDATE employer SET user_id = 3 WHERE nip = '2345678901';
-UPDATE employer SET user_id = 4 WHERE nip = '8765432109';
+UPDATE employer SET user_id = 1 WHERE email = 'info@codesolutions.com';
+UPDATE employer SET user_id = 2 WHERE email = 'info@techinnovators.net';
+UPDATE employer SET user_id = 3 WHERE email = 'info@devmasters.pl';
+UPDATE employer SET user_id = 4 WHERE email = 'info@nextgencoders.com';
 
-UPDATE candidate SET user_id = 5 WHERE phone = '600123456';
-UPDATE candidate SET user_id = 6 WHERE phone = '601234867';
-UPDATE candidate SET user_id = 7 WHERE phone = '602345678';
+UPDATE candidate SET user_id = 5 WHERE email = 'annanowak@gmail.pl';
+UPDATE candidate SET user_id = 6 WHERE email = 'adamkowalski@gmail.pl';
+UPDATE candidate SET user_id = 7 WHERE email = 'katarzynamatejko@gmail.pl';
 
     insert into code_bridge_role (role_id, role) values (1, 'EMPLOYER'), (2, 'CANDIDATE');
 

@@ -17,6 +17,7 @@ import java.util.Set;
 @Table(name = "salary")
 public class SalaryEntity {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "salary_id")
@@ -25,11 +26,12 @@ public class SalaryEntity {
     @Column(name = "min_value")
     private BigDecimal minValue;
 
-    @Column(name = "max_Value")
+    @Column(name = "max_value")
     private BigDecimal maxValue;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "salary")
-    private Set<JobOfferEntity> jobOffer;
+    private Set<JobOfferEntity> jobOffers;
+
 
 
 }

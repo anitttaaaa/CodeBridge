@@ -8,7 +8,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title layout:title-pattern="$CONTENT_TITLE"></title>
 
-    <link rel="stylesheet" type="text/css" href="" th:href="@{/css/style.css}">
     <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
 
     <script th:src="@{/js/custom.min.js}"></script>
@@ -16,23 +15,40 @@
           rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
           crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="" th:href="@{/css/style.css}">
 </head>
 <body>
 <div id="wrapper">
     <div id="header">
-        <nav class="navbar navbar-expand-lg fixed-top">
 
-            <div class="container-fluid">
-                <img th:src="@{/images/logo.png}" alt="Logo CodeBridge" onclick="location.reload();"
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
+
+                <img th:src="@{/images/logo.png}" class="navbar-brand me-4" alt="Logo CodeBridge"
+                     onclick="window.location.href='/CodeBridge';"
                      style="cursor: pointer;">
-                <ul>
-                    <li>
-                        <a href="/job-offers">JOB OFFERS</a>
-                    </li>
-                    <li>
-                        <a href="/contact">CONTACT</a>
-                    </li>
-                </ul>
+
+
+                <div class="navigation-buttons-employer d-flex align-items-center">
+                    <a th:href="@{/employer-portal/job-offers}"
+                       class="list-group-item first-button list-group-item-action py-2 ripple">
+                        <span>JOB OFFERS</span></a>
+
+                    <a th:href="@{/employer-portal/new-job-offer}"
+                       class="list-group-item list-group-item-action py-2 ripple">
+                        <span>NEW JOB OFFER</span></a>
+
+                    <a th:href="@{/employer-portal/job-applications}"
+                       class="list-group-item list-group-item-action py-2 ripple">
+                        <span>JOB APPLICATIONS</span></a>
+
+                    <a th:href="@{/employer-portal/find-a-candidate}"
+                       class="list-group-item list-group-item-action py-2 ripple">
+                        <span>FIND A CANDIDATE</span></a>
+                    <a th:href="@{/employer-portal/contact}"
+                       class="list-group-item list-group-item-action py-2 ripple">
+                        <span>CONTACT</span></a>
+                </div>
                 <a sec:authorize="!isAuthenticated()" class="login-button btn btn-primary" th:href="@{/login}">Log
                     in</a>
                 <a sec:authorize="isAuthenticated()" class="login-button btn btn-primary" th:href="@{/logout}">Log
@@ -40,12 +56,11 @@
 
 
             </div>
-
         </nav>
     </div>
     <div id="main">
 
-        <div id="employer_container" layout:fragment="employer_content">
+        <div id="employer_container" layout:fragment="employerContent">
 
 
         </div>

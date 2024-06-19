@@ -1,25 +1,26 @@
 package pl.zajavka.CodeBridge.infrastructure.database.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.util.Set;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = "salaryId")
-@ToString(of = {"salaryId", "minValue", "maxValue"})
+@EqualsAndHashCode(of = "locationId")
+@ToString(of = {"locationId", "type", "city"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "salary")
+@Table(name = "job_location")
+
 public class LocationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "location_id")
-    private Integer salaryId;
+    private Integer locationId;
 
     @Column(name = "type")
     private String type;
@@ -27,9 +28,9 @@ public class LocationEntity {
     @Column(name = "city")
     private String city;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "location")
-    private Set<JobOfferEntity> jobOffer;
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "job_location")
+    private Set<JobOfferEntity> jobOffers;
 
 
 }
+
