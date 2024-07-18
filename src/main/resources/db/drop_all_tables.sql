@@ -11,3 +11,5 @@ DROP TABLE IF EXISTS code_bridge_user_role CASCADE;
 DROP TABLE IF EXISTS skill CASCADE;
 DROP TABLE IF EXISTS job_offer_skill CASCADE;
 DROP TABLE IF EXISTS flyway_schema_history CASCADE;
+
+SELECT * FROM job_offer;

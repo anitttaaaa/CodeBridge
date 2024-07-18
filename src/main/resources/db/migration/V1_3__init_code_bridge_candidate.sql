@@ -1,4 +1,4 @@
-CREATE TABLE candidate
+  CREATE TABLE candidate
 (
     candidate_id    SERIAL      NOT NULL,
     name            VARCHAR(32) NOT NULL,

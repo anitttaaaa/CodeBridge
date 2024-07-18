@@ -3,7 +3,10 @@ package pl.zajavka.CodeBridge.infrastructure.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import pl.zajavka.CodeBridge.domain.JobOffer;
 
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter

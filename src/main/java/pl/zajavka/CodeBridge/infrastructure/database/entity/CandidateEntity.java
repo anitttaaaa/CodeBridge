@@ -7,25 +7,35 @@ import java.util.Set;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = "jobCategoryId")
-@ToString(of = {"jobCategoryId", "name"})
+@EqualsAndHashCode(of = "candidateId")
+@ToString(of = {"name", "surname","email"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "job_category")
+@Table(name = "candidate")
 public class CandidateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "job_category_id")
-    private Integer jobCategoryId;
+    @Column(name = "candidate_id")
+    private Integer candidateId;
 
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "jobCategory")
-    private Set<JobOfferCategoryEntity> jobOfferCategories;
+    @Column(name = "surname")
+    private String surname;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "phone")
+    private String phone;
+
+
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "jobCategory")
+//    private Set<JobOfferCategoryEntity> jobOfferCategories;
 
 
 }

@@ -6,24 +6,406 @@
 
 <head>
     <title>Code Bridge!</title>
+    <link rel="stylesheet" type="text/css" href="" th:href="@{/css/style.css}">
 </head>
 <body>
-    <div layout:fragment="employerContent">
 
-        <h1>NEW JOB OFFER</h1>
-        <h1>NEW JOB OFFER</h1>
-        <h1>NEW JOB OFFER</h1>
-        <h1>NEW JOB OFFER</h1>
-        <h1>NEW JOB OFFER</h1>
-        <h1>NEW JOB OFFER</h1>
-        <h1>NEW JOB OFFER</h1>
-        <h1>NEW JOB OFFER</h1>
-        <h1>NEW JOB OFFER</h1>
-
+<div layout:fragment="employerContent">
+    <div class="employer-new-job-offer">
+        <h2 class="mb-4 text-center">ADD A NEW JOB OFFER </h2>
     </div>
 
+    <h6>Details</h6>
+    <form action="#" th:action="@{/employer-portal/new-job-offer/add}" method="POST"
+          th:object="${jobOfferAddRequestDTO}">
 
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Job Offer Title</span>
+            <input type="text" class="form-control" th:field="*{jobOfferTitle}" placeholder="Java Developer" aria-label="Username"
+                   aria-describedby="basic-addon1">
+        </div>
+
+        <div class="input-group">
+            <span class="input-group-text">Description</span>
+            <textarea class="form-control" th:field="*{description}" aria-label="With textarea"></textarea>
+        </div>
+
+
+<!--        <h6>Categories</h6>-->
+<!--        <div class="input-group mb-3">-->
+<!--            <div class="input-group-text">-->
+<!--                <input class="form-check-input mt-0" type="checkbox" th:field="*{categories}" value="Frontend"-->
+<!--                aria-label="Checkbox for following text input">-->
+<!--            </div>-->
+<!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="Frontend">-->
+<!--        </div>-->
+<!--        <div class="input-group mb-3">-->
+<!--            <div class="input-group-text">-->
+<!--                <input class="form-check-input mt-0" type="checkbox" th:field="*{categories}" value="Backend"-->
+<!--                aria-label="Checkbox for following text input">-->
+<!--            </div>-->
+<!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="Backend">-->
+<!--        </div>-->
+<!--        <div class="input-group mb-3">-->
+<!--            <div class="input-group-text">-->
+<!--                <input class="form-check-input mt-0" type="checkbox" th:field="*{categories}" value="Fullstack"-->
+<!--                aria-label="Checkbox for following text input">-->
+<!--            </div>-->
+<!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="Fullstack">-->
+<!--        </div>-->
+
+
+        <div class="add-job-offer-button">
+            <input class="add-job-offer btn btn-primary" type="submit" value="Add Job Offer">
+        </div>
+    </form>
+</div>
 </body>
-
-
 </html>
+
+
+
+    <!--            <h6>Must have</h6>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Java">-->
+    <!--            </div>-->
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Python">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox"-->
+    <!--                       value="Visual Studio Code">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="WebStorm">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox"-->
+    <!--                       value="Browser Developer Tools">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="JavaScript">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="jQuery">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="HTML">-->
+    <!--            </div>-->
+
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="CSS">-->
+    <!--            </div>-->
+
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Spring">-->
+    <!--            </div>-->
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Hibernate">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="REST API">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="English">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Gradle">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Maven">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Git">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Docker">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="React">-->
+    <!--            </div>-->
+
+
+    <!--            <h6>Nice to have</h6>-->
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Java">-->
+    <!--            </div>-->
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Python">-->
+    <!--            </div>-->
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox"-->
+    <!--                       value="Visual Studio Code">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="WebStorm">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox"-->
+    <!--                       value="Browser Developer Tools">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="JavaScript">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="jQuery">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="HTML">-->
+    <!--            </div>-->
+
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="CSS">-->
+    <!--            </div>-->
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Spring">-->
+    <!--            </div>-->
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Hibernate">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="REST API">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="English">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Gradle">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Maven">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Git">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Docker">-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <div class="input-group-text">-->
+    <!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
+    <!--                           aria-label="Checkbox for following text input">-->
+    <!--                </div>-->
+    <!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="React">-->
+    <!--            </div>-->
+
+
+    <!--            <h6>Salary</h6>-->
+    <!--            <div class="input-group mb-3">-->
+    <!--                <label class="input-group-text" for="inputGroupSelect01">Salary</label>-->
+    <!--                <select class="form-select" id="inputGroupSelect01">-->
+    <!--                    <option selected>Choose...</option>-->
+    <!--                    <option value="1">0 - 3000</option>-->
+    <!--                    <option value="2">3000 - 5000</option>-->
+    <!--                    <option value="3">5000 - 8000</option>-->
+    <!--                    <option value="3">8000 - 12000</option>-->
+    <!--                    <option value="3">12000 - 15000</option>-->
+    <!--                    <option value="3">15000 - 18000</option>-->
+    <!--                    <option value="3">18000 - 25000</option>-->
+    <!--                </select>-->
+    <!--            </div>-->
+    <!--            <h6>Location</h6>-->
+    <!--            <div class="input-group mb-3">-->
+    <!--                <label class="input-group-text" for="inputGroupSelect01">Location</label>-->
+    <!--                <select class="form-select" id="inputGroupSelect02">-->
+    <!--                    <option selected>Choose...</option>-->
+    <!--                    <option value="1">Remote</option>-->
+    <!--                    <option value="2">Office</option>-->
+    <!--                    <option value="3">Hybrid</option>-->
+    <!--                </select>-->
+    <!--            </div>-->
+
+    <!--            <div class="input-group mb-3">-->
+    <!--                <label class="input-group-text" for="inputGroupSelect01">City</label>-->
+    <!--                <select class="form-select" id="inputGroupSelect03">-->
+    <!--                    <option selected>Choose...</option>-->
+    <!--                    <option value="1">Warszawa</option>-->
+    <!--                    <option value="2">Kraków</option>-->
+    <!--                    <option value="3">Wrocław</option>-->
+    <!--                    <option value="3">Łódź</option>-->
+    <!--                    <option value="3">Gdańsk</option>-->
+    <!--                    <option value="3">Gdynia</option>-->
+    <!--                </select>-->
+    <!--            </div>-->
+
+
+
+
+    <!--            <div class="mb-3">-->
+    <!--                <label for="exampleFormControlInput7" class="form-label">Posted date</label>-->
+    <!--                <input type="text" class="title" id="exampleFormControlInput7" placeholder="15.07.2024">-->
+    <!--            </div>-->
+    <!--            <div class="mb-3">-->
+    <!--                <label for="exampleFormControlInput8" class="form-label">Expiry date</label>-->
+    <!--                <input type="text" class="title" id="exampleFormControlInput8" placeholder="30.08.2024">-->
+    <!--            </div>-->
+

@@ -1,16 +1,28 @@
+/* main settings */
+
 body {
-background-color: #CCC3B1 ;
+    background-color: #CCC3B1 ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 .navbar-brand {
     margin-right: 100px !important;/* Możesz dostosować wartość odstępu według potrzeb */
 }
 
 .navbar {
+    position: absolute;
     background-color: #E2DBD1;
     height: 100px;
     color: #444444; /* Zmiana koloru tekstu */
     text-decoration: none; /* Usunięcie podkreślenia */
     font-weight: bold; /* Wytłuszczenie tekstu */
+
+}
+#main{
+    margin-top: 120px;
 }
 
 .navigation-buttons-employer{
@@ -22,7 +34,6 @@ background-color: #CCC3B1 ;
 .navigation-buttons-home{
     margin-left: -750px;
 }
-
 
 .list-group-item {
     white-space: nowrap; /* Zapobiega łamaniu tekstu na nowej linii */
@@ -57,8 +68,55 @@ background-color: #CCC3B1 ;
     gap: 20px; /* Odstęp między elementami */
 }
 
+/*--------------------------------------------------------------------------------------------------------*/
+/* employer-portal/new-job-offer */
+
+.employer-new-job-offer {
+    position: absolute;
+    margin-top: -285px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    color: #444444;
+    padding: 10px 20px; /* Odstęp wewnętrzny dla tekstu tytułu */
+    text-align: center; /* Wyrównanie tekstu do środka */
+    z-index: 1100; /* Wyższy index niż formularz, aby być na wierzchu */
+
+}
+
+.form {
+    position: absolute;
+    top: 200px;         /* Margines górny */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;            /* Szerokość */
+    background-color: #f0f0f0; /* Kolor tła */
+    border-radius: 15px;      /* Zaokrąglone rogi */
+    padding: 20px;            /* Odstęp wewnętrzny od krawędzi */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Lekki cień dla lepszego efektu wizualnego */
+    box-sizing: border-box;
+    overflow-y: auto;
+    z-index: 1000;
+    margin-bottom: 80px;
 
 
+}
 
+.add-job-offer{
+background-color: #a09b87;
+    border-color: #7d7862;
+    float: right;
+}
 
+.add-job-offer:active{
+background-color: #b2ad99;
+    border-color: #7d7862;
+    float: right;
+}
 
+.add-job-offer:hover {
+    background-color: #b2ad99;
+    border-color: #7d7862;
+    color: white;
+
+}

@@ -25,7 +25,7 @@ UPDATE candidate SET user_id = 5 WHERE email = 'annanowak@gmail.pl';
 UPDATE candidate SET user_id = 6 WHERE email = 'adamkowalski@gmail.pl';
 UPDATE candidate SET user_id = 7 WHERE email = 'katarzynamatejko@gmail.pl';
 
-    insert into code_bridge_role (role_id, role) values (1, 'EMPLOYER'), (2, 'CANDIDATE');
+insert into code_bridge_role (role_id, role) values (1, 'EMPLOYER'), (2, 'CANDIDATE');
 
 insert into code_bridge_user_role (user_id, role_id) values (1, 1), (2, 1), (3, 1), (4, 1);
 insert into code_bridge_user_role (user_id, role_id) values (5, 2), (6, 2), (7, 2);
