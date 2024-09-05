@@ -42,7 +42,7 @@ public class JobOfferAddService {
         return JobOffer.builder()
                 .title(request.getJobOfferTitle())
                 .description(request.getDescription())
-//                .categories(request.getCategories())
+//                .techSpecialization(request.getTechSpecialization())
                 .build();
     }
 }

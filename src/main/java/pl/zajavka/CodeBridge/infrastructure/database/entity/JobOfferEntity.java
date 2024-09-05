@@ -3,11 +3,6 @@ package pl.zajavka.CodeBridge.infrastructure.database.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 @Getter
 @Setter
 @EqualsAndHashCode(of = "jobOfferId")
@@ -30,13 +25,17 @@ public class JobOfferEntity {
     @Column(name = "description")
     private String description;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "jobOffer", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<JobOfferCategoryEntity> jobOfferCategories = new ArrayList<>();
+//    @Column(name = "tech_specialization")
+//    private String techSpecialization;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employer_id")
     private EmployerEntity employer;
 }
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "tech_specialization_id")
+//    private TechSpecializationEntity techSpecialization;
+
 
 //    @Column(name = "job_offer_code", unique = true)
 //    private String jobOfferCode;
