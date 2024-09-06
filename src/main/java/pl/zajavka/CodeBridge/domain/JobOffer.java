@@ -3,6 +3,8 @@ package pl.zajavka.CodeBridge.domain;
 
 import lombok.*;
 
+import java.util.List;
+
 @With
 @Value
 @Builder
@@ -20,6 +22,7 @@ public class JobOffer {
     String city;
     String experience;
     String salary;
+    List<String> skills;
 
 }
 //    String companyName;

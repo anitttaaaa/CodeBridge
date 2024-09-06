@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import pl.zajavka.CodeBridge.api.enums.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @EqualsAndHashCode(of = "jobOfferId")
@@ -43,9 +45,11 @@ public class JobOfferEntity {
     @Column(name = "experience")
     private ExperiencesEnum experience;
 
+
     @Enumerated(EnumType.STRING)
     @Column(name = "salary")
     private SalaryRangeEnum salary;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employer_id")

@@ -20,6 +20,7 @@ public class JobOfferAddRequestDTO {
     private String city;
     private String experience;
     private String salary;
+    private List<String> skills;
 
 }
 

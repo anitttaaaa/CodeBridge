@@ -53,6 +53,7 @@ public class JobOfferAddService {
                 .city(request.getCity())
                 .experience(request.getExperience())
                 .salary(request.getSalary())
+                .skills(request.getSkills())
                 .build();
     }
 }

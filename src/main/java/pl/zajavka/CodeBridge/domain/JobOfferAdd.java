@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Value;
 import lombok.With;
 
+import java.util.List;
+
 @With
 @Value
 @Builder
@@ -17,4 +19,5 @@ public class JobOfferAdd {
     String city;
     String experience;
     String salary;
+    List<String> skills;
 }

@@ -10,23 +10,36 @@ body {
 }
 .navbar-brand {
     margin-right: 100px !important;/* Możesz dostosować wartość odstępu według potrzeb */
+
 }
 
 .navbar {
-    position: absolute;
+
     background-color: #E2DBD1;
     height: 100px;
     color: #444444; /* Zmiana koloru tekstu */
     text-decoration: none; /* Usunięcie podkreślenia */
     font-weight: bold; /* Wytłuszczenie tekstu */
 
+
 }
+
 
 /* Stylizacja dla nagłówków z pionowymi kreskami */
 .header-navigation {
+    font-size: 20px; /* Zwiększa rozmiar czcionki */
+    font-weight: 600; /* Ustawia czcionkę na normalną (nie pogrubioną) */
+    line-height: 1.5; /* Ustawia wysokość linii (możesz dostosować wartość według potrzeb) */
+    text-decoration: none; /* Usuwa podkreślenie linków */
+    color: #444444; /* Ustawia kolor tekstu linków */
+
     display: flex;
-    justify-content: flex- start;
+
     align-items: center;
+}
+
+.header-navigation a:hover {
+    color: #8c8773; /* Kolor tekstu linków po najechaniu */
 }
 
 .header-navigation h1 {
@@ -100,21 +113,37 @@ body {
 /*--------------------------------------------------------------------------------------------------------*/
 /* employer-portal/new-job-offer */
 
+.description-text-area{
+    margin-bottom:15px;
+}
+
 .add-job-offer-button{
-background-color: #a09b87;
+    background-color: #a09b87;
     border-color: #7d7862;
     float: right;
+    margin-bottom:20px;
+
 }
 
 .add-job-offer-button:active{
-background-color: #b2ad99;
+    background-color: #b2ad99;
     border-color: #7d7862;
     float: right;
+    padding-bottom: 20px;
 }
 
 .add-job-offer-button:hover {
     background-color: #b2ad99;
     border-color: #7d7862;
     color: white;
+
+}
+
+.employer-new-job-offer h2 {
+    font-size: 37px; /* Zwiększa rozmiar czcionki dla nagłówka h2 */
+    text-align: center; /* Centruje tekst, jeśli jeszcze tego nie robi */
+    margin-top: 70px; /* Dodaje górny margines */
+    margin-bottom: 45px; /* Dodaje dolny margines */
+    padding-top: 40px;
 
 }
