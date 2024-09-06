@@ -15,7 +15,11 @@ public class JobOfferAddRequestDTO {
 
     private String jobOfferTitle;
     private String description;
-//    private String techSpecialization;
+    private String techSpecialization;
+    private String workType;
+    private String city;
+    private String experience;
+    private String salary;
 
 }
 

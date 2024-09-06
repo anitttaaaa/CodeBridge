@@ -22,39 +22,30 @@
     <div id="header">
 
         <nav class="navbar navbar-expand-lg fixed-top">
-            <div class="container-fluid d-flex justify-content-between align-items-center">
-
-                <img th:src="@{/images/logo.png}" class="navbar-brand me-4" alt="Logo CodeBridge"
-                     onclick="window.location.href='/CodeBridge';"
-                     style="cursor: pointer;">
-
-
-                <div class="navigation-buttons-employer d-flex align-items-center">
-                    <a th:href="@{/employer-portal/job-offers}"
-                       class="list-group-item first-button list-group-item-action py-2 ripple">
-                        <span>MY JOB OFFERS</span></a>
-
-                    <a th:href="@{/employer-portal/new-job-offer}"
-                       class="list-group-item list-group-item-action py-2 ripple">
-                        <span>NEW JOB OFFER</span></a>
-
-                    <a th:href="@{/employer-portal/job-applications}"
-                       class="list-group-item list-group-item-action py-2 ripple">
-                        <span>JOB APPLICATIONS</span></a>
-
-                    <a th:href="@{/employer-portal/find-a-candidate}"
-                       class="list-group-item list-group-item-action py-2 ripple">
-                        <span>FIND A CANDIDATE</span></a>
-                    <a th:href="@{/employer-portal/contact}"
-                       class="list-group-item list-group-item-action py-2 ripple">
-                        <span>CONTACT</span></a>
+            <div class="container-fluid d-flex align-items-center">
+                <div class="logo-container">
+                    <img th:src="@{/images/logo.png}" class="navbar-brand me-4" alt="Logo CodeBridge"
+                         onclick="window.location.href='/CodeBridge';"
+                         style="cursor: pointer;">
                 </div>
-                <a sec:authorize="!isAuthenticated()" class="login-button btn btn-primary" th:href="@{/login}">Log
-                    in</a>
-                <a sec:authorize="isAuthenticated()" class="login-button btn btn-primary" th:href="@{/logout}">Log
-                    out</a>
+
+                <div class="header-navigation">
+                    <a href="/CodeBridge/employer-portal/job-offers" class="nav-link">MY JOB OFFERS</a>
+                    <span class="separator">|</span>
+                    <a href="/CodeBridge/employer-portal/new-job-offer" class="nav-link">NEW JOB OFFER</a>
+                    <span class="separator">|</span>
+                    <a href="/CodeBridge/employer-portal/job-applications" class="nav-link">JOB APPLICATIONS</a>
+                    <span class="separator">|</span>
+                    <a href="/CodeBridge/employer-portal/find-a-candidate" class="nav-link">FIND A CANDIDATE</a>
+                    <span class="separator">|</span>
+                    <a href="/CodeBridge/employer-portal/contact" class="nav-link">CONTACT</a>
+                </div>
 
 
+                <div class="auth-buttons ms-auto">
+                    <a sec:authorize="!isAuthenticated()" class="login-button btn btn-primary" th:href="@{/login}">Log in</a>
+                    <a sec:authorize="isAuthenticated()" class="login-button btn btn-primary" th:href="@{/logout}">Log out</a>
+                </div>
             </div>
         </nav>
     </div>

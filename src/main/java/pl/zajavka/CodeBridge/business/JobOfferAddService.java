@@ -5,11 +5,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.JobOffer;
 import pl.zajavka.CodeBridge.domain.JobOfferAdd;
+import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
 import pl.zajavka.CodeBridge.infrastructure.security.CodeBridgeUserDetailsService;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -37,12 +40,19 @@ public class JobOfferAddService {
 
         employerService.createJobOffer(employerAndJobOffer);
     }
+//    public List<JobOfferEntity> searchJobOffersBySpecialization(TechSpecializationsEnum techSpecialization) {
+//        return employerService.findJobOffersByTechSpecialization(techSpecialization);
+//    }
 
     private JobOffer buildJobOffer(JobOfferAdd request) {
         return JobOffer.builder()
                 .title(request.getJobOfferTitle())
                 .description(request.getDescription())
-//                .techSpecialization(request.getTechSpecialization())
+                .techSpecialization(request.getTechSpecialization())
+                .workType(request.getWorkType())
+                .city(request.getCity())
+                .experience(request.getExperience())
+                .salary(request.getSalary())
                 .build();
     }
 }

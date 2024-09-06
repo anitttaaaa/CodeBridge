@@ -15,7 +15,11 @@ public class JobOffer {
     String title;
     String description;
     Employer employer;
-//    String techSpecialization;
+    String techSpecialization;
+    String workType;
+    String city;
+    String experience;
+    String salary;
 
 }
 //    String companyName;

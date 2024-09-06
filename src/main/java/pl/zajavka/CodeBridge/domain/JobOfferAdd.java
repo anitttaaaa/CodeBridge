@@ -12,5 +12,9 @@ public class JobOfferAdd {
 
     String jobOfferTitle;
     String description;
-//    String techSpecialization;
+    String techSpecialization;
+    String workType;
+    String city;
+    String experience;
+    String salary;
 }

@@ -4,7 +4,11 @@ CREATE TABLE job_offer
     title                   VARCHAR(32) NOT NULL,
     description             VARCHAR(128) NOT NULL,
     employer_id             INT         NOT NULL,
---    tech_specialization     VARCHAR         NOT NULL,
+    tech_specialization     VARCHAR         NOT NULL,
+    work_type               VARCHAR         NOT NULL,
+    city                    VARCHAR         NOT NULL,
+    experience              VARCHAR         NOT NULL,
+    salary                  VARCHAR         NOT NULL,
     PRIMARY KEY (job_offer_id),
         CONSTRAINT fk_job_offer_employer
             FOREIGN KEY (employer_id)

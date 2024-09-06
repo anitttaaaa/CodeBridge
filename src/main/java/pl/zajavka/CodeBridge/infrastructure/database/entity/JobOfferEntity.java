@@ -2,6 +2,7 @@ package pl.zajavka.CodeBridge.infrastructure.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import pl.zajavka.CodeBridge.api.enums.*;
 
 @Getter
 @Setter
@@ -25,8 +26,26 @@ public class JobOfferEntity {
     @Column(name = "description")
     private String description;
 
-//    @Column(name = "tech_specialization")
-//    private String techSpecialization;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tech_specialization")
+    private TechSpecializationsEnum techSpecialization;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "work_type")
+    private WorkTypesEnum workType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "city")
+    private CitiesEnum city;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "experience")
+    private ExperiencesEnum experience;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "salary")
+    private SalaryRangeEnum salary;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employer_id")
