@@ -5,14 +5,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.JobOffer;
 import pl.zajavka.CodeBridge.domain.JobOfferAdd;
-import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
 import pl.zajavka.CodeBridge.infrastructure.security.CodeBridgeUserDetailsService;
 
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -53,7 +50,7 @@ public class JobOfferAddService {
                 .city(request.getCity())
                 .experience(request.getExperience())
                 .salary(request.getSalary())
-                .skills(request.getSkills())
+                .mustHaveSkills(request.getMustHaveSkills())
                 .build();
     }
 }

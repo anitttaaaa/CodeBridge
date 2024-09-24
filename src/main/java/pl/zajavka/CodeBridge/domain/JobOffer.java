@@ -22,7 +22,8 @@ public class JobOffer {
     String city;
     String experience;
     String salary;
-    List<String> skills;
+    List<String> mustHaveSkills;
+
 
 }
 //    String companyName;

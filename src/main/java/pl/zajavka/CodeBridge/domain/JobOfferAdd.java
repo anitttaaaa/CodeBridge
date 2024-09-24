@@ -19,5 +19,6 @@ public class JobOfferAdd {
     String city;
     String experience;
     String salary;
-    List<String> skills;
+    List<String> mustHaveSkills;
+
 }

@@ -13,3 +13,4 @@ DROP TABLE IF EXISTS job_offer_skill CASCADE;
 DROP TABLE IF EXISTS flyway_schema_history CASCADE;
 
 SELECT * FROM job_offer;
+SELECT * FROM job_offer_must_have_skills;

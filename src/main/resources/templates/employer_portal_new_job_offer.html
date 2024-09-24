@@ -35,7 +35,7 @@
             <label class="input-group-text" for="techSpecializationSelect">Tech Specialization</label>
             <select class="form-select" id="techSpecializationSelect" th:field="*{techSpecialization}">
                 <option value="" disabled selected>Choose...</option>
-                <option th:each="techSpecialization : ${T(pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum).values()}"
+                <option th:each="techSpecialization : ${T(pl.zajavka.CodeBridge.api.view.TechSpecializationsEnum).values()}"
                         th:value="${techSpecialization}" th:text="${techSpecialization}">
                 </option>
             </select>
@@ -45,7 +45,7 @@
             <label class="input-group-text" for="workTypeSelect">Work Type</label>
             <select class="form-select" id="workTypeSelect" th:field="*{workType}">
                 <option value="" disabled selected>Choose...</option>
-                <option th:each="workType : ${T(pl.zajavka.CodeBridge.api.enums.WorkTypesEnum).values()}"
+                <option th:each="workType : ${T(pl.zajavka.CodeBridge.api.view.WorkTypesEnum).values()}"
                         th:value="${workType}" th:text="${workType}">
                 </option>
             </select>
@@ -56,7 +56,7 @@
             <label class="input-group-text" for="citySelect">City</label>
             <select class="form-select" id="citySelect" th:field="*{city}">
                 <option value="" disabled selected>Choose...</option>
-                <option th:each="city : ${T(pl.zajavka.CodeBridge.api.enums.CitiesEnum).values()}"
+                <option th:each="city : ${T(pl.zajavka.CodeBridge.api.view.CitiesEnum).values()}"
                         th:value="${city}" th:text="${city}">
                 </option>
             </select>
@@ -67,7 +67,7 @@
             <label class="input-group-text" for="experienceSelect">Experience</label>
             <select class="form-select" id="experienceSelect" th:field="*{experience}">
                 <option value="" disabled selected>Choose...</option>
-                <option th:each="experience : ${T(pl.zajavka.CodeBridge.api.enums.ExperiencesEnum).values()}"
+                <option th:each="experience : ${T(pl.zajavka.CodeBridge.api.view.ExperiencesEnum).values()}"
                         th:value="${experience}" th:text="${experience}">
                 </option>
             </select>
@@ -79,7 +79,7 @@
 
             <select class="form-select" id="salarySelect" th:field="*{salary}">
                 <option value="" disabled selected>Choose...</option>
-                <option th:each="salary : ${T(pl.zajavka.CodeBridge.api.enums.SalaryRangeEnum).values()}"
+                <option th:each="salary : ${T(pl.zajavka.CodeBridge.api.view.SalaryRangeEnum).values()}"
                         th:value="${salary.name}" th:text="${salary.getRange()}">
                 </option>
             </select>
@@ -87,10 +87,10 @@
 
 
         <h6>Must have skills</h6>
-        <div class="input-group mb-3" th:each="skill : ${T(pl.zajavka.CodeBridge.api.enums.SkillsEnum).values()}">
+        <div class="input-group mb-3" th:each="skill : ${T(pl.zajavka.CodeBridge.api.view.SkillsEnum).values()}">
             <div class="input-group-text">
                 <input class="form-check-input mt-0" type="checkbox"
-                       th:field="*{skills}"
+                       th:field="*{mustHaveSkills}"
                        th:value="${skill.getSkill()}"
                        id="must_have_skill_${skill.name()}"/>
             </div>
@@ -101,10 +101,10 @@
         </div>
 
         <h6>Nice to have skills</h6>
-        <div class="input-group mb-3" th:each="skill : ${T(pl.zajavka.CodeBridge.api.enums.SkillsEnum).values()}">
+        <div class="input-group mb-3" th:each="skill : ${T(pl.zajavka.CodeBridge.api.view.SkillsEnum).values()}">
             <div class="input-group-text">
                 <input class="form-check-input mt-0" type="checkbox"
-                       th:field="*{skills}"
+                       th:field="*{mustHaveSkills}"
                        th:value="${skill.getSkill()}"
                        id="nice_to_have_skill_${skill.name()}"/>
             </div>

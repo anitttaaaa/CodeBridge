@@ -1,4 +1,4 @@
-package pl.zajavka.CodeBridge.api.enums;
+package pl.zajavka.CodeBridge.api.view;
 
 public enum WorkTypesEnum {
 

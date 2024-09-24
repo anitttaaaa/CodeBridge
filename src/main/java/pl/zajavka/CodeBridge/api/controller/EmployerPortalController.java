@@ -34,12 +34,12 @@ public class EmployerPortalController {
         return "employer_portal_new_job_offer";
     }
 
-
     @PostMapping(EMPLOYER_NEW_JOB_OFFER_ADD)
     public String addJobOffer(
             @ModelAttribute("jobOfferAddRequestDTO") JobOfferAddRequestDTO jobOfferAddRequestDTO,
             Authentication authentication)
     {
+
         JobOfferAdd request = jobOfferMapper.mapFromDTO(jobOfferAddRequestDTO);
         jobOfferAddService.createJobOfferData(request, authentication);
 

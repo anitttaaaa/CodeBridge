@@ -2,7 +2,7 @@ package pl.zajavka.CodeBridge.infrastructure.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import pl.zajavka.CodeBridge.api.enums.*;
+import pl.zajavka.CodeBridge.api.view.*;
 
 import java.util.List;
 
@@ -54,6 +54,11 @@ public class JobOfferEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employer_id")
     private EmployerEntity employer;
+
+    @ElementCollection
+    @CollectionTable(name = "job_offer_must_have_skills", joinColumns = @JoinColumn(name = "job_offer_id"))
+    @Column(name = "must_have_skills")
+    private List<String> mustHaveSkills;
 }
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "tech_specialization_id")
