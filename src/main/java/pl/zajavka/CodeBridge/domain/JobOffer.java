@@ -23,6 +23,7 @@ public class JobOffer {
     String experience;
     String salary;
     List<String> mustHaveSkills;
+    List<String> niceToHaveSkills;
 
 
 }

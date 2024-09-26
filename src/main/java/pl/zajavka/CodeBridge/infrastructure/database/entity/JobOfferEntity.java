@@ -59,6 +59,11 @@ public class JobOfferEntity {
     @CollectionTable(name = "job_offer_must_have_skills", joinColumns = @JoinColumn(name = "job_offer_id"))
     @Column(name = "must_have_skills")
     private List<String> mustHaveSkills;
+
+    @ElementCollection
+    @CollectionTable(name = "job_offer_nice_to_have_skills", joinColumns = @JoinColumn(name = "job_offer_id"))
+    @Column(name = "nice_to_have_skills")
+    private List<String> niceToHaveSkills;
 }
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "tech_specialization_id")

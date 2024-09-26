@@ -24,6 +24,8 @@ public class EmployerPortalController {
     private final JobOfferMapper jobOfferMapper;
     private final JobOfferAddService jobOfferAddService;
 
+
+
     @GetMapping(value = EMPLOYER)
     public String employerPortal() {return "employer_portal";}
 

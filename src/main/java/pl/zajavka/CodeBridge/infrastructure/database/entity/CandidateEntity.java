@@ -33,10 +33,5 @@ public class CandidateEntity {
     @Column(name = "phone")
     private String phone;
 
-
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "jobCategory")
-//    private Set<JobOfferCategoryEntity> jobOfferCategories;
-
-
 }
 

@@ -3,25 +3,111 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/fragments/layouts/candidate_portal_base}">
+
 <head>
     <title>Find your job!</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 
 <div layout:fragment="candidateContent">
-        <h3>candidate</h3>
-        <h3>candidate</h3>
-        <h3>candidate</h3>
-        <h3>candidate</h3>
-        <h3>candidate</h3>
-        <h3>candidate</h3>
-        <h3>candidate</h3>
-        <h3>candidate</h3>
-        <h3>candidate</h3>
+    <div class="container mt-5">
+        <div class="text-center">
+            <!-- Profile Photo -->
+            <div id="photo-container" class="mb-4">
+                <img id="profile-photo" class="rounded-circle img-fluid mb-3"
+                     src="https://via.placeholder.com/150?text=Avatar" alt="Profile Photo"
+                     style="width: 150px; height: 150px;">
+            </div>
 
+            <!-- Candidate Information -->
+            <div class="mb-3">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="name">Name</label>
+                    <input type="text" id="name" name="name" class="form-control" value="John Doe" readonly>
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="surname">Surname</label>
+                    <input type="text" id="surname" name="surname" class="form-control" value="Smith" readonly>
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" value="john@example.com" readonly>
+                </div>
+
+            </div>
+
+            <!-- Edit Profile Button -->
+            <button type="button" class="add-job-offer-button btn btn-primary" data-toggle="modal"
+                    data-target="#editProfileModal">
+                Edit Profile
+            </button>
+        </div> <!-- End of Text Center -->
+
+        <!-- Modal for Editing Profile -->
+        <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog"
+             aria-labelledby="editProfileModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form th:action="@{/updateCandidate}" method="post">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="editName">Name</label>
+                                <input type="text" id="editName" name="name" class="form-control" required>
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="editSurname">Surname</label>
+                                <input type="text" id="editSurname" name="surname" class="form-control" required>
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="editEmail">Email</label>
+                                <input type="email" id="editEmail" name="email" class="form-control" required>
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="editCity">City</label>
+                                <input type="text" id="editCity" name="city" class="form-control" required>
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="editBio">Bio</label>
+                                <textarea id="editBio" name="bio" class="form-control" rows="4" required></textarea>
+                            </div>
+
+                            <!-- Form for uploading photo -->
+                            <div class="mb-3">
+                                <input type="file" id="file" name="file" accept="image/*" class="form-control mb-3" style="display: none;" onchange="this.form.submit();">
+                                <button type="button" class="btn btn-light" onclick="document.getElementById('file').click();" aria-label="Edit Photo">
+                                    <i class="fas fa-edit"></i> Edit Photo
+                                </button>
+                            </div>
+
+                            <div>
+                                <input class="add-job-offer-button btn btn-primary" type="submit" value="Save">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- End of Modal -->
+    </div> <!-- End of Container -->
 </div>
 
 </body>
-
-
 </html>

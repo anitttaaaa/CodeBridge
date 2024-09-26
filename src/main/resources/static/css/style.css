@@ -1,25 +1,24 @@
 /* main settings */
 
 body {
-    background-color: #CCC3B1 ;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: 100vh;
-    margin: 0;
+    background-color: #CCC3B1 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    height: 100vh !important;
+    margin: 0 !important;
 }
 .navbar-brand {
-    margin-right: 100px !important;/* Możesz dostosować wartość odstępu według potrzeb */
+    margin-right: 100px !important;
 
 }
 
 .navbar {
 
-    background-color: #E2DBD1;
-    height: 100px;
-    color: #444444; /* Zmiana koloru tekstu */
-    text-decoration: none; /* Usunięcie podkreślenia */
-    font-weight: bold; /* Wytłuszczenie tekstu */
+    background-color: #E2DBD1 !important;
+    height: 100px !important;
+    color: #444444 !important;
+    font-weight: bold !important;
 
 
 }
@@ -27,123 +26,128 @@ body {
 
 /* Stylizacja dla nagłówków z pionowymi kreskami */
 .header-navigation {
-    font-size: 20px; /* Zwiększa rozmiar czcionki */
-    font-weight: 600; /* Ustawia czcionkę na normalną (nie pogrubioną) */
-    line-height: 1.5; /* Ustawia wysokość linii (możesz dostosować wartość według potrzeb) */
-    text-decoration: none; /* Usuwa podkreślenie linków */
-    color: #444444; /* Ustawia kolor tekstu linków */
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    line-height: 1.5 !important;
+    text-decoration: none !important;
+    color: #444444 !important;
 
-    display: flex;
+    display: flex!important;
 
-    align-items: center;
+    align-items: center!important;
 }
 
 .header-navigation a:hover {
-    color: #8c8773; /* Kolor tekstu linków po najechaniu */
+    color: #8c8773 !important;
 }
 
 .header-navigation h1 {
-    margin: 0; /* Usunięcie domyślnych marginesów */
-    padding: 0 15px; /* Dodanie odpowiedniego odstępu z każdej strony */
-    white-space: nowrap; /* Zapobiega łamaniu się tekstu */
-    font-size: 18px;
-    color: #444444;
+    margin: 0 !important;
+    padding: 0 15px !important;
+    white-space: nowrap !important;
+    font-size: 18px !important;
+    color: #444444 !important;
 }
 
 .header-navigation .separator {
-    margin: 0 10px; /* Ustawienie mniejszego odstępu przed i za pionową kreską */
-    color: #A19A84; /* Kolor pionowej kreski */
+    margin: 0 10px !important;
+    color: #A19A84 !important;
 }
 
 .header-navigation h1:first-child {
-    padding-left: 0; /* Usunięcie dodatkowego odstępu przed pierwszym nagłówkiem */
+    padding-left: 0 !important;
 }
 
 .header-navigation h1:last-child {
-    padding-right: 0; /* Usunięcie dodatkowego odstępu za ostatnim nagłówkiem */
+    padding-right: 0 !important;
 }
 
 #main{
-    margin-top: 120px;
+    margin-top: 120px !important;
 }
 
 .navigation-buttons-employer{
-    margin-left: -400px;
+    margin-left: -400px !important;
 }
 .navigation-buttons-candidate{
-    margin-left: -850px;
+    margin-left: -850px !important;
 }
 .navigation-buttons-home{
-    margin-left: -750px;
+    margin-left: -750px !important;
 }
 
 .list-group-item {
-    white-space: nowrap; /* Zapobiega łamaniu tekstu na nowej linii */
-    padding: 15px 15px; /* Przykładowe wartości padding */
-    margin-right: 5px; /* Odległość między przyciskami */
-    border-right: 1px solid #A19A84; /* Pionowa linia oddzielająca przyciski */
+    white-space: nowrap !important;
+    padding: 15px 15px !important;
+    margin-right: 5px !important;
+    border-right: 1px solid #A19A84 !important;
 }
 .first-button{
-    border-left: 1px solid #A19A84;
+    border-left: 1px solid #A19A84 !important;
 }
 
 .list-group-item:hover {
-    color: #8c8773; /* Zmiana koloru tekstu po najechaniu myszką na jeden element */
+    color: #8c8773 !important;
 }
 
 .login-button {
-    margin-right: 50px;
-    background-color: #a09b87;
-    border-color: #7d7862;
+    margin-right: 50px !important;
+    background-color: #a09b87 !important;
+    border-color: #7d7862 !important;
     }
 
 .login-button:hover {
-    background-color: #b2ad99;
-    border-color: #7d7862;
+    background-color: #b2ad99 !important;
+    border-color: #7d7862 !important;
 }
 .login-button:focus {
-    outline: none; /* Usuwa domyślne obramowanie po kliknięciu */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Dodaje cień po kliknięciu */
+    outline: none !important;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5) !important;
 }
 .navigation-buttons-employer {
-    display: flex; /* Ustawienie elementów w linii */
-    gap: 20px; /* Odstęp między elementami */
+    display: flex !important;
+    gap: 20px !important;
 }
 
 /*--------------------------------------------------------------------------------------------------------*/
 /* employer-portal/new-job-offer */
 
 .description-text-area{
-    margin-bottom:15px;
+    margin-bottom:15px !important;
 }
 
 .add-job-offer-button{
-    background-color: #a09b87;
-    border-color: #7d7862;
-    float: right;
-    margin-bottom:20px;
+    background-color: #a09b87!important;
+    border-color: #7d7862!important;
+    float: right!important;
+    margin-bottom:20px!important;
 
 }
 
 .add-job-offer-button:active{
-    background-color: #b2ad99;
-    border-color: #7d7862;
-    float: right;
-    padding-bottom: 20px;
+    background-color: #b2ad99 !important;
+    border-color: #7d7862 !important;
+    float: right !important;
+    padding-bottom: 20px !important;
 }
 
 .add-job-offer-button:hover {
-    background-color: #b2ad99;
-    border-color: #7d7862;
-    color: white;
+    background-color: #b2ad99 !important;
+    border-color: #7d7862 !important;
+    color: white !important;
 
 }
 
 .employer-new-job-offer h2 {
-    font-size: 37px; /* Zwiększa rozmiar czcionki dla nagłówka h2 */
-    text-align: center; /* Centruje tekst, jeśli jeszcze tego nie robi */
-    margin-top: 70px; /* Dodaje górny margines */
-    margin-bottom: 45px; /* Dodaje dolny margines */
-    padding-top: 40px;
+    font-size: 37px !important;
+    text-align: center !important;
+    margin-top: 70px !important;
+    margin-bottom: 45px !important;
+    padding-top: 40px !important;
 
+}
+
+.col-md-4{
+ margin-left: 0;  /* Sprawdzamy, czy nie ma zbędnych marginesów */
+    transform: translateX(-20px);
 }

@@ -104,7 +104,7 @@
         <div class="input-group mb-3" th:each="skill : ${T(pl.zajavka.CodeBridge.api.view.SkillsEnum).values()}">
             <div class="input-group-text">
                 <input class="form-check-input mt-0" type="checkbox"
-                       th:field="*{mustHaveSkills}"
+                       th:field="*{niceToHaveSkills}"
                        th:value="${skill.getSkill()}"
                        id="nice_to_have_skill_${skill.name()}"/>
             </div>

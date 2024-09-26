@@ -20,58 +20,41 @@
 <body>
 <div id="wrapper">
     <div id="header">
-
         <nav class="navbar navbar-expand-lg fixed-top">
-            <div class="container-fluid d-flex justify-content-between align-items-center">
-
-                <img th:src="@{/images/logo.png}" class="navbar-brand me-4" alt="Logo CodeBridge"
-                     onclick="window.location.href='/CodeBridge';"
-                     style="cursor: pointer;">
-
-
-                <div class="navigation-buttons-candidate d-flex align-items-center">
-                    <a th:href="@{/candidate-portal/my-profile}"
-                       class="list-group-item first-button list-group-item-action py-2 ripple">
-                        <span>MY PROFILE</span></a>
-
-                    <a th:href="@{/candidate-portal/cv}"
-                       class="list-group-item list-group-item-action py-2 ripple">
-                        <span>CV</span></a>
-
-                    <a th:href="@{/candidate-portal/find-a-job}"
-                       class="list-group-item list-group-item-action py-2 ripple">
-                        <span>FIND A JOB</span></a>
-
-                    <a th:href="@{/candidate-portal/status}"
-                       class="list-group-item list-group-item-action py-2 ripple">
-                        <span>STATUS</span></a>
+            <div class="container-fluid d-flex align-items-center">
+                <!-- Logo section -->
+                <div class="logo-container">
+                    <img th:src="@{/images/logo.png}" class="navbar-brand me-4" alt="Logo CodeBridge"
+                         onclick="window.location.href='/CodeBridge';" style="cursor: pointer;">
                 </div>
-                <a sec:authorize="!isAuthenticated()" class="login-button btn btn-primary" th:href="@{/login}">Log
-                    in</a>
-                <a sec:authorize="isAuthenticated()" class="login-button btn btn-primary" th:href="@{/logout}">Log
-                    out</a>
 
+                <!-- Navigation links -->
+                <div class="header-navigation">
+                    <a th:href="@{/candidate-portal}" class="nav-link">MY PROFILE</a>
+                    <span class="separator">|</span>
+                    <a th:href="@{/candidate-portal/cv}" class="nav-link">CV</a>
+                    <span class="separator">|</span>
+                    <a th:href="@{/candidate-portal/find-a-job}" class="nav-link">FIND A JOB</a>
+                    <span class="separator">|</span>
+                    <a th:href="@{/candidate-portal/status}" class="nav-link">STATUS</a>
+                </div>
 
+                <!-- Authentication buttons on the right -->
+                <div class="auth-buttons ms-auto">
+                    <a sec:authorize="!isAuthenticated()" class="login-button btn btn-primary" th:href="@{/login}">Log in</a>
+                    <a sec:authorize="isAuthenticated()" class="login-button btn btn-primary" th:href="@{/logout}">Log out</a>
+                </div>
             </div>
         </nav>
     </div>
+
     <div id="main">
-
-        <div id="candidate_container" layout:fragment="candidateContent">
-
-
-        </div>
-
+        <div id="candidate_container" layout:fragment="candidateContent"></div>
     </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
 </body>
-
-
 </html>
-
-

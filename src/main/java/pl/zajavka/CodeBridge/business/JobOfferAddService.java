@@ -51,6 +51,7 @@ public class JobOfferAddService {
                 .experience(request.getExperience())
                 .salary(request.getSalary())
                 .mustHaveSkills(request.getMustHaveSkills())
+                .niceToHaveSkills(request.getNiceToHaveSkills())
                 .build();
     }
 }

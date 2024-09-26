@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class CandidatePortalController {
 
-    private static final String CANDIDATE = "/candidate-portal";
+    private static final String CANDIDATE_PORTAL = "/candidate-portal";
 
-    @GetMapping(value = CANDIDATE)
-    public String candidatePortal (){ return "candidate_portal";}
+    @GetMapping(CANDIDATE_PORTAL)
+    public String candidatePortal() {
+        return "candidate_portal";}
 
 }

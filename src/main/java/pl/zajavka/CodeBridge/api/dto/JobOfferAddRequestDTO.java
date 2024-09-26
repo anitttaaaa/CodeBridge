@@ -21,6 +21,7 @@ public class JobOfferAddRequestDTO {
     private String experience;
     private String salary;
     private List<String> mustHaveSkills;
+    private List<String> niceToHaveSkills;
 
 }
 
