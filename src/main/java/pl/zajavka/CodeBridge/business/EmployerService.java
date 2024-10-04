@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.zajavka.CodeBridge.business.dao.EmployerDAO;
 import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.exception.NotFoundException;
-import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.JobOfferJpaRepository;
 
 import java.util.Optional;
 
@@ -15,7 +14,7 @@ import java.util.Optional;
 public class EmployerService {
 
     private final EmployerDAO employerDAO;
-    private final JobOfferJpaRepository jobOfferJpaRepository;
+//    private final JobOfferJpaRepository jobOfferJpaRepository;
 
     @Transactional
     public Employer findEmployer(Integer userId) {

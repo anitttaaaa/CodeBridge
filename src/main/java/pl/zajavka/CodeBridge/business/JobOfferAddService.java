@@ -37,9 +37,7 @@ public class JobOfferAddService {
 
         employerService.createJobOffer(employerAndJobOffer);
     }
-//    public List<JobOfferEntity> searchJobOffersBySpecialization(TechSpecializationsEnum techSpecialization) {
-//        return employerService.findJobOffersByTechSpecialization(techSpecialization);
-//    }
+
 
     private JobOffer buildJobOffer(JobOfferAdd request) {
         return JobOffer.builder()

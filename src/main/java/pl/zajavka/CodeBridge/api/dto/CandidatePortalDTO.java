@@ -14,6 +14,7 @@ public class CandidatePortalDTO {
     private String name;
     private String surname;
     private String email;
+    private String phone;
     private String city;
     private String bio;
     private Integer userId;

@@ -21,8 +21,8 @@ public class CodeBridgeUserDetailsService implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepository.findByUserName(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserEntity user = userRepository.findByEmail(email);
         List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
         return buildUserForAuthentication(user, authorities);
     }
@@ -36,7 +36,7 @@ public class CodeBridgeUserDetailsService implements UserDetailsService {
 
     private UserDetails buildUserForAuthentication(UserEntity user, List<GrantedAuthority> authorities) {
         return new org.springframework.security.core.userdetails.User(
-                user.getUserName(),
+                user.getEmail(),
                 user.getPassword(),
                 user.getActive(),
                 true,
@@ -47,8 +47,8 @@ public class CodeBridgeUserDetailsService implements UserDetailsService {
     }
 
     @Transactional
-    public Integer getUserId(String name) {
-        return userRepository.findByUserName(name).getId();
+    public Integer getUserId(String email) {
+        return userRepository.findByEmail(email).getId();
     }
 
 }

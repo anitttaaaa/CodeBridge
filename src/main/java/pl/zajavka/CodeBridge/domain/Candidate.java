@@ -13,6 +13,7 @@ public class Candidate {
     String name;
     String surname;
     String email;
+    String phone;
     String city;
     String bio;
     Integer userId;
