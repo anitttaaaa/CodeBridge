@@ -151,3 +151,62 @@ body {
  margin-left: 0;  /* Sprawdzamy, czy nie ma zbędnych marginesów */
     transform: translateX(-20px);
 }
+
+
+/*--------------------------------------------------------------------------------------------------------*/
+/* widok portalu kandydata */
+
+
+.card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 1.5rem; /* Rozmiar czcionki imienia i nazwiska */
+    margin-bottom: 8px;
+    color: #444444;
+}
+
+.card-text {
+    font-size: 1rem; /* Rozmiar czcionki emaila */
+    color: #666; /* Kolor tekstu emaila */
+}
+#photo-container {
+    position: relative; /* Ustaw kontener jako relative */
+    width: 150px;      /* Szerokość kontenera */
+    height: 150px;     /* Wysokość kontenera */
+
+}
+
+#profile-photo {
+    width: 100%;       /* Wypełnij kontener */
+    height: 100%;      /* Wypełnij kontener */
+    border-radius: 50%; /* Okrągły kształt zdjęcia */
+
+}
+
+.edit-photo-button {
+    position: absolute; /* Pozycjonowanie względem kontenera */
+    bottom: 10px; /* Odstęp od dołu */
+    right: -15px;  /* Odstęp od prawej */
+    width: 40px;  /* Szerokość przycisku */
+    height: 40px; /* Wysokość przycisku */
+    border-radius: 50%; /* Okrągły kształt */
+    background-color: #D3D3D3; /* Tło przycisku */
+    border: 1px solid #7d7862; /* Ramka przycisku */
+    display: flex; /* Wyśrodkowanie ikony */
+    align-items: center; /* Wyśrodkowanie ikony w pionie */
+    justify-content: center; /* Wyśrodkowanie ikony w poziomie */
+    cursor: pointer; /* Wskaźnik kursora */
+    z-index: 1; /* Ustaw z-index, aby ikona była nad zdjęciem */
+}
+.profile-container {
+    display: flex;
+    flex-direction: column; /* Ustawia zawartość w kolumnie */
+    align-items: center;    /* Wyśrodkowuje w poziomie */
+    text-align: center;     /* Wyśrodkowuje tekst w pionie */
+}
