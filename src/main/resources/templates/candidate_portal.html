@@ -14,7 +14,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 </head>
 
 <body>
@@ -24,88 +23,127 @@
         <div class="text-center">
             <div class="profile-container d-flex flex-column align-items-center">
                 <!-- Kontener dla zdjęcia profilowego -->
-                <div id="photo-container" class="mb-4">
-                    <img id="profile-photo" class="rounded-circle img-fluid mb-3"
-                         src="https://via.placeholder.com/150?text=Avatar" alt="Profile Photo"
+                <div id="photo-container" class="mb-4 position-relative">
+                    <img th:src="@{candidate-portal/profilePhoto/{email}(email=${candidate.email})}"
+                         alt="Profile Photo"
+                         class="img-fluid rounded-circle"
                          style="width: 150px; height: 150px;">
-                    <!-- Przycisk edycji zdjęcia -->
-                    <input type="file" id="file" name="file" accept="image/*" class="form-control mb-3"
-                           style="display: none;" onchange="document.getElementById('photo-form').submit();">
-                    <div class="edit-photo-button" onclick="document.getElementById('file').click();"
-                         aria-label="Edit Photo">
-                        <i class="fas fa-camera"></i>
+                    <div class="edit-photo-button position-absolute" style="bottom: 10px; right: 10px;">
+                        <i class="fas fa-camera" style="cursor: pointer;" data-toggle="modal" data-target="#photoModal"></i>
                     </div>
                 </div>
             </div>
-                <!-- Informacje o kandydacie -->
-                <div th:if="${candidate != null}">
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${candidate.name + ' ' + candidate.surname}"></h5>
-                        <p class="card-text" th:text="${candidate.email}"></p>
-                    </div>
-                </div>
 
-                <!-- Jeśli kandydat jest nullem, wyświetl komunikat -->
-                <div th:if="${candidate == null}">
-                    <p>No candidate details available. Please provide a valid email.</p>
-                </div>
+            <!-- Modal do edycji zdjęcia -->
+            <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="photoModalLabel">Edit Profile Photo</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-center">
 
-                <!-- Przycisk do edycji profilu -->
-                <button type="button" class="add-job-offer-button btn btn-primary" data-toggle="modal"
-                        data-target="#editProfileModal">
-                    Edit Profile
-                </button>
+                            <img th:src="@{candidate-portal/profilePhoto/{email}(email=${candidate.email})}"
+                                 alt="Profile Photo"
+                                 class="img-fluid rounded-circle"
+                                 style="width: 150px; height: 150px;">
 
-                <!-- Modal do edycji profilu -->
-                <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog"
-                     aria-labelledby="editProfileModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form th:action="@{/updateCandidate}" method="post" id="photo-form">
-                                    <div class="input-group mb-3">
-                                        <label class="input-group-text" for="editName">Name</label>
-                                        <input type="text" id="editName" name="name" class="form-control" required>
-                                    </div>
-
-                                    <div class="input-group mb-3">
-                                        <label class="input-group-text" for="editSurname">Surname</label>
-                                        <input type="text" id="editSurname" name="surname" class="form-control"
-                                               required>
-                                    </div>
-
-                                    <div class="input-group mb-3">
-                                        <label class="input-group-text" for="editEmail">Email</label>
-                                        <input type="email" id="editEmail" name="email" class="form-control" required>
-                                    </div>
-
-                                    <div class="input-group mb-3">
-                                        <label class="input-group-text" for="editCity">City</label>
-                                        <input type="text" id="editCity" name="city" class="form-control" required>
-                                    </div>
-
-                                    <div class="input-group mb-3">
-                                        <label class="input-group-text" for="editBio">Bio</label>
-                                        <textarea id="editBio" name="bio" class="form-control" rows="4"
-                                                  required></textarea>
-                                    </div>
-
-                                    <div>
-                                        <input class="add-job-offer-button btn btn-primary" type="submit" value="Save">
-                                    </div>
-                                </form>
-                            </div>
+                            <!-- Formularz do przesyłania nowego zdjęcia -->
+                            <form th:action="@{/update-candidate-photo}" method="post" enctype="multipart/form-data">
+                                <div class="mt-2">
+                                    <label for="profilePhoto" class="change-photo-button btn btn-primary">
+                                        <i class="fas fa-pencil-alt"></i> Change Photo
+                                    </label>
+                                    <input type="file" id="profilePhoto" name="profilePhoto" style="display: none;" required>
+                                </div>
+                                <button type="submit" class="change-photo-button btn btn-primary">Upload</button>
+                            </form>
                         </div>
                     </div>
-                </div> <!-- Koniec modalu -->
-            </div> <!-- Koniec kontenera -->
-        </div>
+                </div>
+            </div>
+
+
+            <!-- Informacje o kandydacie -->
+            <div th:if="${candidate != null}">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${candidate.name + ' ' + candidate.surname}"></h5>
+                    <p class="card-text" th:text="${candidate.email}"></p>
+                    <p class="card-text" th:text="'tel. ' + ${candidate.phone}"></p>
+                </div>
+            </div>
+
+            <!-- Jeśli kandydat jest nullem, wyświetl komunikat -->
+            <div th:if="${candidate == null}">
+                <p>No candidate details available. Please provide a valid email.</p>
+            </div>
+
+            <!-- Przycisk do edycji profilu -->
+            <button type="button" class="add-job-offer-button btn btn-primary" data-toggle="modal"
+                    data-target="#editProfileModal">
+                Edit Profile
+            </button>
+
+
+            <!-- Modal do edycji profilu -->
+            <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog"
+                 aria-labelledby="editProfileModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form th:action="@{/update-candidate}" method="post" enctype="multipart/form-data">
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="editName">Name</label>
+                                    <input type="text" id="editName" name="name" class="form-control" required th:value="${candidate.name}">
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="editSurname">Surname</label>
+                                    <input type="text" id="editSurname" name="surname" class="form-control" required th:value="${candidate.surname}">
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="editEmail">Email</label>
+                                    <input type="email" id="editEmail" name="email" class="form-control" required th:value="${candidate.email}">
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="editPhone">Phone</label>
+                                    <input type="text" id="editPhone" name="phone" class="form-control" required th:value="${candidate.phone}">
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="editCity">City</label>
+                                    <input type="text" id="editCity" name="city" class="form-control" required th:value="${candidate.city}">
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="editBio">Bio</label>
+                                    <textarea id="editBio" name="bio" class="form-control" rows="4" required th:text="${candidate.bio}"></textarea>
+                                </div>
+
+                                <div>
+                                    <input class="add-job-offer-button btn btn-primary" type="submit" value="Save">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- Koniec modalu -->
+        </div> <!-- Koniec kontenera -->
+    </div>
+</div>
+
+
 
 </body>
 </html>

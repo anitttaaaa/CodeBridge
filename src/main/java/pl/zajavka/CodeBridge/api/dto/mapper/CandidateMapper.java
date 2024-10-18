@@ -9,6 +9,10 @@ public interface CandidateMapper {
 
     CandidatePortalDTO candidateToDto(Candidate candidate);
 
+    Candidate candidateToDomain(CandidatePortalDTO candidatePortalDTO);
+
+
+
 
 
 }

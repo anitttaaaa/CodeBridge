@@ -49,6 +49,7 @@ public class SecurityConfiguration  {
                 .requestMatchers("/", "/CodeBridge").permitAll()
                 .requestMatchers("/JobOffers").permitAll()
                 .requestMatchers("/candidate-portal/**").hasAnyAuthority("CANDIDATE")
+                .requestMatchers("/update-candidate-photo").hasAnyAuthority("CANDIDATE")
                 .requestMatchers("/employer-portal/**").hasAnyAuthority("EMPLOYER")
                 .and()
                 .formLogin()

@@ -1,5 +1,3 @@
-/* main settings */
-
 body {
     background-color: #CCC3B1 !important;
     display: flex !important;
@@ -148,7 +146,7 @@ body {
 }
 
 .col-md-4{
- margin-left: 0;  /* Sprawdzamy, czy nie ma zbędnych marginesów */
+ margin-left: 0;
     transform: translateX(-20px);
 }
 
@@ -166,47 +164,62 @@ body {
 }
 
 .card-title {
-    font-size: 1.5rem; /* Rozmiar czcionki imienia i nazwiska */
+    font-size: 1.5rem;
     margin-bottom: 8px;
     color: #444444;
 }
 
 .card-text {
-    font-size: 1rem; /* Rozmiar czcionki emaila */
-    color: #666; /* Kolor tekstu emaila */
+    font-size: 1rem;
+    color: #666;
 }
 #photo-container {
-    position: relative; /* Ustaw kontener jako relative */
-    width: 150px;      /* Szerokość kontenera */
-    height: 150px;     /* Wysokość kontenera */
+    position: relative;
+    width: 150px;
+    height: 150px;
 
 }
 
 #profile-photo {
-    width: 100%;       /* Wypełnij kontener */
-    height: 100%;      /* Wypełnij kontener */
-    border-radius: 50%; /* Okrągły kształt zdjęcia */
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
 
 }
 
 .edit-photo-button {
-    position: absolute; /* Pozycjonowanie względem kontenera */
-    bottom: 10px; /* Odstęp od dołu */
-    right: -15px;  /* Odstęp od prawej */
-    width: 40px;  /* Szerokość przycisku */
-    height: 40px; /* Wysokość przycisku */
-    border-radius: 50%; /* Okrągły kształt */
-    background-color: #D3D3D3; /* Tło przycisku */
-    border: 1px solid #7d7862; /* Ramka przycisku */
-    display: flex; /* Wyśrodkowanie ikony */
-    align-items: center; /* Wyśrodkowanie ikony w pionie */
-    justify-content: center; /* Wyśrodkowanie ikony w poziomie */
-    cursor: pointer; /* Wskaźnik kursora */
-    z-index: 1; /* Ustaw z-index, aby ikona była nad zdjęciem */
+    position: absolute;
+    bottom: -5px;
+    right: 0; /* Wyzeruj wartość */
+    margin-right: -15px; /* Dodaj margines w prawo */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #D3D3D3;
+    border: 1px solid #7d7862;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1;
 }
 .profile-container {
     display: flex;
-    flex-direction: column; /* Ustawia zawartość w kolumnie */
-    align-items: center;    /* Wyśrodkowuje w poziomie */
-    text-align: center;     /* Wyśrodkowuje tekst w pionie */
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
+
+.change-photo-button {
+    margin-right: 0px !important;
+    background-color: #a09b87 !important;
+    border-color: #7d7862 !important;
+    }
+
+.change-photo-button:hover {
+    background-color: #b2ad99 !important;
+    border-color: #7d7862 !important;
+}
+.change-photo-button:focus {
+    outline: none !important;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5) !important;

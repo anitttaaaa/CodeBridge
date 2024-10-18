@@ -36,5 +36,16 @@ public class CandidateEntity {
     @Column(name = "user_id")
     private Integer userId;
 
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "bio")
+    private String bio;
+
+
+    @Column(name = "profile_photo", columnDefinition="bytea")
+    private byte[] profilePhoto;
+
+
 }
 

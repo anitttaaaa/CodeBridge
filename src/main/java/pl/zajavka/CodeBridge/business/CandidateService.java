@@ -1,13 +1,20 @@
 package pl.zajavka.CodeBridge.business;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import pl.zajavka.CodeBridge.api.dto.CandidatePortalDTO;
+import pl.zajavka.CodeBridge.api.dto.mapper.CandidateMapper;
 import pl.zajavka.CodeBridge.business.dao.CandidateDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.exception.NotFoundException;
+import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateEntity;
+import pl.zajavka.CodeBridge.infrastructure.database.repository.CandidateRepository;
+import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.CandidateEntityMapper;
 import pl.zajavka.CodeBridge.infrastructure.security.CodeBridgeUserDetailsService;
 
 import java.util.Optional;
@@ -18,6 +25,12 @@ public class CandidateService {
 
     private final CandidateDAO candidateDAO;
     private final CodeBridgeUserDetailsService codeBridgeUserDetailsService;
+    @Autowired
+    private CandidateRepository candidateRepository;
+    @Autowired
+    private CandidateMapper candidateMapper;
+    @Autowired
+    private CandidateEntityMapper candidateEntityMapper;
 
     // Ta metoda wyszukuje kandydata po emailu, jego wszytskie informacje
     @Transactional
@@ -47,5 +60,40 @@ public class CandidateService {
     }
 
 
+    @Transactional
+    public void updateCandidatePhoto(Candidate candidate, Authentication authentication) {
+        // 1. Sprawdzenie uprawnień
+        String loggedInUserEmail = authentication.getName();
+
+        System.out.println("Logged in user email: " + loggedInUserEmail);
+        System.out.println("Candidate email: " + candidate.getEmail());
+
+        if (!candidate.getEmail().equals(loggedInUserEmail)) {
+            throw new RuntimeException("You do not have permission to update this candidate.");
+        }
+
+        // 2. Zapisz zaktualizowanego kandydata
+        candidateDAO.updateCandidatePhoto(candidate);
+    }
+
+    public byte[] getCandidatePhoto(String email, Authentication authentication) {
+
+        String loggedInUserEmail = authentication.getName();
+
+        if (!email.equals(loggedInUserEmail)) {
+            throw new RuntimeException("You do not have permission to view this photo.");
+        }
+
+        // Wyszukujemy kandydata po emailu
+        Candidate candidate = candidateRepository.findCandidateByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Candidate not found"));
+
+        byte[] photo = candidate.getProfilePhoto();
+        if (photo == null) {
+            throw new RuntimeException("Profile photo not available for this candidate");
+        }
+        return photo;
+
+    }
 }
 

@@ -1,6 +1,7 @@
 package pl.zajavka.CodeBridge.api.dto;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @With
 @Data
@@ -18,4 +19,5 @@ public class CandidatePortalDTO {
     private String city;
     private String bio;
     private Integer userId;
+    private byte[] profilePhoto;
 }
