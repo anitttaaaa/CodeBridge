@@ -1,8 +1,5 @@
 body {
     background-color: #CCC3B1 !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: flex-start !important;
     height: 100vh !important;
     margin: 0 !important;
 }
@@ -108,11 +105,8 @@ body {
 }
 
 /*--------------------------------------------------------------------------------------------------------*/
-/* employer-portal/new-job-offer */
+/* widok employer-portal/new-job-offer */
 
-.description-text-area{
-    margin-bottom:15px !important;
-}
 
 .add-job-offer-button{
     background-color: #a09b87!important;
@@ -139,40 +133,35 @@ body {
 .employer-new-job-offer h2 {
     font-size: 37px !important;
     text-align: center !important;
-    margin-top: 70px !important;
-    margin-bottom: 45px !important;
-    padding-top: 40px !important;
+    margin-top: 20px !important;
+    margin-bottom: 25px !important;
+    padding-top: 0px !important;
 
 }
-
-.col-md-4{
- margin-left: 0;
-    transform: translateX(-20px);
+.new-job-offer-card {
+    width: 40%; /* 80% szerokości rodzica */
+    max-width: 1200px; /* Maksymalna szerokość */
+    background-color: #DAD7D2;
+    margin: 50px auto; /* Wyśrodkowanie w poziomie i dodanie odstępu od góry */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    border-radius: 15px;
 }
+
+.new-job-offer-page-container {
+    min-height: 100vh; /* Wysokość całej strony */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #CCC3B1;
+}
+
 
 
 /*--------------------------------------------------------------------------------------------------------*/
 /* widok portalu kandydata */
 
 
-.card {
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 16px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.card-title {
-    font-size: 1.5rem;
-    margin-bottom: 8px;
-    color: #444444;
-}
-
-.card-text {
-    font-size: 1rem;
-    color: #666;
-}
 #photo-container {
     position: relative;
     width: 150px;
@@ -203,18 +192,24 @@ body {
     cursor: pointer;
     z-index: 1;
 }
-.profile-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
 
 .change-photo-button {
-    margin-right: 0px !important;
+    margin: 0px !important;
     background-color: #a09b87 !important;
     border-color: #7d7862 !important;
-    }
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    height: 40px; /* Consistent height */
+    padding: 0; /* Remove padding */
+    line-height: 0; /* Avoid line height affecting alignment */
+    vertical-align: middle; /* Align icon vertically */
+}
+
+
+.change-photo-button i {
+    vertical-align: middle; /* Align icon vertically */
+}
 
 .change-photo-button:hover {
     background-color: #b2ad99 !important;
@@ -223,3 +218,36 @@ body {
 .change-photo-button:focus {
     outline: none !important;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5) !important;
+
+}
+
+.candidate-card {
+    width: 90%; /* 80% szerokości rodzica */
+    max-width: 1200px; /* Maksymalna szerokość */
+    background-color: #DAD7D2;
+    margin: 50px auto; /* Wyśrodkowanie w poziomie i dodanie odstępu od góry */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+
+}
+
+.candidate-page-container {
+    min-height: 80vh; /* Wysokość całej strony */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #CCC3B1;
+}
+.mt-2 {
+    align-items: center; /* Wyrównanie w pionie */
+}
+
+.icon-size {
+    font-size: 15px; /* Adjust size as necessary */
+    line-height: 1; /* Prevent line height from shifting the icon */
+    margin: 0; /* Reset margins */
+}
+
+
+

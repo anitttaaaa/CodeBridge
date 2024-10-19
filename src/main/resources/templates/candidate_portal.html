@@ -18,131 +18,158 @@
 
 <body>
 
-<div layout:fragment="candidateContent">
-    <div class="container mt-5">
-        <div class="text-center">
-            <div class="profile-container d-flex flex-column align-items-center">
-                <!-- Kontener dla zdjęcia profilowego -->
-                <div id="photo-container" class="mb-4 position-relative">
-                    <img th:src="@{candidate-portal/profilePhoto/{email}(email=${candidate.email})}"
-                         alt="Profile Photo"
-                         class="img-fluid rounded-circle"
-                         style="width: 150px; height: 150px;">
-                    <div class="edit-photo-button position-absolute" style="bottom: 10px; right: 10px;">
-                        <i class="fas fa-camera" style="cursor: pointer;" data-toggle="modal" data-target="#photoModal"></i>
-                    </div>
+<div layout:fragment="candidateContent" class="candidate-page-container">
+    <div class="candidate-card">
+        <div class="card-body">
+
+            <!-- Kontener dla zdjęcia profilowego -->
+            <div id="photo-container">
+                <img th:src="@{candidate-portal/profilePhoto/{email}(email=${candidate.email})}"
+                     alt="Profile Photo"
+                     class="img-fluid rounded-circle"
+                     style="width: 150px; height: 150px;">
+                <div class="edit-photo-button position-absolute" style="bottom: 10px; right: 10px;">
+                    <i class="fas fa-camera" style="cursor: pointer;" data-toggle="modal"
+                       data-target="#photoModal"></i>
                 </div>
             </div>
+        </div>
 
-            <!-- Modal do edycji zdjęcia -->
-            <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="photoModalLabel">Edit Profile Photo</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body text-center">
+        <!-- Modal do edycji zdjęcia -->
+        <div class="modal fade" id="photoModal" tabindex="-1" role="dialog"
+             aria-labelledby="photoModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="photoModalLabel">Edit Profile Photo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
 
-                            <img th:src="@{candidate-portal/profilePhoto/{email}(email=${candidate.email})}"
-                                 alt="Profile Photo"
-                                 class="img-fluid rounded-circle"
-                                 style="width: 150px; height: 150px;">
+                        <img th:src="@{candidate-portal/profilePhoto/{email}(email=${candidate.email})}"
+                             alt="Profile Photo"
+                             class="img-fluid rounded-circle"
+                             style="width: 150px; height: 150px;">
 
-                            <!-- Formularz do przesyłania nowego zdjęcia -->
-                            <form th:action="@{/update-candidate-photo}" method="post" enctype="multipart/form-data">
-                                <div class="mt-2">
+                        <!-- Formularz do przesyłania nowego zdjęcia -->
+                        <form th:action="@{/update-candidate-photo}" method="post"
+                              enctype="multipart/form-data">
+                            <div class="mt-2 ">
+                                <div>
                                     <label for="profilePhoto" class="change-photo-button btn btn-primary">
-                                        <i class="fas fa-pencil-alt"></i> Change Photo
+                                        <i class="fas fa-pencil-alt icon-size"></i>
                                     </label>
                                     <input type="file" id="profilePhoto" name="profilePhoto" style="display: none;" required>
+
+                                    <button type="submit" class="change-photo-button btn btn-primary">
+                                        <i class="fas fa-trash icon-size"></i>
+                                    </button>
+
                                 </div>
-                                <button type="submit" class="change-photo-button btn btn-primary">Upload</button>
-                            </form>
-                        </div>
+                                <div style="height: 15px;"></div>
+                                <button type="submit" class="change-photo-button btn btn-primary">Save changes
+                                </button>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
 
 
-            <!-- Informacje o kandydacie -->
-            <div th:if="${candidate != null}">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${candidate.name + ' ' + candidate.surname}"></h5>
-                    <p class="card-text" th:text="${candidate.email}"></p>
-                    <p class="card-text" th:text="'tel. ' + ${candidate.phone}"></p>
-                </div>
+        <!-- Informacje o kandydacie -->
+        <div th:if="${candidate != null}">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${candidate.name + ' ' + candidate.surname}"></h5>
+                <p class="card-text">
+                    <i class="fas fa-envelope"></i> <!-- Ikona e-maila -->
+                    <span th:text="${candidate.email}"></span>
+                </p>
+                <p class="card-text">
+                    <i class="fas fa-phone"></i> <!-- Ikona telefonu -->
+                    <span th:text="'tel. ' + ${candidate.phone}"></span>
+                </p>
             </div>
+        </div>
 
-            <!-- Jeśli kandydat jest nullem, wyświetl komunikat -->
-            <div th:if="${candidate == null}">
-                <p>No candidate details available. Please provide a valid email.</p>
-            </div>
+        <!-- Jeśli kandydat jest nullem, wyświetl komunikat -->
+        <div th:if="${candidate == null}">
+            <p>No candidate details available. Please provide a valid email.</p>
+        </div>
 
-            <!-- Przycisk do edycji profilu -->
-            <button type="button" class="add-job-offer-button btn btn-primary" data-toggle="modal"
-                    data-target="#editProfileModal">
-                Edit Profile
-            </button>
+        <!-- Przycisk do edycji profilu -->
+        <button type="button" class="add-job-offer-button btn btn-primary" data-toggle="modal"
+                data-target="#editProfileModal">
+            <i class="fas fa-pencil-alt"></i> Edit Profile
+        </button>
 
 
-            <!-- Modal do edycji profilu -->
-            <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog"
-                 aria-labelledby="editProfileModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form th:action="@{/update-candidate}" method="post" enctype="multipart/form-data">
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text" for="editName">Name</label>
-                                    <input type="text" id="editName" name="name" class="form-control" required th:value="${candidate.name}">
-                                </div>
+        <!-- Modal do edycji profilu -->
+        <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog"
+             aria-labelledby="editProfileModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form th:action="@{/update-candidate}" method="post" enctype="multipart/form-data">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="editName">Name</label>
+                                <input type="text" id="editName" name="name" class="form-control" required
+                                       th:value="${candidate.name}">
+                            </div>
 
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text" for="editSurname">Surname</label>
-                                    <input type="text" id="editSurname" name="surname" class="form-control" required th:value="${candidate.surname}">
-                                </div>
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="editSurname">Surname</label>
+                                <input type="text" id="editSurname" name="surname" class="form-control"
+                                       required
+                                       th:value="${candidate.surname}">
+                            </div>
 
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text" for="editEmail">Email</label>
-                                    <input type="email" id="editEmail" name="email" class="form-control" required th:value="${candidate.email}">
-                                </div>
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="editEmail">Email</label>
+                                <input type="email" id="editEmail" name="email" class="form-control"
+                                       required
+                                       th:value="${candidate.email}">
+                            </div>
 
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text" for="editPhone">Phone</label>
-                                    <input type="text" id="editPhone" name="phone" class="form-control" required th:value="${candidate.phone}">
-                                </div>
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="editPhone">Phone</label>
+                                <input type="text" id="editPhone" name="phone" class="form-control" required
+                                       th:value="${candidate.phone}">
+                            </div>
 
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text" for="editCity">City</label>
-                                    <input type="text" id="editCity" name="city" class="form-control" required th:value="${candidate.city}">
-                                </div>
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="editCity">City</label>
+                                <input type="text" id="editCity" name="city" class="form-control" required
+                                       th:value="${candidate.city}">
+                            </div>
 
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text" for="editBio">Bio</label>
-                                    <textarea id="editBio" name="bio" class="form-control" rows="4" required th:text="${candidate.bio}"></textarea>
-                                </div>
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="editBio">Bio</label>
+                                <textarea id="editBio" name="bio" class="form-control" rows="4" required
+                                          th:text="${candidate.bio}"></textarea>
+                            </div>
 
-                                <div>
-                                    <input class="add-job-offer-button btn btn-primary" type="submit" value="Save">
-                                </div>
-                            </form>
-                        </div>
+                            <div>
+                                <input class="add-job-offer-button btn btn-primary" type="submit"
+                                       value="Save changes">
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </div> <!-- Koniec modalu -->
-        </div> <!-- Koniec kontenera -->
+            </div>
+        </div> <!-- Koniec modalu -->
     </div>
 </div>
-
 
 
 </body>

@@ -10,468 +10,118 @@
 </head>
 <body>
 
-<div layout:fragment="employerContent">
-    <div class="employer-new-job-offer">
-        <h2>ADD A NEW JOB OFFER </h2>
+<div layout:fragment="employerContent" class="new-job-offer-page-container">
+    <div class="new-job-offer-card">
+        <div class="employer-new-job-offer">
+            <h2>ADD A NEW JOB OFFER </h2>
+        </div>
+
+        <h6>Details</h6>
+        <form action="#" th:action="@{/employer-portal/new-job-offer/add}" method="POST"
+              th:object="${jobOfferAddRequestDTO}">
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Job Offer Title</span>
+                <input type="text" class="form-control" th:field="*{jobOfferTitle}" placeholder="Java Developer"
+                       aria-label="Username"
+                       aria-describedby="basic-addon1" required>
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Description</span>
+                <textarea class="form-control" th:field="*{description}" aria-label="With textarea" required></textarea>
+            </div>
+            <h6>Tech Specializations</h6>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="techSpecializationSelect">Tech Specialization</label>
+                <select class="form-select" id="techSpecializationSelect" th:field="*{techSpecialization}">
+                    <option value="" disabled selected>Choose...</option>
+                    <option th:each="techSpecialization : ${T(pl.zajavka.CodeBridge.api.view.TechSpecializationsEnum).values()}"
+                            th:value="${techSpecialization}" th:text="${techSpecialization}">
+                    </option>
+                </select>
+            </div>
+            <h6>Work Type</h6>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="workTypeSelect">Work Type</label>
+                <select class="form-select" id="workTypeSelect" th:field="*{workType}">
+                    <option value="" disabled selected>Choose...</option>
+                    <option th:each="workType : ${T(pl.zajavka.CodeBridge.api.view.WorkTypesEnum).values()}"
+                            th:value="${workType}" th:text="${workType}">
+                    </option>
+                </select>
+            </div>
+
+            <h6>Cities</h6>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="citySelect">City</label>
+                <select class="form-select" id="citySelect" th:field="*{city}">
+                    <option value="" disabled selected>Choose...</option>
+                    <option th:each="city : ${T(pl.zajavka.CodeBridge.api.view.CitiesEnum).values()}"
+                            th:value="${city}" th:text="${city}">
+                    </option>
+                </select>
+            </div>
+
+            <h6>Experience</h6>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="experienceSelect">Experience</label>
+                <select class="form-select" id="experienceSelect" th:field="*{experience}">
+                    <option value="" disabled selected>Choose...</option>
+                    <option th:each="experience : ${T(pl.zajavka.CodeBridge.api.view.ExperiencesEnum).values()}"
+                            th:value="${experience}" th:text="${experience}">
+                    </option>
+                </select>
+            </div>
+
+            <h6>Salary</h6>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="salarySelect">Salary</label>
+
+                <select class="form-select" id="salarySelect" th:field="*{salary}">
+                    <option value="" disabled selected>Choose...</option>
+                    <option th:each="salary : ${T(pl.zajavka.CodeBridge.api.view.SalaryRangeEnum).values()}"
+                            th:value="${salary.name}" th:text="${salary.getRange()}">
+                    </option>
+                </select>
+            </div>
+
+
+            <h6>Must have skills</h6>
+            <div class="input-group mb-3" th:each="skill : ${T(pl.zajavka.CodeBridge.api.view.SkillsEnum).values()}">
+                <div class="input-group-text">
+                    <input class="form-check-input mt-0" type="checkbox"
+                           th:field="*{mustHaveSkills}"
+                           th:value="${skill.getSkill()}"
+                           id="must_have_skill_${skill.name()}"/>
+                </div>
+                <label class="form-control" aria-label="Text input with checkbox"
+                       th:for="'skill_' + ${skill.name()}"
+                       th:text="${skill.getSkill}"></label>
+
+            </div>
+
+            <h6>Nice to have skills</h6>
+            <div class="input-group mb-3" th:each="skill : ${T(pl.zajavka.CodeBridge.api.view.SkillsEnum).values()}">
+                <div class="input-group-text">
+                    <input class="form-check-input mt-0" type="checkbox"
+                           th:field="*{niceToHaveSkills}"
+                           th:value="${skill.getSkill()}"
+                           id="nice_to_have_skill_${skill.name()}"/>
+                </div>
+                <label class="form-control" aria-label="Text input with checkbox"
+                       th:for="'skill_' + ${skill.name()}"
+                       th:text="${skill.getSkill}"></label>
+
+            </div>
+            <div>
+                <input class="add-job-offer-button btn btn-primary" type="submit" value="Add Job Offer">
+            </div>
+
+        </form>
     </div>
-
-    <h6>Details</h6>
-    <form action="#" th:action="@{/employer-portal/new-job-offer/add}" method="POST"
-          th:object="${jobOfferAddRequestDTO}">
-
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">Job Offer Title</span>
-            <input type="text" class="form-control" th:field="*{jobOfferTitle}" placeholder="Java Developer"
-                   aria-label="Username"
-                   aria-describedby="basic-addon1">
-        </div>
-
-        <div class="input-group description-text-area">
-            <span class="input-group-text">Description</span>
-            <textarea class="form-control" th:field="*{description}" aria-label="With textarea"></textarea>
-        </div>
-        <h6>Tech Specializations</h6>
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="techSpecializationSelect">Tech Specialization</label>
-            <select class="form-select" id="techSpecializationSelect" th:field="*{techSpecialization}">
-                <option value="" disabled selected>Choose...</option>
-                <option th:each="techSpecialization : ${T(pl.zajavka.CodeBridge.api.view.TechSpecializationsEnum).values()}"
-                        th:value="${techSpecialization}" th:text="${techSpecialization}">
-                </option>
-            </select>
-        </div>
-        <h6>Work Type</h6>
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="workTypeSelect">Work Type</label>
-            <select class="form-select" id="workTypeSelect" th:field="*{workType}">
-                <option value="" disabled selected>Choose...</option>
-                <option th:each="workType : ${T(pl.zajavka.CodeBridge.api.view.WorkTypesEnum).values()}"
-                        th:value="${workType}" th:text="${workType}">
-                </option>
-            </select>
-        </div>
-
-        <h6>Cities</h6>
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="citySelect">City</label>
-            <select class="form-select" id="citySelect" th:field="*{city}">
-                <option value="" disabled selected>Choose...</option>
-                <option th:each="city : ${T(pl.zajavka.CodeBridge.api.view.CitiesEnum).values()}"
-                        th:value="${city}" th:text="${city}">
-                </option>
-            </select>
-        </div>
-
-        <h6>Experience</h6>
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="experienceSelect">Experience</label>
-            <select class="form-select" id="experienceSelect" th:field="*{experience}">
-                <option value="" disabled selected>Choose...</option>
-                <option th:each="experience : ${T(pl.zajavka.CodeBridge.api.view.ExperiencesEnum).values()}"
-                        th:value="${experience}" th:text="${experience}">
-                </option>
-            </select>
-        </div>
-
-        <h6>Salary</h6>
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="salarySelect">Salary</label>
-
-            <select class="form-select" id="salarySelect" th:field="*{salary}">
-                <option value="" disabled selected>Choose...</option>
-                <option th:each="salary : ${T(pl.zajavka.CodeBridge.api.view.SalaryRangeEnum).values()}"
-                        th:value="${salary.name}" th:text="${salary.getRange()}">
-                </option>
-            </select>
-        </div>
-
-
-        <h6>Must have skills</h6>
-        <div class="input-group mb-3" th:each="skill : ${T(pl.zajavka.CodeBridge.api.view.SkillsEnum).values()}">
-            <div class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox"
-                       th:field="*{mustHaveSkills}"
-                       th:value="${skill.getSkill()}"
-                       id="must_have_skill_${skill.name()}"/>
-            </div>
-            <label class="form-control" aria-label="Text input with checkbox"
-                   th:for="'skill_' + ${skill.name()}"
-                   th:text="${skill.getSkill}"></label>
-
-        </div>
-
-        <h6>Nice to have skills</h6>
-        <div class="input-group mb-3" th:each="skill : ${T(pl.zajavka.CodeBridge.api.view.SkillsEnum).values()}">
-            <div class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox"
-                       th:field="*{niceToHaveSkills}"
-                       th:value="${skill.getSkill()}"
-                       id="nice_to_have_skill_${skill.name()}"/>
-            </div>
-            <label class="form-control" aria-label="Text input with checkbox"
-                   th:for="'skill_' + ${skill.name()}"
-                   th:text="${skill.getSkill}"></label>
-
-        </div>
-
-
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="Java">-->
-        <!--        </div>-->
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="Python">-->
-        <!--        </div>-->
-
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox"-->
-        <!--                   value="Visual Studio Code">-->
-        <!--        </div>-->
-
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="WebStorm">-->
-        <!--        </div>-->
-
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox"-->
-        <!--                   value="Browser Developer Tools">-->
-        <!--        </div>-->
-
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="JavaScript">-->
-        <!--        </div>-->
-
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="jQuery">-->
-        <!--        </div>-->
-
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="HTML">-->
-        <!--        </div>-->
-
-
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="CSS">-->
-        <!--        </div>-->
-
-
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="Spring">-->
-        <!--        </div>-->
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="Hibernate">-->
-        <!--        </div>-->
-
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="REST API">-->
-        <!--        </div>-->
-
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="English">-->
-        <!--        </div>-->
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="German">-->
-        <!--        </div>-->
-
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="Gradle">-->
-        <!--        </div>-->
-
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="Maven">-->
-        <!--        </div>-->
-
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="Git">-->
-        <!--        </div>-->
-
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="Docker">-->
-        <!--        </div>-->
-
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="React">-->
-        <!--        </div>-->
-
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="PHP">-->
-        <!--        </div>-->
-
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="RUBY">-->
-        <!--        </div>-->
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="KOTLIN">-->
-        <!--        </div>-->
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="TypeScript">-->
-        <!--        </div>-->
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="Angular">-->
-        <!--        </div>-->
-        <!--        <div class="input-group mb-3">-->
-        <!--            <div class="input-group-text">-->
-        <!--                <input class="form-check-input mt-0" type="checkbox" value=""-->
-        <!--                       aria-label="Checkbox for following text input">-->
-        <!--            </div>-->
-        <!--            <input type="text" class="form-control" aria-label="Text input with checkbox" value="Bootstrap">-->
-        <!--        </div>-->
-
-        <div>
-            <input class="add-job-offer-button btn btn-primary" type="submit" value="Add Job Offer">
-        </div>
-    </form>
 </div>
 </body>
 </html>
 
-
-<!--            <h6>Nice to have</h6>-->
-<!--            <div class="input-group mb-3">-->
-<!--                <div class="input-group-text">-->
-<!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
-<!--                           aria-label="Checkbox for following text input">-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Java">-->
-<!--            </div>-->
-<!--            <div class="input-group mb-3">-->
-<!--                <div class="input-group-text">-->
-<!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
-<!--                           aria-label="Checkbox for following text input">-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Python">-->
-<!--            </div>-->
-<!--            <div class="input-group mb-3">-->
-<!--                <div class="input-group-text">-->
-<!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
-<!--                           aria-label="Checkbox for following text input">-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" aria-label="Text input with checkbox"-->
-<!--                       value="Visual Studio Code">-->
-<!--            </div>-->
-
-<!--            <div class="input-group mb-3">-->
-<!--                <div class="input-group-text">-->
-<!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
-<!--                           aria-label="Checkbox for following text input">-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="WebStorm">-->
-<!--            </div>-->
-
-<!--            <div class="input-group mb-3">-->
-<!--                <div class="input-group-text">-->
-<!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
-<!--                           aria-label="Checkbox for following text input">-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" aria-label="Text input with checkbox"-->
-<!--                       value="Browser Developer Tools">-->
-<!--            </div>-->
-
-<!--            <div class="input-group mb-3">-->
-<!--                <div class="input-group-text">-->
-<!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
-<!--                           aria-label="Checkbox for following text input">-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="JavaScript">-->
-<!--            </div>-->
-
-<!--            <div class="input-group mb-3">-->
-<!--                <div class="input-group-text">-->
-<!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
-<!--                           aria-label="Checkbox for following text input">-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="jQuery">-->
-<!--            </div>-->
-
-<!--            <div class="input-group mb-3">-->
-<!--                <div class="input-group-text">-->
-<!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
-<!--                           aria-label="Checkbox for following text input">-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="HTML">-->
-<!--            </div>-->
-
-
-<!--            <div class="input-group mb-3">-->
-<!--                <div class="input-group-text">-->
-<!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
-<!--                           aria-label="Checkbox for following text input">-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="CSS">-->
-<!--            </div>-->
-<!--            <div class="input-group mb-3">-->
-<!--                <div class="input-group-text">-->
-<!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
-<!--                           aria-label="Checkbox for following text input">-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Spring">-->
-<!--            </div>-->
-<!--            <div class="input-group mb-3">-->
-<!--                <div class="input-group-text">-->
-<!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
-<!--                           aria-label="Checkbox for following text input">-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Hibernate">-->
-<!--            </div>-->
-
-<!--            <div class="input-group mb-3">-->
-<!--                <div class="input-group-text">-->
-<!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
-<!--                           aria-label="Checkbox for following text input">-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="REST API">-->
-<!--            </div>-->
-
-<!--            <div class="input-group mb-3">-->
-<!--                <div class="input-group-text">-->
-<!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
-<!--                           aria-label="Checkbox for following text input">-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="English">-->
-<!--            </div>-->
-
-<!--            <div class="input-group mb-3">-->
-<!--                <div class="input-group-text">-->
-<!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
-<!--                           aria-label="Checkbox for following text input">-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Gradle">-->
-<!--            </div>-->
-
-<!--            <div class="input-group mb-3">-->
-<!--                <div class="input-group-text">-->
-<!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
-<!--                           aria-label="Checkbox for following text input">-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Maven">-->
-<!--            </div>-->
-
-<!--            <div class="input-group mb-3">-->
-<!--                <div class="input-group-text">-->
-<!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
-<!--                           aria-label="Checkbox for following text input">-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Git">-->
-<!--            </div>-->
-
-<!--            <div class="input-group mb-3">-->
-<!--                <div class="input-group-text">-->
-<!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
-<!--                           aria-label="Checkbox for following text input">-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Docker">-->
-<!--            </div>-->
-
-<!--            <div class="input-group mb-3">-->
-<!--                <div class="input-group-text">-->
-<!--                    <input class="form-check-input mt-0" type="checkbox" value=""-->
-<!--                           aria-label="Checkbox for following text input">-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" aria-label="Text input with checkbox" value="React">-->
-<!--            </div>-->
-
-
-<!--            <div class="mb-3">-->
-<!--                <label for="exampleFormControlInput7" class="form-label">Posted date</label>-->
-<!--                <input type="text" class="title" id="exampleFormControlInput7" placeholder="15.07.2024">-->
-<!--            </div>-->
-<!--            <div class="mb-3">-->
-<!--                <label for="exampleFormControlInput8" class="form-label">Expiry date</label>-->
-<!--                <input type="text" class="title" id="exampleFormControlInput8" placeholder="30.08.2024">-->
-<!--            </div>-->
 
