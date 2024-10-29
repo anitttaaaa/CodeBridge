@@ -2,10 +2,13 @@ package pl.zajavka.CodeBridge.business;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 import pl.zajavka.CodeBridge.api.dto.CandidatePortalDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.CandidateMapper;
@@ -17,6 +20,9 @@ import pl.zajavka.CodeBridge.infrastructure.database.repository.CandidateReposit
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.CandidateEntityMapper;
 import pl.zajavka.CodeBridge.infrastructure.security.CodeBridgeUserDetailsService;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Optional;
 
 @Service
@@ -25,6 +31,9 @@ public class CandidateService {
 
     private final CandidateDAO candidateDAO;
     private final CodeBridgeUserDetailsService codeBridgeUserDetailsService;
+
+    private final ResourceLoader resourceLoader;
+
     @Autowired
     private CandidateRepository candidateRepository;
     @Autowired
@@ -90,10 +99,15 @@ public class CandidateService {
 
         byte[] photo = candidate.getProfilePhoto();
         if (photo == null) {
-            throw new RuntimeException("Profile photo not available for this candidate");
+            try {
+               File file= new File("C:/Users/anita/IdeaProjects/CodeBridge/src/main/resources/static/images/avatar.PNG");
+
+                return Files.readAllBytes(file.toPath());
+            } catch (IOException e) {
+                throw new RuntimeException("Default avatar not found", e);
+            }
         }
         return photo;
-
     }
 }
 

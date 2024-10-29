@@ -36,9 +36,7 @@
         </div>
 
         <!-- Modal do edycji zdjęcia -->
-        <div class="modal fade" id="photoModal" tabindex="-1" role="dialog"
-             aria-labelledby="photoModalLabel"
-             aria-hidden="true">
+        <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -48,32 +46,29 @@
                         </button>
                     </div>
                     <div class="modal-body text-center">
-
-                        <img th:src="@{candidate-portal/profilePhoto/{email}(email=${candidate.email})}"
-                             alt="Profile Photo"
-                             class="img-fluid rounded-circle"
-                             style="width: 150px; height: 150px;">
+                        <img th:src="@{candidate-portal/profilePhoto/{email}(email=${candidate.email})}" alt="Profile Photo" class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
 
                         <!-- Formularz do przesyłania nowego zdjęcia -->
-                        <form th:action="@{/update-candidate-photo}" method="post"
-                              enctype="multipart/form-data">
-                            <div class="mt-2 ">
-                                <div>
+                        <form th:action="@{/update-candidate-photo}" method="post" enctype="multipart/form-data">
+                            <div class="mt-2 d-flex justify-content-center align-items-center"> <!-- Użyj justify-content-center do wyśrodkowania -->
+                                <div class="me-2">
                                     <label for="profilePhoto" class="change-photo-button btn btn-primary">
                                         <i class="fas fa-pencil-alt icon-size"></i>
                                     </label>
                                     <input type="file" id="profilePhoto" name="profilePhoto" style="display: none;" required>
-
-                                    <button type="submit" class="change-photo-button btn btn-primary">
-                                        <i class="fas fa-trash icon-size"></i>
-                                    </button>
-
                                 </div>
-                                <div style="height: 15px;"></div>
-                                <button type="submit" class="change-photo-button btn btn-primary">Save changes
-                                </button>
+                                <button type="submit" class="change-photo-button btn btn-primary">Save changes</button>
                             </div>
+                        </form>
 
+
+
+                        <!-- Formularz do usuwania zdjęcia -->
+                        <form th:action="@{/delete-candidate-photo}" method="post">
+                            <div style="height: 15px;"></div>
+                            <button type="submit" class="change-photo-button btn btn-danger">
+                                <i class="fas fa-trash icon-size"></i>
+                            </button>
                         </form>
                     </div>
                 </div>

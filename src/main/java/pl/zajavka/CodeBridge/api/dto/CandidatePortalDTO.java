@@ -19,5 +19,7 @@ public class CandidatePortalDTO {
     private String city;
     private String bio;
     private Integer userId;
+
     private byte[] profilePhoto;
+
 }

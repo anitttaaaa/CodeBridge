@@ -45,7 +45,7 @@ public class SecurityConfiguration  {
                 .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/webjars/**")).permitAll()
-                .requestMatchers("/login", "/error","images/logo.png").permitAll()
+                .requestMatchers("/login", "/error","/images/**").permitAll()
                 .requestMatchers("/", "/CodeBridge").permitAll()
                 .requestMatchers("/JobOffers").permitAll()
                 .requestMatchers("/candidate-portal/**").hasAnyAuthority("CANDIDATE")
