@@ -18,4 +18,6 @@ public class Candidate {
     String city;
     String bio;
     byte[] profilePhoto;
+
+
 }

@@ -33,11 +33,9 @@ public class CandidateRepository implements CandidateDAO {
 
     }
 
-    public void updateCandidatePhoto(Candidate candidate) {
+    public void updateCandidate(Candidate candidate) {
         CandidateEntity candidateEntity = candidateEntityMapper.mapToEntity(candidate);
-
-        System.out.println("Preparing to save profilePhoto for candidate with email: " + candidateEntity.getEmail());
-
+        System.out.println("correctly done");
         candidateJpaRepository.saveAndFlush(candidateEntity);
     }
 }

@@ -24,19 +24,25 @@
 
             <!-- Kontener dla zdjęcia profilowego -->
             <div id="photo-container">
-                <img th:src="@{candidate-portal/profilePhoto/{email}(email=${candidate.email})}"
+                <img th:if="${candidate.profilePhoto != null}"
+                     th:src="@{candidate-portal/profilePhoto/{email}(email=${candidate.email})}"
                      alt="Profile Photo"
                      class="img-fluid rounded-circle"
                      style="width: 150px; height: 150px;">
+                <img th:if="${candidate.profilePhoto == null}"
+                     th:src="@{/images/avatar.png}"
+                     alt="Default Avatar"
+                     class="img-fluid rounded-circle"
+                     style="width: 150px; height: 150px;"/>
                 <div class="edit-photo-button position-absolute" style="bottom: 10px; right: 10px;">
                     <i class="fas fa-camera" style="cursor: pointer;" data-toggle="modal"
                        data-target="#photoModal"></i>
                 </div>
             </div>
         </div>
-
-        <!-- Modal do edycji zdjęcia -->
-        <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel" aria-hidden="true">
+        <!-- Główne Okno Modal do edycji zdjęcia profilowego -->
+        <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -46,35 +52,63 @@
                         </button>
                     </div>
                     <div class="modal-body text-center">
-                        <img th:src="@{candidate-portal/profilePhoto/{email}(email=${candidate.email})}" alt="Profile Photo" class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
+                        <!-- Profile Photo -->
+                        <img th:if="${candidate.profilePhoto != null}"
+                             th:src="@{candidate-portal/profilePhoto/{email}(email=${candidate.email})}"
+                             alt="Profile Photo"
+                             class="img-fluid rounded-circle"
+                             style="width: 150px; height: 150px;">
+                        <img th:if="${candidate.profilePhoto == null}"
+                             th:src="@{/images/avatar.png}"
+                             alt="Default Avatar"
+                             class="img-fluid rounded-circle"
+                             style="width: 150px; height: 150px;"/>
 
-                        <!-- Formularz do przesyłania nowego zdjęcia -->
-                        <form th:action="@{/update-candidate-photo}" method="post" enctype="multipart/form-data">
-                            <div class="mt-2 d-flex justify-content-center align-items-center"> <!-- Użyj justify-content-center do wyśrodkowania -->
-                                <div class="me-2">
-                                    <label for="profilePhoto" class="change-photo-button btn btn-primary">
-                                        <i class="fas fa-pencil-alt icon-size"></i>
-                                    </label>
-                                    <input type="file" id="profilePhoto" name="profilePhoto" style="display: none;" required>
-                                </div>
-                                <button type="submit" class="change-photo-button btn btn-primary">Save changes</button>
-                            </div>
-                        </form>
-
-
-
-                        <!-- Formularz do usuwania zdjęcia -->
-                        <form th:action="@{/delete-candidate-photo}" method="post">
-                            <div style="height: 15px;"></div>
-                            <button type="submit" class="change-photo-button btn btn-danger">
-                                <i class="fas fa-trash icon-size"></i>
+                        <!-- Centered buttons below the photo -->
+                        <div class="d-flex flex-column align-items-center mt-3">
+                            <!-- Change Photo Button -->
+                            <button type="button" class="change-photo-button btn btn-danger mb-2" data-toggle="modal"
+                                    data-target="#changePhotoModal" data-dismiss="modal">
+                                <i class="fas fa-pencil-alt"></i> Change Photo
                             </button>
-                        </form>
+                            <!-- Delete Photo Form -->
+                            <form th:action="@{/candidate-portal/delete-candidate-photo/{email}}"
+                                  th:method="DELETE">
+                                <button type="submit" class="change-photo-button btn btn-danger">
+                                    <i class="fas fa-trash icon-size"></i> Delete Photo
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Drugie Okno Modal do przesyłania nowego zdjęcia -->
+        <div class="modal fade" id="changePhotoModal" tabindex="-1" role="dialog"
+             aria-labelledby="changePhotoModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="changePhotoModalLabel">Choose new Photo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Formularz do przesyłania nowego zdjęcia -->
+                        <form th:action="@{/candidate-portal/update-candidate-photo}" method="post"
+                              enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="profilePhoto">Choose Photo:</label>
+                                <input type="file" id="profilePhoto" name="profilePhoto" class="form-control" required>
+                            </div>
+                            <button type="submit" class="change-photo-button btn btn-danger mb-2">Save changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Informacje o kandydacie -->
         <div th:if="${candidate != null}">
@@ -164,6 +198,12 @@
             </div>
         </div> <!-- Koniec modalu -->
     </div>
+</div>
+</div>
+</div>
+
+
+</div>
 </div>
 
 
