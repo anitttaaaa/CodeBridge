@@ -15,8 +15,8 @@ public class Candidate {
     String email;
     String phone;
     Integer userId;
-    String city;
-    String bio;
+    String linkedIn;
+    String gitHub;
     byte[] profilePhoto;
 
 

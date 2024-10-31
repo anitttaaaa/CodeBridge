@@ -23,7 +23,7 @@ import java.util.Objects;
 public class CandidatePortalController {
 
     private static final String CANDIDATE_PORTAL = "/candidate-portal";
-    private static final String UPDATE_CANDIDATE_ALL_DETAILS = "/candidate-portal/update-candidate";
+    private static final String UPDATE_CANDIDATE_ALL_DETAILS = "/candidate-portal/update-candidate-all-details";
     private static final String UPDATE_CANDIDATE_PHOTO = "/candidate-portal/update-candidate-photo";
     private static final String DELETE_CANDIDATE_PHOTO = "/candidate-portal/delete-candidate-photo/{email}";
     private static final String CANDIDATE_PORTAL_PROFILE_PHOTO_DISPLAY = "/candidate-portal/profilePhoto/{email}";
@@ -50,9 +50,13 @@ public class CandidatePortalController {
                 .surname(candidate.getSurname())
                 .email(candidate.getEmail())
                 .phone(candidate.getPhone())
+                .linkedIn(candidate.getLinkedIn())
+                .gitHub(candidate.getGitHub())
                 .profilePhoto(candidate.getProfilePhoto())
                 .build();
         model.addAttribute("candidate", candidateDTO);
+
+        System.out.println(candidate.getName() + candidate.getSurname() + candidate.getLinkedIn());
 
         return "candidate_portal";
     }
@@ -88,6 +92,29 @@ public class CandidatePortalController {
             candidate = candidate.withProfilePhoto(profilePhotoData);
             candidateService.updateCandidate(candidate, authentication);
         }
+
+        return "redirect:/candidate-portal";
+    }
+
+    @PostMapping(UPDATE_CANDIDATE_ALL_DETAILS)
+    public String updateCandidateAllDetails (
+            @RequestParam("name") String name,
+            @RequestParam("surname") String surname,
+            @RequestParam("email") String email,
+            @RequestParam("phone") String phone,
+            @RequestParam("linkedIn") String linkedIn,
+            @RequestParam("gitHub") String gitHub,
+            Authentication authentication
+    ) {
+        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
+
+        candidate = candidate.withName(name)
+                .withSurname(surname)
+                .withEmail(email)
+                .withPhone(phone)
+                .withLinkedIn(linkedIn)
+                .withGitHub(gitHub);
+        candidateService.updateCandidate(candidate, authentication);
 
         return "redirect:/candidate-portal";
     }

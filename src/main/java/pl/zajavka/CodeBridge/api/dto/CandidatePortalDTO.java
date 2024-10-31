@@ -16,8 +16,8 @@ public class CandidatePortalDTO {
     private String surname;
     private String email;
     private String phone;
-    private String city;
-    private String bio;
+    private String gitHub;
+    private String linkedIn;
     private Integer userId;
 
     private byte[] profilePhoto;

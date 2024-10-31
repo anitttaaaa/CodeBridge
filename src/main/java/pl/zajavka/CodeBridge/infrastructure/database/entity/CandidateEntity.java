@@ -36,11 +36,11 @@ public class CandidateEntity {
     @Column(name = "user_id")
     private Integer userId;
 
-    @Column(name = "city")
-    private String city;
+    @Column(name = "linked_in")
+    private String linkedIn;
 
-    @Column(name = "bio")
-    private String bio;
+    @Column(name = "git_hub")
+    private String gitHub;
 
 
     @Column(name = "profile_photo", columnDefinition="bytea")

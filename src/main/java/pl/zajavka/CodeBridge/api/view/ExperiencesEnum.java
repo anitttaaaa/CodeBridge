@@ -6,7 +6,7 @@ public enum ExperiencesEnum {
     JUNIOR,
     MID,
     SENIOR,
-    MANAGER
+    EXPERT
 
 
 }

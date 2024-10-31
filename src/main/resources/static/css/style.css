@@ -142,7 +142,7 @@ body {
     width: 40%; /* 80% szerokości rodzica */
     max-width: 1200px; /* Maksymalna szerokość */
     background-color: #DAD7D2;
-    margin: 50px auto; /* Wyśrodkowanie w poziomie i dodanie odstępu od góry */
+    margin: 20px auto; /* Wyśrodkowanie w poziomie i dodanie odstępu od góry */
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     padding: 40px;
     border-radius: 15px;
@@ -166,13 +166,10 @@ body {
     position: relative;
     width: 150px;
     height: 150px;
-    background: url('/images/logo.png');
+    margin-right: 20px;
 
 }
 
-#photo-container img{
-
-}
 
 #profile-photo {
     width: 100%;
@@ -230,10 +227,11 @@ body {
     width: 90%; /* 80% szerokości rodzica */
     max-width: 1200px; /* Maksymalna szerokość */
     background-color: #DAD7D2;
-    margin: 50px auto; /* Wyśrodkowanie w poziomie i dodanie odstępu od góry */
+    margin: 20px auto; /* Wyśrodkowanie w poziomie i dodanie odstępu od góry */
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 10px;
     border-radius: 15px;
+    margin-bottom: 5px;
 
 }
 
@@ -243,17 +241,51 @@ body {
     align-items: center;
     justify-content: center;
     background-color: #CCC3B1;
-}
-.mt-2 {
-    align-items: center; /* Wyrównanie w pionie */
+    flex-direction: column;
 }
 
+
 .icon-size {
-    font-size: 15px; /* Adjust size as necessary */
+    font-size: 20px; /* Adjust size as necessary */
     line-height: 1; /* Prevent line height from shifting the icon */
     margin: 0; /* Reset margins */
 }
 
+.candidate-details {
+    display: flex; /* Użyj flexboxa do układu kolumn */
+    justify-content: space-between; /* Rozmieść kolumny na całą szerokość */
+    margin-left: 20px; /* Dodatkowa przestrzeń po lewej stronie */
+}
+
+.left-column {
+    flex: 1; /* Ustal równe proporcje dla kolumn */
+    margin-right: 150px; /* Dodatkowa przestrzeń między kolumnami */
+    margin-left: 100px; /* Dodatkowa przestrzeń między kolumnami */
+}
+
+.right-column {
+    flex: 1;
+    margin-left: 150; /* Wyzeruj margines z prawej strony */
+}
 
 
+.card-text {
+    display: flex; /* Użyj flexboxa do wyrównania */
+    align-items: center; /* Wyrównaj elementy w pionie */
+    font-size: 17px;
+}
+
+.card-text i {
+    margin-right: 8px; /* Dodatkowa przestrzeń między ikoną a tekstem */
+}
+
+.icon-color {
+        color: #444444;
+    }
+.frame {
+    width: 90%; /* 80% szerokości rodzica */
+    max-width: 1200px;
+    margin-top: 50px !important;
+    margin-bottom: 50px !important;
+    }
 
