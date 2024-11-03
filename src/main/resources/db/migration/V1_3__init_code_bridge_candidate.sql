@@ -7,6 +7,7 @@
     phone           VARCHAR(32) NOT NULL,
     linked_in        VARCHAR(32),
     git_hub          VARCHAR(32),
+    tech_specialization          VARCHAR(32),
     profile_photo           BYTEA,
     PRIMARY KEY (candidate_id),
     UNIQUE (email)

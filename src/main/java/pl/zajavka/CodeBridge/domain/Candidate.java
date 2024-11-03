@@ -2,6 +2,8 @@ package pl.zajavka.CodeBridge.domain;
 
 import lombok.*;
 
+import java.util.List;
+
 @With
 @Value
 @Builder
@@ -17,6 +19,8 @@ public class Candidate {
     Integer userId;
     String linkedIn;
     String gitHub;
+    String techSpecialization;
+    List<String> candidateSkills;
     byte[] profilePhoto;
 
 

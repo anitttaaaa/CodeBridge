@@ -10,11 +10,13 @@ DROP TABLE IF EXISTS code_bridge_role CASCADE;
 DROP TABLE IF EXISTS code_bridge_user_role CASCADE;
 DROP TABLE IF EXISTS job_offer_must_have_skills CASCADE;
 DROP TABLE IF EXISTS job_offer_nice_to_have_skills CASCADE;
+DROP TABLE IF EXISTS candidate_skills CASCADE;
 DROP TABLE IF EXISTS job_offer_skill CASCADE;
 DROP TABLE IF EXISTS flyway_schema_history CASCADE;
 
 SELECT * FROM job_offer;
 SELECT * FROM candidate;
 SELECT * FROM job_offer_must_have_skills;
+SELECT * FROM candidate_skills;
 SELECT * FROM job_offer_nice_to_have_skills;
 

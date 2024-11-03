@@ -3,6 +3,7 @@ package pl.zajavka.CodeBridge.infrastructure.database.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -41,6 +42,14 @@ public class CandidateEntity {
 
     @Column(name = "git_hub")
     private String gitHub;
+
+    @Column(name = "tech_specialization")
+    private String techSpecialization;
+
+    @ElementCollection
+    @CollectionTable(name = "candidate_skills", joinColumns = @JoinColumn(name = "candidate_id"))
+    @Column(name = "candidate_skills")
+    private List<String> candidateSkills;
 
 
     @Column(name = "profile_photo", columnDefinition="bytea")
