@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import pl.zajavka.CodeBridge.api.dto.JobOfferAddRequestDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.JobOfferMapper;
 import pl.zajavka.CodeBridge.business.JobOfferAddService;
-import pl.zajavka.CodeBridge.domain.JobOfferAdd;
+import pl.zajavka.CodeBridge.domain.JobOfferFromRequest;
 
 
 @Controller
@@ -42,7 +42,7 @@ public class EmployerPortalController {
             Authentication authentication)
     {
 
-        JobOfferAdd request = jobOfferMapper.mapFromDTO(jobOfferAddRequestDTO);
+        JobOfferFromRequest request = jobOfferMapper.mapFromDTO(jobOfferAddRequestDTO);
         jobOfferAddService.createJobOfferData(request, authentication);
 
         System.out.println("yyyyyyyyyyyyyyyyyy");

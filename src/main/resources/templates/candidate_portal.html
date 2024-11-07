@@ -228,19 +228,39 @@
         <!--    Nowe karty z danymi -->
         <div class="candidate-card">
             <div class="card-body">
-                <!-- Przycisk do edycji profilu - przeniesiony na górę -->
+                <!-- Przycisk do edycji profilu -->
                 <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
-                        data-target="#editProfileModal">
-                    <i class="fas fa-pencil-alt"></i> Edit Details
+                        data-target="#editAboutMe">
+                    <i class="fas fa-pencil-alt"></i> Edit Bio
                 </button>
                 <h4 class="mb-0">About me</h4>
+                <p class="card-text text-justify" th:text="${candidate.aboutMe}">No information available</p>
             </div>
-            <div class="card-body">
-                <h6 class="card-title">----------------------------------</h6>
-                <p class="card-text"></p>
-
-                <h6 class="card-title">-------------------------------</h6>
-
+        </div>
+        <!-- Nowe Okno Modal do edycji profilu -->
+        <div class="modal fade" id="editAboutMe" tabindex="-1" role="dialog"
+             aria-labelledby="editAboutMeLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editAboutMeLabel">Edit Bio</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form for updating personal details -->
+                        <form th:action="@{/candidate-portal/update-candidate-about-me}" method="post">
+                            <div class="form-group">
+                                <label for="aboutMe">About Me:</label>
+                                <textarea class="form-control" id="aboutMe" name="aboutMe" rows="4"
+                                          th:text="${candidate.aboutMe}"></textarea>
+                            </div>
+                            <button type="submit" class="add-job-offer-button btn btn-primary mb-3">Save changes
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -256,7 +276,8 @@
                 <p class="card-text">
                     <!-- Check if the tech specialization is empty -->
                     <span th:if="${candidate.techSpecialization == null}">No Specialization</span>
-                    <span th:if="${candidate.techSpecialization != null}" th:text="${candidate.techSpecialization}"></span>
+                    <span th:if="${candidate.techSpecialization != null}"
+                          th:text="${candidate.techSpecialization}"></span>
                 </p>
             </div>
         </div>
@@ -284,7 +305,7 @@
                                     </option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="add-job-offer-button btn btn-primary">Save changes</button>
                         </form>
                     </div>
                 </div>
@@ -346,7 +367,68 @@
                                            th:text="${skill.getSkill()}"></label>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="submit" class="add-job-offer-button btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="candidate-card">
+            <div class="card-body">
+                <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
+                        data-target="#editExperienceModal">
+                    <i class="fas fa-pencil-alt"></i> Edit Work Experience
+                </button>
+                <h4 class="mb-0">My Work Experience</h4>
+                <p></p>
+                <ul>
+
+                </ul>
+            </div>
+        </div>
+        <!-- Modal -->
+        <!-- Modal for editing work experience -->
+        <div class="modal fade" id="editExperienceModal" tabindex="-1" role="dialog" aria-labelledby="editExperienceModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editExperienceModalLabel">Edit My Work Experience</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form for updating work experience -->
+                        <form id="experienceForm" action="/candidate-portal/update-candidate-experience" method="post">
+                            <input type="hidden" id="candidateExperienceId" name="candidateExperienceId">
+
+                            <div class="form-group">
+                                <label for="companyName">Company Name:</label>
+                                <input type="text" class="form-control" id="companyName" name="companyName" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="position">Position:</label>
+                                <input type="text" class="form-control" id="position" name="position" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Description:</label>
+                                <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fromDate">From Date:</label>
+                                <input type="date" class="form-control" id="fromDate" name="fromDate" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="toDate">To Date:</label>
+                                <input type="date" class="form-control" id="toDate" name="toDate" required>
+                            </div>
+
+                            <button type="submit" class="add-job-offer-button btn btn-primary">Save changes</button>
                         </form>
                     </div>
                 </div>
@@ -354,23 +436,24 @@
         </div>
 
 
-        <div class="candidate-card">
-            <div class="card-body">
-                <!-- Przycisk do edycji profilu - przeniesiony na górę -->
-                <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
-                        data-target="#editProfileModal">
-                    <i class="fas fa-pencil-alt"></i> Edit Details
-                </button>
-                <h4 class="mb-0">Experience</h4>
-            </div>
-            <div class="card-body">
-                <h6 class="card-title">---------------------------------</h6>
-                <p class="card-text"></p>
 
-                <h6 class="card-title">-------------------------------</h6>
+        <!--        <div class="candidate-card">-->
+        <!--            <div class="card-body">-->
+        <!--                &lt;!&ndash; Przycisk do edycji profilu - przeniesiony na górę &ndash;&gt;-->
+        <!--                <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"-->
+        <!--                        data-target="#editProfileModal">-->
+        <!--                    <i class="fas fa-pencil-alt"></i> Edit Details-->
+        <!--                </button>-->
+        <!--                <h4 class="mb-0">Experience</h4>-->
+        <!--            </div>-->
+        <!--            <div class="card-body">-->
+        <!--                <h6 class="card-title">-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</h6>-->
+        <!--                <p class="card-text"></p>-->
 
-            </div>
-        </div>
+        <!--                <h6 class="card-title">-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</h6>-->
+
+        <!--            </div>-->
+        <!--        </div>-->
 
         <div class="candidate-card">
             <div class="card-body">
@@ -428,19 +511,39 @@
 
         <div class="candidate-card">
             <div class="card-body">
-                <!-- Przycisk do edycji profilu - przeniesiony na górę -->
+                <!-- Przycisk do edycji profilu -->
                 <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
-                        data-target="#editProfileModal">
-                    <i class="fas fa-pencil-alt"></i> Edit Details
+                        data-target="#editHobby">
+                    <i class="fas fa-pencil-alt"></i> Edit Hobby
                 </button>
-                <h4 class="mb-0">Hobby</h4>
+                <h4 class="mb-0">My hobby</h4>
+                <p class="card-text text-justify" th:text="${candidate.hobby}">No information available</p>
             </div>
-            <div class="card-body">
-                <h6 class="card-title">---------------------------------</h6>
-                <p class="card-text"></p>
-
-                <h6 class="card-title">-------------------------------</h6>
-
+        </div>
+        <!-- Nowe Okno Modal do edycji profilu -->
+        <div class="modal fade" id="editHobby" tabindex="-1" role="dialog"
+             aria-labelledby="editHobbyLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editHobbyLabel">Edit Hobby</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form for updating personal details -->
+                        <form th:action="@{/candidate-portal/update-candidate-hobby}" method="post">
+                            <div class="form-group">
+                                <label for="aboutMe">My hobby:</label>
+                                <textarea class="form-control" id="hobby" name="hobby" rows="4"
+                                          th:text="${candidate.hobby}"></textarea>
+                            </div>
+                            <button type="submit" class="add-job-offer-button btn btn-primary mb-3">Save changes
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 

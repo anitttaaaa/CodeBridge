@@ -9,7 +9,7 @@ import java.util.List;
 @With
 @Value
 @Builder
-public class JobOfferAdd {
+public class JobOfferFromRequest {
 
 
     String jobOfferTitle;

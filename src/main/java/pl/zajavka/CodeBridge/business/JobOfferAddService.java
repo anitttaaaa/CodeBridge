@@ -6,8 +6,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.zajavka.CodeBridge.domain.Employer;
-import pl.zajavka.CodeBridge.domain.JobOffer;
-import pl.zajavka.CodeBridge.domain.JobOfferAdd;
+import pl.zajavka.CodeBridge.domain.JobOfferToDatabase;
+import pl.zajavka.CodeBridge.domain.JobOfferFromRequest;
 import pl.zajavka.CodeBridge.infrastructure.security.CodeBridgeUserDetailsService;
 
 import java.util.Set;
@@ -21,15 +21,15 @@ public class JobOfferAddService {
 
 
     @Transactional
-    public void createJobOfferData(JobOfferAdd request, Authentication authentication) {
+    public void createJobOfferData(JobOfferFromRequest request, Authentication authentication) {
 
         String username = authentication.getName();
         Integer userId = codeBridgeUserDetailsService.getUserId(username);
         Employer employer = employerService.findEmployer(userId);
 
-        JobOffer jobOffer = buildJobOffer(request);
+        JobOfferToDatabase jobOffer = buildJobOffer(request);
 
-        Set<JobOffer> jobOffers = employer.getJobOffers();
+        Set<JobOfferToDatabase> jobOffers = employer.getJobOffers();
 
         jobOffers.add(jobOffer);
 
@@ -39,8 +39,8 @@ public class JobOfferAddService {
     }
 
 
-    private JobOffer buildJobOffer(JobOfferAdd request) {
-        return JobOffer.builder()
+    private JobOfferToDatabase buildJobOffer(JobOfferFromRequest request) {
+        return JobOfferToDatabase.builder()
                 .title(request.getJobOfferTitle())
                 .description(request.getDescription())
                 .techSpecialization(request.getTechSpecialization())

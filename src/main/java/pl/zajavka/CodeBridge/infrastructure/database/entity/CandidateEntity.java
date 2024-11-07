@@ -46,6 +46,12 @@ public class CandidateEntity {
     @Column(name = "tech_specialization")
     private String techSpecialization;
 
+    @Column(name = "about_me")
+    private String aboutMe;
+
+    @Column(name = "hobby")
+    private String hobby;
+
     @ElementCollection
     @CollectionTable(name = "candidate_skills", joinColumns = @JoinColumn(name = "candidate_id"))
     @Column(name = "candidate_skills")

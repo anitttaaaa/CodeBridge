@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode(of = "title")
 @ToString(of = {"title"})
-public class JobOffer {
+public class JobOfferToDatabase {
 
 
     Integer jobOfferId;

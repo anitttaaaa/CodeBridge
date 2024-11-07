@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.api.dto;
 
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,6 +20,8 @@ public class CandidatePortalDTO {
     private String linkedIn;
     private String gitHub;
     private String techSpecialization;
+    private String aboutMe;
+    private String hobby;
     private List<String> candidateSkills;
     private Integer userId;
 

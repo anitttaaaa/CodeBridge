@@ -20,6 +20,8 @@ public class Candidate {
     String linkedIn;
     String gitHub;
     String techSpecialization;
+    String aboutMe;
+    String hobby;
     List<String> candidateSkills;
     byte[] profilePhoto;
 
