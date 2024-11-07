@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.zajavka.CodeBridge.api.dto.CandidateExperienceDTO;
 import pl.zajavka.CodeBridge.api.dto.CandidatePortalDTO;
-//import pl.zajavka.CodeBridge.api.dto.mapper.CandidateMapper;
+import pl.zajavka.CodeBridge.api.dto.mapper.CandidateExperienceMapper;
 import pl.zajavka.CodeBridge.business.CandidateService;
 import pl.zajavka.CodeBridge.domain.Candidate;
+import pl.zajavka.CodeBridge.domain.CandidateExperience;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,16 +27,16 @@ public class CandidatePortalController {
     private static final String CANDIDATE_PORTAL = "/candidate-portal";
     private static final String UPDATE_CANDIDATE_BASIC_INFO = "/candidate-portal/update-candidate-basic-info";
     private static final String UPDATE_CANDIDATE_TECH_SPECIALIZATION = "/candidate-portal/update-candidate-tech-specialization";
-    private static final String CREATE_EXPERIENCE = "/candidate-portal/create-experience";
     private static final String UPDATE_CANDIDATE_SKILLS = "/candidate-portal/update-candidate-skills";
     private static final String UPDATE_CANDIDATE_ABOUT_ME = "/candidate-portal/update-candidate-about-me";
     private static final String UPDATE_CANDIDATE_HOBBY = "/candidate-portal/update-candidate-hobby";
-    private static final String UPDATE_CANDIDATE_EXPERIENCE = "/candidate-portal/update-candidate-experience";
+    private static final String CANDIDATE_EXPERIENCE = "/candidate-portal/candidate-experience";
     private static final String UPDATE_CANDIDATE_PHOTO = "/candidate-portal/update-candidate-photo";
     private static final String DELETE_CANDIDATE_PHOTO = "/candidate-portal/delete-candidate-photo/{email}";
     private static final String CANDIDATE_PORTAL_PROFILE_PHOTO_DISPLAY = "/candidate-portal/profilePhoto/{email}";
 
     private final CandidateService candidateService;
+    private final CandidateExperienceMapper candidateExperienceMapper;
 //    private final CandidateMapper candidateMapper;
 
 
@@ -63,10 +64,6 @@ public class CandidatePortalController {
                 .profilePhoto(candidate.getProfilePhoto())
                 .build();
         model.addAttribute("candidate", candidateDTO);
-
-        // Debugowanie - wypisz dane o kandydacie
-        System.out.println("Candidate details: " + candidate + candidate.getLinkedIn() + candidate.getTechSpecialization());
-
 
         return "candidate_portal";
     }
@@ -110,9 +107,8 @@ public class CandidatePortalController {
             @RequestParam("name") String name,
             @RequestParam("surname") String surname,
             @RequestParam("phone") String phone,
-            @RequestParam("linkedIn") String linkedIn,
-            @RequestParam("gitHub") String gitHub,
-//            @RequestParam("techSpecialization") String techSpecialization,
+            @RequestParam(value = "linkedIn", required = false) String linkedIn,
+            @RequestParam(value = "gitHub", required = false) String gitHub,
             Authentication authentication
     ) {
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
@@ -122,12 +118,20 @@ public class CandidatePortalController {
                 .withPhone(phone)
                 .withLinkedIn(linkedIn)
                 .withGitHub(gitHub);
-//                .withTechSpecialization(techSpecialization);
         candidateService.updateCandidate(candidate, authentication);
 
         return "redirect:/candidate-portal";
     }
 
+    @PostMapping(CANDIDATE_EXPERIENCE)
+    public String addExperience(
+            @ModelAttribute("candidateExperienceDTO")CandidateExperienceDTO candidateExperienceDTO)
+    {
+//        CandidateExperience candidateExperience = candidateExperienceMapper.mapToDomain(candidateExperienceDTO);
+        System.out.println("Dane w DTO" + candidateExperienceDTO);
+
+        return "redirect:/candidate-portal";
+    }
 
     @PostMapping(UPDATE_CANDIDATE_TECH_SPECIALIZATION)
     public String updateCandidateTechSpecialization(
