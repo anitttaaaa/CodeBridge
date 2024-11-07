@@ -1,7 +1,7 @@
 CREATE TABLE candidate_experience
 (
     candidate_experience_id             SERIAL              NOT NULL,
-    companyName                         VARCHAR(32)         NOT NULL,
+    company_name                         VARCHAR(32)         NOT NULL,
     candidate_position                  VARCHAR             NOT NULL,
     description                         VARCHAR(128)        NOT NULL,
     from_date                           DATE                NOT NULL,

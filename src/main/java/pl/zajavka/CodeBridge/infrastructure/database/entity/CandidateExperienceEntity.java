@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "candidateExperienceId")
-@ToString(of = {"candidateExperienceId", "companyName","position"})
+@ToString(of = {"candidateExperienceId", "companyName","candidatePosition"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,8 +24,8 @@ public class CandidateExperienceEntity {
     @Column(name = "company_name")
     private String companyName;
 
-    @Column(name = "position")
-    private String position;
+    @Column(name = "candidate_position")
+    private String candidatePosition;
 
     @Column(name = "description")
     private String description;
@@ -35,6 +35,10 @@ public class CandidateExperienceEntity {
 
     @Column(name = "to_date")
     private LocalDate toDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "candidate_id")
+    private CandidateEntity candidate;
 
 
 }

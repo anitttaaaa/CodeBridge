@@ -45,7 +45,6 @@ public class EmployerPortalController {
         JobOfferFromRequest request = jobOfferMapper.mapFromDTO(jobOfferAddRequestDTO);
         jobOfferAddService.createJobOfferData(request, authentication);
 
-        System.out.println("yyyyyyyyyyyyyyyyyy");
 
         return "redirect:/employer-portal";
     }

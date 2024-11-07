@@ -2,7 +2,9 @@ package pl.zajavka.CodeBridge.domain;
 
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @With
 @Value
@@ -23,7 +25,11 @@ public class Candidate {
     String aboutMe;
     String hobby;
     List<String> candidateSkills;
+    List<CandidateExperience> candidateExperiences;
     byte[] profilePhoto;
 
+    public List<CandidateExperience> getCandidateExperiences () {
+        return Objects.isNull(candidateExperiences) ? new ArrayList<>() : candidateExperiences;
+    }
 
 }

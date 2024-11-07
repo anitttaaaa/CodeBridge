@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.zajavka.CodeBridge.api.dto.CandidateExperienceDTO;
 import pl.zajavka.CodeBridge.api.dto.CandidatePortalDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.CandidateExperienceMapper;
+import pl.zajavka.CodeBridge.business.CandidateExperienceService;
 import pl.zajavka.CodeBridge.business.CandidateService;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.CandidateExperience;
@@ -24,24 +25,35 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class CandidatePortalController {
 
-    private static final String CANDIDATE_PORTAL = "/candidate-portal";
+    private static final String SHOW_CANDIDATE_PORTAL = "/candidate-portal";
+    private static final String PROFILE_PHOTO_DISPLAY = "/candidate-portal/profilePhoto/{email}";
+    private static final String SHOW_CANDIDATE_EXPERIENCE = "/candidate-portal/show-experience/{email}";
+
     private static final String UPDATE_CANDIDATE_BASIC_INFO = "/candidate-portal/update-candidate-basic-info";
     private static final String UPDATE_CANDIDATE_TECH_SPECIALIZATION = "/candidate-portal/update-candidate-tech-specialization";
     private static final String UPDATE_CANDIDATE_SKILLS = "/candidate-portal/update-candidate-skills";
     private static final String UPDATE_CANDIDATE_ABOUT_ME = "/candidate-portal/update-candidate-about-me";
     private static final String UPDATE_CANDIDATE_HOBBY = "/candidate-portal/update-candidate-hobby";
-    private static final String CANDIDATE_EXPERIENCE = "/candidate-portal/candidate-experience";
+    private static final String UPDATE_CANDIDATE_EXPERIENCE = "/candidate-portal/candidate-experience";
     private static final String UPDATE_CANDIDATE_PHOTO = "/candidate-portal/update-candidate-photo";
+
     private static final String DELETE_CANDIDATE_PHOTO = "/candidate-portal/delete-candidate-photo/{email}";
-    private static final String CANDIDATE_PORTAL_PROFILE_PHOTO_DISPLAY = "/candidate-portal/profilePhoto/{email}";
+
+
 
     private final CandidateService candidateService;
+    private final CandidateExperienceService candidateExperienceService;
     private final CandidateExperienceMapper candidateExperienceMapper;
-//    private final CandidateMapper candidateMapper;
 
 
-    // Metoda do wyświetlania podstawowych danych o kandydacie przed jakąkolwiek edycją profilu.
-    @GetMapping(CANDIDATE_PORTAL)
+//    @GetMapping(SHOW_CANDIDATE_EXPERIENCE)
+//    public List<CandidateExperienceDTO> getCandidateExperience(Authentication authentication) {
+//        return candidateExperienceService.getExperienceData(authentication);
+//    }
+
+
+
+    @GetMapping(SHOW_CANDIDATE_PORTAL)
     public String getCandidateDetails(
             @RequestParam(required = false) String email,
             Model model) {
@@ -68,7 +80,7 @@ public class CandidatePortalController {
         return "candidate_portal";
     }
 
-    @GetMapping(CANDIDATE_PORTAL_PROFILE_PHOTO_DISPLAY)
+    @GetMapping(PROFILE_PHOTO_DISPLAY)
     public ResponseEntity<byte[]> getProfilePhoto(
             @PathVariable("email") String email,
             Authentication authentication) {
@@ -123,12 +135,13 @@ public class CandidatePortalController {
         return "redirect:/candidate-portal";
     }
 
-    @PostMapping(CANDIDATE_EXPERIENCE)
+    @PostMapping(UPDATE_CANDIDATE_EXPERIENCE)
     public String addExperience(
-            @ModelAttribute("candidateExperienceDTO")CandidateExperienceDTO candidateExperienceDTO)
-    {
-//        CandidateExperience candidateExperience = candidateExperienceMapper.mapToDomain(candidateExperienceDTO);
-        System.out.println("Dane w DTO" + candidateExperienceDTO);
+            @ModelAttribute("candidateExperienceDTO") CandidateExperienceDTO candidateExperienceDTO,
+            Authentication authentication) {
+        CandidateExperience candidateExperience = candidateExperienceMapper.mapToDomain(candidateExperienceDTO);
+        candidateExperienceService.createExperienceData(candidateExperience, authentication);
+
 
         return "redirect:/candidate-portal";
     }

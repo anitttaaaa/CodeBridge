@@ -13,7 +13,7 @@ public class CandidateExperience {
 
     Integer candidateExperienceId;
     String companyName;
-    String position;
+    String candidatePosition;
     String description;
     LocalDate fromDate;
     LocalDate toDate;

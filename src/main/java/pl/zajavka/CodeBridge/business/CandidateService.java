@@ -37,6 +37,7 @@ public class CandidateService {
         return findCandidateByEmail(email);
 
     }
+
     // Metoda wyszukuje kandydata po emailu, jego wszytskie informacje.
     @Transactional
     public Candidate findCandidateByEmail(String email) {
@@ -53,8 +54,10 @@ public class CandidateService {
         candidateDAO.updateCandidate(candidate);
     }
 
-
-
+    @Transactional
+    public void createCandidateExperience(Candidate candidateWithExperience) {
+    candidateDAO.createCandidateExperience(candidateWithExperience);
+    }
 }
 
 

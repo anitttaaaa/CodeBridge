@@ -11,4 +11,5 @@ public interface CandidateDAO {
     void updateCandidate(Candidate candidate);
 
 
+    void createCandidateExperience(Candidate candidateWithExperience);
 }

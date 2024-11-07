@@ -13,7 +13,7 @@ public class CandidateExperienceDTO {
 
     private Integer candidateExperienceId;
     private String companyName;
-    private String position;
+    private String candidatePosition;
     private String description;
     private LocalDate fromDate;
     private LocalDate toDate;
