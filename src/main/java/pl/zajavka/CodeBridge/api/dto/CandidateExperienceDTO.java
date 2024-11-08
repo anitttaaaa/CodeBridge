@@ -1,8 +1,10 @@
 package pl.zajavka.CodeBridge.api.dto;
 
 import lombok.*;
+import pl.zajavka.CodeBridge.domain.CandidateExperience;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @With
 @Data

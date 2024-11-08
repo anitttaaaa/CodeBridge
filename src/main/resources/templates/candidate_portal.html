@@ -16,6 +16,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </head>
 
 <body>
@@ -383,12 +384,14 @@
                 <h4 class="mb-0">My Work Experience</h4>
                 <p></p>
                 <ul>
-
+                    <!-- Dynamically added experiences will appear here -->
                 </ul>
             </div>
         </div>
+
         <!-- Modal do edycji doświadczenia zawodowego -->
-        <div class="modal fade" id="editExperienceModal" tabindex="-1" role="dialog" aria-labelledby="editExperienceModalLabel" aria-hidden="true">
+        <div class="modal fade" id="editExperienceModal" tabindex="-1" role="dialog"
+             aria-labelledby="editExperienceModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -398,44 +401,23 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="#" th:action="@{/candidate-portal/candidate-experience}" method="post">
-                            <!-- Company Name -->
-                            <div class="form-group">
-                                <label for="companyName">Company Name</label>
-                                <input type="text" class="form-control" id="companyName" name="companyName"
-                                       th:value="${candidateExperienceDTO != null ? candidateExperienceDTO.companyName : ''}">
+                        <form action="#" th:action="@{/candidate-portal/candidate-experience}" method="post"
+                              id="experienceForm">
+                            <div id="experienceSection">
+                                <!-- Experience input fields will be added here dynamically -->
                             </div>
 
-                            <!-- Position -->
-                            <div class="form-group">
-                                <label for="candidatePosition">Position</label>
-                                <input type="text" class="form-control" id="candidatePosition" name="candidatePosition"
-                                       th:value="${candidateExperienceDTO != null ? candidateExperienceDTO.candidatePosition : ''}">
+                            <div class="button-container">
+                                <!-- Add More Button -->
+                                <button type="button" id="addExperienceBtn" class="btn btn-primary add-more-button">Add
+                                    More
+                                </button>
+
+                                <!-- Submit Button -->
+                                <button type="submit" class="add-job-offer-button btn btn-primary mt-3">Save changes
+                                </button>
                             </div>
 
-                            <!-- Description -->
-                            <div class="form-group">
-                                <label for="description">Description</label>
-                                <textarea class="form-control" id="description" name="description"
-                                          th:text="${candidateExperienceDTO != null ? candidateExperienceDTO.description : ''}"></textarea>
-                            </div>
-
-                            <!-- From Date -->
-                            <div class="form-group">
-                                <label for="fromDate">From</label>
-                                <input type="date" class="form-control" id="fromDate" name="fromDate"
-                                       th:value="${candidateExperienceDTO != null ? candidateExperienceDTO.fromDate : ''}">
-                            </div>
-
-                            <!-- To Date -->
-                            <div class="form-group">
-                                <label for="toDate">To</label>
-                                <input type="date" class="form-control" id="toDate" name="toDate"
-                                       th:value="${candidateExperienceDTO != null ? candidateExperienceDTO.toDate : ''}">
-                            </div>
-
-                            <!-- Submit Button -->
-                            <button type="submit" class="add-job-offer-button btn btn-primary">Save changes</button>
                         </form>
                     </div>
                 </div>
@@ -538,5 +520,6 @@
 
     </div>
 </div>
+<script th:src="@{/js/custom.min.js}"></script>
 </body>
 </html>

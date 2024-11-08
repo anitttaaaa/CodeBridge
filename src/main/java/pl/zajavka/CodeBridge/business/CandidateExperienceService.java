@@ -20,18 +20,18 @@ public class CandidateExperienceService {
     private final CandidateService candidateService;
 
     @Transactional
-    public void createExperienceData(CandidateExperience candidateExperienceFromRequest, Authentication authentication) {
-
+    public void createExperienceData(List<CandidateExperience> candidateExperiencesFromRequest, Authentication authentication) {
         Candidate candidate = candidateService.findLoggedInCandidate();
-        CandidateExperience candidateExperience = buildCandidateExperience(candidateExperienceFromRequest);
-
+        // Iteracja przez listę doświadczeń z requestu i dodanie ich do kandydata
         List<CandidateExperience> candidateExperiences = candidate.getCandidateExperiences();
-        candidateExperiences.add(candidateExperience);
 
+        for (CandidateExperience experienceFromRequest : candidateExperiencesFromRequest) {
+            CandidateExperience candidateExperience = buildCandidateExperience(experienceFromRequest);
+            candidateExperiences.add(candidateExperience);
+        }
         Candidate candidateWithExperience = candidate.withCandidateExperiences(candidateExperiences);
 
-    candidateService.createCandidateExperience(candidateWithExperience);
-
+        candidateService.createCandidateExperience(candidateWithExperience);
     }
     // New method to get candidate experiences
     private CandidateExperience buildCandidateExperience(CandidateExperience candidateExperienceFromRequest) {

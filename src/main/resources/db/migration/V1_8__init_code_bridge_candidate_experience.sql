@@ -9,6 +9,7 @@ CREATE TABLE candidate_experience
     candidate_id                        INT                 NOT NULL,
 
     PRIMARY KEY (candidate_experience_id),
+
         CONSTRAINT fk_candidate_experience_candidate
             FOREIGN KEY (candidate_id)
                 REFERENCES candidate (candidate_id)

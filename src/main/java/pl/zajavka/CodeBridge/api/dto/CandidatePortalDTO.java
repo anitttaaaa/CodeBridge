@@ -27,4 +27,6 @@ public class CandidatePortalDTO {
 
     private byte[] profilePhoto;
 
+    private List<CandidateExperienceDTO> candidateExperiences;
+
 }

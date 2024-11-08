@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Value
 @Builder
 @EqualsAndHashCode(of = "candidateExperienceId")
-@ToString(of = {"candidateExperienceId", "companyName", "position"})
+@ToString(of = {"candidateExperienceId", "companyName", "candidatePosition"})
 public class CandidateExperience {
 
     Integer candidateExperienceId;
