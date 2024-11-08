@@ -297,7 +297,7 @@ body {
 /* widok formularza experience */
 
 /* Dodanie tła i marginesu do formularzy */
-.experience-entry {
+.entry {
     background-color: #DAD7D2; /* Jasnoszare tło */
     padding: 20px;  /* Wewnętrzny odstęp */
     margin-bottom: 20px; /* Odstęp między formularzami */
@@ -306,13 +306,13 @@ body {
 }
 
 /* Dodanie cienkiej linii oddzielającej formularze */
-.experience-entry hr {
+.entry hr {
     border: 1px solid #ddd; /* Szara linia */
     margin: 10px 0; /* Marginesy wokół linii */
 }
 
 /* Stylowanie przycisku "Add More" */
-#addExperienceBtn {
+#addExperienceBtn, #addProjectBtn {
     background-color: #a09b87 !important;
     border-color: #7d7862 !important;
     float: left !important; /* Ustawienie przycisku po lewej stronie */
@@ -326,17 +326,18 @@ body {
     cursor: pointer;
     font-size: 14px; /* Ujednolicony rozmiar czcionki */
     line-height: 1.5; /* Spójny line-height */
+    padding-top: 5px; /* Spójny line-height */
 }
 
 /* Opcjonalnie: Dostosowanie efektów aktywnego i hover */
-#addExperienceBtn:active {
+#addExperienceBtn:active, #addProjectBtn:active {
     background-color: #b2ad99 !important;
     border-color: #7d7862 !important;
     padding-bottom: 20px !important;
     color: white !important; /* Utrzymanie koloru tekstu na biały */
 }
 
-#addExperienceBtn:hover {
+#addExperienceBtn:hover, #addProjectBtn:hover {
     background-color: #b2ad99 !important;
     border-color: #7d7862 !important;
     color: white !important; /* Utrzymanie koloru tekstu na biały */

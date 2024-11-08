@@ -424,24 +424,52 @@
             </div>
         </div>
 
-
         <div class="candidate-card">
             <div class="card-body">
-                <!-- Przycisk do edycji profilu - przeniesiony na górę -->
                 <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
-                        data-target="#editProfileModal">
-                    <i class="fas fa-pencil-alt"></i> Edit Details
+                        data-target="#editProjectModal">
+                    <i class="fas fa-pencil-alt"></i> Edit My Projects
                 </button>
                 <h4 class="mb-0">My Projects</h4>
-            </div>
-            <div class="card-body">
-                <h6 class="card-title">---------------------------------</h6>
-                <p class="card-text"></p>
-
-                <h6 class="card-title">-------------------------------</h6>
-
+                <p></p>
+                <ul>
+                    <!-- Dynamically added experiences will appear here -->
+                </ul>
             </div>
         </div>
+
+
+        <!-- Modal for editing candidate's projects -->
+        <div class="modal fade" id="editProjectModal" tabindex="-1" role="dialog"
+             aria-labelledby="editProjectModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editProjectModalLabel">Edit My Projects</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#" th:action="@{/candidate-portal/candidate-project}" method="post" id="projectForm">
+                            <div id="projectSection">
+                                <!-- Project input fields will be added here dynamically -->
+                            </div>
+
+                            <div class="button-container">
+                                <!-- Add More Button -->
+                                <button type="button" id="addProjectBtn" class="btn btn-primary add-more-button">Add More</button>
+
+                                <!-- Submit Button -->
+                                <button type="submit" class="add-job-offer-button btn btn-primary mt-3">Save changes</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="candidate-card">
             <div class="card-body">

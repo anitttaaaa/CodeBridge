@@ -13,9 +13,11 @@ import pl.zajavka.CodeBridge.api.dto.CandidateExperienceDTO;
 import pl.zajavka.CodeBridge.api.dto.CandidatePortalDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.CandidateExperienceMapper;
 import pl.zajavka.CodeBridge.business.CandidateExperienceService;
+import pl.zajavka.CodeBridge.business.CandidateProjectService;
 import pl.zajavka.CodeBridge.business.CandidateService;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.CandidateExperience;
+import pl.zajavka.CodeBridge.domain.CandidateProject;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,6 +37,7 @@ public class CandidatePortalController {
     private static final String UPDATE_CANDIDATE_ABOUT_ME = "/candidate-portal/update-candidate-about-me";
     private static final String UPDATE_CANDIDATE_HOBBY = "/candidate-portal/update-candidate-hobby";
     private static final String UPDATE_CANDIDATE_EXPERIENCE = "/candidate-portal/candidate-experience";
+    private static final String UPDATE_CANDIDATE_PROJECT = "/candidate-portal/candidate-project";
     private static final String UPDATE_CANDIDATE_PHOTO = "/candidate-portal/update-candidate-photo";
 
     private static final String DELETE_CANDIDATE_PHOTO = "/candidate-portal/delete-candidate-photo/{email}";
@@ -43,6 +46,7 @@ public class CandidatePortalController {
 
     private final CandidateService candidateService;
     private final CandidateExperienceService candidateExperienceService;
+    private final CandidateProjectService candidateProjectService;
     private final CandidateExperienceMapper candidateExperienceMapper;
 
 
@@ -138,6 +142,14 @@ public class CandidatePortalController {
     @PostMapping(UPDATE_CANDIDATE_EXPERIENCE)
     public String submitExperience(@ModelAttribute List<CandidateExperience> candidateExperiences, Authentication authentication) {
         candidateExperienceService.createExperienceData(candidateExperiences, authentication);
+
+        return "redirect:/candidate-portal";
+    }
+
+
+    @PostMapping(UPDATE_CANDIDATE_PROJECT)
+    public String submitProject(@ModelAttribute List<CandidateProject> candidateProjects, Authentication authentication) {
+        candidateProjectService.createProjectData(candidateProjects, authentication);
 
         return "redirect:/candidate-portal";
     }
