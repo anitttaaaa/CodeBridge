@@ -12,12 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.zajavka.CodeBridge.api.dto.CandidateExperienceDTO;
 import pl.zajavka.CodeBridge.api.dto.CandidatePortalDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.CandidateExperienceMapper;
-import pl.zajavka.CodeBridge.business.CandidateExperienceService;
-import pl.zajavka.CodeBridge.business.CandidateProjectService;
-import pl.zajavka.CodeBridge.business.CandidateService;
-import pl.zajavka.CodeBridge.domain.Candidate;
-import pl.zajavka.CodeBridge.domain.CandidateExperience;
-import pl.zajavka.CodeBridge.domain.CandidateProject;
+import pl.zajavka.CodeBridge.business.*;
+import pl.zajavka.CodeBridge.domain.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,6 +34,8 @@ public class CandidatePortalController {
     private static final String UPDATE_CANDIDATE_HOBBY = "/candidate-portal/update-candidate-hobby";
     private static final String UPDATE_CANDIDATE_EXPERIENCE = "/candidate-portal/candidate-experience";
     private static final String UPDATE_CANDIDATE_PROJECT = "/candidate-portal/candidate-project";
+    private static final String UPDATE_CANDIDATE_EDUCATION = "/candidate-portal/candidate-education";
+    private static final String UPDATE_CANDIDATE_COURSES = "/candidate-portal/candidate-courses";
     private static final String UPDATE_CANDIDATE_PHOTO = "/candidate-portal/update-candidate-photo";
 
     private static final String DELETE_CANDIDATE_PHOTO = "/candidate-portal/delete-candidate-photo/{email}";
@@ -47,6 +45,8 @@ public class CandidatePortalController {
     private final CandidateService candidateService;
     private final CandidateExperienceService candidateExperienceService;
     private final CandidateProjectService candidateProjectService;
+    private final CandidateEducationService candidateEducationService;
+    private final CandidateCourseService candidateCourseService;
     private final CandidateExperienceMapper candidateExperienceMapper;
 
 
@@ -63,7 +63,6 @@ public class CandidatePortalController {
             Model model) {
 
         Candidate candidate = candidateService.findLoggedInCandidate();
-
 
         // Tworzymy DTO i dodajemy go do modelu
         CandidatePortalDTO candidateDTO = CandidatePortalDTO.builder()
@@ -140,8 +139,8 @@ public class CandidatePortalController {
     }
 
     @PostMapping(UPDATE_CANDIDATE_EXPERIENCE)
-    public String submitExperience(@ModelAttribute List<CandidateExperience> candidateExperiences, Authentication authentication) {
-        candidateExperienceService.createExperienceData(candidateExperiences, authentication);
+    public String submitExperience(@ModelAttribute List<CandidateExperienceDTO> candidateExperiencesDTO, Authentication authentication) {
+        candidateExperienceService.createExperienceData(candidateExperiencesDTO, authentication);
 
         return "redirect:/candidate-portal";
     }
@@ -150,6 +149,20 @@ public class CandidatePortalController {
     @PostMapping(UPDATE_CANDIDATE_PROJECT)
     public String submitProject(@ModelAttribute List<CandidateProject> candidateProjects, Authentication authentication) {
         candidateProjectService.createProjectData(candidateProjects, authentication);
+
+        return "redirect:/candidate-portal";
+    }
+
+    @PostMapping(UPDATE_CANDIDATE_EDUCATION)
+    public String submitEducation(@ModelAttribute List<CandidateEducation> candidateEducationStages, Authentication authentication) {
+        candidateEducationService.createEducationData(candidateEducationStages, authentication);
+
+        return "redirect:/candidate-portal";
+    }
+
+    @PostMapping(UPDATE_CANDIDATE_COURSES)
+    public String submitCourses(@ModelAttribute List<CandidateCourse> candidateCourses, Authentication authentication) {
+        candidateCourseService.createCourseData(candidateCourses, authentication);
 
         return "redirect:/candidate-portal";
     }

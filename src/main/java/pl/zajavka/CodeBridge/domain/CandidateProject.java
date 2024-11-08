@@ -15,7 +15,7 @@ public class CandidateProject {
     Integer candidateProjectId;
     String projectTitle;
     String description;
-    List<String> technologies;
+    String technologies;
     LocalDate fromDate;
     LocalDate toDate;
     String projectLink;

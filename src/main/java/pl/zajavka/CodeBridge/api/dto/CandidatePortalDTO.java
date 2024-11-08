@@ -1,6 +1,8 @@
 package pl.zajavka.CodeBridge.api.dto;
 
 import lombok.*;
+import pl.zajavka.CodeBridge.business.CandidateEducationService;
+import pl.zajavka.CodeBridge.domain.CandidateCourse;
 
 import java.util.List;
 
@@ -29,5 +31,7 @@ public class CandidatePortalDTO {
 
     private List<CandidateExperienceDTO> candidateExperiences;
     private List<CandidateProjectDTO> candidateProjects;
+    private List<CandidateEducationDTO> candidateEducationStages;
+    private List<CandidateCourseDTO> candidateCourses;
 
 }

@@ -312,7 +312,7 @@ body {
 }
 
 /* Stylowanie przycisku "Add More" */
-#addExperienceBtn, #addProjectBtn {
+#addExperienceBtn, #addProjectBtn, #addEducationBtn, #addCourseBtn {
     background-color: #a09b87 !important;
     border-color: #7d7862 !important;
     float: left !important; /* Ustawienie przycisku po lewej stronie */
@@ -330,14 +330,14 @@ body {
 }
 
 /* Opcjonalnie: Dostosowanie efektów aktywnego i hover */
-#addExperienceBtn:active, #addProjectBtn:active {
+#addExperienceBtn:active, #addProjectBtn:active, #addEducationBtn:active, #addCourseBtn:active {
     background-color: #b2ad99 !important;
     border-color: #7d7862 !important;
     padding-bottom: 20px !important;
     color: white !important; /* Utrzymanie koloru tekstu na biały */
 }
 
-#addExperienceBtn:hover, #addProjectBtn:hover {
+#addExperienceBtn:hover, #addProjectBtn:hover, #addEducationBtn:hover, #addCourseBtn:hover {
     background-color: #b2ad99 !important;
     border-color: #7d7862 !important;
     color: white !important; /* Utrzymanie koloru tekstu na biały */

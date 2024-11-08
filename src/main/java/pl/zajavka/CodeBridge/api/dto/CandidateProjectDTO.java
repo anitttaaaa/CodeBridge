@@ -15,7 +15,7 @@ public class CandidateProjectDTO {
     private Integer candidateProjectId;
     private String projectTitle;
     private String description;
-    private List<String> technologies;
+    private String technologies;
     private LocalDate fromDate;
     private LocalDate toDate;
     private String projectLink;

@@ -9,13 +9,15 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CandidateEducationDTO {
+public class CandidateCourseDTO {
 
-    private Integer candidateEducationId;
+    private Integer candidateCoursesId;
     private String institution;
-    private String degree;
-    private String fieldOfStudy;
+    private String courseTitle;
+    private String description;
+    private String technologies;
     private LocalDate fromDate;
     private LocalDate toDate;
+
 
 }
