@@ -9,7 +9,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CandidatePortalDTO {
+public class CandidateDTO {
 
 
     private Integer candidateId;

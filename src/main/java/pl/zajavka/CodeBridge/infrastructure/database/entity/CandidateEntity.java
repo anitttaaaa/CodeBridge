@@ -61,6 +61,8 @@ public class CandidateEntity {
     @Column(name = "profile_photo", columnDefinition="bytea")
     private byte[] profilePhoto;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "candidate")
+    private List<CandidateExperienceEntity> candidateExperiences;
 
 }
 

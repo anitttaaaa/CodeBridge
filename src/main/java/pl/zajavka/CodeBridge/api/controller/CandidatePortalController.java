@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.zajavka.CodeBridge.api.dto.CandidateExperienceDTO;
-import pl.zajavka.CodeBridge.api.dto.CandidatePortalDTO;
+import pl.zajavka.CodeBridge.api.dto.CandidateDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.CandidateExperienceMapper;
 import pl.zajavka.CodeBridge.business.CandidateExperienceService;
 import pl.zajavka.CodeBridge.business.CandidateService;
@@ -20,6 +20,7 @@ import pl.zajavka.CodeBridge.domain.CandidateExperience;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -58,27 +59,21 @@ public class CandidatePortalController {
             @RequestParam(required = false) String email,
             Model model) {
 
+        // Pobranie pełnego obiektu kandydata
         Candidate candidate = candidateService.findLoggedInCandidate();
 
+        List<CandidateExperience> candidateExperienceList = candidateExperienceService.findExperienceByCandidateId(candidate.getCandidateId());
+        List<CandidateExperienceDTO> candidateExperienceDTOList = candidateExperienceList.stream()
+                .map(candidateExperienceMapper::mapToDto).toList();
 
-        // Tworzymy DTO i dodajemy go do modelu
-        CandidatePortalDTO candidateDTO = CandidatePortalDTO.builder()
-                .name(candidate.getName())
-                .surname(candidate.getSurname())
-                .email(candidate.getEmail())
-                .phone(candidate.getPhone())
-                .linkedIn(candidate.getLinkedIn())
-                .gitHub(candidate.getGitHub())
-                .techSpecialization(candidate.getTechSpecialization())
-                .aboutMe(candidate.getAboutMe())
-                .hobby(candidate.getHobby())
-                .candidateSkills(candidate.getCandidateSkills())
-                .profilePhoto(candidate.getProfilePhoto())
-                .build();
-        model.addAttribute("candidate", candidateDTO);
+        // Dodanie całego obiektu kandydata do modelu
+        model.addAttribute("candidate", candidate);
+        model.addAttribute("candidateExperienceDTOList", candidateExperienceDTOList);
 
         return "candidate_portal";
     }
+
+
 
     @GetMapping(PROFILE_PHOTO_DISPLAY)
     public ResponseEntity<byte[]> getProfilePhoto(
@@ -139,7 +134,7 @@ public class CandidatePortalController {
     public String addExperience(
             @ModelAttribute("candidateExperienceDTO") CandidateExperienceDTO candidateExperienceDTO,
             Authentication authentication) {
-        CandidateExperience candidateExperience = candidateExperienceMapper.mapToDomain(candidateExperienceDTO);
+        CandidateExperience candidateExperience = candidateExperienceMapper.mapFromDTO(candidateExperienceDTO);
         candidateExperienceService.createExperienceData(candidateExperience, authentication);
 
 

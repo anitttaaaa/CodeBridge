@@ -14,5 +14,7 @@ public interface CandidateExperienceEntityMapper {
 
 
     CandidateExperience mapFromEntity(CandidateExperienceEntity candidateExperienceEntity);
+
+
     CandidateExperienceEntity mapToEntity (CandidateExperience candidateExperience);
 }

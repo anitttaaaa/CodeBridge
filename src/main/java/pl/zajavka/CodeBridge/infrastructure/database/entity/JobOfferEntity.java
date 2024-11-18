@@ -65,35 +65,5 @@ public class JobOfferEntity {
     @Column(name = "nice_to_have_skills")
     private List<String> niceToHaveSkills;
 }
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "tech_specialization_id")
-//    private TechSpecializationEntity techSpecialization;
-
-
-//    @Column(name = "job_offer_code", unique = true)
-//    private String jobOfferCode;
-
-//    @Column(name = "posted_date")
-//    private OffsetDateTime postedDate;
-//
-//    @Column(name = "expiry_date")
-//    private OffsetDateTime expiryDate;
-//
-
-//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "location_id")
-//    private LocationEntity job_location;
-
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "salary_id")
-//    private SalaryEntity salary;
-//
-
-//
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "jobOffer")
-//    private Set<JobOfferSkillEntity> jobOfferSkills;
-
 
 

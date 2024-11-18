@@ -383,10 +383,17 @@
                 <h4 class="mb-0">My Work Experience</h4>
                 <p></p>
                 <ul>
-
+                    <!-- Pętla po doświadczeniu zawodowym kandydata -->
+                    <li th:each="experience : ${candidateExperienceList}">
+                        <p th:text="'Company: ' + ${experience.companyName}"></p>
+                        <p th:text="'Position: ' + ${experience.candidatePosition}"></p>
+                        <p th:text="'Description: ' + ${experience.description}"></p>
+                        <p th:text="'From: ' + ${experience.fromDate} + ' To: ' + ${experience.toDate}"></p>
+                    </li>
                 </ul>
             </div>
         </div>
+
         <!-- Modal do edycji doświadczenia zawodowego -->
         <div class="modal fade" id="editExperienceModal" tabindex="-1" role="dialog" aria-labelledby="editExperienceModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -441,6 +448,7 @@
                 </div>
             </div>
         </div>
+
 
 
         <div class="candidate-card">

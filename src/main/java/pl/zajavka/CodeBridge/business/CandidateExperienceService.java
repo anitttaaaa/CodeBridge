@@ -4,13 +4,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.zajavka.CodeBridge.api.dto.CandidateExperienceDTO;
+import pl.zajavka.CodeBridge.business.dao.CandidateExperienceDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.CandidateExperience;
+import pl.zajavka.CodeBridge.infrastructure.database.repository.CandidateExperienceRepository;
+import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.CandidateExperienceEntityMapper;
 import pl.zajavka.CodeBridge.infrastructure.security.CodeBridgeUserDetailsService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -18,48 +19,42 @@ public class CandidateExperienceService {
 
     private final CodeBridgeUserDetailsService codeBridgeUserDetailsService;
     private final CandidateService candidateService;
+    private final CandidateExperienceDAO candidateExperienceDAO;
+    private final CandidateExperienceRepository candidateExperienceRepository;
+    private final CandidateExperienceEntityMapper candidateExperienceEntityMapper;
 
     @Transactional
     public void createExperienceData(CandidateExperience candidateExperienceFromRequest, Authentication authentication) {
 
         Candidate candidate = candidateService.findLoggedInCandidate();
-        CandidateExperience candidateExperience = buildCandidateExperience(candidateExperienceFromRequest);
 
-        List<CandidateExperience> candidateExperiences = candidate.getCandidateExperiences();
-        candidateExperiences.add(candidateExperience);
+        CandidateExperience candidateExperience = buildCandidateExperience(candidateExperienceFromRequest, candidate);
 
-        Candidate candidateWithExperience = candidate.withCandidateExperiences(candidateExperiences);
+        CandidateExperience candidateExperienceSaved = candidateExperienceDAO.createExperience(candidateExperience);
 
-    candidateService.createCandidateExperience(candidateWithExperience);
+        candidate.getCandidateExperiences().add(candidateExperienceSaved);
 
+//        candidate.getCandidateExperiences().add(candidateExperience);
+
+        candidateService.updateCandidate(candidate, authentication);
     }
-    // New method to get candidate experiences
-    private CandidateExperience buildCandidateExperience(CandidateExperience candidateExperienceFromRequest) {
+
+
+    private CandidateExperience buildCandidateExperience(CandidateExperience candidateExperienceFromRequest, Candidate candidate) {
         return CandidateExperience.builder()
                 .companyName(candidateExperienceFromRequest.getCompanyName())
                 .candidatePosition(candidateExperienceFromRequest.getCandidatePosition())
                 .description(candidateExperienceFromRequest.getDescription())
                 .fromDate(candidateExperienceFromRequest.getFromDate())
                 .toDate(candidateExperienceFromRequest.getToDate())
+                .candidate(candidate)
                 .build();
     }
 
-    public List<CandidateExperienceDTO> getExperienceData(Authentication authentication) {
-        Candidate candidate = candidateService.findLoggedInCandidate();
-        return candidate.getCandidateExperiences().stream()
-                .map(this::toCandidateExperienceDTO)
-                .collect(Collectors.toList());
-    }
 
-    private CandidateExperienceDTO toCandidateExperienceDTO(CandidateExperience experience) {
-        return CandidateExperienceDTO.builder()
-                .candidateExperienceId(experience.getCandidateExperienceId())
-                .companyName(experience.getCompanyName())
-                .candidatePosition(experience.getCandidatePosition())
-                .description(experience.getDescription())
-                .fromDate(experience.getFromDate())
-                .toDate(experience.getToDate())
-                .build();
-    }
+    public List<CandidateExperience> findExperienceByCandidateId(Integer candidateId) {
 
+        return candidateExperienceDAO.findExperienceByCandidateId(candidateId);
+
+    }
 }

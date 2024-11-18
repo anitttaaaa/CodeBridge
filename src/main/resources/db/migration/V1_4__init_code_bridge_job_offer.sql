@@ -14,22 +14,24 @@ CREATE TABLE job_offer
             FOREIGN KEY (employer_id)
                 REFERENCES employer (employer_id)
                 );
---        CONSTRAINT fk_job_offer_tech_specialization
---            FOREIGN KEY (tech_specialization_id)
---                REFERENCES tech_specialization (tech_specialization_id)
 
---    job_offer_code          VARCHAR(32) NOT NULL,
---    posted_date             TIMESTAMP WITH TIME ZONE,
---    expiry_date             TIMESTAMP WITH TIME ZONE,
---    salary_id               INT,
---    location_id             INT,
---    UNIQUE (job_offer_code)
 
---    CONSTRAINT fk_job_offer_salary
---            FOREIGN KEY (salary_id)
---                REFERENCES salary (salary_id),
---
---    CONSTRAINT fk_job_offer_job_location
---            FOREIGN KEY (location_id)
---                REFERENCES job_location (location_id),
---
+
+CREATE TABLE job_offer_must_have_skills (
+    job_offer_id                    INT             NOT NULL,
+    must_have_skills                VARCHAR(255)    NOT NULL,
+
+    FOREIGN KEY (job_offer_id)
+        REFERENCES job_offer(job_offer_id)
+            ON DELETE CASCADE
+);
+
+
+
+CREATE TABLE job_offer_nice_to_have_skills (
+    job_offer_id                        INT             NOT NULL,
+    nice_to_have_skills                 VARCHAR(255)    NOT NULL,
+    FOREIGN KEY (job_offer_id)
+        REFERENCES job_offer(job_offer_id)
+            ON DELETE CASCADE
+);

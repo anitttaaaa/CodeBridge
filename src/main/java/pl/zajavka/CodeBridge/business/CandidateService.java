@@ -22,12 +22,7 @@ public class CandidateService {
     private final CandidateDAO candidateDAO;
     private final CodeBridgeUserDetailsService codeBridgeUserDetailsService;
 
-    private final ResourceLoader resourceLoader;
-
-    @Autowired
-    private CandidateRepository candidateRepository;
-
-    // Metoda wyszukuje zalogowanego użytkownika i wykorzystuje
+     // Metoda wyszukuje zalogowanego użytkownika i wykorzystuje
     // findCandidateByEmail zeby dostać sie do szczegółów
     @Transactional(readOnly = true)
     public Candidate findLoggedInCandidate() {
@@ -54,10 +49,7 @@ public class CandidateService {
         candidateDAO.updateCandidate(candidate);
     }
 
-    @Transactional
-    public void createCandidateExperience(Candidate candidateWithExperience) {
-    candidateDAO.createCandidateExperience(candidateWithExperience);
-    }
+
 }
 
 
