@@ -293,3 +293,57 @@ body {
     padding-bottom: 30px;
 }
 
+/*--------------------------------------------------------------------------------------------------------*/
+/* widok formularza experience */
+
+/* Dodanie tła i marginesu do formularzy */
+.entry {
+    background-color: #DAD7D2; /* Jasnoszare tło */
+    padding: 20px;  /* Wewnętrzny odstęp */
+    margin-bottom: 20px; /* Odstęp między formularzami */
+    border-radius: 8px; /* Zaokrąglone rogi */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Cień, żeby formularz wyglądał na uniesiony */
+}
+
+/* Dodanie cienkiej linii oddzielającej formularze */
+.entry hr {
+    border: 1px solid #ddd; /* Szara linia */
+    margin: 10px 0; /* Marginesy wokół linii */
+}
+
+/* Stylowanie przycisku "Add More" */
+#addExperienceBtn, #addProjectBtn, #addEducationBtn, #addCourseBtn {
+    background-color: #a09b87 !important;
+    border-color: #7d7862 !important;
+    float: left !important; /* Ustawienie przycisku po lewej stronie */
+    margin-bottom: 20px !important;
+    display: block;
+    margin: 20px 0 0 0; /* Usunięcie wyśrodkowania, pozostawienie marginesu od góry */
+
+    color: white !important; /* Kolor tekstu na biały */
+    border: 1px solid #7d7862 !important;
+    border-radius: 4px; /* Dopasowanie do .add-job-offer-button */
+    cursor: pointer;
+    font-size: 14px; /* Ujednolicony rozmiar czcionki */
+    line-height: 1.5; /* Spójny line-height */
+    padding-top: 5px; /* Spójny line-height */
+}
+
+/* Opcjonalnie: Dostosowanie efektów aktywnego i hover */
+#addExperienceBtn:active, #addProjectBtn:active, #addEducationBtn:active, #addCourseBtn:active {
+    background-color: #b2ad99 !important;
+    border-color: #7d7862 !important;
+    padding-bottom: 20px !important;
+    color: white !important; /* Utrzymanie koloru tekstu na biały */
+}
+
+#addExperienceBtn:hover, #addProjectBtn:hover, #addEducationBtn:hover, #addCourseBtn:hover {
+    background-color: #b2ad99 !important;
+    border-color: #7d7862 !important;
+    color: white !important; /* Utrzymanie koloru tekstu na biały */
+}
+
+
+
+
+

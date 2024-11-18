@@ -2,6 +2,7 @@ package pl.zajavka.CodeBridge.infrastructure.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import pl.zajavka.CodeBridge.domain.CandidateExperience;
 
 import java.util.List;
 import java.util.Set;
@@ -56,6 +57,11 @@ public class CandidateEntity {
     @CollectionTable(name = "candidate_skills", joinColumns = @JoinColumn(name = "candidate_id"))
     @Column(name = "candidate_skills")
     private List<String> candidateSkills;
+
+//    @ElementCollection
+//    @CollectionTable(name = "candidate_experiences", joinColumns = @JoinColumn(name = "candidate_id"))
+//    @Column(name = "candidate_experiences")
+//    private  List<CandidateExperience> candidateExperiences;
 
 
     @Column(name = "profile_photo", columnDefinition="bytea")
