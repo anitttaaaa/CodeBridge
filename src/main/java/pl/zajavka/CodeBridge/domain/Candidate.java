@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.domain;
 
 import lombok.*;
-import pl.zajavka.CodeBridge.api.dto.CandidateProjectDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +26,7 @@ public class Candidate {
     String hobby;
     List<String> candidateSkills;
     List<CandidateExperience> candidateExperiences;
-    List<CandidateProject> candidateProjects;
-    List<CandidateEducation> candidateEducationStages;
-    List<CandidateCourse> candidateCourses;
+
     byte[] profilePhoto;
 
     public List<CandidateExperience> getCandidateExperiences() {
@@ -37,16 +34,5 @@ public class Candidate {
 
     }
 
-    public List<CandidateProject> getCandidateProjects() {
-        return Objects.isNull(candidateProjects) ? new ArrayList<>() : candidateProjects;
-    }
-
-    public List<CandidateEducation> getCandidateEducationStages() {
-        return Objects.isNull(candidateEducationStages) ? new ArrayList<>() : candidateEducationStages;
-    }
-
-    public List<CandidateCourse> getCandidateCourses() {
-        return Objects.isNull(candidateCourses) ? new ArrayList<>() : candidateCourses;
-    }
 
 }

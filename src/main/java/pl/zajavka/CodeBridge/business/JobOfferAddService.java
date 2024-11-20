@@ -6,8 +6,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.zajavka.CodeBridge.domain.Employer;
-import pl.zajavka.CodeBridge.domain.JobOfferToDatabase;
 import pl.zajavka.CodeBridge.domain.JobOfferFromRequest;
+import pl.zajavka.CodeBridge.domain.JobOfferToDatabase;
 import pl.zajavka.CodeBridge.infrastructure.security.CodeBridgeUserDetailsService;
 
 import java.util.Set;

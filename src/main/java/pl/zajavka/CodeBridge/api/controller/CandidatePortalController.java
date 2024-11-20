@@ -9,9 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pl.zajavka.CodeBridge.api.dto.CandidateExperienceDTO;
 import pl.zajavka.CodeBridge.api.dto.CandidateDTO;
+import pl.zajavka.CodeBridge.api.dto.CandidateExperienceDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.CandidateExperienceMapper;
+import pl.zajavka.CodeBridge.api.dto.mapper.CandidateMapper;
 import pl.zajavka.CodeBridge.business.CandidateExperienceService;
 import pl.zajavka.CodeBridge.business.CandidateService;
 import pl.zajavka.CodeBridge.domain.Candidate;
@@ -40,44 +41,38 @@ public class CandidatePortalController {
 
     private static final String DELETE_CANDIDATE_PHOTO = "/candidate-portal/delete-candidate-photo/{email}";
 
-
-
     private final CandidateService candidateService;
     private final CandidateExperienceService candidateExperienceService;
     private final CandidateExperienceMapper candidateExperienceMapper;
+    private final CandidateMapper candidateMapper;
 
-
-//    @GetMapping(SHOW_CANDIDATE_EXPERIENCE)
-//    public List<CandidateExperienceDTO> getCandidateExperience(Authentication authentication) {
-//        return candidateExperienceService.getExperienceData(authentication);
-//    }
 
 
 
     @GetMapping(SHOW_CANDIDATE_PORTAL)
-    public String getCandidateDetails(
-            @RequestParam(required = false) String email,
-            Model model) {
+    public String getCandidateDetails(Model model) {
 
-        // Pobranie pełnego obiektu kandydata
         Candidate candidate = candidateService.findLoggedInCandidate();
+        CandidateDTO candidateDetails = candidateMapper.candidateToDto(candidate);
 
-        List<CandidateExperience> candidateExperienceList = candidateExperienceService.findExperienceByCandidateId(candidate.getCandidateId());
-        List<CandidateExperienceDTO> candidateExperienceDTOList = candidateExperienceList.stream()
-                .map(candidateExperienceMapper::mapToDto).toList();
 
-        // Dodanie całego obiektu kandydata do modelu
-        model.addAttribute("candidate", candidate);
-        model.addAttribute("candidateExperienceDTOList", candidateExperienceDTOList);
+        model.addAttribute("candidateExperiences", candidateDetails.getCandidateExperiences());
 
+        // Dodanie obiektów do modelu
+        model.addAttribute("candidate", candidateDetails);
+
+
+        // Zwrócenie widoku
         return "candidate_portal";
     }
 
 
 
+
+
+
     @GetMapping(PROFILE_PHOTO_DISPLAY)
     public ResponseEntity<byte[]> getProfilePhoto(
-            @PathVariable("email") String email,
             Authentication authentication) {
 
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());

@@ -1,6 +1,5 @@
 package pl.zajavka.CodeBridge.api.dto;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.*;
 
 import java.util.List;

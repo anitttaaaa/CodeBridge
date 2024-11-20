@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.api.dto;
 
 import lombok.*;
-import pl.zajavka.CodeBridge.domain.Candidate;
 
 import java.time.LocalDate;
 
@@ -18,5 +17,4 @@ public class CandidateExperienceDTO {
     private String description;
     private LocalDate fromDate;
     private LocalDate toDate;
-    private CandidateDTO candidate;
 }

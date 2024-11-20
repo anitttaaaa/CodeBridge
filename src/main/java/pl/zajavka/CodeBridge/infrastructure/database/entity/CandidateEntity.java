@@ -2,10 +2,9 @@ package pl.zajavka.CodeBridge.infrastructure.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import pl.zajavka.CodeBridge.domain.CandidateExperience;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -58,16 +57,11 @@ public class CandidateEntity {
     @Column(name = "candidate_skills")
     private List<String> candidateSkills;
 
-//    @ElementCollection
-//    @CollectionTable(name = "candidate_experiences", joinColumns = @JoinColumn(name = "candidate_id"))
-//    @Column(name = "candidate_experiences")
-//    private  List<CandidateExperience> candidateExperiences;
-
-
     @Column(name = "profile_photo", columnDefinition="bytea")
     private byte[] profilePhoto;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "candidate")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "candidate_id")
     private List<CandidateExperienceEntity> candidateExperiences;
 
 }

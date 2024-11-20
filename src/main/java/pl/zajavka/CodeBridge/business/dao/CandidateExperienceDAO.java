@@ -9,5 +9,4 @@ public interface CandidateExperienceDAO {
 
     CandidateExperience createExperience(CandidateExperience candidateExperience);
 
-    List<CandidateExperience> findExperienceByCandidateId(Integer candidateId);
 }

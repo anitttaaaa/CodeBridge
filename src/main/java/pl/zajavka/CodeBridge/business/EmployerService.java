@@ -14,7 +14,6 @@ import java.util.Optional;
 public class EmployerService {
 
     private final EmployerDAO employerDAO;
-//    private final JobOfferJpaRepository jobOfferJpaRepository;
 
     @Transactional
     public Employer findEmployer(Integer userId) {
@@ -30,7 +29,5 @@ public class EmployerService {
         employerDAO.createJobOffer(employerAddJobOffer);
 
     }
-//    public List<JobOfferEntity> findJobOffersByTechSpecialization(TechSpecializationsEnum techSpecialization) {
-//        return jobOfferJpaRepository.findByTechSpecialization(techSpecialization);
-//    }
+
 }

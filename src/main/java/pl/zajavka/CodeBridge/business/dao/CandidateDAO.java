@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.business.dao;
 
 import pl.zajavka.CodeBridge.domain.Candidate;
-import pl.zajavka.CodeBridge.domain.Employer;
 
 import java.util.Optional;
 

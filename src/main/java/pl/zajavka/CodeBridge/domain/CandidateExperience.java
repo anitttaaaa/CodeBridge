@@ -17,5 +17,5 @@ public class CandidateExperience {
     String description;
     LocalDate fromDate;
     LocalDate toDate;
-    Candidate candidate;
+    Integer candidateId;
 }

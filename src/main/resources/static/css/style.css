@@ -344,6 +344,31 @@ body {
 }
 
 
+/*--------------------------------------------------------------------------------------------------------*/
+/* widok wyświetlania experience */
+/* Ogólna ramka dla sekcji "My Work Experience" */
 
+.experience-card {
+    border: 1px solid #ddd;
+    border-radius: 8px !important;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #F4F3F0 !important;
+}
+
+.experience-card .card-title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.experience-card .card-subtitle {
+    font-size: 1em;
+    color: #6c757d;
+}
+
+.experience-card .card-text {
+    font-size: 0.9em;
+    color: #333;
+}
 
 

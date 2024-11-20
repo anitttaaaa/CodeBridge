@@ -7,21 +7,16 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.zajavka.CodeBridge.business.dao.CandidateExperienceDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.CandidateExperience;
-import pl.zajavka.CodeBridge.infrastructure.database.repository.CandidateExperienceRepository;
-import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.CandidateExperienceEntityMapper;
-import pl.zajavka.CodeBridge.infrastructure.security.CodeBridgeUserDetailsService;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class CandidateExperienceService {
 
-    private final CodeBridgeUserDetailsService codeBridgeUserDetailsService;
+
     private final CandidateService candidateService;
     private final CandidateExperienceDAO candidateExperienceDAO;
-    private final CandidateExperienceRepository candidateExperienceRepository;
-    private final CandidateExperienceEntityMapper candidateExperienceEntityMapper;
+
+
 
     @Transactional
     public void createExperienceData(CandidateExperience candidateExperienceFromRequest, Authentication authentication) {
@@ -47,14 +42,9 @@ public class CandidateExperienceService {
                 .description(candidateExperienceFromRequest.getDescription())
                 .fromDate(candidateExperienceFromRequest.getFromDate())
                 .toDate(candidateExperienceFromRequest.getToDate())
-                .candidate(candidate)
+                .candidateId(candidate.getCandidateId())
                 .build();
     }
 
 
-    public List<CandidateExperience> findExperienceByCandidateId(Integer candidateId) {
-
-        return candidateExperienceDAO.findExperienceByCandidateId(candidateId);
-
-    }
 }

@@ -1,28 +1,30 @@
 package pl.zajavka.CodeBridge.business;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.zajavka.CodeBridge.api.dto.CandidateDTO;
+import pl.zajavka.CodeBridge.api.dto.mapper.CandidateExperienceMapper;
 import pl.zajavka.CodeBridge.business.dao.CandidateDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.exception.NotFoundException;
-import pl.zajavka.CodeBridge.infrastructure.database.repository.CandidateRepository;
 import pl.zajavka.CodeBridge.infrastructure.security.CodeBridgeUserDetailsService;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class CandidateService {
 
     private final CandidateDAO candidateDAO;
-    private final CodeBridgeUserDetailsService codeBridgeUserDetailsService;
 
-     // Metoda wyszukuje zalogowanego użytkownika i wykorzystuje
+    private final CandidateExperienceMapper candidateExperienceMapper;
+
+
+    // Metoda wyszukuje zalogowanego użytkownika i wykorzystuje
     // findCandidateByEmail zeby dostać sie do szczegółów
     @Transactional(readOnly = true)
     public Candidate findLoggedInCandidate() {
@@ -48,7 +50,6 @@ public class CandidateService {
     public void updateCandidate(Candidate candidate, Authentication authentication) {
         candidateDAO.updateCandidate(candidate);
     }
-
 
 }
 

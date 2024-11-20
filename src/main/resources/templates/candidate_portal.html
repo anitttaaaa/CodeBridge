@@ -382,15 +382,17 @@
                 </button>
                 <h4 class="mb-0">My Work Experience</h4>
                 <p></p>
-                <ul>
+                <div class="experience-list">
                     <!-- Pętla po doświadczeniu zawodowym kandydata -->
-                    <li th:each="experience : ${candidateExperienceList}">
-                        <p th:text="'Company: ' + ${experience.companyName}"></p>
-                        <p th:text="'Position: ' + ${experience.candidatePosition}"></p>
-                        <p th:text="'Description: ' + ${experience.description}"></p>
-                        <p th:text="'From: ' + ${experience.fromDate} + ' To: ' + ${experience.toDate}"></p>
-                    </li>
-                </ul>
+                    <div th:each="experience : ${candidateExperiences}" class="experience-card card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${experience.companyName}"></h5>
+                            <h6 class="card-subtitle mb-2 text-muted" th:text="${experience.candidatePosition}"></h6>
+                            <p class="card-text" th:text="'Description: ' + ${experience.description}"></p>
+                            <p class="card-text" th:text="'From: ' + ${experience.fromDate} + ' To: ' + ${experience.toDate}"></p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
