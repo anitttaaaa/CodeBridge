@@ -25,13 +25,8 @@ public class CandidateExperienceService {
 
         CandidateExperience candidateExperience = buildCandidateExperience(candidateExperienceFromRequest, candidate);
 
-        CandidateExperience candidateExperienceSaved = candidateExperienceDAO.createExperience(candidateExperience);
+        candidateExperienceDAO.createExperience(candidateExperience);
 
-        candidate.getCandidateExperiences().add(candidateExperienceSaved);
-
-//        candidate.getCandidateExperiences().add(candidateExperience);
-
-        candidateService.updateCandidate(candidate, authentication);
     }
 
 

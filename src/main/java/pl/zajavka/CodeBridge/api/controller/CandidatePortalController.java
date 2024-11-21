@@ -21,7 +21,6 @@ import pl.zajavka.CodeBridge.domain.CandidateExperience;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,7 +28,6 @@ public class CandidatePortalController {
 
     private static final String SHOW_CANDIDATE_PORTAL = "/candidate-portal";
     private static final String PROFILE_PHOTO_DISPLAY = "/candidate-portal/profilePhoto/{email}";
-    private static final String SHOW_CANDIDATE_EXPERIENCE = "/candidate-portal/show-experience/{email}";
 
     private static final String UPDATE_CANDIDATE_BASIC_INFO = "/candidate-portal/update-candidate-basic-info";
     private static final String UPDATE_CANDIDATE_TECH_SPECIALIZATION = "/candidate-portal/update-candidate-tech-specialization";
@@ -45,8 +43,6 @@ public class CandidatePortalController {
     private final CandidateExperienceService candidateExperienceService;
     private final CandidateExperienceMapper candidateExperienceMapper;
     private final CandidateMapper candidateMapper;
-
-
 
 
     @GetMapping(SHOW_CANDIDATE_PORTAL)
@@ -67,17 +63,14 @@ public class CandidatePortalController {
     }
 
 
-
-
-
-
     @GetMapping(PROFILE_PHOTO_DISPLAY)
     public ResponseEntity<byte[]> getProfilePhoto(
             Authentication authentication) {
 
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
+        CandidateDTO candidateDTO = candidateMapper.candidateToDto(candidate);
 
-        byte[] profilePhoto = candidate.getProfilePhoto();
+        byte[] profilePhoto = candidateDTO.getProfilePhoto();
 
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)

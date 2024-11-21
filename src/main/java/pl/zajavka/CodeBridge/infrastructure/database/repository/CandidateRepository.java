@@ -23,55 +23,38 @@ public class CandidateRepository implements CandidateDAO {
     private final CandidateEntityMapper candidateEntityMapper;
     private final CandidateExperienceEntityMapper candidateExperienceEntityMapper;
 
-
-
     @Override
     public Optional<Candidate> findCandidateByEmail(String email) {
         return candidateJpaRepository.findByEmail(email)
                 .map(candidateEntityMapper::mapFromEntity);
     }
 
-
-    public void saveCandidate(Candidate candidate) {
-
-        CandidateEntity candidateToSave = candidateEntityMapper.mapToEntity(candidate);
-        CandidateEntity candidateSaved = candidateJpaRepository.saveAndFlush(candidateToSave);
-
-
-    }
-
     public void updateCandidate(Candidate candidate) {
-        CandidateEntity candidateEntity = candidateEntityMapper.mapToEntity(candidate);
-        System.out.println("correctly done");
-        candidateJpaRepository.saveAndFlush(candidateEntity);
+        saveCandidateEntity(candidate);
     }
 
     @Override
     public void createCandidateExperience(Candidate candidateToDatabase) {
+        CandidateEntity candidateSaved = saveCandidateEntity(candidateToDatabase);
+        saveCandidateExperiences(candidateToDatabase, candidateSaved.getCandidateId());
+    }
 
-        // Mapowanie kandydata na encję
-        CandidateEntity candidateToSave = candidateEntityMapper.mapToEntity(candidateToDatabase);
 
-        // Zapisujemy kandydata w bazie
-        CandidateEntity candidateSaved = candidateJpaRepository.saveAndFlush(candidateToSave);
+    private CandidateEntity saveCandidateEntity(Candidate candidate) {
+        CandidateEntity candidateEntity = candidateEntityMapper.mapToEntity(candidate);
+        return candidateJpaRepository.saveAndFlush(candidateEntity);
+    }
 
-        // Iteracja po doświadczeniach kandydata
-        candidateToDatabase.getCandidateExperiences().stream()
-                // Sprawdzamy, czy doświadczenie nie ma przypisanego ID (czyli jest to nowe doświadczenie)
+    private void saveCandidateExperiences(Candidate candidate, Integer candidateId) {
+        candidate.getCandidateExperiences().stream()
                 .filter(experience -> Objects.isNull(experience.getCandidateExperienceId()))
-                // Mapujemy CandidateExperience na CandidateExperienceEntity
                 .map(candidateExperienceEntityMapper::mapToEntity)
                 .forEach(candidateExperienceEntity -> {
-                    // Przypisujemy candidateId do doświadczenia
-                    candidateExperienceEntity.setCandidateId(candidateSaved.getCandidateId());
-
-                    // Zapisujemy doświadczenie w bazie
+                    candidateExperienceEntity.setCandidateId(candidateId);
                     candidateExperienceJpaRepository.saveAndFlush(candidateExperienceEntity);
                 });
     }
-
 }
-
 
 
 
