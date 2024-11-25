@@ -29,6 +29,11 @@ public class CandidateRepository implements CandidateDAO {
                 .map(candidateEntityMapper::mapFromEntity);
     }
 
+    private CandidateEntity saveCandidateEntity(Candidate candidate) {
+        CandidateEntity candidateEntity = candidateEntityMapper.mapToEntity(candidate);
+        return candidateJpaRepository.saveAndFlush(candidateEntity);
+    }
+
     public void updateCandidate(Candidate candidate) {
         saveCandidateEntity(candidate);
     }
@@ -39,11 +44,6 @@ public class CandidateRepository implements CandidateDAO {
         saveCandidateExperiences(candidateToDatabase, candidateSaved.getCandidateId());
     }
 
-
-    private CandidateEntity saveCandidateEntity(Candidate candidate) {
-        CandidateEntity candidateEntity = candidateEntityMapper.mapToEntity(candidate);
-        return candidateJpaRepository.saveAndFlush(candidateEntity);
-    }
 
     private void saveCandidateExperiences(Candidate candidate, Integer candidateId) {
         candidate.getCandidateExperiences().stream()

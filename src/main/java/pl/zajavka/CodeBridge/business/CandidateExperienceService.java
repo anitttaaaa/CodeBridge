@@ -19,12 +19,10 @@ public class CandidateExperienceService {
 
 
     @Transactional
-    public void createExperienceData(CandidateExperience candidateExperienceFromRequest, Authentication authentication) {
+    public void createExperienceData(CandidateExperience candidateExperienceFromRequest) {
 
         Candidate candidate = candidateService.findLoggedInCandidate();
-
         CandidateExperience candidateExperience = buildCandidateExperience(candidateExperienceFromRequest, candidate);
-
         candidateExperienceDAO.createExperience(candidateExperience);
 
     }

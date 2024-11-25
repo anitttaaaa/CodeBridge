@@ -19,6 +19,7 @@ import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.CandidateExperience;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,12 +30,13 @@ public class CandidatePortalController {
     private static final String SHOW_CANDIDATE_PORTAL = "/candidate-portal";
     private static final String PROFILE_PHOTO_DISPLAY = "/candidate-portal/profilePhoto/{email}";
 
+    private static final String ADD_CANDIDATE_EXPERIENCE = "/candidate-portal/candidate-experience";
     private static final String UPDATE_CANDIDATE_BASIC_INFO = "/candidate-portal/update-candidate-basic-info";
     private static final String UPDATE_CANDIDATE_TECH_SPECIALIZATION = "/candidate-portal/update-candidate-tech-specialization";
     private static final String UPDATE_CANDIDATE_SKILLS = "/candidate-portal/update-candidate-skills";
+    private static final String UPDATE_CANDIDATE_EXPERIENCE = "/candidate-portal/update-candidate-experience";
     private static final String UPDATE_CANDIDATE_ABOUT_ME = "/candidate-portal/update-candidate-about-me";
     private static final String UPDATE_CANDIDATE_HOBBY = "/candidate-portal/update-candidate-hobby";
-    private static final String UPDATE_CANDIDATE_EXPERIENCE = "/candidate-portal/candidate-experience";
     private static final String UPDATE_CANDIDATE_PHOTO = "/candidate-portal/update-candidate-photo";
 
     private static final String DELETE_CANDIDATE_PHOTO = "/candidate-portal/delete-candidate-photo/{email}";
@@ -51,14 +53,14 @@ public class CandidatePortalController {
         Candidate candidate = candidateService.findLoggedInCandidate();
         CandidateDTO candidateDetails = candidateMapper.candidateToDto(candidate);
 
+        List<CandidateExperienceDTO> sortedExperiences = candidateDetails.getCandidateExperiences()
+                .stream()
+                .sorted(Comparator.comparing(CandidateExperienceDTO::getFromDate))
+                .toList();
 
-        model.addAttribute("candidateExperiences", candidateDetails.getCandidateExperiences());
-
-        // Dodanie obiektów do modelu
+        model.addAttribute("candidateExperiences",sortedExperiences);
         model.addAttribute("candidate", candidateDetails);
 
-
-        // Zwrócenie widoku
         return "candidate_portal";
     }
 
@@ -69,7 +71,6 @@ public class CandidatePortalController {
 
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
         CandidateDTO candidateDTO = candidateMapper.candidateToDto(candidate);
-
         byte[] profilePhoto = candidateDTO.getProfilePhoto();
 
         return ResponseEntity.ok()
@@ -77,7 +78,6 @@ public class CandidatePortalController {
                 .body(profilePhoto);
 
     }
-
 
     @PostMapping(UPDATE_CANDIDATE_PHOTO)
     public String updateCandidateProfilePhoto(
@@ -87,13 +87,11 @@ public class CandidatePortalController {
     ) throws IOException {
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
 
-
         if (!profilePhoto.isEmpty()) {
             byte[] profilePhotoData = profilePhoto.getBytes();
             candidate = candidate.withProfilePhoto(profilePhotoData);
             candidateService.updateCandidate(candidate, authentication);
         }
-
         return "redirect:/candidate-portal";
     }
 
@@ -118,13 +116,25 @@ public class CandidatePortalController {
         return "redirect:/candidate-portal";
     }
 
-    @PostMapping(UPDATE_CANDIDATE_EXPERIENCE)
+    @PostMapping(ADD_CANDIDATE_EXPERIENCE)
     public String addExperience(
-            @ModelAttribute("candidateExperienceDTO") CandidateExperienceDTO candidateExperienceDTO,
-            Authentication authentication) {
-        CandidateExperience candidateExperience = candidateExperienceMapper.mapFromDTO(candidateExperienceDTO);
-        candidateExperienceService.createExperienceData(candidateExperience, authentication);
+            @ModelAttribute("candidateExperienceDTO") CandidateExperienceDTO candidateExperienceDTO) {
 
+        CandidateExperience candidateExperience = candidateExperienceMapper.mapFromDTO(candidateExperienceDTO);
+        candidateExperienceService.createExperienceData(candidateExperience);
+
+        return "redirect:/candidate-portal";
+    }
+    @PostMapping(UPDATE_CANDIDATE_EXPERIENCE)
+    public String updateCandidateExperience(
+            @ModelAttribute("candidateExperienceDTO") CandidateExperienceDTO candidateExperienceDTO,
+            Authentication authentication
+            ) {
+        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
+
+
+        CandidateExperience candidateExperience = candidateExperienceMapper.mapFromDTO(candidateExperienceDTO);
+        candidateExperienceService.createExperienceData(candidateExperience);
 
         return "redirect:/candidate-portal";
     }
@@ -136,11 +146,9 @@ public class CandidatePortalController {
     ) {
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
 
-        // Sprawdzanie, czy techSpecialization jest null lub pustym ciągiem
         if (techSpecialization == null || techSpecialization.trim().isEmpty()) {
-            techSpecialization = null; // Ustawiamy na null, jeśli nie wybrano specjalizacji
+            techSpecialization = null;
         }
-
         candidate = candidate.withTechSpecialization(techSpecialization);
         candidateService.updateCandidate(candidate, authentication);
 
@@ -217,7 +225,6 @@ public class CandidatePortalController {
             candidateService.updateCandidate(candidate, authentication);
 
         }
-
         return "redirect:/candidate-portal";
     }
 

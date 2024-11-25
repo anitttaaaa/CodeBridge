@@ -14,6 +14,7 @@ body {
     height: 100px !important;
     color: #444444 !important;
     font-weight: bold !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Mocniejszy cień */
 
 
 }
@@ -89,6 +90,7 @@ body {
     margin-right: 50px !important;
     background-color: #a09b87 !important;
     border-color: #7d7862 !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Mocniejszy cień */
     }
 
 .login-button:hover {
@@ -113,7 +115,6 @@ body {
     border-color: #7d7862!important;
     float: right!important;
     margin-bottom:20px!important;
-
 }
 
 .add-job-offer-button:active{
@@ -127,7 +128,6 @@ body {
     background-color: #b2ad99 !important;
     border-color: #7d7862 !important;
     color: white !important;
-
 }
 
 .employer-new-job-offer h2 {
@@ -136,8 +136,8 @@ body {
     margin-top: 20px !important;
     margin-bottom: 25px !important;
     padding-top: 0px !important;
-
 }
+
 .new-job-offer-card {
     width: 40%; /* 80% szerokości rodzica */
     max-width: 1200px; /* Maksymalna szerokość */
@@ -167,7 +167,6 @@ body {
     width: 150px;
     height: 150px;
     margin-right: 20px;
-
 }
 
 
@@ -175,7 +174,6 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-
 }
 
 .edit-photo-button {
@@ -220,7 +218,6 @@ body {
 .change-photo-button:focus {
     outline: none !important;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5) !important;
-
 }
 
 .candidate-card {
@@ -228,11 +225,10 @@ body {
     max-width: 1200px; /* Maksymalna szerokość */
     background-color: #DAD7D2;
     margin: 20px auto; /* Wyśrodkowanie w poziomie i dodanie odstępu od góry */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Mocniejszy cień */
     padding: 10px;
     border-radius: 15px;
     margin-bottom: 5px;
-
 }
 
 .candidate-page-container {
@@ -246,7 +242,7 @@ body {
 
 
 .icon-size {
-    font-size: 20px; /* Adjust size as necessary */
+    font-size: 15px; /* Adjust size as necessary */
     line-height: 1; /* Prevent line height from shifting the icon */
     margin: 0; /* Reset margins */
 }
@@ -280,7 +276,7 @@ body {
 }
 
 .icon-color {
-        color: #444444;
+        color: #a09b87;
     }
 .frame {
     width: 90%; /* 80% szerokości rodzica */
@@ -346,8 +342,130 @@ body {
 
 /*--------------------------------------------------------------------------------------------------------*/
 /* widok experience Add */
-.candidate-card-experience {
-    background-color: #E8E7E4!important;
+
+/* Stylowanie ogólne dla karty */
+/* Ramki dla kart */
+.frame-card, .frame-card-skills, .frame-card-basic-info {
+    border-radius: 12px !important; /* Zaokrąglenie rogów */
+    background-color: #E5E5E5 !important; /* Kremowy kolor tła */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Cień */
+    padding: 30px;
+    border: 1px solid #ddd; /* Ramka wokół karty */
+    font-family: 'YourFontFamily', sans-serif;
+    font-size: 16px;
+    color: #333;
+}
+.frame-card-skills{
+    padding-left: 50px;
 
 }
+
+/* Karta z podstawowymi informacjami */
+.frame-card-basic-info {
+    width: 80%;
+}
+
+/* Styl dla ciała karty */
+.frame-card .card-body {
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Kontener dla przycisków */
+    padding: 20px; /* Padding wewnętrzny */
+}
+
+/* Pozycjonowanie przycisków edycji i usuwania */
+.experience-actions {
+    position: absolute; /* Pozycjonowanie absolutne */
+    top: 10px; /* Odstęp od góry */
+    right: 10px; /* Odstęp od prawej krawędzi */
+    display: flex;
+    gap: 10px; /* Odstęp między przyciskami */
+}
+
+/* Sekcja dat */
+.experience-dates {
+    text-align: right;
+    min-width: 150px;
+    padding-right: 250px;
+    white-space: nowrap;
+}
+
+.experience-dates p {
+    margin: 0;
+    color: #555;
+}
+
+/* Sekcja informacji (pozycja, firma, opis) */
+/* Sekcja informacji */
+.experience-info {
+    font-weight: normal; /* Nie pogrubiona czcionka */
+    color: #777; /* Jaśniejszy kolor tekstu */
+    font-size: 0.9rem; /* Mniejszy rozmiar czcionki */
+    margin-bottom: 5px; /* Odstęp między etykietą a wartością */
+    display: inline-block;
+    width: 100%;  /* Ustawienie pełnej szerokości */
+    padding: 0;  /* Upewniamy się, że nie ma paddingu */
+}
+
+.experience-info-value {
+    font-weight: bold; /* Ustalamy, że wartości nie będą pogrubione */
+    color: #333; /* Ciemniejszy kolor wartości */
+    display: block; /* Ustawiamy na block, by wartość była poniżej etykiety */
+    margin-top: 5px; /* Odstęp między etykietą a wartością */
+    font-size: 1rem; /* Standardowy rozmiar czcionki dla wartości */
+    padding: 0;  /* Upewniamy się, że padding jest zerowy */
+    margin-left: 0; /* Usuwamy dodatkowy margines z lewej */
+    width: 100%; /* Ustawiamy na pełną szerokość */
+}
+
+/* Opcjonalne: Jeśli chcesz dostosować szerokość wartości, np. by była szersza od etykiety */
+.experience-info-value.description {
+    font-weight: normal;
+    width: 100%; /* Sprawia, że będzie na całej szerokości */
+    padding-left: 0; /* Usuwamy wszelkie dodatkowe przesunięcie w lewo */
+}
+
+/* Styl dla przycisków */
+.change-photo-button {
+    margin-left: 10px;
+}
+
+/* Układ przycisków i dat */
+.d-flex.justify-content-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Responsywność dla mniejszych ekranów */
+@media (max-width: 768px) {
+    .d-flex {
+        flex-direction: column;
+    }
+
+    .experience-dates {
+        padding-right: 0;
+    }
+
+    .experience-info {
+        font-size: 1rem; /* Zwiększenie rozmiaru etykiet na mniejszych ekranach */
+    }
+
+    .text-end {
+        margin-top: 10px;
+        text-align: left;
+    }
+}
+
+/* Linki niestandardowe */
+.custom-link {
+    color: #444444; /* Szary kolor */
+    text-decoration: none;
+}
+
+.custom-link:hover {
+    color: #6c757d; /* Ciemniejszy szary */
+    text-decoration: underline;
+}
+
 
