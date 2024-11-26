@@ -30,7 +30,7 @@ public class CandidatePortalController {
     private static final String SHOW_CANDIDATE_PORTAL = "/candidate-portal";
     private static final String PROFILE_PHOTO_DISPLAY = "/candidate-portal/profilePhoto/{email}";
 
-    private static final String ADD_CANDIDATE_EXPERIENCE = "/candidate-portal/candidate-experience";
+    private static final String ADD_CANDIDATE_EXPERIENCE = "/candidate-portal/candidate-experience-add";
     private static final String UPDATE_CANDIDATE_BASIC_INFO = "/candidate-portal/update-candidate-basic-info";
     private static final String UPDATE_CANDIDATE_TECH_SPECIALIZATION = "/candidate-portal/update-candidate-tech-specialization";
     private static final String UPDATE_CANDIDATE_SKILLS = "/candidate-portal/update-candidate-skills";

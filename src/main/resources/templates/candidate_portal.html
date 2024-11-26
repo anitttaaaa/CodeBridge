@@ -126,7 +126,7 @@
                             <p class="card-text" style="visibility: hidden;">&nbsp;</p>
                             <p class="card-text">
                                 <i class="bi bi-linkedin icon-color"></i>
-                                <a class="custom-link"th:href="${candidate.linkedIn}" target="_blank"
+                                <a class="custom-link" th:href="${candidate.linkedIn}" target="_blank"
                                    th:text="${candidate.linkedIn != null ? candidate.linkedIn : 'Profile LinkedIn'}"
                                    th:if="${candidate.linkedIn != null}"></a>
                             </p>
@@ -375,8 +375,9 @@
 
         <div class="candidate-card">
             <div class="card-body">
-                <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal" data-target="#editExperienceModal">
-                    <i class="fas fa-pencil-alt"></i> Add Work Experience
+                <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
+                        data-target="#addExperienceModal">
+                    <i class="fas fa-plus"></i> Add Work Experience
                 </button>
                 <h4 class="mb-0">My Work Experience</h4>
                 <p></p>
@@ -389,190 +390,254 @@
                                 <!-- Lewa sekcja: Pozycja i firma -->
                                 <div>
                                     <!-- Informacyjne teksty w ramkach -->
-                                    <div class="experience-info">Position: <span class="experience-info-value" th:text="${experience.candidatePosition}"></span></div>
-                                    <div class="experience-info">Company: <span class="experience-info-value" th:text="${experience.companyName}"></span></div>
-                                </div>
-                                <!-- Sekcja z datami i przyciskami -->
-                                <div class="d-flex align-items-center">
-                                    <!-- Sekcja z datami -->
-                                    <div class="experience-dates text-right">
-                                        <p class="mb-1"><strong>From:</strong> <span th:text="${experience.fromDate}"></span></p>
-                                        <p class="mb-1"><strong>To:</strong> <span th:text="${experience.toDate}"></span></p>
+                                    <div class="experience-info">Position: <span class="experience-info-value"
+                                                                                 th:text="${experience.candidatePosition}"></span>
                                     </div>
-                                    <!-- Sekcja z przyciskami -->
-                                    <div class="experience-actions ml-3">
-                                        <button type="button" class="change-photo-button btn btn-danger" title="Edit">
-                                            <i class="fas fa-pencil-alt icon-size"></i>
-                                        </button>
-                                        <button type="submit" class="change-photo-button btn btn-danger" title="Delete">
+                                    <div class="experience-info">Company: <span class="experience-info-value"
+                                                                                th:text="${experience.companyName}"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Sekcja z datami -->
+                                <div class="experience-dates text-right">
+                                    <p class="mb-1"><strong>From:</strong> <span
+                                            th:text="${experience.fromDate}"></span></p>
+                                    <p class="mb-1"><strong>To:</strong> <span th:text="${experience.toDate}"></span>
+                                    </p>
+                                </div>
+
+                                <!-- Przyciski -->
+                                <div class="experience-actions ml-3">
+                                    <!-- Edycja doświadczenia -->
+                                    <button type="button" class="btn btn-primary change-photo-button"
+                                            th:data-target="'#editExperienceModal-' + ${experience.candidateExperienceId}"
+                                            data-toggle="modal" title="Edit">
+                                        <i class="fas fa-pencil-alt icon-size"></i>
+                                    </button>
+
+                                    <!-- Usuwanie doświadczenia -->
+                                    <form action="/candidate-portal/delete-experience" method="post" class="d-inline">
+                                        <input type="hidden" name="experienceId"
+                                               th:value="${experience.candidateExperienceId}"/>
+                                        <button type="submit" class="btn btn-danger change-photo-button" title="Delete">
                                             <i class="fas fa-trash icon-size"></i>
                                         </button>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                             <!-- Opis -->
                             <div class="mt-3">
                                 <div class="experience-info">Description:</div>  <!-- Etykieta Description -->
-                                <div class="experience-info-value description" th:text="${experience.description}"></div> <!-- Wartość description -->
+                                <div class="experience-info-value description"
+                                     th:text="${experience.description}"></div> <!-- Wartość description -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-        <!-- Modal do edycji doświadczenia zawodowego -->
-        <div class="modal fade" id="editExperienceModal" tabindex="-1" role="dialog" aria-labelledby="editExperienceModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editExperienceModalLabel">Edit My Work Experience</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="#" th:action="@{/candidate-portal/candidate-experience}" method="post">
-                            <!-- Company Name -->
-                            <div class="form-group">
-                                <label for="companyName">Company Name</label>
-                                <input type="text" class="form-control" id="companyName" name="companyName"
-                                       th:value="${candidateExperienceDTO != null ? candidateExperienceDTO.companyName : ''}">
-                            </div>
-
-                            <!-- Position -->
-                            <div class="form-group">
-                                <label for="candidatePosition">Position</label>
-                                <input type="text" class="form-control" id="candidatePosition" name="candidatePosition"
-                                       th:value="${candidateExperienceDTO != null ? candidateExperienceDTO.candidatePosition : ''}">
-                            </div>
-
-                            <!-- Description -->
-                            <div class="form-group">
-                                <label for="description">Description</label>
-                                <textarea class="form-control" id="description" name="description"
-                                          th:text="${candidateExperienceDTO != null ? candidateExperienceDTO.description : ''}"></textarea>
-                            </div>
-
-                            <!-- From Date -->
-                            <div class="form-group">
-                                <label for="fromDate">From</label>
-                                <input type="date" class="form-control" id="fromDate" name="fromDate"
-                                       th:value="${candidateExperienceDTO != null ? candidateExperienceDTO.fromDate : ''}">
-                            </div>
-
-                            <!-- To Date -->
-                            <div class="form-group">
-                                <label for="toDate">To</label>
-                                <input type="date" class="form-control" id="toDate" name="toDate"
-                                       th:value="${candidateExperienceDTO != null ? candidateExperienceDTO.toDate : ''}">
-                            </div>
-
-                            <!-- Submit Button -->
-                            <button type="submit" class="add-job-offer-button btn btn-primary">Save changes</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="candidate-card">
-            <div class="card-body">
-                <!-- Przycisk do edycji profilu - przeniesiony na górę -->
-                <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
-                        data-target="#editProfileModal">
-                    <i class="fas fa-pencil-alt"></i> Edit Details
-                </button>
-                <h4 class="mb-0">My Projects</h4>
-            </div>
-            <div class="card-body">
-                <h6 class="card-title">---------------------------------</h6>
-                <p class="card-text"></p>
-
-                <h6 class="card-title">-------------------------------</h6>
-
-            </div>
-        </div>
-
-        <div class="candidate-card">
-            <div class="card-body">
-                <!-- Przycisk do edycji profilu - przeniesiony na górę -->
-                <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
-                        data-target="#editProfileModal">
-                    <i class="fas fa-pencil-alt"></i> Edit Details
-                </button>
-                <h4 class="mb-0">Education</h4>
-            </div>
-            <div class="card-body">
-                <h6 class="card-title">---------------------------------</h6>
-                <p class="card-text"></p>
-
-                <h6 class="card-title">-------------------------------</h6>
-
-            </div>
-        </div>
-
-        <div class="candidate-card">
-            <div class="card-body">
-                <!-- Przycisk do edycji profilu - przeniesiony na górę -->
-                <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
-                        data-target="#editProfileModal">
-                    <i class="fas fa-pencil-alt"></i> Edit Details
-                </button>
-                <h4 class="mb-0">Courses and Certificates</h4>
-            </div>
-            <div class="card-body">
-                <h6 class="card-title">---------------------------------</h6>
-                <p class="card-text"></p>
-
-                <h6 class="card-title">-------------------------------</h6>
-
-            </div>
-        </div>
-
-        <div class="candidate-card">
-            <div class="card-body">
-                <!-- Przycisk do edycji profilu -->
-                <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
-                        data-target="#editHobby">
-                    <i class="fas fa-pencil-alt"></i> Edit Hobby
-                </button>
-                <h4 class="mb-0">My hobby</h4>
-                <p class="card-text text-justify frame-card" th:text="${candidate.hobby}">No information available</p>
-            </div>
-        </div>
-        <!-- Nowe Okno Modal do edycji profilu -->
-        <div class="modal fade" id="editHobby" tabindex="-1" role="dialog"
-             aria-labelledby="editHobbyLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content ">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editHobbyLabel">Edit Hobby</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Form for updating personal details -->
-                        <form th:action="@{/candidate-portal/update-candidate-hobby}" method="post">
-                            <div class="form-group ">
-                                <label for="aboutMe">My hobby:</label>
-                                <textarea class="form-control " id="hobby" name="hobby" rows="4"
-                                          th:text="${candidate.hobby}"></textarea>
-                            </div>
-                            <button type="submit" class="add-job-offer-button btn btn-primary mb-3">Save changes
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
     </div>
+
+    <!-- Modal edycji doświadczenia dla każdego obiektu -->
+    <div th:each="experience : ${candidateExperiences}" class="modal fade"
+         th:id="'editExperienceModal-' + ${experience.candidateExperienceId}" tabindex="-1" role="dialog"
+         aria-labelledby="editExperienceModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Work Experience</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formularz edycji -->
+                    <form action="/candidate-portal/candidate-experience-update" method="post">
+                        <input type="hidden" name="experienceId" th:value="${experience.candidateExperienceId}"/>
+                        <div class="form-group">
+                            <label for="editCompanyName">Company Name</label>
+                            <input type="text" class="form-control" id="editCompanyName" name="companyName"
+                                   th:value="${experience.companyName}">
+                        </div>
+                        <div class="form-group">
+                            <label for="editCandidatePosition">Position</label>
+                            <input type="text" class="form-control" id="editCandidatePosition" name="candidatePosition"
+                                   th:value="${experience.candidatePosition}">
+                        </div>
+                        <div class="form-group">
+                            <label for="editDescription">Description</label>
+                            <textarea class="form-control" id="editDescription" name="description"
+                                      th:text="${experience.description}"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="editFromDate">From</label>
+                            <input type="date" class="form-control" id="editFromDate" name="fromDate"
+                                   th:value="${experience.fromDate}">
+                        </div>
+                        <div class="form-group">
+                            <label for="editToDate">To</label>
+                            <input type="date" class="form-control" id="editToDate" name="toDate"
+                                   th:value="${experience.toDate}">
+                        </div>
+                        <button type="submit" class="add-job-offer-button btn btn-primary mb-3">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal ADD -->
+    <div class="modal fade" id="addExperienceModal" tabindex="-1" role="dialog"
+         aria-labelledby="addExperienceModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addExperienceModalLabel">Add My Work Experience</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" th:action="@{/candidate-portal/candidate-experience-add}" method="post">
+                        <!-- Company Name -->
+                        <div class="form-group">
+                            <label for="companyName">Company Name</label>
+                            <input type="text" class="form-control" id="companyName" name="companyName"
+                                   th:value="${candidateExperienceDTO != null ? candidateExperienceDTO.companyName : ''}">
+                        </div>
+
+                        <!-- Position -->
+                        <div class="form-group">
+                            <label for="candidatePosition">Position</label>
+                            <input type="text" class="form-control" id="candidatePosition" name="candidatePosition"
+                                   th:value="${candidateExperienceDTO != null ? candidateExperienceDTO.candidatePosition : ''}">
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" name="description"
+                                      th:text="${candidateExperienceDTO != null ? candidateExperienceDTO.description : ''}"></textarea>
+                        </div>
+
+                        <!-- From Date -->
+                        <div class="form-group">
+                            <label for="fromDate">From</label>
+                            <input type="date" class="form-control" id="fromDate" name="fromDate"
+                                   th:value="${candidateExperienceDTO != null ? candidateExperienceDTO.fromDate : ''}">
+                        </div>
+
+                        <!-- To Date -->
+                        <div class="form-group">
+                            <label for="toDate">To</label>
+                            <input type="date" class="form-control" id="toDate" name="toDate"
+                                   th:value="${candidateExperienceDTO != null ? candidateExperienceDTO.toDate : ''}">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="add-job-offer-button btn btn-primary">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="candidate-card">
+        <div class="card-body">
+            <!-- Przycisk do edycji profilu - przeniesiony na górę -->
+            <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
+                    data-target="#editProfileModal">
+                <i class="fas fa-pencil-alt"></i> Edit Details
+            </button>
+            <h4 class="mb-0">My Projects</h4>
+        </div>
+        <div class="card-body">
+            <h6 class="card-title">---------------------------------</h6>
+            <p class="card-text"></p>
+
+            <h6 class="card-title">-------------------------------</h6>
+
+        </div>
+    </div>
+
+    <div class="candidate-card">
+        <div class="card-body">
+            <!-- Przycisk do edycji profilu - przeniesiony na górę -->
+            <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
+                    data-target="#editProfileModal">
+                <i class="fas fa-pencil-alt"></i> Edit Details
+            </button>
+            <h4 class="mb-0">Education</h4>
+        </div>
+        <div class="card-body">
+            <h6 class="card-title">---------------------------------</h6>
+            <p class="card-text"></p>
+
+            <h6 class="card-title">-------------------------------</h6>
+
+        </div>
+    </div>
+
+    <div class="candidate-card">
+        <div class="card-body">
+            <!-- Przycisk do edycji profilu - przeniesiony na górę -->
+            <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
+                    data-target="#editProfileModal">
+                <i class="fas fa-pencil-alt"></i> Edit Details
+            </button>
+            <h4 class="mb-0">Courses and Certificates</h4>
+        </div>
+        <div class="card-body">
+            <h6 class="card-title">---------------------------------</h6>
+            <p class="card-text"></p>
+
+            <h6 class="card-title">-------------------------------</h6>
+
+        </div>
+    </div>
+
+    <div class="candidate-card">
+        <div class="card-body">
+            <!-- Przycisk do edycji profilu -->
+            <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
+                    data-target="#editHobby">
+                <i class="fas fa-pencil-alt"></i> Edit Hobby
+            </button>
+            <h4 class="mb-0">My hobby</h4>
+            <p class="card-text text-justify frame-card" th:text="${candidate.hobby}">No information available</p>
+        </div>
+    </div>
+    <!-- Nowe Okno Modal do edycji profilu -->
+    <div class="modal fade" id="editHobby" tabindex="-1" role="dialog"
+         aria-labelledby="editHobbyLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editHobbyLabel">Edit Hobby</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form for updating personal details -->
+                    <form th:action="@{/candidate-portal/update-candidate-hobby}" method="post">
+                        <div class="form-group ">
+                            <label for="aboutMe">My hobby:</label>
+                            <textarea class="form-control " id="hobby" name="hobby" rows="4"
+                                      th:text="${candidate.hobby}"></textarea>
+                        </div>
+                        <button type="submit" class="add-job-offer-button btn btn-primary mb-3">Save changes
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
 </div>
 </body>
 </html>
