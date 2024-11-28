@@ -12,12 +12,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.zajavka.CodeBridge.api.dto.CandidateDTO;
 import pl.zajavka.CodeBridge.api.dto.CandidateExperienceDTO;
+import pl.zajavka.CodeBridge.api.dto.CandidateProjectDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.CandidateExperienceMapper;
 import pl.zajavka.CodeBridge.api.dto.mapper.CandidateMapper;
+import pl.zajavka.CodeBridge.api.dto.mapper.CandidateProjectMapper;
 import pl.zajavka.CodeBridge.business.CandidateExperienceService;
+import pl.zajavka.CodeBridge.business.CandidateProjectService;
 import pl.zajavka.CodeBridge.business.CandidateService;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.CandidateExperience;
+import pl.zajavka.CodeBridge.domain.CandidateProject;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
@@ -33,6 +37,7 @@ public class CandidatePortalController {
     private static final String PROFILE_PHOTO_DISPLAY = "/candidate-portal/profilePhoto/{email}";
 
     private static final String ADD_CANDIDATE_EXPERIENCE = "/candidate-portal/add-candidate-experience";
+    private static final String ADD_CANDIDATE_PROJECT = "/candidate-portal/add-candidate-project";
     private static final String UPDATE_CANDIDATE_BASIC_INFO = "/candidate-portal/update-candidate-basic-info";
     private static final String UPDATE_CANDIDATE_TECH_SPECIALIZATION = "/candidate-portal/update-candidate-tech-specialization";
     private static final String UPDATE_CANDIDATE_SKILLS = "/candidate-portal/update-candidate-skills";
@@ -47,7 +52,9 @@ public class CandidatePortalController {
 
     private final CandidateService candidateService;
     private final CandidateExperienceService candidateExperienceService;
+//    private final CandidateProjectService candidateProjectService;
     private final CandidateExperienceMapper candidateExperienceMapper;
+    private final CandidateProjectMapper candidateProjectMapper;
     private final CandidateMapper candidateMapper;
 
 
@@ -151,6 +158,38 @@ public class CandidatePortalController {
 
         return "redirect:/candidate-portal";
     }
+
+    @PostMapping(ADD_CANDIDATE_PROJECT)
+    public String addCandidateProject(
+            @ModelAttribute("candidateProjectDTO") CandidateProjectDTO candidateProjectDTO) {
+
+        CandidateProject candidateProject = candidateProjectMapper.mapFromDTO(candidateProjectDTO);
+//        candidateProjectService.createProjectData(candidateProject);
+
+        return "redirect:/candidate-portal";
+    }
+
+//    @PostMapping(UPDATE_CANDIDATE_EXPERIENCE)
+//    public String updateCandidateExperience(
+//            @ModelAttribute CandidateExperienceDTO candidateExperienceDTO,
+//            Authentication authentication) throws AccessDeniedException {
+//
+//        CandidateExperience candidateExperience = candidateExperienceMapper.mapFromDTO(candidateExperienceDTO);
+//        candidateExperienceService.updateCandidateExperience(candidateExperience, authentication);
+//
+//        return "redirect:/candidate-portal";
+//    }
+//
+//
+//    @PostMapping(DELETE_CANDIDATE_EXPERIENCE)
+//    public String deleteCandidateExperience(
+//            @RequestParam("candidateExperienceId") Integer candidateExperienceId,
+//            Authentication authentication) throws AccessDeniedException {
+//
+//        candidateExperienceService.deleteCandidateExperienceById(candidateExperienceId,authentication);
+//
+//        return "redirect:/candidate-portal";
+//    }
 
     @PostMapping(UPDATE_CANDIDATE_TECH_SPECIALIZATION)
     public String updateCandidateTechSpecialization(

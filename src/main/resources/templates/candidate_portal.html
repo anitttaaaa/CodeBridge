@@ -547,23 +547,207 @@
 
     <div class="candidate-card">
         <div class="card-body">
-            <!-- Przycisk do edycji profilu - przeniesiony na górę -->
+            <!-- Przycisk dodawania nowego projektu -->
+
             <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
-                    data-target="#editProfileModal">
-                <i class="fas fa-pencil-alt"></i> Edit Details
+                    data-target="#addProjectModal">
+                <i class="fas fa-plus"></i> Add Project
             </button>
+
             <h4 class="mb-0">My Projects</h4>
-            <div class="frame-card">
-                <h6 class="card-title">---------------------------------</h6>
-                <p class="card-text"></p>
+            <p></p>
+            <div class="project-list">
+                <!-- Pętla po projektach kandydata -->
+                <div th:each="project : ${candidateProjects}" class="frame-card card mb-3">
+                    <div class="card-body">
+                        <!-- Główna sekcja: tytuł projektu, technologie, daty i przyciski -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Lewa sekcja: Tytuł projektu i technologie -->
+                            <div>
+                                <!-- Informacyjne teksty w ramkach -->
+                                <div class="project-info">Title: <span class="project-info-value"
+                                                                       th:text="${project.projectTitle}"></span>
+                                </div>
+                                <div class="project-info">Technologies: <span class="project-info-value"
+                                                                              th:text="${project.technologies}"></span>
+                                </div>
+                            </div>
 
-                <h6 class="card-title">-------------------------------</h6>
+                            <!-- Sekcja z datami -->
+                            <div class="project-dates text-right">
+                                <p class="mb-1"><strong>From:</strong> <span th:text="${project.fromDate}"></span></p>
+                                <p class="mb-1"><strong>To:</strong> <span th:text="${project.toDate}"></span></p>
+                            </div>
 
+                            <!-- Przyciski -->
+                            <div class="project-actions ml-3">
+                                <!-- Edycja projektu -->
+                                <button type="button" class="btn btn-primary change-project-button"
+                                        th:data-target="'#editProjectModal-' + ${project.candidateProjectId}"
+                                        data-toggle="modal" title="Edit">
+                                    <i class="fas fa-pencil-alt icon-size"></i>
+                                </button>
+
+                                <!-- Usuwanie projektu -->
+                                <form th:action="@{/candidate-portal/delete-project}" method="post" class="d-inline">
+                                    <input type="hidden" name="candidateProjectId" th:value="${project.candidateProjectId}"/>
+                                    <input type="hidden" name="candidateId" th:value="${project.candidateId}"/>
+                                    <button type="submit" class="btn btn-danger change-project-button" title="Delete">
+                                        <i class="fas fa-trash icon-size"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Opis -->
+                        <div class="mt-3">
+                            <div class="project-info">Description:</div> <!-- Etykieta Description -->
+                            <div class="project-info-value description"
+                                 th:text="${project.description}"></div> <!-- Wartość description -->
+                        </div>
+                        <!-- Link do projektu -->
+                        <div class="mt-3">
+                            <div class="project-info">Project Link:</div> <!-- Etykieta Project Link -->
+                            <a th:href="${project.projectLink}" target="_blank" class="project-link"
+                               th:text="${project.projectLink}"></a> <!-- Wartość link -->
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="candidate-card">
+    <!-- Modal ADD -->
+    <div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="addProjectModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProjectModalLabel">Add My Project</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" th:action="@{/candidate-portal/add-candidate-project}" method="post">
+                        <!-- Project Title -->
+                        <div class="form-group">
+                            <label for="projectTitle">Project Title</label>
+                            <input type="text" class="form-control" id="projectTitle" name="projectTitle"
+                                   th:value="${candidateProjectDTO != null ? candidateProjectDTO.projectTitle : ''}">
+                        </div>
+
+                        <!-- Technologies -->
+                        <div class="form-group">
+                            <label for="technologies">Technologies</label>
+                            <input type="text" class="form-control" id="technologies" name="technologies"
+                                   th:value="${candidateProjectDTO != null ? candidateProjectDTO.technologies : ''}">
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="projectDescription" name="description"
+                                      th:text="${candidateProjectDTO != null ? candidateProjectDTO.description : ''}"></textarea>
+                        </div>
+
+                        <!-- From Date -->
+                        <div class="form-group">
+                            <label for="fromDate">From</label>
+                            <input type="date" class="form-control" id="fromDateProject" name="fromDate"
+                                   th:value="${candidateProjectDTO != null ? candidateProjectDTO.fromDate : ''}">
+                        </div>
+
+                        <!-- To Date -->
+                        <div class="form-group">
+                            <label for="toDate">To</label>
+                            <input type="date" class="form-control" id="toDateProject" name="toDate"
+                                   th:value="${candidateProjectDTO != null ? candidateProjectDTO.toDate : ''}">
+                        </div>
+
+                        <!-- Project Link -->
+                        <div class="form-group">
+                            <label for="projectLink">Project Link</label>
+                            <input type="url" class="form-control" id="projectLink" name="projectLink"
+                                   th:value="${candidateProjectDTO != null ? candidateProjectDTO.projectLink : ''}">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="add-job-offer-button btn btn-primary">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal edycji projektu dla każdego obiektu -->
+    <div th:each="project : ${candidateProjects}" class="modal fade"
+         th:id="'editProjectModal-' + ${project.candidateProjectId}" tabindex="-1" role="dialog"
+         aria-labelledby="editProjectModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Project</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formularz edycji -->
+                    <form th:action="@{/candidate-portal/update-candidate-project}" method="post">
+                        <input type="hidden" name="candidateProjectId" th:value="${project.candidateProjectId}"/>
+                        <input type="hidden" name="candidateId" th:value="${project.candidateId}"/>
+
+                        <!-- Project Title -->
+                        <div class="form-group">
+                            <label for="editProjectTitle">Project Title</label>
+                            <input type="text" class="form-control" id="editProjectTitle" name="projectTitle"
+                                   th:value="${project.projectTitle}">
+                        </div>
+
+                        <!-- Technologies -->
+                        <div class="form-group">
+                            <label for="editTechnologies">Technologies</label>
+                            <input type="text" class="form-control" id="editTechnologies" name="technologies"
+                                   th:value="${project.technologies}">
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-group">
+                            <label for="editDescription">Description</label>
+                            <textarea class="form-control" id="editProjectDescription" name="description"
+                                      th:text="${project.description}"></textarea>
+                        </div>
+
+                        <!-- From Date -->
+                        <div class="form-group">
+                            <label for="editFromDate">From</label>
+                            <input type="date" class="form-control" id="editFromDateProject" name="fromDate"
+                                   th:value="${project.fromDate}">
+                        </div>
+
+                        <!-- To Date -->
+                        <div class="form-group">
+                            <label for="editToDate">To</label>
+                            <input type="date" class="form-control" id="editToDateProject" name="toDate"
+                                   th:value="${project.toDate}">
+                        </div>
+
+                        <!-- Project Link -->
+                        <div class="form-group">
+                            <label for="editProjectLink">Project Link</label>
+                            <input type="url" class="form-control" id="editProjectLink" name="projectLink"
+                                   th:value="${project.projectLink}">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="add-project-button btn btn-primary mb-3">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<div class="candidate-card">
         <div class="card-body">
             <!-- Przycisk do edycji profilu - przeniesiony na górę -->
             <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"

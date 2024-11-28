@@ -386,21 +386,21 @@ project-card {
 }
 
 /* Sekcja dat */
-.experience-dates {
+.experience-dates, .project-dates {
     text-align: right;
     min-width: 150px;
     padding-right: 250px;
     white-space: nowrap;
 }
 
-.experience-dates p {
+.experience-dates p, .project-dates p {
     margin: 0;
     color: #555;
 }
 
 /* Sekcja informacji (pozycja, firma, opis) */
 /* Sekcja informacji */
-.experience-info {
+.experience-info, .project-info {
     font-weight: normal; /* Nie pogrubiona czcionka */
     color: #777; /* Jaśniejszy kolor tekstu */
     font-size: 0.9rem; /* Mniejszy rozmiar czcionki */
@@ -410,7 +410,7 @@ project-card {
     padding: 0;  /* Upewniamy się, że nie ma paddingu */
 }
 
-.experience-info-value {
+.experience-info-value, .project-info-value {
     font-weight: bold; /* Ustalamy, że wartości nie będą pogrubione */
     color: #555; /* Ciemniejszy kolor wartości */
     display: block; /* Ustawiamy na block, by wartość była poniżej etykiety */
