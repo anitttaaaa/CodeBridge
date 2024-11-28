@@ -416,9 +416,9 @@
                                     </button>
 
                                     <!-- Usuwanie doświadczenia -->
-                                    <form action="/candidate-portal/delete-experience" method="post" class="d-inline">
-                                        <input type="hidden" name="experienceId"
-                                               th:value="${experience.candidateExperienceId}"/>
+                                    <form th:action="@{/candidate-portal/delete-experience}" method="post" class="d-inline">
+                                        <input type="hidden" name="candidateExperienceId" th:value="${experience.candidateExperienceId}"/>
+                                        <input type="hidden" name="candidateId" th:value="${experience.candidateId}"/>
                                         <button type="submit" class="btn btn-danger change-photo-button" title="Delete">
                                             <i class="fas fa-trash icon-size"></i>
                                         </button>
@@ -452,17 +452,18 @@
                 </div>
                 <div class="modal-body">
                     <!-- Formularz edycji -->
-                    <form action="/candidate-portal/candidate-experience-update" method="post">
-                        <input type="hidden" name="experienceId" th:value="${experience.candidateExperienceId}"/>
-                        <div class="form-group">
-                            <label for="editCompanyName">Company Name</label>
-                            <input type="text" class="form-control" id="editCompanyName" name="companyName"
-                                   th:value="${experience.companyName}">
-                        </div>
+                    <form th:action="@{/candidate-portal/update-candidate-experience}" method="post">
+                        <input type="hidden" name="candidateExperienceId" th:value="${experience.candidateExperienceId}"/>
+                        <input type="hidden" name="candidateId" th:value="${experience.candidateId}"/>
                         <div class="form-group">
                             <label for="editCandidatePosition">Position</label>
                             <input type="text" class="form-control" id="editCandidatePosition" name="candidatePosition"
                                    th:value="${experience.candidatePosition}">
+                        </div>
+                        <div class="form-group">
+                            <label for="editCompanyName">Company Name</label>
+                            <input type="text" class="form-control" id="editCompanyName" name="companyName"
+                                   th:value="${experience.companyName}">
                         </div>
                         <div class="form-group">
                             <label for="editDescription">Description</label>
@@ -499,7 +500,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="#" th:action="@{/candidate-portal/candidate-experience-add}" method="post">
+                    <form action="#" th:action="@{/candidate-portal/add-candidate-experience}" method="post">
                         <!-- Company Name -->
                         <div class="form-group">
                             <label for="companyName">Company Name</label>
@@ -552,13 +553,13 @@
                 <i class="fas fa-pencil-alt"></i> Edit Details
             </button>
             <h4 class="mb-0">My Projects</h4>
-        </div>
-        <div class="card-body">
-            <h6 class="card-title">---------------------------------</h6>
-            <p class="card-text"></p>
+            <div class="frame-card">
+                <h6 class="card-title">---------------------------------</h6>
+                <p class="card-text"></p>
 
-            <h6 class="card-title">-------------------------------</h6>
+                <h6 class="card-title">-------------------------------</h6>
 
+            </div>
         </div>
     </div>
 
@@ -570,13 +571,13 @@
                 <i class="fas fa-pencil-alt"></i> Edit Details
             </button>
             <h4 class="mb-0">Education</h4>
-        </div>
-        <div class="card-body">
-            <h6 class="card-title">---------------------------------</h6>
-            <p class="card-text"></p>
+            <div class="frame-card">
+                <h6 class="card-title">---------------------------------</h6>
+                <p class="card-text"></p>
 
-            <h6 class="card-title">-------------------------------</h6>
+                <h6 class="card-title">-------------------------------</h6>
 
+            </div>
         </div>
     </div>
 
@@ -588,13 +589,13 @@
                 <i class="fas fa-pencil-alt"></i> Edit Details
             </button>
             <h4 class="mb-0">Courses and Certificates</h4>
-        </div>
-        <div class="card-body">
-            <h6 class="card-title">---------------------------------</h6>
-            <p class="card-text"></p>
+            <div class="frame-card">
+                <h6 class="card-title">---------------------------------</h6>
+                <p class="card-text"></p>
 
-            <h6 class="card-title">-------------------------------</h6>
+                <h6 class="card-title">-------------------------------</h6>
 
+            </div>
         </div>
     </div>
 
@@ -637,7 +638,6 @@
     </div>
 
 
-</div>
 </div>
 </body>
 </html>

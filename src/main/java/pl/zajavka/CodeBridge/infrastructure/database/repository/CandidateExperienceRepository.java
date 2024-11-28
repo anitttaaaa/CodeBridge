@@ -1,5 +1,6 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository;
 
+import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.CodeBridge.business.dao.CandidateExperienceDAO;
@@ -8,16 +9,13 @@ import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateExperienceE
 import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.CandidateExperienceJpaRepository;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.CandidateExperienceEntityMapper;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Repository
 @AllArgsConstructor
 public class CandidateExperienceRepository implements CandidateExperienceDAO {
 
     private final CandidateExperienceEntityMapper candidateExperienceEntityMapper;
     private final CandidateExperienceJpaRepository candidateExperienceJpaRepository;
-
+    private final EntityManager entityManager;
 
     @Override
     public CandidateExperience createExperience(CandidateExperience candidateExperience) {
@@ -29,7 +27,16 @@ public class CandidateExperienceRepository implements CandidateExperienceDAO {
 
     }
 
+    @Override
+    public void updateCandidateExperience(CandidateExperience candidateExperienceToUpdate) {
+        CandidateExperienceEntity experienceToSave = candidateExperienceEntityMapper.mapToEntity(candidateExperienceToUpdate);
+        candidateExperienceJpaRepository.saveAndFlush(experienceToSave);
+    }
 
+    @Override
+    public void deleteById(Integer candidateExperienceId) {
+        candidateExperienceJpaRepository.deleteById(candidateExperienceId);
+    }
 
 
 }

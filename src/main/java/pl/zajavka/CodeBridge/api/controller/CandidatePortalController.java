@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.CandidateExperience;
 
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -30,7 +32,7 @@ public class CandidatePortalController {
     private static final String SHOW_CANDIDATE_PORTAL = "/candidate-portal";
     private static final String PROFILE_PHOTO_DISPLAY = "/candidate-portal/profilePhoto/{email}";
 
-    private static final String ADD_CANDIDATE_EXPERIENCE = "/candidate-portal/candidate-experience-add";
+    private static final String ADD_CANDIDATE_EXPERIENCE = "/candidate-portal/add-candidate-experience";
     private static final String UPDATE_CANDIDATE_BASIC_INFO = "/candidate-portal/update-candidate-basic-info";
     private static final String UPDATE_CANDIDATE_TECH_SPECIALIZATION = "/candidate-portal/update-candidate-tech-specialization";
     private static final String UPDATE_CANDIDATE_SKILLS = "/candidate-portal/update-candidate-skills";
@@ -40,6 +42,8 @@ public class CandidatePortalController {
     private static final String UPDATE_CANDIDATE_PHOTO = "/candidate-portal/update-candidate-photo";
 
     private static final String DELETE_CANDIDATE_PHOTO = "/candidate-portal/delete-candidate-photo/{email}";
+    private static final String DELETE_CANDIDATE_EXPERIENCE = "/candidate-portal/delete-experience";
+
 
     private final CandidateService candidateService;
     private final CandidateExperienceService candidateExperienceService;
@@ -51,14 +55,14 @@ public class CandidatePortalController {
     public String getCandidateDetails(Model model) {
 
         Candidate candidate = candidateService.findLoggedInCandidate();
-        CandidateDTO candidateDetails = candidateMapper.candidateToDto(candidate);
+        CandidateDTO candidateDetails = candidateMapper.mapToDto(candidate);
 
         List<CandidateExperienceDTO> sortedExperiences = candidateDetails.getCandidateExperiences()
                 .stream()
                 .sorted(Comparator.comparing(CandidateExperienceDTO::getFromDate))
                 .toList();
 
-        model.addAttribute("candidateExperiences",sortedExperiences);
+        model.addAttribute("candidateExperiences", sortedExperiences);
         model.addAttribute("candidate", candidateDetails);
 
         return "candidate_portal";
@@ -70,7 +74,7 @@ public class CandidatePortalController {
             Authentication authentication) {
 
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
-        CandidateDTO candidateDTO = candidateMapper.candidateToDto(candidate);
+        CandidateDTO candidateDTO = candidateMapper.mapToDto(candidate);
         byte[] profilePhoto = candidateDTO.getProfilePhoto();
 
         return ResponseEntity.ok()
@@ -125,16 +129,25 @@ public class CandidatePortalController {
 
         return "redirect:/candidate-portal";
     }
+
     @PostMapping(UPDATE_CANDIDATE_EXPERIENCE)
     public String updateCandidateExperience(
-            @ModelAttribute("candidateExperienceDTO") CandidateExperienceDTO candidateExperienceDTO,
-            Authentication authentication
-            ) {
-        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
-
+            @ModelAttribute CandidateExperienceDTO candidateExperienceDTO,
+            Authentication authentication) throws AccessDeniedException {
 
         CandidateExperience candidateExperience = candidateExperienceMapper.mapFromDTO(candidateExperienceDTO);
-        candidateExperienceService.createExperienceData(candidateExperience);
+        candidateExperienceService.updateCandidateExperience(candidateExperience, authentication);
+
+        return "redirect:/candidate-portal";
+    }
+
+
+    @PostMapping(DELETE_CANDIDATE_EXPERIENCE)
+    public String deleteCandidateExperience(
+            @RequestParam("candidateExperienceId") Integer candidateExperienceId,
+            Authentication authentication) throws AccessDeniedException {
+
+        candidateExperienceService.deleteCandidateExperienceById(candidateExperienceId,authentication);
 
         return "redirect:/candidate-portal";
     }

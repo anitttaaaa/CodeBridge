@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.api.dto.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import pl.zajavka.CodeBridge.api.dto.CandidateExperienceDTO;
 import pl.zajavka.CodeBridge.domain.CandidateExperience;
 
@@ -12,6 +11,6 @@ public interface CandidateExperienceMapper {
 
     CandidateExperienceDTO mapToDto(CandidateExperience candidateExperience);
 
-    @Mapping(target = "candidateId", ignore = true)
+
     CandidateExperience mapFromDTO(CandidateExperienceDTO candidateExperienceDTO);
 }

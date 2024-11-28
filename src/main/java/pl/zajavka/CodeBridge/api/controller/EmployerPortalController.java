@@ -42,7 +42,7 @@ public class EmployerPortalController {
             Authentication authentication)
     {
 
-        JobOfferFromRequest request = jobOfferMapper.mapFromDTO(jobOfferAddRequestDTO);
+        JobOfferFromRequest request = jobOfferMapper.mapToDomain(jobOfferAddRequestDTO);
         jobOfferAddService.createJobOfferData(request, authentication);
 
 

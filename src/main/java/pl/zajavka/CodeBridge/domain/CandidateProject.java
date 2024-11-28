@@ -13,9 +13,10 @@ public class CandidateProject {
 
     Integer candidateProjectId;
     String projectTitle;
-    String description;
     String technologies;
+    String description;
     LocalDate fromDate;
     LocalDate toDate;
     String projectLink;
+    Integer candidateId;
 }

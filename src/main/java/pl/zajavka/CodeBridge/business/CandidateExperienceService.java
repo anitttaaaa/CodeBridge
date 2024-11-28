@@ -4,9 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.zajavka.CodeBridge.api.dto.CandidateExperienceDTO;
 import pl.zajavka.CodeBridge.business.dao.CandidateExperienceDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.CandidateExperience;
+
+import java.nio.file.AccessDeniedException;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +27,6 @@ public class CandidateExperienceService {
         Candidate candidate = candidateService.findLoggedInCandidate();
         CandidateExperience candidateExperience = buildCandidateExperience(candidateExperienceFromRequest, candidate);
         candidateExperienceDAO.createExperience(candidateExperience);
-
     }
 
 
@@ -39,5 +41,32 @@ public class CandidateExperienceService {
                 .build();
     }
 
+    @Transactional
+    public void updateCandidateExperience(CandidateExperience candidateExperience, Authentication authentication) throws AccessDeniedException {
 
+        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
+        Integer loggedInCandidateId = candidate.getCandidateId();
+
+        if (!candidateExperience.getCandidateId().equals(loggedInCandidateId)){
+            throw new AccessDeniedException("Unauthorized access.");
+        }
+
+        candidateExperienceDAO.updateCandidateExperience(candidateExperience);
+    }
+
+    public void deleteCandidateExperienceById(Integer candidateExperienceId, Authentication authentication) throws AccessDeniedException {
+
+
+//        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
+//        Integer loggedInCandidateId = candidate.getCandidateId();
+//
+//        if (!candidateExperienceId.equals(loggedInCandidateId)){
+//            throw new AccessDeniedException("Unauthorized access.");
+//        }
+
+        candidateExperienceDAO.deleteById(candidateExperienceId);
+
+
+
+    }
 }

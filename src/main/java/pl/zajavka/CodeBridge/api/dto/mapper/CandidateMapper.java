@@ -8,9 +8,9 @@ import pl.zajavka.CodeBridge.domain.Candidate;
 @Mapper(componentModel = "spring")
 public interface CandidateMapper {
 
-    CandidateDTO candidateToDto(Candidate candidate);
+    CandidateDTO mapToDto(Candidate candidate);
     @Mapping(target = "candidateExperiences", ignore = true)
-    Candidate candidateToDomain(CandidateDTO candidateDTO);
+    Candidate mapToDomain(CandidateDTO candidateDTO);
 
 
 

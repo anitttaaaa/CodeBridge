@@ -230,6 +230,9 @@ body {
     border-radius: 15px;
     margin-bottom: 5px;
 }
+project-card {
+    width: 90%;
+}
 
 .candidate-page-container {
     min-height: 80vh; /* Wysokość całej strony */
@@ -409,7 +412,7 @@ body {
 
 .experience-info-value {
     font-weight: bold; /* Ustalamy, że wartości nie będą pogrubione */
-    color: #333; /* Ciemniejszy kolor wartości */
+    color: #555; /* Ciemniejszy kolor wartości */
     display: block; /* Ustawiamy na block, by wartość była poniżej etykiety */
     margin-top: 5px; /* Odstęp między etykietą a wartością */
     font-size: 1rem; /* Standardowy rozmiar czcionki dla wartości */
@@ -467,5 +470,7 @@ body {
     color: #6c757d; /* Ciemniejszy szary */
     text-decoration: underline;
 }
+
+
 
 

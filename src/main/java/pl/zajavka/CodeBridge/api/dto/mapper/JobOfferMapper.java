@@ -7,7 +7,7 @@ import pl.zajavka.CodeBridge.domain.JobOfferFromRequest;
 @Mapper(componentModel = "spring")
 public interface JobOfferMapper {
 
-    JobOfferFromRequest mapFromDTO(JobOfferAddRequestDTO dto);
+    JobOfferFromRequest mapToDomain(JobOfferAddRequestDTO dto);
 
 
 
