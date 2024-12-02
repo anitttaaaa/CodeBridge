@@ -23,238 +23,191 @@
 <div layout:fragment="candidateContent" class="candidate-page-container ">
 
 
-    <div class="frame">
-        <div class="candidate-card">
-            <div class="card-body ">
-                <!-- Przycisk do edycji profilu - przeniesiony na górę -->
-                <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
-                        data-target="#editProfileModal">
-                    <i class="fas fa-pencil-alt"></i> Edit Details
-                </button>
-                <!-- Modal do edycji profilu -->
-                <div class="modal fade " id="editProfileModal" tabindex="-1" role="dialog"
-                     aria-labelledby="editProfileModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form th:action="@{/candidate-portal/update-candidate-basic-info}" method="post"
-                                      enctype="multipart/form-data">
-                                    <div class="input-group mb-3">
-                                        <label class="input-group-text" for="editName">Name</label>
-                                        <input type="text" id="editName" name="name" class="form-control" required
-                                               th:value="${candidate.name}">
-                                    </div>
-
-                                    <div class="input-group mb-3">
-                                        <label class="input-group-text" for="editSurname">Surname</label>
-                                        <input type="text" id="editSurname" name="surname" class="form-control"
-                                               required
-                                               th:value="${candidate.surname}">
-                                    </div>
-
-                                    <div class="input-group mb-3">
-                                        <label class="input-group-text" for="editPhone">Phone</label>
-                                        <input type="text" id="editPhone" name="phone" class="form-control" required
-                                               th:value="${candidate.phone}">
-                                    </div>
-
-                                    <div class="input-group mb-3">
-                                        <label class="input-group-text" for="editLinkedIn">LinkedIn</label>
-                                        <input type="text" id="editLinkedIn" name="linkedIn" class="form-control"
-                                               th:value="${candidate.linkedIn}">
-                                    </div>
-
-                                    <div class="input-group mb-3">
-                                        <label class="input-group-text" for="editGitHub">GitHub</label>
-                                        <input type="text" id="editGitHub" name="gitHub" class="form-control"
-                                               th:value="${candidate.gitHub}">
-                                    </div>
-
-                                    <div>
-                                        <input class="add-job-offer-button btn btn-primary" type="submit"
-                                               value="Save changes">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div> <!-- Koniec modalu -->
-
-
-                <h3 style="margin-bottom: 40px;">Basic Info</h3>
-                <div class="card-body d-flex align-items-center">
-
-
-                    <!-- Kontener dla zdjęcia profilowego -->
-                    <div id="photo-container" class="me-4">
-                        <img th:if="${candidate.profilePhoto != null}"
-                             th:src="@{candidate-portal/profilePhoto/{email}(email=${candidate.email})}"
-                             alt="Profile Photo"
-                             class="img-fluid rounded-circle"
-                             style="width: 150px; height: 150px;">
-                        <img th:if="${candidate.profilePhoto == null}"
-                             th:src="@{/images/avatar.png}"
-                             alt="Default Avatar"
-                             class="img-fluid rounded-circle"
-                             style="width: 150px; height: 150px;"/>
-                        <div class="edit-photo-button position-absolute" style="bottom: 10px; right: 10px;">
-                            <i class="fas fa-camera" style="cursor: pointer;" data-toggle="modal"
-                               data-target="#photoModal"></i>
-                        </div>
-                    </div>
-
-                    <div class="candidate-details frame-card-basic-info">
-                        <div class="left-column">
-                            <h5 class="card-title" style="font-size: 1.5em;"
-                                th:text="${candidate.name + ' ' + candidate.surname}"></h5>
-                            <p class="card-text">
-                                <i class="bi bi-envelope-fill icon-color"></i>
-                                <span th:text="${candidate.email}"></span>
-                            </p>
-                            <p class="card-text">
-                                <i class="bi bi-telephone-fill icon-color"></i>
-                                <span th:text="'tel. ' + ${candidate.phone}"></span>
-                            </p>
-                        </div>
-                        <div class="right-column">
-                            <p class="card-text" style="visibility: hidden;">&nbsp;</p>
-                            <p class="card-text">
-                                <i class="bi bi-linkedin icon-color"></i>
-                                <a class="custom-link" th:href="${candidate.linkedIn}" target="_blank"
-                                   th:text="${candidate.linkedIn != null ? candidate.linkedIn : 'Profile LinkedIn'}"
-                                   th:if="${candidate.linkedIn != null}"></a>
-                            </p>
-                            <p class="card-text">
-                                <i class="bi bi-github icon-color"></i>
-                                <a class="custom-link" th:href="${candidate.gitHub}" target="_blank"
-                                   th:text="${candidate.gitHub != null ? candidate.gitHub : 'Profile GitHub'}"
-                                   th:if="${candidate.gitHub != null}"></a>
-                            </p>
-                        </div>
-                    </div>
-
-
-                </div>
-
-
-                <!-- Główne Okno Modal do edycji zdjęcia profilowego -->
-                <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="photoModalLabel">Edit Profile Photo</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body text-center">
-                                <!-- Profile Photo -->
-                                <img th:if="${candidate.profilePhoto != null}"
-                                     th:src="@{candidate-portal/profilePhoto/{email}(email=${candidate.email})}"
-                                     alt="Profile Photo"
-                                     class="img-fluid rounded-circle"
-                                     style="width: 150px; height: 150px;">
-                                <img th:if="${candidate.profilePhoto == null}"
-                                     th:src="@{/images/avatar.png}"
-                                     alt="Default Avatar"
-                                     class="img-fluid rounded-circle"
-                                     style="width: 150px; height: 150px;"/>
-                                <!-- Centered buttons below the photo -->
-                                <div class="d-flex flex-column align-items-center mt-3">
-                                    <!-- Change Photo Button -->
-                                    <button type="button" class="change-photo-button btn btn-danger mb-2"
-                                            data-toggle="modal"
-                                            data-target="#changePhotoModal" data-dismiss="modal">
-                                        <i class="fas fa-pencil-alt"></i> Change Photo
-                                    </button>
-                                    <!-- Delete Photo Form -->
-                                    <form th:action="@{/candidate-portal/delete-candidate-photo/{email}}"
-                                          th:method="DELETE">
-                                        <button type="submit" class="change-photo-button btn btn-danger">
-                                            <i class="fas fa-trash icon-size"></i> Delete Photo
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Drugie Okno Modal do przesyłania nowego zdjęcia -->
-            <div class="modal fade" id="changePhotoModal" tabindex="-1" role="dialog"
-                 aria-labelledby="changePhotoModalLabel" aria-hidden="true">
+    <div class="candidate-card">
+        <div class="card-body ">
+            <!-- Przycisk do edycji profilu - przeniesiony na górę -->
+            <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
+                    data-target="#editProfileModal">
+                <i class="fas fa-pencil-alt"></i> Edit Details
+            </button>
+            <!-- Modal do edycji profilu -->
+            <div class="modal fade " id="editProfileModal" tabindex="-1" role="dialog"
+                 aria-labelledby="editProfileModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="changePhotoModalLabel">Choose new Photo</h5>
+                            <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <!-- Formularz do przesyłania nowego zdjęcia -->
-                            <form th:action="@{/candidate-portal/update-candidate-photo}" method="post"
+                            <form th:action="@{/candidate-portal/update-candidate-basic-info}" method="post"
                                   enctype="multipart/form-data">
-                                <div class="form-group">
-                                    <label for="profilePhoto">Choose Photo:</label>
-                                    <input type="file" id="profilePhoto" name="profilePhoto" class="form-control"
-                                           required>
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="editName">Name</label>
+                                    <input type="text" id="editName" name="name" class="form-control" required
+                                           th:value="${candidate.name}">
                                 </div>
-                                <button type="submit" class="change-photo-button btn btn-danger mb-2">Save changes
-                                </button>
+
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="editSurname">Surname</label>
+                                    <input type="text" id="editSurname" name="surname" class="form-control"
+                                           required
+                                           th:value="${candidate.surname}">
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="editPhone">Phone</label>
+                                    <input type="text" id="editPhone" name="phone" class="form-control" required
+                                           th:value="${candidate.phone}">
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="editLinkedIn">LinkedIn</label>
+                                    <input type="text" id="editLinkedIn" name="linkedIn" class="form-control"
+                                           th:value="${candidate.linkedIn}">
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="editGitHub">GitHub</label>
+                                    <input type="text" id="editGitHub" name="gitHub" class="form-control"
+                                           th:value="${candidate.gitHub}">
+                                </div>
+
+                                <div>
+                                    <input class="add-job-offer-button btn btn-primary" type="submit"
+                                           value="Save changes">
+                                </div>
                             </form>
                         </div>
                     </div>
                 </div>
+            </div> <!-- Koniec modalu -->
+
+
+            <h3 style="margin-bottom: 40px;">Basic Info</h3>
+            <div class="card-body d-flex align-items-center">
+
+
+                <!-- Kontener dla zdjęcia profilowego -->
+                <div id="photo-container" class="me-4">
+                    <img th:if="${candidate.profilePhoto != null}"
+                         th:src="@{candidate-portal/profilePhoto/{email}(email=${candidate.email})}"
+                         alt="Profile Photo"
+                         class="img-fluid rounded-circle"
+                         style="width: 150px; height: 150px;">
+                    <img th:if="${candidate.profilePhoto == null}"
+                         th:src="@{/images/avatar.png}"
+                         alt="Default Avatar"
+                         class="img-fluid rounded-circle"
+                         style="width: 150px; height: 150px;"/>
+                    <div class="edit-photo-button position-absolute" style="bottom: 10px; right: 10px;">
+                        <i class="fas fa-camera" style="cursor: pointer;" data-toggle="modal"
+                           data-target="#photoModal"></i>
+                    </div>
+                </div>
+
+                <div class="candidate-details frame-card-basic-info">
+                    <div class="left-column">
+                        <h5 class="card-title" style="font-size: 1.5em;"
+                            th:text="${candidate.name + ' ' + candidate.surname}"></h5>
+                        <p class="card-text">
+                            <i class="bi bi-envelope-fill icon-color"></i>
+                            <span th:text="${candidate.email}"></span>
+                        </p>
+                        <p class="card-text">
+                            <i class="bi bi-telephone-fill icon-color"></i>
+                            <span th:text="'tel. ' + ${candidate.phone}"></span>
+                        </p>
+                    </div>
+                    <div class="right-column">
+                        <p class="card-text" style="visibility: hidden;">&nbsp;</p>
+                        <p class="card-text">
+                            <i class="bi bi-linkedin icon-color"></i>
+                            <a class="custom-link" th:href="${candidate.linkedIn}" target="_blank"
+                               th:text="${candidate.linkedIn != null ? candidate.linkedIn : 'Profile LinkedIn'}"
+                               th:if="${candidate.linkedIn != null}"></a>
+                        </p>
+                        <p class="card-text">
+                            <i class="bi bi-github icon-color"></i>
+                            <a class="custom-link" th:href="${candidate.gitHub}" target="_blank"
+                               th:text="${candidate.gitHub != null ? candidate.gitHub : 'Profile GitHub'}"
+                               th:if="${candidate.gitHub != null}"></a>
+                        </p>
+                    </div>
+                </div>
+
+
             </div>
 
 
-            <!-- Jeśli kandydat jest nullem, wyświetl komunikat -->
-            <div th:if="${candidate == null}">
-                <p>No candidate details available. Please provide a valid email.</p>
+            <!-- Główne Okno Modal do edycji zdjęcia profilowego -->
+            <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="photoModalLabel">Edit Profile Photo</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <!-- Profile Photo -->
+                            <img th:if="${candidate.profilePhoto != null}"
+                                 th:src="@{candidate-portal/profilePhoto/{email}(email=${candidate.email})}"
+                                 alt="Profile Photo"
+                                 class="img-fluid rounded-circle"
+                                 style="width: 150px; height: 150px;">
+                            <img th:if="${candidate.profilePhoto == null}"
+                                 th:src="@{/images/avatar.png}"
+                                 alt="Default Avatar"
+                                 class="img-fluid rounded-circle"
+                                 style="width: 150px; height: 150px;"/>
+                            <!-- Centered buttons below the photo -->
+                            <div class="d-flex flex-column align-items-center mt-3">
+                                <!-- Change Photo Button -->
+                                <button type="button" class="change-photo-button btn btn-danger mb-2"
+                                        data-toggle="modal"
+                                        data-target="#changePhotoModal" data-dismiss="modal">
+                                    <i class="fas fa-pencil-alt"></i> Change Photo
+                                </button>
+                                <!-- Delete Photo Form -->
+                                <form th:action="@{/candidate-portal/delete-candidate-photo/{email}}"
+                                      th:method="DELETE">
+                                    <button type="submit" class="change-photo-button btn btn-danger">
+                                        <i class="fas fa-trash icon-size"></i> Delete Photo
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!--    Nowe karty z danymi -->
-        <div class="candidate-card">
-            <div class="card-body">
-                <!-- Przycisk do edycji profilu -->
-                <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
-                        data-target="#editAboutMe">
-                    <i class="fas fa-pencil-alt"></i> Edit Bio
-                </button>
-                <h4 class="mb-0">About me</h4>
-                <p class="card-text text-justify frame-card" th:text="${candidate.aboutMe}">No information available</p>
-            </div>
-        </div>
-        <!-- Nowe Okno Modal do edycji profilu -->
-        <div class="modal fade" id="editAboutMe" tabindex="-1" role="dialog"
-             aria-labelledby="editAboutMeLabel" aria-hidden="true">
+        <!-- Drugie Okno Modal do przesyłania nowego zdjęcia -->
+        <div class="modal fade" id="changePhotoModal" tabindex="-1" role="dialog"
+             aria-labelledby="changePhotoModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editAboutMeLabel">Edit Bio</h5>
+                        <h5 class="modal-title" id="changePhotoModalLabel">Choose new Photo</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <!-- Form for updating personal details -->
-                        <form th:action="@{/candidate-portal/update-candidate-about-me}" method="post">
+                        <!-- Formularz do przesyłania nowego zdjęcia -->
+                        <form th:action="@{/candidate-portal/update-candidate-photo}" method="post"
+                              enctype="multipart/form-data">
                             <div class="form-group">
-                                <label for="aboutMe">About Me:</label>
-                                <textarea class="form-control" id="aboutMe" name="aboutMe" rows="4"
-                                          th:text="${candidate.aboutMe}"></textarea>
+                                <label for="profilePhoto">Choose Photo:</label>
+                                <input type="file" id="profilePhoto" name="profilePhoto" class="form-control"
+                                       required>
                             </div>
-                            <button type="submit" class="add-job-offer-button btn btn-primary mb-3">Save changes
+                            <button type="submit" class="change-photo-button btn btn-danger mb-2">Save changes
                             </button>
                         </form>
                     </div>
@@ -262,175 +215,222 @@
             </div>
         </div>
 
-        <div class="candidate-card">
-            <div class="card-body">
-                <!-- Przycisk do edycji specjalizacji technicznej -->
-                <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
-                        data-target="#editTechSpecializationModal">
-                    <i class="fas fa-pencil-alt"></i> Edit Tech Specialization
-                </button>
-                <h4 class="mb-0">My Tech Specialization</h4>
-                <p></p>
-                <p class="card-text frame-card">
-                    <!-- Check if the tech specialization is empty -->
-                    <span th:if="${candidate.techSpecialization == null}">No Specialization</span>
-                    <span th:if="${candidate.techSpecialization != null}"
-                          th:text="${candidate.techSpecialization}"></span>
-                </p>
-            </div>
-        </div>
 
-        <!-- Nowe Okno Modal do edycji specjalizacji technicznej -->
-        <div class="modal fade" id="editTechSpecializationModal" tabindex="-1" role="dialog"
-             aria-labelledby="editTechSpecializationModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editTechSpecializationModalLabel">Edit Tech Specialization</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+        <!-- Jeśli kandydat jest nullem, wyświetl komunikat -->
+        <div th:if="${candidate == null}">
+            <p>No candidate details available. Please provide a valid email.</p>
+        </div>
+    </div>
+
+    <!--    Nowe karty z danymi -->
+    <div class="candidate-card">
+        <div class="card-body">
+            <!-- Przycisk do edycji profilu -->
+            <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
+                    data-target="#editAboutMe">
+                <i class="fas fa-pencil-alt"></i> Edit Bio
+            </button>
+            <h4 class="mb-0">About me</h4>
+            <p class="card-text text-justify frame-card" th:text="${candidate.aboutMe}">No information available</p>
+        </div>
+    </div>
+    <!-- Nowe Okno Modal do edycji profilu -->
+    <div class="modal fade" id="editAboutMe" tabindex="-1" role="dialog"
+         aria-labelledby="editAboutMeLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editAboutMeLabel">Edit Bio</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form for updating personal details -->
+                    <form th:action="@{/candidate-portal/update-candidate-about-me}" method="post">
+                        <div class="form-group">
+                            <label for="aboutMe">About Me:</label>
+                            <textarea class="form-control" id="aboutMe" name="aboutMe" rows="4"
+                                      th:text="${candidate.aboutMe}"></textarea>
+                        </div>
+                        <button type="submit" class="add-job-offer-button btn btn-primary mb-3">Save changes
                         </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Form for updating tech specialization -->
-                        <form th:action="@{/candidate-portal/update-candidate-tech-specialization}" method="post">
-                            <div class="form-group">
-                                <label for="techSpecialization">Select Tech Specialization:</label>
-                                <select class="form-control" id="techSpecialization" name="techSpecialization">
-                                    <option value="" disabled selected>Choose...</option>
-                                    <option th:each="techSpecialization : ${T(pl.zajavka.CodeBridge.api.view.TechSpecializationsEnum).values()}"
-                                            th:value="${techSpecialization}" th:text="${techSpecialization}">
-                                    </option>
-                                </select>
-                            </div>
-                            <button type="submit" class="add-job-offer-button btn btn-primary">Save changes</button>
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 
-
-        <div class="candidate-card">
-            <div class="card-body">
-                <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
-                        data-target="#editSkillsModal">
-                    <i class="fas fa-pencil-alt"></i> Edit Skills
-                </button>
-                <h4 class="mb-0 ">My Skills</h4>
-                <p></p>
-                <ul class="frame-card-skills ">
-                    <!-- Check if there are any skills -->
-                    <li th:if="${#lists.isEmpty(candidate.candidateSkills)}">No Skills</li>
-                    <li th:each="skill : ${candidate.candidateSkills}" th:text="${skill}"></li>
-                </ul>
-            </div>
+    <div class="candidate-card">
+        <div class="card-body">
+            <!-- Przycisk do edycji specjalizacji technicznej -->
+            <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
+                    data-target="#editTechSpecializationModal">
+                <i class="fas fa-pencil-alt"></i> Edit Tech Specialization
+            </button>
+            <h4 class="mb-0">My Tech Specialization</h4>
+            <p></p>
+            <p class="card-text frame-card">
+                <!-- Check if the tech specialization is empty -->
+                <span th:if="${candidate.techSpecialization == null}">No Specialization</span>
+                <span th:if="${candidate.techSpecialization != null}"
+                      th:text="${candidate.techSpecialization}"></span>
+            </p>
         </div>
+    </div>
 
-        <!-- Modal do edycji umiejętności -->
-        <div class="modal fade" id="editSkillsModal" tabindex="-1" role="dialog" aria-labelledby="editSkillsModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editSkillsModalLabel">Edit Skills</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Formularz do aktualizacji umiejętności -->
-                        <form th:action="@{/candidate-portal/update-candidate-skills}" method="post" id="skillsForm">
-                            <div class="form-group ">
-                                <label>Choose Skills:</label>
-
-                                <select name="selectedSkill" class="form-control mb-3">
-                                    <option value="">Choose Skills</option>
-                                    <option th:each="skill : ${T(pl.zajavka.CodeBridge.api.view.SkillsEnum).values()}"
-                                            th:value="${skill.getSkill()}"
-                                            th:text="${skill.getSkill()}"></option>
-                                </select>
-
-                                <div class="input-group mb-3"
-                                     th:each="skill : ${T(pl.zajavka.CodeBridge.api.view.SkillsEnum).values()}">
-                                    <div class="input-group-text">
-                                        <input class="form-check-input mt-0" type="checkbox"
-                                               th:field="*{candidate.candidateSkills}"
-                                               th:value="${skill.getSkill()}"
-                                               id="candidate_skill_${skill.name()}"
-                                               th:checked="${#lists.contains(candidate.candidateSkills, skill.getSkill())}"/>
-                                    </div>
-                                    <label class="form-control" aria-label="Text input with checkbox"
-                                           th:for="'candidate_skill_' + ${skill.name()}"
-                                           th:text="${skill.getSkill()}"></label>
-                                </div>
-                            </div>
-                            <button type="submit" class="add-job-offer-button btn btn-primary">Save Changes</button>
-                        </form>
-                    </div>
+    <!-- Nowe Okno Modal do edycji specjalizacji technicznej -->
+    <div class="modal fade" id="editTechSpecializationModal" tabindex="-1" role="dialog"
+         aria-labelledby="editTechSpecializationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editTechSpecializationModalLabel">Edit Tech Specialization</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form for updating tech specialization -->
+                    <form th:action="@{/candidate-portal/update-candidate-tech-specialization}" method="post">
+                        <div class="form-group">
+                            <label for="techSpecialization">Select Tech Specialization:</label>
+                            <select class="form-control" id="techSpecialization" name="techSpecialization">
+                                <option value="" disabled selected>Choose...</option>
+                                <option th:each="techSpecialization : ${T(pl.zajavka.CodeBridge.api.view.TechSpecializationsEnum).values()}"
+                                        th:value="${techSpecialization}" th:text="${techSpecialization}">
+                                </option>
+                            </select>
+                        </div>
+                        <button type="submit" class="add-job-offer-button btn btn-primary">Save changes</button>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 
 
-        <div class="candidate-card">
-            <div class="card-body">
-                <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
-                        data-target="#addExperienceModal">
-                    <i class="fas fa-plus"></i> Add Work Experience
-                </button>
-                <h4 class="mb-0">My Work Experience</h4>
-                <p></p>
-                <div class="experience-list">
-                    <!-- Pętla po doświadczeniu zawodowym kandydata -->
-                    <div th:each="experience : ${candidateExperiences}" class="frame-card card mb-3">
-                        <div class="card-body">
-                            <!-- Główna sekcja: stanowisko, firma, daty i przyciski -->
-                            <div class="d-flex justify-content-between align-items-center">
-                                <!-- Lewa sekcja: Pozycja i firma -->
-                                <div>
-                                    <!-- Informacyjne teksty w ramkach -->
-                                    <div class="experience-info">Position: <span class="experience-info-value"
-                                                                                 th:text="${experience.candidatePosition}"></span>
-                                    </div>
-                                    <div class="experience-info">Company: <span class="experience-info-value"
-                                                                                th:text="${experience.companyName}"></span>
-                                    </div>
+    <div class="candidate-card">
+        <div class="card-body">
+            <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
+                    data-target="#editSkillsModal">
+                <i class="fas fa-pencil-alt"></i> Edit Skills
+            </button>
+            <h4 class="mb-0 ">My Skills</h4>
+            <p></p>
+            <ul class="frame-card-skills ">
+                <!-- Check if there are any skills -->
+                <li th:if="${#lists.isEmpty(candidate.candidateSkills)}">No Skills</li>
+                <li th:each="skill : ${candidate.candidateSkills}" th:text="${skill}"></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal do edycji umiejętności -->
+    <div class="modal fade" id="editSkillsModal" tabindex="-1" role="dialog" aria-labelledby="editSkillsModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editSkillsModalLabel">Edit Skills</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formularz do aktualizacji umiejętności -->
+                    <form th:action="@{/candidate-portal/update-candidate-skills}" method="post" id="skillsForm">
+                        <div class="form-group ">
+                            <label>Choose Skills:</label>
+
+                            <select name="selectedSkill" class="form-control mb-3">
+                                <option value="">Choose Skills</option>
+                                <option th:each="skill : ${T(pl.zajavka.CodeBridge.api.view.SkillsEnum).values()}"
+                                        th:value="${skill.getSkill()}"
+                                        th:text="${skill.getSkill()}"></option>
+                            </select>
+
+                            <div class="input-group mb-3"
+                                 th:each="skill : ${T(pl.zajavka.CodeBridge.api.view.SkillsEnum).values()}">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                           th:field="*{candidate.candidateSkills}"
+                                           th:value="${skill.getSkill()}"
+                                           id="candidate_skill_${skill.name()}"
+                                           th:checked="${#lists.contains(candidate.candidateSkills, skill.getSkill())}"/>
                                 </div>
+                                <label class="form-control" aria-label="Text input with checkbox"
+                                       th:for="'candidate_skill_' + ${skill.name()}"
+                                       th:text="${skill.getSkill()}"></label>
+                            </div>
+                        </div>
+                        <button type="submit" class="add-job-offer-button btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
-                                <!-- Sekcja z datami -->
-                                <div class="experience-dates text-right">
-                                    <p class="mb-1"><strong>From:</strong> <span
-                                            th:text="${experience.fromDate}"></span></p>
-                                    <p class="mb-1"><strong>To:</strong> <span th:text="${experience.toDate}"></span>
-                                    </p>
+    <div class="candidate-card">
+        <div class="card-body">
+            <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
+                    data-target="#addExperienceModal">
+                <i class="fas fa-plus"></i> Add Work Experience
+            </button>
+            <h4 class="mb-0">My Work Experience</h4>
+            <p></p>
+            <div class="experience-list">
+                <!-- Pętla po doświadczeniu zawodowym kandydata -->
+                <div th:each="experience : ${candidateExperiences}" class="frame-card card mb-3">
+                    <div class="card-body">
+                        <!-- Główna sekcja: stanowisko, firma, daty i przyciski -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Lewa sekcja: Pozycja i firma -->
+                            <div>
+                                <!-- Informacyjne teksty w ramkach -->
+                                <div class="experience-info">Position: <span class="experience-info-value"
+                                                                             th:text="${experience.candidatePosition}"></span>
                                 </div>
+                                <div class="experience-info">Company: <span class="experience-info-value"
+                                                                            th:text="${experience.companyName}"></span>
+                                </div>
+                            </div>
 
-                                <!-- Przyciski -->
-                                <div class="experience-actions ml-3">
-                                    <!-- Edycja doświadczenia -->
-                                    <button type="button" class="btn btn-primary change-photo-button"
-                                            th:data-target="'#editExperienceModal-' + ${experience.candidateExperienceId}"
-                                            data-toggle="modal" title="Edit">
-                                        <i class="fas fa-pencil-alt icon-size"></i>
+                            <!-- Sekcja z datami -->
+                            <div class="experience-dates text-right">
+                                <p class="mb-1"><strong>From:</strong> <span
+                                        th:text="${experience.fromDate}"></span></p>
+                                <p class="mb-1"><strong>To:</strong> <span th:text="${experience.toDate}"></span>
+                                </p>
+                            </div>
+
+                            <!-- Przyciski -->
+                            <div class="experience-actions ml-3">
+                                <!-- Edycja doświadczenia -->
+                                <button type="button" class="btn btn-primary change-photo-button"
+                                        th:data-target="'#editExperienceModal-' + ${experience.candidateExperienceId}"
+                                        data-toggle="modal" title="Edit">
+                                    <i class="fas fa-pencil-alt icon-size"></i>
+                                </button>
+
+                                <!-- Usuwanie doświadczenia -->
+                                <form th:action="@{/candidate-portal/delete-experience}" method="post"
+                                      class="d-inline">
+                                    <input type="hidden" name="candidateExperienceId"
+                                           th:value="${experience.candidateExperienceId}"/>
+                                    <input type="hidden" name="candidateId" th:value="${experience.candidateId}"/>
+                                    <button type="submit" class="btn btn-danger change-photo-button" title="Delete">
+                                        <i class="fas fa-trash icon-size"></i>
                                     </button>
-
-                                    <!-- Usuwanie doświadczenia -->
-                                    <form th:action="@{/candidate-portal/delete-experience}" method="post" class="d-inline">
-                                        <input type="hidden" name="candidateExperienceId" th:value="${experience.candidateExperienceId}"/>
-                                        <input type="hidden" name="candidateId" th:value="${experience.candidateId}"/>
-                                        <button type="submit" class="btn btn-danger change-photo-button" title="Delete">
-                                            <i class="fas fa-trash icon-size"></i>
-                                        </button>
-                                    </form>
-                                </div>
+                                </form>
                             </div>
-                            <!-- Opis -->
-                            <div class="mt-3">
-                                <div class="experience-info">Description:</div>  <!-- Etykieta Description -->
-                                <div class="experience-info-value description"
-                                     th:text="${experience.description}"></div> <!-- Wartość description -->
-                            </div>
+                        </div>
+                        <!-- Opis -->
+                        <div class="mt-3">
+                            <div class="experience-info">Description:</div>  <!-- Etykieta Description -->
+                            <div class="experience-info-value description"
+                                 th:text="${experience.description}"></div> <!-- Wartość description -->
                         </div>
                     </div>
                 </div>
@@ -453,7 +453,8 @@
                 <div class="modal-body">
                     <!-- Formularz edycji -->
                     <form th:action="@{/candidate-portal/update-candidate-experience}" method="post">
-                        <input type="hidden" name="candidateExperienceId" th:value="${experience.candidateExperienceId}"/>
+                        <input type="hidden" name="candidateExperienceId"
+                               th:value="${experience.candidateExperienceId}"/>
                         <input type="hidden" name="candidateId" th:value="${experience.candidateId}"/>
                         <div class="form-group">
                             <label for="editCandidatePosition">Position</label>
@@ -544,19 +545,16 @@
         </div>
     </div>
 
-
+    <!-------------------------------------------------------------------------------------------------------------------------------------------->
     <div class="candidate-card">
         <div class="card-body">
-            <!-- Przycisk dodawania nowego projektu -->
-
             <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
                     data-target="#addProjectModal">
                 <i class="fas fa-plus"></i> Add Project
             </button>
-
             <h4 class="mb-0">My Projects</h4>
             <p></p>
-            <div class="project-list">
+            <div class="experience-list">
                 <!-- Pętla po projektach kandydata -->
                 <div th:each="project : ${candidateProjects}" class="frame-card card mb-3">
                     <div class="card-body">
@@ -565,24 +563,24 @@
                             <!-- Lewa sekcja: Tytuł projektu i technologie -->
                             <div>
                                 <!-- Informacyjne teksty w ramkach -->
-                                <div class="project-info">Title: <span class="project-info-value"
-                                                                       th:text="${project.projectTitle}"></span>
+                                <div class="experience-info">Title: <span class="experience-info-value"
+                                                                          th:text="${project.projectTitle}"></span>
                                 </div>
-                                <div class="project-info">Technologies: <span class="project-info-value"
-                                                                              th:text="${project.technologies}"></span>
+                                <div class="experience-info">Technologies: <span class="experience-info-value"
+                                                                                 th:text="${project.technologies}"></span>
                                 </div>
                             </div>
 
                             <!-- Sekcja z datami -->
-                            <div class="project-dates text-right">
+                            <div class="experience-dates text-right">
                                 <p class="mb-1"><strong>From:</strong> <span th:text="${project.fromDate}"></span></p>
                                 <p class="mb-1"><strong>To:</strong> <span th:text="${project.toDate}"></span></p>
                             </div>
 
                             <!-- Przyciski -->
-                            <div class="project-actions ml-3">
+                            <div class="experience-actions ml-3">
                                 <!-- Edycja projektu -->
-                                <button type="button" class="btn btn-primary change-project-button"
+                                <button type="button" class="btn btn-primary change-photo-button"
                                         th:data-target="'#editProjectModal-' + ${project.candidateProjectId}"
                                         data-toggle="modal" title="Edit">
                                     <i class="fas fa-pencil-alt icon-size"></i>
@@ -590,24 +588,27 @@
 
                                 <!-- Usuwanie projektu -->
                                 <form th:action="@{/candidate-portal/delete-project}" method="post" class="d-inline">
-                                    <input type="hidden" name="candidateProjectId" th:value="${project.candidateProjectId}"/>
+                                    <input type="hidden" name="candidateProjectId"
+                                           th:value="${project.candidateProjectId}"/>
                                     <input type="hidden" name="candidateId" th:value="${project.candidateId}"/>
-                                    <button type="submit" class="btn btn-danger change-project-button" title="Delete">
+                                    <button type="submit" class="btn btn-danger change-photo-button" title="Delete">
                                         <i class="fas fa-trash icon-size"></i>
                                     </button>
                                 </form>
                             </div>
                         </div>
+
                         <!-- Opis -->
                         <div class="mt-3">
-                            <div class="project-info">Description:</div> <!-- Etykieta Description -->
-                            <div class="project-info-value description"
-                                 th:text="${project.description}"></div> <!-- Wartość description -->
+                            <div class="experience-info">Description:</div> <!-- Etykieta Description -->
+                            <div class="experience-info-value description" th:text="${project.description}"></div>
+                            <!-- Wartość description -->
                         </div>
+
                         <!-- Link do projektu -->
                         <div class="mt-3">
-                            <div class="project-info">Project Link:</div> <!-- Etykieta Project Link -->
-                            <a th:href="${project.projectLink}" target="_blank" class="project-link"
+                            <div class="experience-info">Project Link:</div> <!-- Etykieta Project Link -->
+                            <a th:href="${project.projectLink}" target="_blank" class="experience-info-value"
                                th:text="${project.projectLink}"></a> <!-- Wartość link -->
                         </div>
                     </div>
@@ -617,7 +618,8 @@
     </div>
 
     <!-- Modal ADD -->
-    <div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="addProjectModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="addProjectModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -666,7 +668,7 @@
                         <!-- Project Link -->
                         <div class="form-group">
                             <label for="projectLink">Project Link</label>
-                            <input type="url" class="form-control" id="projectLink" name="projectLink"
+                            <input type="text" class="form-control" id="projectLink" name="projectLink"
                                    th:value="${candidateProjectDTO != null ? candidateProjectDTO.projectLink : ''}">
                         </div>
 
@@ -734,20 +736,20 @@
                         <!-- Project Link -->
                         <div class="form-group">
                             <label for="editProjectLink">Project Link</label>
-                            <input type="url" class="form-control" id="editProjectLink" name="projectLink"
+                            <input type="text" class="form-control" id="editProjectLink" name="projectLink"
                                    th:value="${project.projectLink}">
                         </div>
 
                         <!-- Submit Button -->
-                        <button type="submit" class="add-project-button btn btn-primary mb-3">Save changes</button>
+                        <button type="submit" class="add-job-offer-button btn btn-primary mb-3">Save changes</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
-
-<div class="candidate-card">
+    <div class="candidate-card">
         <div class="card-body">
             <!-- Przycisk do edycji profilu - przeniesiony na górę -->
             <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"

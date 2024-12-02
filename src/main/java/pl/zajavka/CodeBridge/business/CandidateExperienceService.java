@@ -54,19 +54,8 @@ public class CandidateExperienceService {
         candidateExperienceDAO.updateCandidateExperience(candidateExperience);
     }
 
-    public void deleteCandidateExperienceById(Integer candidateExperienceId, Authentication authentication) throws AccessDeniedException {
-
-
-//        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
-//        Integer loggedInCandidateId = candidate.getCandidateId();
-//
-//        if (!candidateExperienceId.equals(loggedInCandidateId)){
-//            throw new AccessDeniedException("Unauthorized access.");
-//        }
+    public void deleteCandidateExperienceById(Integer candidateExperienceId) {
 
         candidateExperienceDAO.deleteById(candidateExperienceId);
-
-
-
     }
 }

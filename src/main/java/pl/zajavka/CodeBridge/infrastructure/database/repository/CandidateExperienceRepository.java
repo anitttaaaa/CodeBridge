@@ -15,7 +15,7 @@ public class CandidateExperienceRepository implements CandidateExperienceDAO {
 
     private final CandidateExperienceEntityMapper candidateExperienceEntityMapper;
     private final CandidateExperienceJpaRepository candidateExperienceJpaRepository;
-    private final EntityManager entityManager;
+
 
     @Override
     public CandidateExperience createExperience(CandidateExperience candidateExperience) {

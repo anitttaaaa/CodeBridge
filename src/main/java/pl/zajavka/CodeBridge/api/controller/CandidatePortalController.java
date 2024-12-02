@@ -42,17 +42,19 @@ public class CandidatePortalController {
     private static final String UPDATE_CANDIDATE_TECH_SPECIALIZATION = "/candidate-portal/update-candidate-tech-specialization";
     private static final String UPDATE_CANDIDATE_SKILLS = "/candidate-portal/update-candidate-skills";
     private static final String UPDATE_CANDIDATE_EXPERIENCE = "/candidate-portal/update-candidate-experience";
+    private static final String UPDATE_CANDIDATE_PROJECT = "/candidate-portal/update-candidate-project";
     private static final String UPDATE_CANDIDATE_ABOUT_ME = "/candidate-portal/update-candidate-about-me";
     private static final String UPDATE_CANDIDATE_HOBBY = "/candidate-portal/update-candidate-hobby";
     private static final String UPDATE_CANDIDATE_PHOTO = "/candidate-portal/update-candidate-photo";
 
     private static final String DELETE_CANDIDATE_PHOTO = "/candidate-portal/delete-candidate-photo/{email}";
     private static final String DELETE_CANDIDATE_EXPERIENCE = "/candidate-portal/delete-experience";
+    private static final String DELETE_CANDIDATE_PROJECT = "/candidate-portal/delete-project";
 
 
     private final CandidateService candidateService;
     private final CandidateExperienceService candidateExperienceService;
-//    private final CandidateProjectService candidateProjectService;
+    private final CandidateProjectService candidateProjectService;
     private final CandidateExperienceMapper candidateExperienceMapper;
     private final CandidateProjectMapper candidateProjectMapper;
     private final CandidateMapper candidateMapper;
@@ -69,7 +71,13 @@ public class CandidatePortalController {
                 .sorted(Comparator.comparing(CandidateExperienceDTO::getFromDate))
                 .toList();
 
+        List<CandidateProjectDTO> sortedProjects = candidateDetails.getCandidateProjects()
+                .stream()
+                .sorted(Comparator.comparing(CandidateProjectDTO::getFromDate))
+                .toList();
+
         model.addAttribute("candidateExperiences", sortedExperiences);
+        model.addAttribute("candidateProjects", sortedProjects);
         model.addAttribute("candidate", candidateDetails);
 
         return "candidate_portal";
@@ -151,10 +159,10 @@ public class CandidatePortalController {
 
     @PostMapping(DELETE_CANDIDATE_EXPERIENCE)
     public String deleteCandidateExperience(
-            @RequestParam("candidateExperienceId") Integer candidateExperienceId,
-            Authentication authentication) throws AccessDeniedException {
+            @RequestParam("candidateExperienceId") Integer candidateExperienceId
+    ) {
 
-        candidateExperienceService.deleteCandidateExperienceById(candidateExperienceId,authentication);
+        candidateExperienceService.deleteCandidateExperienceById(candidateExperienceId);
 
         return "redirect:/candidate-portal";
     }
@@ -164,32 +172,32 @@ public class CandidatePortalController {
             @ModelAttribute("candidateProjectDTO") CandidateProjectDTO candidateProjectDTO) {
 
         CandidateProject candidateProject = candidateProjectMapper.mapFromDTO(candidateProjectDTO);
-//        candidateProjectService.createProjectData(candidateProject);
+        candidateProjectService.createProjectData(candidateProject);
 
         return "redirect:/candidate-portal";
     }
 
-//    @PostMapping(UPDATE_CANDIDATE_EXPERIENCE)
-//    public String updateCandidateExperience(
-//            @ModelAttribute CandidateExperienceDTO candidateExperienceDTO,
-//            Authentication authentication) throws AccessDeniedException {
-//
-//        CandidateExperience candidateExperience = candidateExperienceMapper.mapFromDTO(candidateExperienceDTO);
-//        candidateExperienceService.updateCandidateExperience(candidateExperience, authentication);
-//
-//        return "redirect:/candidate-portal";
-//    }
-//
-//
-//    @PostMapping(DELETE_CANDIDATE_EXPERIENCE)
-//    public String deleteCandidateExperience(
-//            @RequestParam("candidateExperienceId") Integer candidateExperienceId,
-//            Authentication authentication) throws AccessDeniedException {
-//
-//        candidateExperienceService.deleteCandidateExperienceById(candidateExperienceId,authentication);
-//
-//        return "redirect:/candidate-portal";
-//    }
+    @PostMapping(UPDATE_CANDIDATE_PROJECT)
+    public String getUpdateCandidateProject(
+            @ModelAttribute CandidateProjectDTO candidateProjectDTO,
+            Authentication authentication) throws AccessDeniedException {
+
+        CandidateProject candidateProject = candidateProjectMapper.mapFromDTO(candidateProjectDTO);
+        candidateProjectService.updateCandidateProject(candidateProject, authentication);
+
+        return "redirect:/candidate-portal";
+    }
+
+
+    @PostMapping(DELETE_CANDIDATE_PROJECT)
+    public String deleteCandidateProject(
+            @RequestParam("candidateProjectId") Integer candidateProjectId,
+            Authentication authentication) throws AccessDeniedException {
+
+        candidateProjectService.deleteCandidateProjectById(candidateProjectId, authentication);
+
+        return "redirect:/candidate-portal";
+    }
 
     @PostMapping(UPDATE_CANDIDATE_TECH_SPECIALIZATION)
     public String updateCandidateTechSpecialization(

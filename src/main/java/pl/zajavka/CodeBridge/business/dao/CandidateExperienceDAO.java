@@ -2,8 +2,6 @@ package pl.zajavka.CodeBridge.business.dao;
 
 import pl.zajavka.CodeBridge.domain.CandidateExperience;
 
-import java.util.Optional;
-
 public interface CandidateExperienceDAO {
 
 

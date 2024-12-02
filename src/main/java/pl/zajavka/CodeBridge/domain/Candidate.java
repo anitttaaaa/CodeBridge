@@ -26,11 +26,16 @@ public class Candidate {
     String hobby;
     List<String> candidateSkills;
     List<CandidateExperience> candidateExperiences;
+    List<CandidateProject> candidateProjects;
 
     byte[] profilePhoto;
 
     public List<CandidateExperience> getCandidateExperiences() {
         return Objects.isNull(candidateExperiences) ? new ArrayList<>() : candidateExperiences;
+
+    }
+    public List<CandidateProject> getCandidateProjects() {
+        return Objects.isNull(candidateProjects) ? new ArrayList<>() : candidateProjects;
 
     }
 

@@ -28,6 +28,7 @@ public class CandidateDTO {
     private byte[] profilePhoto;
 
     private List<CandidateExperienceDTO> candidateExperiences;
+    private List<CandidateProjectDTO> candidateProjects;
 
 
 }

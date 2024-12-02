@@ -64,5 +64,9 @@ public class CandidateEntity {
     @JoinColumn(name = "candidate_id")
     private List<CandidateExperienceEntity> candidateExperiences;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "candidate_id")
+    private List<CandidateProjectEntity> candidateProjects;
+
 }
 

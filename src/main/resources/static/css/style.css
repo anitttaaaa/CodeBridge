@@ -230,9 +230,14 @@ body {
     border-radius: 15px;
     margin-bottom: 5px;
 }
-project-card {
-    width: 90%;
+/* Styl dla ciała karty */
+.frame-card .card-body  {
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Kontener dla przycisków */
+    padding: 20px; /* Padding wewnętrzny */
 }
+
 
 .candidate-page-container {
     min-height: 80vh; /* Wysokość całej strony */
@@ -368,13 +373,6 @@ project-card {
     width: 80%;
 }
 
-/* Styl dla ciała karty */
-.frame-card .card-body {
-    display: flex;
-    flex-direction: column;
-    position: relative; /* Kontener dla przycisków */
-    padding: 20px; /* Padding wewnętrzny */
-}
 
 /* Pozycjonowanie przycisków edycji i usuwania */
 .experience-actions {
