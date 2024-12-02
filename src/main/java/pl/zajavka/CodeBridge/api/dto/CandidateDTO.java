@@ -29,6 +29,7 @@ public class CandidateDTO {
 
     private List<CandidateExperienceDTO> candidateExperiences;
     private List<CandidateProjectDTO> candidateProjects;
+    private List<CandidateEducationDTO> candidateEducationStages;
 
 
 }

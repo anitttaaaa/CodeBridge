@@ -59,3 +59,43 @@ CREATE TABLE candidate_project
 
 
 );
+
+
+CREATE TABLE candidate_education
+(
+    candidate_education_id            SERIAL                  NOT NULL,
+    institution                       VARCHAR                 NOT NULL,
+    degree                            VARCHAR                 NOT NULL,
+    field_of_study                    VARCHAR                 NOT NULL,
+    from_date                         DATE,
+    to_date                           DATE,
+    candidate_id                      INT                     NOT NULL,
+
+    PRIMARY KEY (candidate_education_id),
+        CONSTRAINT fk_candidate_education_candidate
+            FOREIGN KEY (candidate_id)
+                REFERENCES candidate (candidate_id)
+
+
+);
+
+CREATE TABLE candidate_course
+(
+    candidate_course_id               SERIAL                  NOT NULL,
+    institution                       VARCHAR                 NOT NULL,
+    course_title                      VARCHAR                 NOT NULL,
+    technologies                      VARCHAR                 NOT NULL,
+    description                       VARCHAR                 NOT NULL,
+    from_date                         DATE,
+    to_date                           DATE,
+    candidate_id                      INT                     NOT NULL,
+
+    PRIMARY KEY (candidate_course_id),
+        CONSTRAINT fk_candidate_course_candidate
+            FOREIGN KEY (candidate_id)
+                REFERENCES candidate (candidate_id)
+
+
+);
+
+

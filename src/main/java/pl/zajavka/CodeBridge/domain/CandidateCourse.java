@@ -18,5 +18,6 @@ public class CandidateCourse {
     String technologies;
     LocalDate fromDate;
     LocalDate toDate;
+    Integer candidateId;
 }
 

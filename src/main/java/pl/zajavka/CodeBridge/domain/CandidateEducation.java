@@ -17,4 +17,5 @@ public class CandidateEducation {
     String fieldOfStudy;
     LocalDate fromDate;
     LocalDate toDate;
+    Integer candidateId;
 }

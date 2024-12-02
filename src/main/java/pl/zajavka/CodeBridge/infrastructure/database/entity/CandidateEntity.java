@@ -68,5 +68,9 @@ public class CandidateEntity {
     @JoinColumn(name = "candidate_id")
     private List<CandidateProjectEntity> candidateProjects;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "candidate_id")
+    private List<CandidateEducationEntity> candidateEducationStages;
+
 }
 

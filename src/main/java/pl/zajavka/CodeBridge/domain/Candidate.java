@@ -27,6 +27,7 @@ public class Candidate {
     List<String> candidateSkills;
     List<CandidateExperience> candidateExperiences;
     List<CandidateProject> candidateProjects;
+    List<CandidateEducation> candidateEducationStages;
 
     byte[] profilePhoto;
 
@@ -36,6 +37,12 @@ public class Candidate {
     }
     public List<CandidateProject> getCandidateProjects() {
         return Objects.isNull(candidateProjects) ? new ArrayList<>() : candidateProjects;
+
+    }
+
+
+    public List<CandidateEducation> getCandidateEducationStages() {
+        return Objects.isNull(candidateEducationStages) ? new ArrayList<>() : candidateEducationStages;
 
     }
 
