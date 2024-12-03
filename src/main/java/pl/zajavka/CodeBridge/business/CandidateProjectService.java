@@ -51,7 +51,7 @@ public class CandidateProjectService {
 
     }
 
-    public void deleteCandidateProjectById(Integer candidateProjectId, Authentication authentication) {
+    public void deleteCandidateProjectById(Integer candidateProjectId) {
         candidateProjectDAO.deleteById(candidateProjectId);
     }
 }

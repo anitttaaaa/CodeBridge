@@ -22,6 +22,7 @@
 
 <div layout:fragment="candidateContent" class="candidate-page-container ">
 
+<!----BASIC INFO-------------------------------------------------------------------------------------------------------->
 
     <div class="candidate-card">
         <div class="card-body ">
@@ -90,7 +91,8 @@
             <div class="card-body d-flex align-items-center">
 
 
-                <!-- Kontener dla zdjęcia profilowego -->
+
+<!---PROFILE PHOTO------------------------------------------------------------------------------------------------------------>
                 <div id="photo-container" class="me-4">
                     <img th:if="${candidate.profilePhoto != null}"
                          th:src="@{candidate-portal/profilePhoto/{email}(email=${candidate.email})}"
@@ -222,7 +224,7 @@
         </div>
     </div>
 
-    <!--    Nowe karty z danymi -->
+<!---BIO------------------------------------------------------------------------------------------------------------------------------------------------->
     <div class="candidate-card">
         <div class="card-body">
             <!-- Przycisk do edycji profilu -->
@@ -260,7 +262,7 @@
             </div>
         </div>
     </div>
-
+<!----TECH SPECIALIZATION------------------------------------------------------------------------------------------------------------------>
     <div class="candidate-card">
         <div class="card-body">
             <!-- Przycisk do edycji specjalizacji technicznej -->
@@ -308,7 +310,7 @@
             </div>
         </div>
     </div>
-
+<!--SKILLS------------------------------------------------------------------------------------------->
 
     <div class="candidate-card">
         <div class="card-body">
@@ -370,7 +372,7 @@
             </div>
         </div>
     </div>
-    <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+    <!----EXPERIENCE---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
     <div class="candidate-card">
         <div class="card-body">
@@ -545,7 +547,7 @@
         </div>
     </div>
 
-    <!-------------------------------------------------------------------------------------------------------------------------------------------->
+    <!-----PROJECT--------------------------------------------------------------------------------------------------------------------------------------->
     <div class="candidate-card">
         <div class="card-body">
             <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
@@ -640,7 +642,7 @@
                         <!-- Technologies -->
                         <div class="form-group">
                             <label for="technologies">Technologies</label>
-                            <input type="text" class="form-control" id="technologies" name="technologies"
+                            <input type="text" class="form-control" id="projectTechnologies" name="technologies"
                                    th:value="${candidateProjectDTO != null ? candidateProjectDTO.technologies : ''}">
                         </div>
 
@@ -708,7 +710,7 @@
                         <!-- Technologies -->
                         <div class="form-group">
                             <label for="editTechnologies">Technologies</label>
-                            <input type="text" class="form-control" id="editTechnologies" name="technologies"
+                            <input type="text" class="form-control" id="editProjectTechnologies" name="technologies"
                                    th:value="${project.technologies}">
                         </div>
 
@@ -747,44 +749,386 @@
             </div>
         </div>
     </div>
-    <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+    <!---EDUCATION-------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
     <div class="candidate-card">
         <div class="card-body">
-            <!-- Przycisk do edycji profilu - przeniesiony na górę -->
             <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
-                    data-target="#editProfileModal">
-                <i class="fas fa-pencil-alt"></i> Edit Details
+                    data-target="#addEducationModal">
+                <i class="fas fa-plus"></i> Add Education
             </button>
-            <h4 class="mb-0">Education</h4>
-            <div class="frame-card">
-                <h6 class="card-title">---------------------------------</h6>
-                <p class="card-text"></p>
+            <h4 class="mb-0">My Education</h4>
+            <p></p>
+            <div class="experience-list">
+                <!-- Pętla po edukacji kandydata -->
+                <div th:each="education : ${candidateEducationStages}" class="frame-card card mb-3">
+                    <div class="card-body">
+                        <!-- Główna sekcja: instytucja, stopień, daty i przyciski -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Lewa sekcja: Instytucja i stopień -->
+                            <div>
+                                <!-- Informacyjne teksty w ramkach -->
+                                <div class="education-info">Institution: <span class="experience-info-value"
+                                                                               th:text="${education.institution}"></span>
+                                </div>
+                                <div class="education-info">Degree: <span class="experience-info-value"
+                                                                          th:text="${education.degree}"></span>
+                                </div>
+                                <div class="education-info">Field of Study: <span class="experience-info-value"
+                                                                                  th:text="${education.fieldOfStudy}"></span>
+                                </div>
+                            </div>
 
-                <h6 class="card-title">-------------------------------</h6>
+                            <!-- Sekcja z datami -->
+                            <div class="experience-dates text-right">
+                                <p class="mb-1"><strong>From:</strong> <span th:text="${education.fromDate}"></span></p>
+                                <p class="mb-1"><strong>To:</strong> <span th:text="${education.toDate}"></span></p>
+                            </div>
 
+                            <!-- Przyciski -->
+                            <div class="experience-actions ml-3">
+                                <!-- Edycja edukacji -->
+                                <button type="button" class="btn btn-primary change-photo-button"
+                                        th:data-target="'#editEducationModal-' + ${education.candidateEducationId}"
+                                        data-toggle="modal" title="Edit">
+                                    <i class="fas fa-pencil-alt icon-size"></i>
+                                </button>
+
+                                <!-- Usuwanie edukacji -->
+                                <form th:action="@{/candidate-portal/delete-education}" method="post" class="d-inline">
+                                    <input type="hidden" name="candidateEducationId" th:value="${education.candidateEducationId}"/>
+                                    <input type="hidden" name="candidateId" th:value="${education.candidateId}"/>
+                                    <button type="submit" class="btn btn-danger change-photo-button" title="Delete">
+                                        <i class="fas fa-trash icon-size"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="candidate-card">
-        <div class="card-body">
-            <!-- Przycisk do edycji profilu - przeniesiony na górę -->
-            <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
-                    data-target="#editProfileModal">
-                <i class="fas fa-pencil-alt"></i> Edit Details
-            </button>
-            <h4 class="mb-0">Courses and Certificates</h4>
-            <div class="frame-card">
-                <h6 class="card-title">---------------------------------</h6>
-                <p class="card-text"></p>
+    <!-- Modal ADD Education -->
+    <div class="modal fade" id="addEducationModal" tabindex="-1" role="dialog" aria-labelledby="addEducationModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addEducationModalLabel">Add My Education</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" th:action="@{/candidate-portal/add-candidate-education}" method="post">
+                        <!-- Institution -->
+                        <div class="form-group">
+                            <label for="institution">Institution</label>
+                            <input type="text" class="form-control" id="educationInstitution" name="institution"
+                                   th:value="${candidateEducationDTO != null ? candidateEducationDTO.institution : ''}">
+                        </div>
 
-                <h6 class="card-title">-------------------------------</h6>
+                        <!-- Degree -->
+                        <div class="form-group">
+                            <label for="degree">Degree</label>
+                            <input type="text" class="form-control" id="degree" name="degree"
+                                   th:value="${candidateEducationDTO != null ? candidateEducationDTO.degree : ''}">
+                        </div>
 
+                        <!-- Field of Study -->
+                        <div class="form-group">
+                            <label for="fieldOfStudy">Field of Study</label>
+                            <input type="text" class="form-control" id="fieldOfStudy" name="fieldOfStudy"
+                                   th:value="${candidateEducationDTO != null ? candidateEducationDTO.fieldOfStudy : ''}">
+                        </div>
+
+                        <!-- From Date -->
+                        <div class="form-group">
+                            <label for="fromDateEducation">From</label>
+                            <input type="date" class="form-control" id="fromDateEducation" name="fromDate"
+                                   th:value="${candidateEducationDTO != null ? candidateEducationDTO.fromDate : ''}">
+                        </div>
+
+                        <!-- To Date -->
+                        <div class="form-group">
+                            <label for="toDateEducation">To</label>
+                            <input type="date" class="form-control" id="toDateEducation" name="toDate"
+                                   th:value="${candidateEducationDTO != null ? candidateEducationDTO.toDate : ''}">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="add-job-offer-button btn btn-primary">Save changes</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Modal edycji edukacji dla każdego obiektu -->
+    <div th:each="education : ${candidateEducationStages}" class="modal fade"
+         th:id="'editEducationModal-' + ${education.candidateEducationId}" tabindex="-1" role="dialog"
+         aria-labelledby="editEducationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Education</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formularz edycji -->
+                    <form th:action="@{/candidate-portal/update-candidate-education}" method="post">
+                        <input type="hidden" name="candidateEducationId" th:value="${education.candidateEducationId}"/>
+                        <input type="hidden" name="candidateId" th:value="${education.candidateId}"/>
+
+                        <!-- Institution -->
+                        <div class="form-group">
+                            <label for="editInstitution">Institution</label>
+                            <input type="text" class="form-control" id="editEducationInstitution" name="institution"
+                                   th:value="${education.institution}">
+                        </div>
+
+                        <!-- Degree -->
+                        <div class="form-group">
+                            <label for="editDegree">Degree</label>
+                            <input type="text" class="form-control" id="editDegree" name="degree"
+                                   th:value="${education.degree}">
+                        </div>
+
+                        <!-- Field of Study -->
+                        <div class="form-group">
+                            <label for="editFieldOfStudy">Field of Study</label>
+                            <input type="text" class="form-control" id="editFieldOfStudy" name="fieldOfStudy"
+                                   th:value="${education.fieldOfStudy}">
+                        </div>
+
+                        <!-- From Date -->
+                        <div class="form-group">
+                            <label for="editFromDateEducation">From</label>
+                            <input type="date" class="form-control" id="editFromDateEducation" name="fromDate"
+                                   th:value="${education.fromDate}">
+                        </div>
+
+                        <!-- To Date -->
+                        <div class="form-group">
+                            <label for="editToDateEducation">To</label>
+                            <input type="date" class="form-control" id="editToDateEducation" name="toDate"
+                                   th:value="${education.toDate}">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="add-job-offer-button btn btn-primary mb-3">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--COURSE----------------------------------------------------------------------------------------------------------------------------------------------------->
+    <div class="candidate-card">
+        <div class="card-body">
+            <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
+                    data-target="#addCourseModal">
+                <i class="fas fa-plus"></i> Add Course
+            </button>
+            <h4 class="mb-0">My Courses</h4>
+            <p></p>
+            <div class="course-list">
+                <!-- Pętla po kursach kandydata -->
+                <div th:each="course : ${candidateCourses}" class="frame-card card mb-3">
+                    <div class="card-body">
+                        <!-- Główna sekcja: instytucja, tytuł kursu, technologie, daty i przyciski -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Lewa sekcja: Instytucja, Tytuł kursu i Technologie -->
+                            <div>
+                                <!-- Informacyjne teksty w ramkach -->
+                                <div class="course-info">Institution: <span class="course-info-value"
+                                                                            th:text="${course.institution}"></span>
+                                </div>
+                                <div class="course-info">Course Title: <span class="course-info-value"
+                                                                             th:text="${course.courseTitle}"></span>
+                                </div>
+                                <div class="course-info">Technologies: <span class="course-info-value"
+                                                                             th:text="${course.technologies}"></span>
+                                </div>
+                            </div>
+
+                            <!-- Sekcja z datami -->
+                            <div class="course-dates text-right">
+                                <p class="mb-1"><strong>From:</strong> <span th:text="${course.fromDate}"></span></p>
+                                <p class="mb-1"><strong>To:</strong> <span th:text="${course.toDate}"></span></p>
+                            </div>
+
+                            <!-- Przyciski -->
+                            <div class="course-actions ml-3">
+                                <!-- Edycja kursu -->
+                                <button type="button" class="btn btn-primary change-photo-button"
+                                        th:data-target="'#editCourseModal-' + ${course.courseId}"
+                                        data-toggle="modal" title="Edit">
+                                    <i class="fas fa-pencil-alt icon-size"></i>
+                                </button>
+
+                                <!-- Usuwanie kursu -->
+                                <form th:action="@{/candidate-portal/delete-course}" method="post" class="d-inline">
+                                    <input type="hidden" name="courseId" th:value="${course.courseId}"/>
+                                    <input type="hidden" name="candidateId" th:value="${course.candidateId}"/>
+                                    <button type="submit" class="btn btn-danger change-photo-button" title="Delete">
+                                        <i class="fas fa-trash icon-size"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Opis -->
+                        <div class="mt-3">
+                            <div class="course-info">Description:</div> <!-- Etykieta Description -->
+                            <div class="course-info-value description" th:text="${course.description}"></div>
+                            <!-- Wartość description -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal ADD Course -->
+    <div class="modal fade" id="addCourseModal" tabindex="-1" role="dialog" aria-labelledby="addCourseModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCourseModalLabel">Add My Course</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" th:action="@{/candidate-portal/add-candidate-course}" method="post">
+                        <!-- Institution -->
+                        <div class="form-group">
+                            <label for="institution">Institution</label>
+                            <input type="text" class="form-control" id="institution" name="institution"
+                                   th:value="${candidateCourseDTO != null ? candidateCourseDTO.institution : ''}">
+                        </div>
+
+                        <!-- Course Title -->
+                        <div class="form-group">
+                            <label for="courseTitle">Course Title</label>
+                            <input type="text" class="form-control" id="courseTitle" name="courseTitle"
+                                   th:value="${candidateCourseDTO != null ? candidateCourseDTO.courseTitle : ''}">
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="courseDescription" name="description"
+                                      th:text="${candidateCourseDTO != null ? candidateCourseDTO.description : ''}"></textarea>
+                        </div>
+
+                        <!-- Technologies -->
+                        <div class="form-group">
+                            <label for="technologies">Technologies</label>
+                            <input type="text" class="form-control" id="technologies" name="technologies"
+                                   th:value="${candidateCourseDTO != null ? candidateCourseDTO.technologies : ''}">
+                        </div>
+
+                        <!-- From Date -->
+                        <div class="form-group">
+                            <label for="fromDateCourse">From</label>
+                            <input type="date" class="form-control" id="fromDateCourse" name="fromDate"
+                                   th:value="${candidateCourseDTO != null ? candidateCourseDTO.fromDate : ''}">
+                        </div>
+
+                        <!-- To Date -->
+                        <div class="form-group">
+                            <label for="toDateCourse">To</label>
+                            <input type="date" class="form-control" id="toDateCourse" name="toDate"
+                                   th:value="${candidateCourseDTO != null ? candidateCourseDTO.toDate : ''}">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="add-job-offer-button btn btn-primary">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal edycji kursu dla każdego obiektu -->
+    <div th:each="course : ${candidateCourses}" class="modal fade"
+         th:id="'editCourseModal-' + ${course.candidateCourseId}" tabindex="-1" role="dialog"
+         aria-labelledby="editCourseModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Course</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formularz edycji -->
+                    <form th:action="@{/candidate-portal/update-candidate-course}" method="post">
+                        <input type="hidden" name="candidateCourseId" th:value="${course.candidateCourseId}"/>
+                        <input type="hidden" name="candidateId" th:value="${course.candidateId}"/>
+
+                        <!-- Institution -->
+                        <div class="form-group">
+                            <label for="editInstitution">Institution</label>
+                            <input type="text" class="form-control" id="editInstitution" name="institution"
+                                   th:value="${course.institution}">
+                        </div>
+
+                        <!-- Course Title -->
+                        <div class="form-group">
+                            <label for="editCourseTitle">Course Title</label>
+                            <input type="text" class="form-control" id="editCourseTitle" name="courseTitle"
+                                   th:value="${course.courseTitle}">
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-group">
+                            <label for="editDescription">Description</label>
+                            <textarea class="form-control" id="editCourseDescription" name="description"
+                                      th:text="${course.description}"></textarea>
+                        </div>
+
+                        <!-- Technologies -->
+                        <div class="form-group">
+                            <label for="editTechnologies">Technologies</label>
+                            <input type="text" class="form-control" id="editTechnologies" name="technologies"
+                                   th:value="${course.technologies}">
+                        </div>
+
+                        <!-- From Date -->
+                        <div class="form-group">
+                            <label for="editFromDateCourse">From</label>
+                            <input type="date" class="form-control" id="editFromDateCourse" name="fromDate"
+                                   th:value="${course.fromDate}">
+                        </div>
+
+                        <!-- To Date -->
+                        <div class="form-group">
+                            <label for="editToDateCourse">To</label>
+                            <input type="date" class="form-control" id="editToDateCourse" name="toDate"
+                                   th:value="${course.toDate}">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="add-job-offer-button btn btn-primary mb-3">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!------HOBBY--------------------------------------------------------------------------------------------------------------------------------------------------------->
     <div class="candidate-card">
         <div class="card-body">
             <!-- Przycisk do edycji profilu -->
