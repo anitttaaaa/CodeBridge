@@ -7,11 +7,11 @@ import java.time.LocalDate;
 @With
 @Value
 @Builder
-@EqualsAndHashCode(of = "candidateCoursesId")
-@ToString(of = {"candidateCoursesId", "institution", "courseTitle"})
+@EqualsAndHashCode(of = "candidateCourseId")
+@ToString(of = {"candidateCourseId", "institution", "courseTitle"})
 public class CandidateCourse {
 
-    Integer candidateCoursesId;
+    Integer candidateCourseId;
     String institution;
     String courseTitle;
     String description;

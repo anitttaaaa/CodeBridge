@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class CandidateCourseDTO {
 
-    private Integer candidateCoursesId;
+    private Integer candidateCourseId;
     private String institution;
     private String courseTitle;
     private String description;

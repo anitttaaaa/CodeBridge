@@ -3,7 +3,6 @@ package pl.zajavka.CodeBridge.infrastructure.database.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -71,6 +70,10 @@ public class CandidateEntity {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "candidate_id")
     private List<CandidateEducationEntity> candidateEducationStages;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "candidate_id")
+    private List<CandidateCourseEntity> candidateCourses;
 
 }
 

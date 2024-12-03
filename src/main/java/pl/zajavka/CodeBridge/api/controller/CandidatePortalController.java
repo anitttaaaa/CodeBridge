@@ -9,22 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pl.zajavka.CodeBridge.api.dto.CandidateDTO;
-import pl.zajavka.CodeBridge.api.dto.CandidateEducationDTO;
-import pl.zajavka.CodeBridge.api.dto.CandidateExperienceDTO;
-import pl.zajavka.CodeBridge.api.dto.CandidateProjectDTO;
-import pl.zajavka.CodeBridge.api.dto.mapper.CandidateEducationMapper;
-import pl.zajavka.CodeBridge.api.dto.mapper.CandidateExperienceMapper;
-import pl.zajavka.CodeBridge.api.dto.mapper.CandidateMapper;
-import pl.zajavka.CodeBridge.api.dto.mapper.CandidateProjectMapper;
-import pl.zajavka.CodeBridge.business.CandidateEducationService;
-import pl.zajavka.CodeBridge.business.CandidateExperienceService;
-import pl.zajavka.CodeBridge.business.CandidateProjectService;
-import pl.zajavka.CodeBridge.business.CandidateService;
-import pl.zajavka.CodeBridge.domain.Candidate;
-import pl.zajavka.CodeBridge.domain.CandidateEducation;
-import pl.zajavka.CodeBridge.domain.CandidateExperience;
-import pl.zajavka.CodeBridge.domain.CandidateProject;
+import pl.zajavka.CodeBridge.api.dto.*;
+import pl.zajavka.CodeBridge.api.dto.mapper.*;
+import pl.zajavka.CodeBridge.business.*;
+import pl.zajavka.CodeBridge.domain.*;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
@@ -64,9 +52,11 @@ public class CandidatePortalController {
     private final CandidateService candidateService;
     private final CandidateExperienceService candidateExperienceService;
     private final CandidateProjectService candidateProjectService;
+    private final CandidateCourseService candidateCourseService;
     private final CandidateEducationService candidateEducationService;
     private final CandidateExperienceMapper candidateExperienceMapper;
     private final CandidateProjectMapper candidateProjectMapper;
+    private final CandidateCourseMapper candidateCourseMapper;
     private final CandidateEducationMapper candidateEducationMapper;
     private final CandidateMapper candidateMapper;
 
@@ -92,9 +82,15 @@ public class CandidatePortalController {
                 .sorted(Comparator.comparing(CandidateEducationDTO::getFromDate))
                 .toList();
 
+        List<CandidateCourseDTO> sortedCourses = candidateDetails.getCandidateCourses()
+                .stream()
+                .sorted(Comparator.comparing(CandidateCourseDTO::getFromDate))
+                .toList();
+
         model.addAttribute("candidateExperiences", sortedExperiences);
         model.addAttribute("candidateProjects", sortedProjects);
         model.addAttribute("candidateEducationStages", sortedCandidateEducationStages);
+        model.addAttribute("candidateCourses", sortedCourses);
         model.addAttribute("candidate", candidateDetails);
 
         return "candidate_portal";
@@ -246,6 +242,38 @@ public class CandidatePortalController {
 
         return "redirect:/candidate-portal";
     }
+
+
+    @PostMapping(ADD_CANDIDATE_COURSE)
+    public String addCandidateCourse(
+            @ModelAttribute("candidateCourseDTO") CandidateCourseDTO candidateCourseDTO) {
+
+        CandidateCourse candidateCourse = candidateCourseMapper.mapFromDTO(candidateCourseDTO);
+        candidateCourseService.createCourseData(candidateCourse);
+
+        return "redirect:/candidate-portal";
+    }
+//
+//    @PostMapping(UPDATE_CANDIDATE_EDUCATION)
+//    public String updateCandidateEducation(
+//            @ModelAttribute CandidateEducationDTO candidateEducationDTO,
+//            Authentication authentication) throws AccessDeniedException {
+//
+//        CandidateEducation candidateEducation = candidateEducationMapper.mapFromDTO(candidateEducationDTO);
+//        candidateEducationService.updateCandidateEducation(candidateEducation, authentication);
+//
+//        return "redirect:/candidate-portal";
+//    }
+//
+//
+//    @PostMapping(DELETE_CANDIDATE_EDUCATION)
+//    public String deleteCandidateEducation(
+//            @RequestParam("candidateEducationId") Integer candidateEducationId) {
+//
+//        candidateEducationService.deleteCandidateEducationById(candidateEducationId);
+//
+//        return "redirect:/candidate-portal";
+//    }
 
     @PostMapping(UPDATE_CANDIDATE_TECH_SPECIALIZATION)
     public String updateCandidateTechSpecialization(

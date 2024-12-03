@@ -1,6 +1,5 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository;
 
-import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.CodeBridge.business.dao.CandidateExperienceDAO;

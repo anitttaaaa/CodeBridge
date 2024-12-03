@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.zajavka.CodeBridge.api.dto.CandidateExperienceDTO;
 import pl.zajavka.CodeBridge.business.dao.CandidateExperienceDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.CandidateExperience;

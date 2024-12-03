@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import pl.zajavka.CodeBridge.business.dao.CandidateEducationDAO;
 import pl.zajavka.CodeBridge.domain.CandidateEducation;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateEducationEntity;
-import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateExperienceEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.CandidateEducationJpaRepository;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.CandidateEducationEntityMapper;
 

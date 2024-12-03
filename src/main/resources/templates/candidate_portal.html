@@ -937,7 +937,7 @@
             </button>
             <h4 class="mb-0">My Courses</h4>
             <p></p>
-            <div class="course-list">
+            <div class="experience-list">
                 <!-- Pętla po kursach kandydata -->
                 <div th:each="course : ${candidateCourses}" class="frame-card card mb-3">
                     <div class="card-body">
@@ -946,35 +946,35 @@
                             <!-- Lewa sekcja: Instytucja, Tytuł kursu i Technologie -->
                             <div>
                                 <!-- Informacyjne teksty w ramkach -->
-                                <div class="course-info">Institution: <span class="course-info-value"
+                                <div class="course-info">Institution: <span class="experience-info-value"
                                                                             th:text="${course.institution}"></span>
                                 </div>
-                                <div class="course-info">Course Title: <span class="course-info-value"
+                                <div class="course-info">Course Title: <span class="experience-info-value"
                                                                              th:text="${course.courseTitle}"></span>
                                 </div>
-                                <div class="course-info">Technologies: <span class="course-info-value"
+                                <div class="course-info">Technologies: <span class="experience-info-value"
                                                                              th:text="${course.technologies}"></span>
                                 </div>
                             </div>
 
                             <!-- Sekcja z datami -->
-                            <div class="course-dates text-right">
+                            <div class="experience-dates text-right">
                                 <p class="mb-1"><strong>From:</strong> <span th:text="${course.fromDate}"></span></p>
                                 <p class="mb-1"><strong>To:</strong> <span th:text="${course.toDate}"></span></p>
                             </div>
 
                             <!-- Przyciski -->
-                            <div class="course-actions ml-3">
+                            <div class="experience-actions ml-3">
                                 <!-- Edycja kursu -->
                                 <button type="button" class="btn btn-primary change-photo-button"
-                                        th:data-target="'#editCourseModal-' + ${course.courseId}"
+                                        th:data-target="'#editCourseModal-' + ${course.candidateCourseId}"
                                         data-toggle="modal" title="Edit">
                                     <i class="fas fa-pencil-alt icon-size"></i>
                                 </button>
 
                                 <!-- Usuwanie kursu -->
                                 <form th:action="@{/candidate-portal/delete-course}" method="post" class="d-inline">
-                                    <input type="hidden" name="courseId" th:value="${course.courseId}"/>
+                                    <input type="hidden" name="courseId" th:value="${course.candidateCourseId}"/>
                                     <input type="hidden" name="candidateId" th:value="${course.candidateId}"/>
                                     <button type="submit" class="btn btn-danger change-photo-button" title="Delete">
                                         <i class="fas fa-trash icon-size"></i>

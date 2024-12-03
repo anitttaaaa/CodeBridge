@@ -28,6 +28,7 @@ public class Candidate {
     List<CandidateExperience> candidateExperiences;
     List<CandidateProject> candidateProjects;
     List<CandidateEducation> candidateEducationStages;
+    List<CandidateCourse> candidateCourses;
 
     byte[] profilePhoto;
 
@@ -40,9 +41,14 @@ public class Candidate {
 
     }
 
-
     public List<CandidateEducation> getCandidateEducationStages() {
         return Objects.isNull(candidateEducationStages) ? new ArrayList<>() : candidateEducationStages;
+
+    }
+
+
+    public List<CandidateCourse> getCandidateCourses() {
+        return Objects.isNull(candidateCourses) ? new ArrayList<>() : candidateCourses;
 
     }
 
