@@ -18,6 +18,7 @@ public class Candidate {
     String surname;
     String email;
     String phone;
+    String status;
     Integer userId;
     String linkedIn;
     String gitHub;

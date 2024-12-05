@@ -17,6 +17,7 @@ public class CandidateDTO {
     private String surname;
     private String email;
     private String phone;
+    private String status;
     private String linkedIn;
     private String gitHub;
     private String techSpecialization;

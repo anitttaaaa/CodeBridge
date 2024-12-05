@@ -22,7 +22,7 @@
 
 <div layout:fragment="candidateContent" class="candidate-page-container ">
 
-<!----BASIC INFO-------------------------------------------------------------------------------------------------------->
+    <!----BASIC INFO-------------------------------------------------------------------------------------------------------->
 
     <div class="candidate-card">
         <div class="card-body ">
@@ -91,8 +91,7 @@
             <div class="card-body d-flex align-items-center">
 
 
-
-<!---PROFILE PHOTO------------------------------------------------------------------------------------------------------------>
+                <!---PROFILE PHOTO------------------------------------------------------------------------------------------------------------>
                 <div id="photo-container" class="me-4">
                     <img th:if="${candidate.profilePhoto != null}"
                          th:src="@{candidate-portal/profilePhoto/{email}(email=${candidate.email})}"
@@ -109,7 +108,6 @@
                            data-target="#photoModal"></i>
                     </div>
                 </div>
-
                 <div class="candidate-details frame-card-basic-info">
                     <div class="left-column">
                         <h5 class="card-title" style="font-size: 1.5em;"
@@ -140,9 +138,58 @@
                     </div>
                 </div>
 
-
             </div>
 
+            <!-----status view------------------------------------------------------------------------------------------------------->
+            <div class="candidate-status frame-card frame-card-status">
+                <p class="card-text-status">
+                    <i class="bi me-2"
+                       th:classappend="${candidate.status == 'Actively looking for a job' ? 'bi-person-fill text-success' : (candidate.status == 'Currently employed' ? 'bi-person-fill text-danger' : 'bi-question-circle')}"></i>
+                    <!-- Sprawdzenie, czy status kandydata jest pusty -->
+                    <span th:if="${candidate.status == null}">Status: No information</span>
+                    <span th:if="${candidate.status != null}" th:text="${candidate.status}"></span>
+                    <button type="button" class="edit-status add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
+                            data-target="#editStatusModal">
+                        <i class="fas fa-pencil-alt"></i> Edit Status
+                    </button>
+                </p>
+            </div>
+
+            <!-------status modal------------------------------------------------------------------------>
+            <div class="modal fade" id="editStatusModal" tabindex="-1" role="dialog"
+                 aria-labelledby="editStatusModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editStatusModalLabel">Edit Status</h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Form for editing status -->
+                            <form th:action="@{/candidate-portal/update-candidate-status}"
+                                  method="post">
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="status">Status</label>
+                                    <select class="form-control" id="status" name="status">
+                                        <option value="" disabled selected>Choose...</option>
+                                        <option th:each="status : ${T(pl.zajavka.CodeBridge.api.view.StatusEnum).values()}"
+                                                th:value="${status.getDescription()}"
+                                                th:text="${status.getDescription()}">
+                                        </option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <button type="submit" class="add-job-offer-button btn btn-primary">Save changes
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Główne Okno Modal do edycji zdjęcia profilowego -->
             <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel"
@@ -224,7 +271,7 @@
         </div>
     </div>
 
-<!---BIO------------------------------------------------------------------------------------------------------------------------------------------------->
+    <!---BIO------------------------------------------------------------------------------------------------------------------------------------------------->
     <div class="candidate-card">
         <div class="card-body">
             <!-- Przycisk do edycji profilu -->
@@ -262,7 +309,7 @@
             </div>
         </div>
     </div>
-<!----TECH SPECIALIZATION------------------------------------------------------------------------------------------------------------------>
+    <!----TECH SPECIALIZATION------------------------------------------------------------------------------------------------------------------>
     <div class="candidate-card">
         <div class="card-body">
             <!-- Przycisk do edycji specjalizacji technicznej -->
@@ -310,7 +357,7 @@
             </div>
         </div>
     </div>
-<!--SKILLS------------------------------------------------------------------------------------------->
+    <!--SKILLS------------------------------------------------------------------------------------------->
 
     <div class="candidate-card">
         <div class="card-body">
@@ -796,7 +843,8 @@
 
                                 <!-- Usuwanie edukacji -->
                                 <form th:action="@{/candidate-portal/delete-education}" method="post" class="d-inline">
-                                    <input type="hidden" name="candidateEducationId" th:value="${education.candidateEducationId}"/>
+                                    <input type="hidden" name="candidateEducationId"
+                                           th:value="${education.candidateEducationId}"/>
                                     <input type="hidden" name="candidateId" th:value="${education.candidateId}"/>
                                     <button type="submit" class="btn btn-danger change-photo-button" title="Delete">
                                         <i class="fas fa-trash icon-size"></i>
@@ -974,7 +1022,8 @@
 
                                 <!-- Usuwanie kursu -->
                                 <form th:action="@{/candidate-portal/delete-course}" method="post" class="d-inline">
-                                    <input type="hidden" name="courseId" th:value="${course.candidateCourseId}"/>
+                                    <input type="hidden" name="candidateCourseId"
+                                           th:value="${course.candidateCourseId}"/>
                                     <input type="hidden" name="candidateId" th:value="${course.candidateId}"/>
                                     <button type="submit" class="btn btn-danger change-photo-button" title="Delete">
                                         <i class="fas fa-trash icon-size"></i>
@@ -1125,7 +1174,6 @@
             </div>
         </div>
     </div>
-
 
 
     <!------HOBBY--------------------------------------------------------------------------------------------------------------------------------------------------------->

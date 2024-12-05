@@ -469,6 +469,26 @@ body {
     text-decoration: underline;
 }
 
+.candidate-status .card-text-status {
+    display: flex;          /* Używamy flexbox */
+    justify-content: space-between; /* Rozmieszczenie elementów na dwóch krańcach (po lewej i prawej) */
+    align-items: center;    /* Wyrównanie w pionie */
+}
+
+.edit-status {
+    margin-left: auto; /* Przesuwa przycisk na prawą stronę */
+}
+
+.frame-card-status {
+    margin-left: 212px;
+    margin-right: 45px;
+    padding-left: 130px;
+    padding-top: 20px;
+    padding-bottom: 0px;
+}
+
+
+
 
 
 

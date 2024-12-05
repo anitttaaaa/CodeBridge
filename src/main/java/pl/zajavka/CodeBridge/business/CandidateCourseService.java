@@ -1,11 +1,14 @@
 package pl.zajavka.CodeBridge.business;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import pl.zajavka.CodeBridge.business.dao.CandidateCourseDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.CandidateCourse;
 import pl.zajavka.CodeBridge.domain.CandidateEducation;
+
+import java.nio.file.AccessDeniedException;
 
 @Service
 @AllArgsConstructor
@@ -34,4 +37,23 @@ public class CandidateCourseService {
                 .candidateId(candidate.getCandidateId())
                 .build();
     }
+
+
+    public void updateCandidateCourse(CandidateCourse candidateCourse, Authentication authentication) throws AccessDeniedException {
+
+        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
+        Integer loggedInCandidateId = candidate.getCandidateId();
+
+        if (!candidateCourse.getCandidateId().equals(loggedInCandidateId)){
+            throw new AccessDeniedException("Unauthorized access.");
+        }
+
+        candidateCourseDAO.updateCandidateCourse(candidateCourse);
+    }
+
+
+    public void deleteCandidateCourseById(Integer candidateCourseId) {
+        candidateCourseDAO.deleteById(candidateCourseId);
+    }
+
 }

@@ -23,4 +23,15 @@ public class CandidateCourseRepository implements CandidateCourseDAO {
 
         return candidateCourseEntityMapper.mapFromEntity(candidateCourseSaved);
     }
+
+    @Override
+    public void updateCandidateCourse(CandidateCourse candidateCourseToUpdate) {
+        CandidateCourseEntity educationToSave = candidateCourseEntityMapper.mapToEntity(candidateCourseToUpdate);
+        candidateCourseJpaRepository.saveAndFlush(educationToSave);
+    }
+
+    @Override
+    public void deleteById(Integer candidateCourseId) {
+        candidateCourseJpaRepository.deleteById(candidateCourseId);
+    }
 }

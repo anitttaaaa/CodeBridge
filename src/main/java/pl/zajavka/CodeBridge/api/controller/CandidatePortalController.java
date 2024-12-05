@@ -33,6 +33,7 @@ public class CandidatePortalController {
     private static final String ADD_CANDIDATE_COURSE = "/candidate-portal/add-candidate-course";
     private static final String UPDATE_CANDIDATE_BASIC_INFO = "/candidate-portal/update-candidate-basic-info";
     private static final String UPDATE_CANDIDATE_TECH_SPECIALIZATION = "/candidate-portal/update-candidate-tech-specialization";
+    private static final String UPDATE_CANDIDATE_STATUS = "/candidate-portal/update-candidate-status";
     private static final String UPDATE_CANDIDATE_SKILLS = "/candidate-portal/update-candidate-skills";
     private static final String UPDATE_CANDIDATE_EXPERIENCE = "/candidate-portal/update-candidate-experience";
     private static final String UPDATE_CANDIDATE_PROJECT = "/candidate-portal/update-candidate-project";
@@ -96,6 +97,38 @@ public class CandidatePortalController {
         return "candidate_portal";
     }
 
+
+    @PostMapping(UPDATE_CANDIDATE_TECH_SPECIALIZATION)
+    public String updateCandidateTechSpecialization(
+            @RequestParam(value = "techSpecialization", required = false) String techSpecialization,
+            Authentication authentication
+    ) {
+        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
+
+        if (techSpecialization == null || techSpecialization.trim().isEmpty()) {
+            techSpecialization = null;
+        }
+        candidate = candidate.withTechSpecialization(techSpecialization);
+        candidateService.updateCandidate(candidate, authentication);
+
+        return "redirect:/candidate-portal";
+    }
+
+        @PostMapping(UPDATE_CANDIDATE_STATUS)
+    public String updateCandidateStatus(
+            @RequestParam(value = "status", required = false) String status,
+            Authentication authentication
+    ) {
+        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
+
+        if (status == null || status.trim().isEmpty()) {
+            status = null;
+        }
+        candidate = candidate.withStatus(status);
+        candidateService.updateCandidate(candidate, authentication);
+
+        return "redirect:/candidate-portal";
+    }
 
     @GetMapping(PROFILE_PHOTO_DISPLAY)
     public ResponseEntity<byte[]> getProfilePhoto(
@@ -204,7 +237,7 @@ public class CandidatePortalController {
 
     @PostMapping(DELETE_CANDIDATE_PROJECT)
     public String deleteCandidateProject(
-            @RequestParam("candidateProjectId") Integer candidateProjectId ) {
+            @RequestParam("candidateProjectId") Integer candidateProjectId) {
 
         candidateProjectService.deleteCandidateProjectById(candidateProjectId);
 
@@ -253,44 +286,28 @@ public class CandidatePortalController {
 
         return "redirect:/candidate-portal";
     }
-//
-//    @PostMapping(UPDATE_CANDIDATE_EDUCATION)
-//    public String updateCandidateEducation(
-//            @ModelAttribute CandidateEducationDTO candidateEducationDTO,
-//            Authentication authentication) throws AccessDeniedException {
-//
-//        CandidateEducation candidateEducation = candidateEducationMapper.mapFromDTO(candidateEducationDTO);
-//        candidateEducationService.updateCandidateEducation(candidateEducation, authentication);
-//
-//        return "redirect:/candidate-portal";
-//    }
-//
-//
-//    @PostMapping(DELETE_CANDIDATE_EDUCATION)
-//    public String deleteCandidateEducation(
-//            @RequestParam("candidateEducationId") Integer candidateEducationId) {
-//
-//        candidateEducationService.deleteCandidateEducationById(candidateEducationId);
-//
-//        return "redirect:/candidate-portal";
-//    }
 
-    @PostMapping(UPDATE_CANDIDATE_TECH_SPECIALIZATION)
-    public String updateCandidateTechSpecialization(
-            @RequestParam(value = "techSpecialization", required = false) String techSpecialization,
-            Authentication authentication
-    ) {
-        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
+    @PostMapping(UPDATE_CANDIDATE_COURSE)
+    public String updateCandidateCourse(
+            @ModelAttribute CandidateCourseDTO candidateCourseDTO,
+            Authentication authentication) throws AccessDeniedException {
 
-        if (techSpecialization == null || techSpecialization.trim().isEmpty()) {
-            techSpecialization = null;
-        }
-        candidate = candidate.withTechSpecialization(techSpecialization);
-        candidateService.updateCandidate(candidate, authentication);
+        CandidateCourse candidateCourse = candidateCourseMapper.mapFromDTO(candidateCourseDTO);
+        candidateCourseService.updateCandidateCourse(candidateCourse, authentication);
 
         return "redirect:/candidate-portal";
     }
 
+
+    @PostMapping(DELETE_CANDIDATE_COURSE)
+    public String deleteCandidateCourse(
+            @RequestParam("candidateCourseId") Integer candidateCourseId) {
+
+        candidateCourseService.deleteCandidateCourseById(candidateCourseId);
+
+        return "redirect:/candidate-portal";
+
+    }
 
     @PostMapping(UPDATE_CANDIDATE_HOBBY)
     public String getUpdateCandidateHobby(

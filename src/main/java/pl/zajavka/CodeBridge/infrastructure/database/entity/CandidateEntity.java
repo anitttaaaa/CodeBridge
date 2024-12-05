@@ -33,6 +33,9 @@ public class CandidateEntity {
     @Column(name = "phone")
     private String phone;
 
+    @Column(name = "status")
+    private String status;
+
     @Column(name = "user_id")
     private Integer userId;
 

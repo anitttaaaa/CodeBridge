@@ -5,6 +5,7 @@
     surname                 VARCHAR(32) NOT NULL,
     email                   VARCHAR(32) NOT NULL,
     phone                   VARCHAR(32) NOT NULL,
+    status                  VARCHAR(32),
     linked_in               VARCHAR(32),
     git_hub                 VARCHAR(32),
     tech_specialization     VARCHAR(32),
