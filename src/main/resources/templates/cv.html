@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Curriculum Vitae - <span th:text="${candidateCv.name} + ' ' + ${candidateCv.surname}"></span></title>
+
+</head>
+<body>
+
+<h1>Curriculum Vitae</h1>
+
+<!-- Sekcja Profilu -->
+<div class="header-info">
+    <img th:if="${candidateCv.profilePhoto != null}"
+         th:src="'data:image/png;base64,' + ${encodedImage}"
+         alt="Profile Photo"/>
+
+
+    <div>
+        <h2 th:text="${candidateCv.name} + ' ' + ${candidateCv.surname}"></h2>
+        <p><strong>Email:</strong> <span th:text="${candidateCv.email}"></span></p>
+        <p><strong>Phone:</strong> <span th:text="${candidateCv.phone}"></span></p>
+        <p><strong>LinkedIn:</strong> <a th:href="${candidateCv.linkedIn}" th:text="${candidateCv.linkedIn}"></a></p>
+        <p><strong>GitHub:</strong> <a th:href="${candidateCv.gitHub}" th:text="${candidateCv.gitHub}"></a></p>
+        <p><strong>Tech Specialization:</strong> <span th:text="${candidateCv.techSpecialization}"></span></p>
+    </div>
+</div>
+
+<!-- Sekcja umiejętności -->
+<div class="section skills">
+    <h3>Skills</h3>
+    <ul>
+        <li th:each="skill : ${candidateCv.candidateSkills}" th:text="${skill}"></li>
+    </ul>
+</div>
+
+<!-- Sekcja doświadczenia -->
+<div class="section experience">
+    <h3>Experience</h3>
+    <ul>
+        <li th:each="experience : ${candidateCv.candidateExperiences}">
+            <strong th:text="${experience.candidatePosition}"></strong> - <span th:text="${experience.companyName}"></span>
+            <br />
+            <span th:text="${experience.fromDate}"></span> to <span th:text="${experience.toDate}"></span>
+            <p th:text="${experience.description}"></p>
+        </li>
+    </ul>
+</div>
+
+<!-- Sekcja projektów -->
+<div class="section projects">
+    <h3>Projects</h3>
+    <ul>
+        <li th:each="project : ${candidateCv.candidateProjects}">
+            <strong th:text="${project.projectTitle}"></strong>
+            <p th:text="${project.description}"></p>
+        </li>
+    </ul>
+</div>
+
+<!-- Sekcja edukacji -->
+<div class="section education">
+    <h3>Education</h3>
+    <ul>
+        <li th:each="education : ${candidateCv.candidateEducationStages}">
+            <strong th:text="${education.degree}"></strong> - <span th:text="${education.institution}"></span>
+            <br />
+            <span th:text="${education.fromDate}"></span>
+        </li>
+    </ul>
+</div>
+
+<!-- Sekcja kursów -->
+<div class="section courses">
+    <h3>Courses</h3>
+    <ul>
+        <li th:each="course : ${candidateCv.candidateCourses}">
+            <strong th:text="${course.courseTitle}"></strong> - <span th:text="${course.description}"></span>
+            <br />
+            <span th:text="${course.fromDate}"></span>
+        </li>
+    </ul>
+</div>
+
+<!-- Sekcja hobby -->
+<div class="section hobby">
+    <h3>Hobbies</h3>
+    <p th:text="${candidateCv.hobby}"></p>
+</div>
+
+<!-- Przyciski do generowania PDF -->
+<form action="/CodeBridge/candidate-portal/generate-pdf" method="get">
+    <button type="submit" class="btn">Generate CV as PDF</button>
+</form>
+
+
+
+</body>
+</html>

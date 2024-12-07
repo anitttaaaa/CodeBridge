@@ -47,6 +47,15 @@ dependencies {
 	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 	annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
 
+	// Flying Saucer PDF rendering
+	implementation 'org.xhtmlrenderer:flying-saucer-pdf:9.11.2'
+
+	// iText (iText 7, ale sprawdź zależności)
+	implementation 'com.itextpdf:itext7-core:9.0.0'
+
+	// SLF4J for logging (Flying Saucer needs it)
+	runtimeOnly 'org.slf4j:slf4j-simple:1.7.32'  // Użyj nowszej wersji SLF4J
+
 //	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
