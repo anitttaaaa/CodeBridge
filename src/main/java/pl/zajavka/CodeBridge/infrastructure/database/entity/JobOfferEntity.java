@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "jobOfferId")
-@ToString(of = {"jobOfferId", "title"})
+@ToString(of = {"jobOfferId", "jobOfferTitle"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,8 +22,8 @@ public class JobOfferEntity {
     @Column(name = "job_offer_id")
     private Integer jobOfferId;
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "job_offer_title")
+    private String jobOfferTitle;
 
     @Column(name = "description")
     private String description;

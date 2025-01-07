@@ -7,7 +7,6 @@ import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
 @Repository
 public interface JobOfferJpaRepository extends JpaRepository<JobOfferEntity, Integer> {
 
-//    List<JobOfferEntity> findByTechSpecialization(TechSpecializationsEnum techSpecialization);
 
 
 }

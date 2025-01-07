@@ -12,5 +12,5 @@ public interface CandidateExperienceMapper {
     CandidateExperienceDTO mapToDto(CandidateExperience candidateExperience);
 
 
-    CandidateExperience mapFromDTO(CandidateExperienceDTO candidateExperienceDTO);
+    CandidateExperience mapToDomain(CandidateExperienceDTO candidateExperienceDTO);
 }

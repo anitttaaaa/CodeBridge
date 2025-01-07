@@ -9,5 +9,5 @@ public interface CandidateEducationMapper {
 
 
     CandidateEducationDTO mapToDto(CandidateEducation candidateEducation);
-    CandidateEducation mapFromDTO(CandidateEducationDTO candidateEducationDTO);
+    CandidateEducation mapToDomain(CandidateEducationDTO candidateEducationDTO);
 }

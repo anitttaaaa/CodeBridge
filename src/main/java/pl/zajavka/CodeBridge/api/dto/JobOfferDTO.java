@@ -1,6 +1,7 @@
 package pl.zajavka.CodeBridge.api.dto;
 
 import lombok.*;
+import pl.zajavka.CodeBridge.domain.Employer;
 
 import java.util.List;
 
@@ -9,8 +10,9 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class JobOfferAddRequestDTO {
+public class JobOfferDTO {
 
+    private Integer jobOfferId;
 
     private String jobOfferTitle;
     private String description;
@@ -22,13 +24,11 @@ public class JobOfferAddRequestDTO {
     private List<String> mustHaveSkills;
     private List<String> niceToHaveSkills;
 
+    private Employer employer;
+
 }
 
-//    private List<String> categories;
-//    private List<String> mustHave;
-//    private List<String> niceToHave;
-//    private String salary;
-//    private String location;
+
 
 
 

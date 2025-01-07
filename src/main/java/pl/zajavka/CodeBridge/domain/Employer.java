@@ -18,10 +18,10 @@ public class Employer {
     String email;
     String nip;
     Integer userId;
-    Set<JobOfferToDatabase> jobOffers;
+    Set<JobOffer> jobOffers;
 
 
-    public Set<JobOfferToDatabase> getJobOffers () {
+    public Set<JobOffer> getJobOffers () {
         return Objects.isNull(jobOffers) ? new HashSet<>() : jobOffers;
     }
 

@@ -1,7 +1,7 @@
 CREATE TABLE job_offer
 (
     job_offer_id            SERIAL      NOT NULL,
-    title                   VARCHAR(32) NOT NULL,
+    job_offer_title                   VARCHAR(32) NOT NULL,
     description             VARCHAR(128) NOT NULL,
     employer_id             INT         NOT NULL,
     tech_specialization     VARCHAR         NOT NULL,

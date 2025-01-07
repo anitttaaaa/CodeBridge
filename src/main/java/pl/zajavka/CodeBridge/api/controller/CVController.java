@@ -29,8 +29,6 @@ public class CVController {
     private static final String CANDIDATE_GENERATE_PDF = "/candidate-portal/generate-pdf";
 
 
-
-
     @GetMapping(SHOW_CANDIDATE_CV)
     public String generateCv(Model model) {
         // Pobierz dane kandydata

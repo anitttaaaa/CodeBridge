@@ -1,6 +1,6 @@
-
 <!DOCTYPE HTML>
 <html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/fragments/layouts/base}">
 <head>
@@ -9,20 +9,35 @@
 <body>
 
 <div layout:fragment="mainContent">
-    <h1>home</h1>
-    <h1>home</h1>
-    <h1>home</h1>
-    <h1>home</h1>
-    <h1>home</h1>
-    <h1>home</h1>
-    <h1>home</h1>
-    <h1>home</h1>
-    <h1>home</h1>
-<!--    <h1>Find your job!</h1>-->
+    <h1>Find your job!</h1>
+    <h1>Job Offers:</h1>
+    <!-- Pętla do iteracji przez oferty pracy -->
+    <div>
+        <ul>
+            <li th:each="jobOffer : ${jobOffers}">
+                <h2 th:text="${jobOffer.jobOfferTitle}">Job Title</h2>
+                <p>Description: <span th:text="${jobOffer.description}">Description</span></p>
+                <p>Specialization: <span th:text="${jobOffer.techSpecialization}">Tech Specialization</span></p>
+                <p>Work Type: <span th:text="${jobOffer.workType}">Work Type</span></p>
+                <p>City: <span th:text="${jobOffer.city}">City</span></p>
+                <p>Experience: <span th:text="${jobOffer.experience}">Experience</span></p>
+                <p>Salary: <span th:text="${jobOffer.salary}">Salary</span></p>
 
+                <p>Must Have Skills:</p>
+                <ul>
+                    <li th:each="skill : ${jobOffer.mustHaveSkills}" th:text="${skill}">Skill</li>
+                </ul>
+
+                <p>Nice to Have Skills:</p>
+                <ul>
+                    <li th:each="skill : ${jobOffer.niceToHaveSkills}" th:text="${skill}">Skill</li>
+                </ul>
+
+                <p>Company: <span th:text="${jobOffer.employer.companyName}">Company Name</span></p>
+            </li>
+        </ul>
+    </div>
 </div>
 
 </body>
-
-
 </html>

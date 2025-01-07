@@ -8,5 +8,5 @@ import pl.zajavka.CodeBridge.domain.CandidateProject;
 public interface CandidateProjectMapper {
 
     CandidateProjectDTO mapToDto(CandidateProject candidateProject);
-    CandidateProject mapFromDTO(CandidateProjectDTO candidateProjectDTO);
+    CandidateProject mapToDomain(CandidateProjectDTO candidateProjectDTO);
 }

@@ -38,22 +38,7 @@ public class CandidateRepository implements CandidateDAO {
         saveCandidateEntity(candidate);
     }
 
-    @Override
-    public void createCandidateExperience(Candidate candidateToDatabase) {
-        CandidateEntity candidateSaved = saveCandidateEntity(candidateToDatabase);
-        saveCandidateExperiences(candidateToDatabase, candidateSaved.getCandidateId());
-    }
 
-
-    private void saveCandidateExperiences(Candidate candidate, Integer candidateId) {
-        candidate.getCandidateExperiences().stream()
-                .filter(experience -> Objects.isNull(experience.getCandidateExperienceId()))
-                .map(candidateExperienceEntityMapper::mapToEntity)
-                .forEach(candidateExperienceEntity -> {
-                    candidateExperienceEntity.setCandidateId(candidateId);
-                    candidateExperienceJpaRepository.saveAndFlush(candidateExperienceEntity);
-                });
-    }
 }
 
 

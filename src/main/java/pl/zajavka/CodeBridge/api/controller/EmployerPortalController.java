@@ -7,10 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import pl.zajavka.CodeBridge.api.dto.JobOfferAddRequestDTO;
+import pl.zajavka.CodeBridge.api.dto.JobOfferDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.JobOfferMapper;
-import pl.zajavka.CodeBridge.business.JobOfferAddService;
-import pl.zajavka.CodeBridge.domain.JobOfferFromRequest;
+import pl.zajavka.CodeBridge.business.JobOfferService;
+import pl.zajavka.CodeBridge.domain.JobOffer;
 
 
 @Controller
@@ -22,7 +22,7 @@ public class EmployerPortalController {
     private static final String EMPLOYER_NEW_JOB_OFFER_ADD = "/employer-portal/new-job-offer/add";
 
     private final JobOfferMapper jobOfferMapper;
-    private final JobOfferAddService jobOfferAddService;
+    private final JobOfferService jobOfferService;
 
 
 
@@ -32,18 +32,18 @@ public class EmployerPortalController {
 
     @GetMapping(value = EMPLOYER_NEW_JOB_OFFER)
     public String showJobOfferForm(Model model) {
-        model.addAttribute("jobOfferAddRequestDTO", new JobOfferAddRequestDTO());
+        model.addAttribute("jobOfferDTO", new JobOfferDTO());
         return "employer_portal_new_job_offer";
     }
 
     @PostMapping(EMPLOYER_NEW_JOB_OFFER_ADD)
     public String addJobOffer(
-            @ModelAttribute("jobOfferAddRequestDTO") JobOfferAddRequestDTO jobOfferAddRequestDTO,
+            @ModelAttribute("jobOfferDTO") JobOfferDTO jobOfferDTO,
             Authentication authentication)
     {
 
-        JobOfferFromRequest request = jobOfferMapper.mapToDomain(jobOfferAddRequestDTO);
-        jobOfferAddService.createJobOfferData(request, authentication);
+        JobOffer request = jobOfferMapper.mapToDomain(jobOfferDTO);
+        jobOfferService.createJobOfferData(request, authentication);
 
 
         return "redirect:/employer-portal";

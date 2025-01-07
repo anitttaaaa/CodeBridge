@@ -1,20 +1,23 @@
 package pl.zajavka.CodeBridge.domain;
 
-import lombok.Builder;
-import lombok.Value;
-import lombok.With;
+
+import lombok.*;
 
 import java.util.List;
 
 @With
 @Value
 @Builder
-public class JobOfferFromRequest {
+@EqualsAndHashCode(of = "jobOfferTitle")
+@ToString(of = {"jobOfferTitle"})
+public class JobOffer {
 
 
+    Integer jobOfferId;
     String jobOfferTitle;
     String description;
     String techSpecialization;
+    Employer employer;
     String workType;
     String city;
     String experience;
@@ -22,4 +25,7 @@ public class JobOfferFromRequest {
     List<String> mustHaveSkills;
     List<String> niceToHaveSkills;
 
+
 }
+
+

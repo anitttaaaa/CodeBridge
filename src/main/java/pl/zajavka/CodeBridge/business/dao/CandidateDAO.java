@@ -9,6 +9,4 @@ public interface CandidateDAO {
     Optional<Candidate> findCandidateByEmail(String email);
     void updateCandidate(Candidate candidate);
 
-
-    void createCandidateExperience(Candidate candidateWithExperience);
 }

@@ -185,7 +185,7 @@ public class CandidatePortalController {
     public String addExperience(
             @ModelAttribute("candidateExperienceDTO") CandidateExperienceDTO candidateExperienceDTO) {
 
-        CandidateExperience candidateExperience = candidateExperienceMapper.mapFromDTO(candidateExperienceDTO);
+        CandidateExperience candidateExperience = candidateExperienceMapper.mapToDomain(candidateExperienceDTO);
         candidateExperienceService.createExperienceData(candidateExperience);
 
         return "redirect:/candidate-portal";
@@ -196,7 +196,7 @@ public class CandidatePortalController {
             @ModelAttribute CandidateExperienceDTO candidateExperienceDTO,
             Authentication authentication) throws AccessDeniedException {
 
-        CandidateExperience candidateExperience = candidateExperienceMapper.mapFromDTO(candidateExperienceDTO);
+        CandidateExperience candidateExperience = candidateExperienceMapper.mapToDomain(candidateExperienceDTO);
         candidateExperienceService.updateCandidateExperience(candidateExperience, authentication);
 
         return "redirect:/candidate-portal";
@@ -217,7 +217,7 @@ public class CandidatePortalController {
     public String addCandidateProject(
             @ModelAttribute("candidateProjectDTO") CandidateProjectDTO candidateProjectDTO) {
 
-        CandidateProject candidateProject = candidateProjectMapper.mapFromDTO(candidateProjectDTO);
+        CandidateProject candidateProject = candidateProjectMapper.mapToDomain(candidateProjectDTO);
         candidateProjectService.createProjectData(candidateProject);
 
         return "redirect:/candidate-portal";
@@ -228,7 +228,7 @@ public class CandidatePortalController {
             @ModelAttribute CandidateProjectDTO candidateProjectDTO,
             Authentication authentication) throws AccessDeniedException {
 
-        CandidateProject candidateProject = candidateProjectMapper.mapFromDTO(candidateProjectDTO);
+        CandidateProject candidateProject = candidateProjectMapper.mapToDomain(candidateProjectDTO);
         candidateProjectService.updateCandidateProject(candidateProject, authentication);
 
         return "redirect:/candidate-portal";
@@ -249,7 +249,7 @@ public class CandidatePortalController {
     public String addCandidateEducation(
             @ModelAttribute("candidateEducationDTO") CandidateEducationDTO candidateEducationDTO) {
 
-        CandidateEducation candidateEducation = candidateEducationMapper.mapFromDTO(candidateEducationDTO);
+        CandidateEducation candidateEducation = candidateEducationMapper.mapToDomain(candidateEducationDTO);
         candidateEducationService.createEducationData(candidateEducation);
 
         return "redirect:/candidate-portal";
@@ -260,7 +260,7 @@ public class CandidatePortalController {
             @ModelAttribute CandidateEducationDTO candidateEducationDTO,
             Authentication authentication) throws AccessDeniedException {
 
-        CandidateEducation candidateEducation = candidateEducationMapper.mapFromDTO(candidateEducationDTO);
+        CandidateEducation candidateEducation = candidateEducationMapper.mapToDomain(candidateEducationDTO);
         candidateEducationService.updateCandidateEducation(candidateEducation, authentication);
 
         return "redirect:/candidate-portal";
@@ -281,7 +281,7 @@ public class CandidatePortalController {
     public String addCandidateCourse(
             @ModelAttribute("candidateCourseDTO") CandidateCourseDTO candidateCourseDTO) {
 
-        CandidateCourse candidateCourse = candidateCourseMapper.mapFromDTO(candidateCourseDTO);
+        CandidateCourse candidateCourse = candidateCourseMapper.mapToDomain(candidateCourseDTO);
         candidateCourseService.createCourseData(candidateCourse);
 
         return "redirect:/candidate-portal";
@@ -292,7 +292,7 @@ public class CandidatePortalController {
             @ModelAttribute CandidateCourseDTO candidateCourseDTO,
             Authentication authentication) throws AccessDeniedException {
 
-        CandidateCourse candidateCourse = candidateCourseMapper.mapFromDTO(candidateCourseDTO);
+        CandidateCourse candidateCourse = candidateCourseMapper.mapToDomain(candidateCourseDTO);
         candidateCourseService.updateCandidateCourse(candidateCourse, authentication);
 
         return "redirect:/candidate-portal";
