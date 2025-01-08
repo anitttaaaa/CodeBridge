@@ -487,6 +487,62 @@ body {
     padding-bottom: 0px;
 }
 
+/*--------------------------------------------------------------------------------------------------------*/
+/* widok home */
+
+.title-frame {
+    margin-left: 45px;
+    padding-top: 20px;
+}
+
+
+.info-frame {
+     padding-bottom: 10px;
+     margin-left: 20px;
+     margin-right: 20px;
+     margin-bottom: 20px !important;
+
+}
+
+.short-information {
+    display: flex;
+    flex-wrap: wrap; /* Elementy przechodzą do nowej linii, jeśli zabraknie miejsca */
+    gap: 20px; /* Dodaje odstęp między elementami */
+}
+
+
+.short-information p {
+    margin: 0; /* Usuwamy marginesy wewnętrzne, aby nie było przestrzeni wokół tekstu */
+}
+
+
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style-type: disc; /* Dodaje punkty przed każdym elementem */
+    padding: 0;
+}
+
+.skills-list li {
+    margin: 0;
+    list-style-position: inside; /* Wyrównanie punktów do lewej strony elementu */
+}
+
+.short-information, .description-information, .skills-information {
+    margin-bottom: 20px; /* Upewnia się, że sekcje nie mają dodatkowych marginesów */
+    justify-content: space-between; /* Równomiernie rozkłada elementy w poziomie */
+}
+
+.h1-home {
+    display: flex;
+    justify-content: center; /* Wyśrodkowuje w poziomie */
+    align-items: center; /* Wyśrodkowuje w pionie */
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+}
+
 
 
 

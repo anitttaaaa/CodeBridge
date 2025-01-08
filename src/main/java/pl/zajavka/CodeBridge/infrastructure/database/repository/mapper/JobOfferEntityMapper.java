@@ -12,7 +12,6 @@ public interface JobOfferEntityMapper {
 
     JobOfferEntity mapToEntity(JobOffer jobOffer);
 
-    // Mapowanie z employer na tylko companyName
     @Mapping(target = "employer", expression = "java(mapEmployer(jobOfferEntity.getEmployer().getCompanyName()))")
     JobOffer mapToDomain(JobOfferEntity jobOfferEntity);
 
