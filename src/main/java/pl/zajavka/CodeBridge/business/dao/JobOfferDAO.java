@@ -9,4 +9,6 @@ public interface JobOfferDAO {
 
     List<JobOffer> findAllJobOffers();
 
+    List<JobOffer> findAll();
+
 }

@@ -13,6 +13,7 @@ import pl.zajavka.CodeBridge.infrastructure.security.CodeBridgeUserDetailsServic
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -60,6 +61,29 @@ public class JobOfferService {
     public List<JobOffer> getAllJobOffers() {
 
         return jobOfferDAO.findAllJobOffers();
+
+    }
+
+
+
+    public List<JobOffer> getFilteredJobOffers(
+            String techSpecialization,
+            String workType,
+            String city,
+            String experience,
+            String salary) {
+
+        // Pobranie wszystkich ofert z bazy
+        List<JobOffer> allJobOffers = jobOfferDAO.findAll();
+
+        // Filtrowanie ofert
+        return allJobOffers.stream()
+                .filter(job -> techSpecialization == null || techSpecialization.equals(job.getTechSpecialization()))
+                .filter(job -> workType == null || workType.equals(job.getWorkType()))
+                .filter(job -> city == null || city.equals(job.getCity()))
+                .filter(job -> experience == null || experience.equals(job.getExperience()))
+                .filter(job -> salary == null || job.getSalary().equals(salary))
+                .collect(Collectors.toList());
 
     }
 }
