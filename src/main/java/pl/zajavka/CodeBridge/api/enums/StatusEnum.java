@@ -1,4 +1,4 @@
-package pl.zajavka.CodeBridge.api.view;
+package pl.zajavka.CodeBridge.api.enums;
 
 public enum StatusEnum {
 

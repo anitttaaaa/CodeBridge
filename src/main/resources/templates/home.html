@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/fragments/layouts/base}">
 <head>
@@ -27,7 +28,7 @@
                                 <label for="techSpecializationSelect" class="form-label">Specialization</label>
                                 <select class="form-select" id="techSpecializationSelect" name="techSpecialization">
                                     <option value="" disabled selected>Choose...</option>
-                                    <option th:each="techSpecialization : ${T(pl.zajavka.CodeBridge.api.view.TechSpecializationsEnum).values()}"
+                                    <option th:each="techSpecialization : ${T(pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum).values()}"
                                             th:value="${techSpecialization}" th:text="${techSpecialization}">
                                     </option>
                                 </select>
@@ -38,7 +39,7 @@
                                 <label for="workTypeSelect" class="form-label">Work Type</label>
                                 <select class="form-select" id="workTypeSelect" name="workType">
                                     <option value="" disabled selected>Choose...</option>
-                                    <option th:each="workType : ${T(pl.zajavka.CodeBridge.api.view.WorkTypesEnum).values()}"
+                                    <option th:each="workType : ${T(pl.zajavka.CodeBridge.api.enums.WorkTypesEnum).values()}"
                                             th:value="${workType}" th:text="${workType}">
                                     </option>
                                 </select>
@@ -49,7 +50,7 @@
                                 <label for="citySelect" class="form-label">City</label>
                                 <select class="form-select" id="citySelect" name="city">
                                     <option value="" disabled selected>Choose...</option>
-                                    <option th:each="city : ${T(pl.zajavka.CodeBridge.api.view.CitiesEnum).values()}"
+                                    <option th:each="city : ${T(pl.zajavka.CodeBridge.api.enums.CitiesEnum).values()}"
                                             th:value="${city}" th:text="${city}">
                                     </option>
                                 </select>
@@ -60,7 +61,7 @@
                                 <label for="experienceSelect" class="form-label">Experience</label>
                                 <select class="form-select" id="experienceSelect" name="experience">
                                     <option value="" disabled selected>Choose...</option>
-                                    <option th:each="experience : ${T(pl.zajavka.CodeBridge.api.view.ExperiencesEnum).values()}"
+                                    <option th:each="experience : ${T(pl.zajavka.CodeBridge.api.enums.ExperiencesEnum).values()}"
                                             th:value="${experience}" th:text="${experience}">
                                     </option>
                                 </select>
@@ -71,7 +72,7 @@
                                 <label for="salarySelect" class="form-label">Salary</label>
                                 <select class="form-select" id="salarySelect" name="salary">
                                     <option value="" disabled selected>Choose...</option>
-                                    <option th:each="salary : ${T(pl.zajavka.CodeBridge.api.view.SalaryRangeEnum).values()}"
+                                    <option th:each="salary : ${T(pl.zajavka.CodeBridge.api.enums.SalaryRangeEnum).values()}"
                                             th:value="${salary.name}" th:text="${salary.getRange()}">
                                     </option>
                                 </select>
@@ -79,44 +80,51 @@
 
                             <!-- Skills Fields -->
                             <div class="col-md-3">
-                                <label for="mustHaveSkills" class="form-label">Must Have Skills</label>
+                                <label for="mustHaveSkills" class="form-label">Must Have Skills (future feature)</label>
                                 <input type="text" class="form-control" id="mustHaveSkills" name="mustHaveSkills"
                                        placeholder="Must Have Skills"/>
                             </div>
                             <div class="col-md-3">
-                                <label for="niceToHaveSkills" class="form-label">Nice to Have Skills</label>
+                                <label for="niceToHaveSkills" class="form-label">Nice to Have Skills (future
+                                    feature)</label>
                                 <input type="text" class="form-control" id="niceToHaveSkills" name="niceToHaveSkills"
                                        placeholder="Nice to Have Skills"/>
                             </div>
                         </div>
-
-                        <!-- Submit Button -->
                         <button type="submit" class="add-job-offer-button btn btn-primary">Search</button>
                     </form>
                 </div>
             </div>
         </div>
-
-
-
     </div>
     <!-- Pętla do iteracji przez oferty pracy -->
     <div class="job-offers-container">
         <div class="candidate-card" th:each="jobOffer : ${jobOffers}">
             <div class="card-body">
-                <div class="title-frame">
+                <div class="title-frame d-flex justify-content-between align-items-center">
                     <h4 class="mb-0" th:text="${jobOffer.jobOfferTitle}">Job Title</h4>
+
+                    <!-- Jeśli użytkownik nie jest zalogowany -->
+                    <div sec:authorize="!isAuthenticated()">
+                        <a href="/CodeBridge/login" class="add-job-offer-button btn btn-primary apply-button">
+                            Apply Now
+                        </a>
+                    </div>
+                    <!-- Jeśli użytkownik jest zalogowany i ma rolę CANDIDATE -->
+                    <div sec:authorize="hasAuthority('CANDIDATE')">
+                        <a href="/apply" class="add-job-offer-button btn btn-primary apply-button">
+                            Apply Now
+                        </a>
+                    </div>
                 </div>
                 <div class="frame-card info-frame">
                     <div class="short-information">
-                        <p><strong>Specialization:</strong> <span th:text="${jobOffer.techSpecialization}">Tech Specialization</span>
-                        </p>
+                        <p><strong>Specialization:</strong> <span th:text="${jobOffer.techSpecialization}">Tech Specialization</span></p>
                         <p><strong>Work Type:</strong> <span th:text="${jobOffer.workType}">Work Type</span></p>
                         <p><strong>City:</strong> <span th:text="${jobOffer.city}">City</span></p>
                         <p><strong>Experience:</strong> <span th:text="${jobOffer.experience}">Experience</span></p>
                         <p><strong>Salary:</strong> <span th:text="${jobOffer.salary}">Salary</span></p>
-                        <p><strong>Company:</strong> <span
-                                th:text="${jobOffer.employer.companyName}">Company Name</span></p>
+                        <p><strong>Company:</strong> <span th:text="${jobOffer.employer.companyName}">Company Name</span></p>
                     </div>
                     <hr>
                     <div class="description-information">
@@ -138,8 +146,6 @@
             </div>
         </div>
     </div>
-
 </div>
-
 </body>
 </html>
