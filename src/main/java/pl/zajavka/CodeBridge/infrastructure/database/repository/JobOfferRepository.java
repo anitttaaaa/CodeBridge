@@ -9,6 +9,7 @@ import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.JobOfferJpaR
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.JobOfferEntityMapper;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -37,6 +38,11 @@ public class JobOfferRepository implements JobOfferDAO {
                 map(jobOfferEntityMapper::mapToDomain)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Optional<JobOffer> findById(Integer jobOfferId) {
+        return jobOfferJpaRepository.findById(jobOfferId)
+                .map(jobOfferEntityMapper::mapToDomain);    }
 
 
 }

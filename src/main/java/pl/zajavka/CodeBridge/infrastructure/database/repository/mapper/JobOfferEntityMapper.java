@@ -12,14 +12,17 @@ public interface JobOfferEntityMapper {
 
     JobOfferEntity mapToEntity(JobOffer jobOffer);
 
-    @Mapping(target = "employer", expression = "java(mapEmployer(jobOfferEntity.getEmployer().getCompanyName()))")
+    @Mapping(target = "employer", expression = "java(mapEmployer(jobOfferEntity.getEmployer().getCompanyName(), jobOfferEntity.getEmployer().getEmployerId()))")
     JobOffer mapToDomain(JobOfferEntity jobOfferEntity);
 
     // Metoda pomocnicza, która tworzy obiekt Employer z companyName
-    default Employer mapEmployer(String companyName) {
-        if (companyName == null) {
-            return null;
+    default Employer mapEmployer(String companyName, Integer employerId) {
+        if (companyName == null || employerId == null) {
+            return null;  // Sprawdzamy, czy którykolwiek z argumentów jest null
         }
-        return Employer.builder().companyName(companyName).build();  // Tworzymy Employer tylko z companyName
+        return Employer.builder()
+                .companyName(companyName)
+                .employerId(employerId)  // Ustawiamy employerId
+                .build();
     }
 }

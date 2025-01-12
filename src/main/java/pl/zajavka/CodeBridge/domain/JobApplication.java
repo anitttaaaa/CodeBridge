@@ -1,18 +1,19 @@
 package pl.zajavka.CodeBridge.domain;
 
 import lombok.*;
+import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
 
 @With
 @Value
 @Builder
-@EqualsAndHashCode(of = "employerId")
-@ToString(of = {"applicationId", "jobOfferId"})
+@EqualsAndHashCode(of = "applicationId")
+@ToString(of = {"applicationId"})
 public class JobApplication {
 
     Integer applicationId;
-    Integer jobOfferId;
-    Integer employerId;
-    Integer candidateId;
-    String applicationStatus;
+    JobOffer jobOffer;
+    Employer employer;
+    Candidate candidate;
+    ApplicationStatus applicationStatus;
 
 }

@@ -37,5 +37,8 @@ public class EmployerEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employer")
     private Set<JobOfferEntity> jobOffers;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employer")
+    private Set<JobApplicationEntity> jobApplications;
+
 
 }

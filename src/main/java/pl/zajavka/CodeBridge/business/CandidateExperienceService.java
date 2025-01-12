@@ -24,6 +24,8 @@ public class CandidateExperienceService {
     public void createExperienceData(CandidateExperience candidateExperienceFromRequest) {
 
         Candidate candidate = candidateService.findLoggedInCandidate();
+
+
         CandidateExperience candidateExperience = buildCandidateExperience(candidateExperienceFromRequest, candidate);
         candidateExperienceDAO.createExperience(candidateExperience);
     }

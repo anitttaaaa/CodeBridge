@@ -6,12 +6,15 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.zajavka.CodeBridge.business.dao.EmployerDAO;
 import pl.zajavka.CodeBridge.business.dao.JobOfferDAO;
 import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.JobOffer;
+import pl.zajavka.CodeBridge.domain.exception.NotFoundException;
 import pl.zajavka.CodeBridge.infrastructure.security.CodeBridgeUserDetailsService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -85,5 +88,16 @@ public class JobOfferService {
                 .filter(job -> salary == null || job.getSalary().equals(salary))
                 .collect(Collectors.toList());
 
+    }
+
+    private final EmployerDAO employerDAO;
+
+    @Transactional
+    public JobOffer findJobOffer(Integer jobOfferId) {
+        Optional<JobOffer> jobOffer = jobOfferDAO.findById(jobOfferId);
+        if (jobOffer.isEmpty()) {
+            throw new NotFoundException("Could not find employer by user id: [%s]".formatted(jobOfferId));
+        }
+        return jobOffer.get();
     }
 }

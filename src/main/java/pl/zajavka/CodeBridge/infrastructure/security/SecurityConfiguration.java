@@ -48,7 +48,7 @@ public class SecurityConfiguration  {
                 .requestMatchers("/login", "/error","/images/**").permitAll()
                 .requestMatchers("/", "/CodeBridge/").permitAll()
                 .requestMatchers("/filtered-job-offers").permitAll()
-                .requestMatchers("/candidate-portal/**").hasAnyAuthority("CANDIDATE")
+                .requestMatchers("/candidate-portal/**", "/candidate-applications/**", "/apply/**").hasAnyAuthority("CANDIDATE")
                 .requestMatchers("/update-candidate-photo").hasAnyAuthority("CANDIDATE")
                 .requestMatchers("/employer-portal/**").hasAnyAuthority("EMPLOYER")
                 .and()

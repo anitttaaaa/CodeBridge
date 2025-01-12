@@ -110,21 +110,28 @@
                             Apply Now
                         </a>
                     </div>
+
                     <!-- Jeśli użytkownik jest zalogowany i ma rolę CANDIDATE -->
                     <div sec:authorize="hasAuthority('CANDIDATE')">
-                        <a href="/apply" class="add-job-offer-button btn btn-primary apply-button">
-                            Apply Now
-                        </a>
+                        <form th:action="@{/apply/{jobOfferId}(jobOfferId=${jobOffer.jobOfferId})}" method="post">
+                            <button type="submit" class="add-job-offer-button btn btn-primary apply-button">
+                                Apply Now
+                            </button>
+                        </form>
                     </div>
+
+
                 </div>
                 <div class="frame-card info-frame">
                     <div class="short-information">
-                        <p><strong>Specialization:</strong> <span th:text="${jobOffer.techSpecialization}">Tech Specialization</span></p>
+                        <p><strong>Specialization:</strong> <span th:text="${jobOffer.techSpecialization}">Tech Specialization</span>
+                        </p>
                         <p><strong>Work Type:</strong> <span th:text="${jobOffer.workType}">Work Type</span></p>
                         <p><strong>City:</strong> <span th:text="${jobOffer.city}">City</span></p>
                         <p><strong>Experience:</strong> <span th:text="${jobOffer.experience}">Experience</span></p>
                         <p><strong>Salary:</strong> <span th:text="${jobOffer.salary}">Salary</span></p>
-                        <p><strong>Company:</strong> <span th:text="${jobOffer.employer.companyName}">Company Name</span></p>
+                        <p><strong>Company:</strong> <span
+                                th:text="${jobOffer.employer.companyName}">Company Name</span></p>
                     </div>
                     <hr>
                     <div class="description-information">
@@ -146,6 +153,8 @@
             </div>
         </div>
     </div>
+
+</div>
 </div>
 </body>
 </html>

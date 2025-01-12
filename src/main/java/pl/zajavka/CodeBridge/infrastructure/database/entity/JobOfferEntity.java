@@ -5,6 +5,7 @@ import lombok.*;
 import pl.zajavka.CodeBridge.api.enums.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -54,6 +55,9 @@ public class JobOfferEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employer_id")
     private EmployerEntity employer;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "jobOffer")
+    private Set<JobApplicationEntity> jobApplications;
 
     @ElementCollection
     @CollectionTable(name = "job_offer_must_have_skills", joinColumns = @JoinColumn(name = "job_offer_id"))
