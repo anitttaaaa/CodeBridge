@@ -28,7 +28,7 @@ public class EmployerRepository implements EmployerDAO {
     @Override
     public Optional<Employer> findByUserId(Integer userId) {
         return employerJpaRepository.findByUserId(userId)
-                .map(employerEntityMapper::mapFromEntity);
+                .map(employerEntityMapper::mapToDomain);
     }
 
     @Override

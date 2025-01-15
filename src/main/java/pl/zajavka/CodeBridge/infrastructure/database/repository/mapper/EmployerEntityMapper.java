@@ -11,9 +11,11 @@ public interface EmployerEntityMapper {
 
 
     @Mapping(target = "jobOffers", ignore = true)
-    Employer mapFromEntity(EmployerEntity employerEntity);
+    @Mapping(target = "jobApplications", ignore = true)
+    Employer mapToDomain(EmployerEntity employerEntity);
 
     EmployerEntity mapToEntity(Employer employer);
 
 
 }
+

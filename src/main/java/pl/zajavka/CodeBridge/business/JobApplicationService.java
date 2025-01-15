@@ -4,13 +4,23 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.zajavka.CodeBridge.api.dto.CandidateDTO;
+import pl.zajavka.CodeBridge.api.dto.EmployerDTO;
+import pl.zajavka.CodeBridge.api.dto.JobApplicationDTO;
+import pl.zajavka.CodeBridge.api.dto.JobOfferDTO;
+import pl.zajavka.CodeBridge.api.dto.mapper.JobApplicationMapper;
 import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
 import pl.zajavka.CodeBridge.business.dao.JobApplicationDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.JobApplication;
 import pl.zajavka.CodeBridge.domain.JobOffer;
+import pl.zajavka.CodeBridge.domain.exception.NotFoundException;
 import pl.zajavka.CodeBridge.infrastructure.security.CodeBridgeUserDetailsService;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -20,6 +30,7 @@ public class JobApplicationService {
     JobApplicationDAO jobApplicationDAO;
     JobOfferService jobOfferService;
     CodeBridgeUserDetailsService codeBridgeUserDetailsService;
+    JobApplicationMapper jobApplicationMapper;
 
     @Transactional
     public void applyForJob(Integer jobOfferId, Authentication authentication) {
@@ -45,6 +56,19 @@ public class JobApplicationService {
         JobOffer jobOffer = jobOfferService.findJobOffer(jobOfferId);
 
         return jobOffer.getEmployer().getEmployerId();
+    }
+
+    public List<JobApplicationDTO> getCandidateApplications(Authentication authentication) {
+
+        String candidateEmail = authentication.getName();
+        Integer candidateId = candidateService.findCandidateByEmail(candidateEmail).getCandidateId();
+
+        List<JobApplication> jobApplications = jobApplicationDAO.findApplicationsByCandidateId(candidateId);
+
+        // Mapa JobApplication na JobApplicationDTO
+        return jobApplications.stream()
+                .map(jobApplicationMapper::mapToDto)
+                .collect(Collectors.toList());
 
     }
 }

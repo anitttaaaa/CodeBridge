@@ -90,8 +90,6 @@ public class JobOfferService {
 
     }
 
-    private final EmployerDAO employerDAO;
-
     @Transactional
     public JobOffer findJobOffer(Integer jobOfferId) {
         Optional<JobOffer> jobOffer = jobOfferDAO.findById(jobOfferId);

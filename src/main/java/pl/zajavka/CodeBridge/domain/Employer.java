@@ -19,10 +19,15 @@ public class Employer {
     String nip;
     Integer userId;
     Set<JobOffer> jobOffers;
+    Set<JobApplication> jobApplications;
 
 
     public Set<JobOffer> getJobOffers () {
         return Objects.isNull(jobOffers) ? new HashSet<>() : jobOffers;
+    }
+
+    public Set<JobApplication> getJobApplications () {
+        return Objects.isNull(jobApplications) ? new HashSet<>() : jobApplications;
     }
 
 

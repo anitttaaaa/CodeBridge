@@ -18,5 +18,6 @@ public class EmployerDTO {
     private Integer userId;
 
     private Set<JobOfferDTO> jobOffers;
+    private Set<JobOfferDTO> jobApplications;
 
 }
