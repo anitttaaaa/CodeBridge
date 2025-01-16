@@ -34,7 +34,7 @@ public class JobApplicationRepository implements JobApplicationDAO {
     @Override
     public List<JobApplication> findApplicationsByCandidateId(Integer candidateId) {
 
-        List<JobApplicationEntity> jobApplicationEntities= jobApplicationJpaRepository.findByCandidate_CandidateId(candidateId);
+        List<JobApplicationEntity> jobApplicationEntities= jobApplicationJpaRepository.findApplicationsByCandidateId(candidateId);
 
         return jobApplicationEntities.stream()
                 .map(jobApplicationEntityMapper::mapToDomain)

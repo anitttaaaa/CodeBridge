@@ -7,7 +7,9 @@ import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.JobApplication;
 import pl.zajavka.CodeBridge.domain.JobOffer;
+import pl.zajavka.CodeBridge.infrastructure.database.entity.EmployerEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.JobApplicationEntity;
+import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface JobApplicationEntityMapper {
@@ -15,30 +17,30 @@ public interface JobApplicationEntityMapper {
     JobApplicationEntity mapToEntity(JobApplication jobApplication);
 
 
-    @Mapping(target = "candidate", expression = "java(mapCandidate(jobApplicationEntity.getCandidate().getCandidateId()))")
-    @Mapping(target = "employer", expression = "java(mapEmployer(jobApplicationEntity.getEmployer().getEmployerId()))")
-    @Mapping(target = "jobOffer", expression = "java(mapJobOffer(jobApplicationEntity.getJobOffer().getJobOfferId()))")
+    @Mapping(target = "candidate", ignore = true)
+    @Mapping(target = "employer", expression = "java(mapEmployer(jobApplicationEntity.getEmployer()))")
+    @Mapping(target = "jobOffer", expression = "java(mapJobOffer(jobApplicationEntity.getJobOffer()))")
     JobApplication mapToDomain(JobApplicationEntity jobApplicationEntity);
 
-
-    default Candidate mapCandidate(Integer candidateId) {
-        // Logika mapowania Candidate na podstawie candidateId
-        return Candidate.builder()
-                .candidateId(candidateId)
-                .build();
-    }
-    default Employer mapEmployer(Integer employerId) {
-        // Logika mapowania Employer na podstawie employerId
-        return Employer.builder()
-                .employerId(employerId)
-                .build();
-    }
-    default JobOffer mapJobOffer(Integer jobOfferId) {
-        // Logika mapowania JobOffer na podstawie jobOfferId
+    default JobOffer mapJobOffer(JobOfferEntity jobOfferEntity) {
+        // Mapowanie pól z JobOfferEntity na JobOffer
         return JobOffer.builder()
-                .jobOfferId(jobOfferId)
+                .jobOfferTitle(jobOfferEntity.getJobOfferTitle())
+                .description(jobOfferEntity.getDescription())
+                .techSpecialization(jobOfferEntity.getTechSpecialization().name())
+                .city(jobOfferEntity.getCity().name())
+                .workType(jobOfferEntity.getWorkType().name())
+                .experience(jobOfferEntity.getExperience().name())
+                .salary(jobOfferEntity.getSalary().name())
+                .mustHaveSkills(jobOfferEntity.getMustHaveSkills())
+                .niceToHaveSkills(jobOfferEntity.getNiceToHaveSkills())
                 .build();
     }
 
-
+    // Dodajemy metodę mapującą tylko companyName z EmployerEntity
+    default Employer mapEmployer(EmployerEntity employerEntity) {
+        return Employer.builder()
+                .companyName(employerEntity.getCompanyName())
+                .build();
+    }
 }

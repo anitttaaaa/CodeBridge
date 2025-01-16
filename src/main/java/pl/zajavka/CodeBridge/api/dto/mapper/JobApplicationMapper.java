@@ -2,17 +2,45 @@ package pl.zajavka.CodeBridge.api.dto.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import pl.zajavka.CodeBridge.api.dto.EmployerDTO;
 import pl.zajavka.CodeBridge.api.dto.JobApplicationDTO;
+import pl.zajavka.CodeBridge.api.dto.JobOfferDTO;
+import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.JobApplication;
+import pl.zajavka.CodeBridge.domain.JobOffer;
 
 @Mapper(componentModel = "spring")
 public interface JobApplicationMapper {
 
+    @Mapping(target = "candidate", ignore = true)
+    @Mapping(target = "jobOffer", expression = "java(mapJobOffer(jobApplication.getJobOffer()))")
+    @Mapping(target = "employer", expression = "java(mapEmployer(jobApplication.getEmployer()))")
     JobApplicationDTO mapToDto(JobApplication jobApplication);
+
+    default JobOfferDTO mapJobOffer(JobOffer jobOffer) {
+        return JobOfferDTO.builder()
+                .jobOfferTitle(jobOffer.getJobOfferTitle())
+                .description(jobOffer.getDescription())
+                .techSpecialization(jobOffer.getTechSpecialization())
+                .city(jobOffer.getCity())
+                .workType(jobOffer.getWorkType())
+                .experience(jobOffer.getExperience())
+                .salary(jobOffer.getSalary())
+                .mustHaveSkills(jobOffer.getMustHaveSkills())
+                .niceToHaveSkills(jobOffer.getNiceToHaveSkills())
+                .build();
+    }
+
+    default EmployerDTO mapEmployer(Employer employer) {
+        return EmployerDTO.builder()
+                .companyName(employer.getCompanyName())
+                .build();
+    }
 
 
     @Mapping(target = "employer", ignore = true)
     @Mapping(target = "candidate", ignore = true)
     @Mapping(target = "applicationStatus", ignore = true)
     JobApplication mapToDomain(JobApplicationDTO jobApplicationDTO);
+
 }

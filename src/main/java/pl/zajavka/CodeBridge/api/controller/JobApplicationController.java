@@ -11,8 +11,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.zajavka.CodeBridge.api.dto.JobApplicationDTO;
 import pl.zajavka.CodeBridge.business.CandidateService;
 import pl.zajavka.CodeBridge.business.JobApplicationService;
+import pl.zajavka.CodeBridge.domain.JobOffer;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -39,7 +42,9 @@ public class JobApplicationController {
         // Pobierz aplikacje kandydata
 
 
-        List<JobApplicationDTO> jobApplications = jobApplicationService.getCandidateApplications(authentication);
+        List<JobApplicationDTO> jobApplications = jobApplicationService.getCandidateApplications(authentication).stream()
+                .sorted(Comparator.comparingInt(JobApplicationDTO::getApplicationId).reversed())
+                .collect(Collectors.toList());;
 
         // Dodaj listę aplikacji do modelu
         model.addAttribute("jobApplications", jobApplications);
