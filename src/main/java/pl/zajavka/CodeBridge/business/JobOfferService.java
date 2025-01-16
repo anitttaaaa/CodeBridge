@@ -2,17 +2,22 @@ package pl.zajavka.CodeBridge.business;
 
 
 import com.lowagie.text.pdf.PRAcroForm;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.zajavka.CodeBridge.api.dto.JobOfferDTO;
+import pl.zajavka.CodeBridge.api.dto.mapper.JobOfferMapper;
 import pl.zajavka.CodeBridge.business.dao.EmployerDAO;
 import pl.zajavka.CodeBridge.business.dao.JobOfferDAO;
 import pl.zajavka.CodeBridge.domain.Employer;
+import pl.zajavka.CodeBridge.domain.JobApplication;
 import pl.zajavka.CodeBridge.domain.JobOffer;
 import pl.zajavka.CodeBridge.domain.exception.NotFoundException;
 import pl.zajavka.CodeBridge.infrastructure.security.CodeBridgeUserDetailsService;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -25,6 +30,7 @@ public class JobOfferService {
     private final CodeBridgeUserDetailsService codeBridgeUserDetailsService;
     private final EmployerService employerService;
     private final JobOfferDAO jobOfferDAO;
+    private final JobOfferMapper jobOfferMapper;
 
 
     @Transactional
@@ -97,5 +103,18 @@ public class JobOfferService {
             throw new NotFoundException("Could not find employer by user id: [%s]".formatted(jobOfferId));
         }
         return jobOffer.get();
+    }
+
+
+    public List<JobOfferDTO> getJobOffersByEmployerId(Authentication authentication) {
+
+        String employerEmail = authentication.getName();
+        Integer employerId = employerService.findEmployerByEmail(employerEmail).getEmployerId();
+
+        List<JobOffer> employerJobOffers = jobOfferDAO.findJobOffersByEmployerId(employerId);
+
+        return employerJobOffers.stream()
+                .map(jobOfferMapper::mapToDTO)
+                .collect(Collectors.toList());
     }
 }

@@ -10,4 +10,5 @@ public interface EmployerDAO {
 
     void createJobOffer(Employer employerAddJobOffer);
 
+    Optional<Employer> findEmployerByEmail(String employerEmail);
 }

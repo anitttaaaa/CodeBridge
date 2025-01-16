@@ -7,36 +7,64 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import pl.zajavka.CodeBridge.api.dto.JobApplicationDTO;
 import pl.zajavka.CodeBridge.api.dto.JobOfferDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.JobOfferMapper;
 import pl.zajavka.CodeBridge.business.JobOfferService;
 import pl.zajavka.CodeBridge.domain.JobOffer;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Controller
 @RequiredArgsConstructor
 public class EmployerPortalController {
 
-    private static final String EMPLOYER = "/employer-portal";
-    private static final String EMPLOYER_NEW_JOB_OFFER = "/employer-portal/new-job-offer";
-    private static final String EMPLOYER_NEW_JOB_OFFER_ADD = "/employer-portal/new-job-offer/add";
+    private static final String GET_EMPLOYER = "/employer-portal";
+    private static final String GET_EMPLOYER_NEW_JOB_OFFER_FORM = "/employer-portal/new-job-offer";
+    private static final String GET_EMPLOYER_MY_JOB_OFFERS = "/employer-portal/my-job-offers";
+    private static final String GET_EMPLOYER_ALL_JOB_APPLICATIONS = "/employer-portal/job-applications";
+    private static final String GET_EMPLOYER_FIND_A_CANDIDATE = "/employer-portal/find-a-candidate";
+    private static final String ADD_EMPLOYER_NEW_JOB_OFFER = "/employer-portal/new-job-offer/add";
 
     private final JobOfferMapper jobOfferMapper;
     private final JobOfferService jobOfferService;
 
 
 
-    @GetMapping(value = EMPLOYER)
+    @GetMapping(GET_EMPLOYER_MY_JOB_OFFERS)
+    public String getAllMyJobOffers(Authentication authentication,
+                                    Model model) {
+
+        List<JobOfferDTO> employerJobOffers = jobOfferService.getJobOffersByEmployerId(authentication).stream()
+                .sorted(Comparator.comparingInt(JobOfferDTO::getJobOfferId).reversed())
+                .collect(Collectors.toList());;;
+
+        model.addAttribute("employerJobOffers", employerJobOffers);
+
+
+        return "employer_portal_my_job_offers";
+    }
+
+    @GetMapping(value = GET_EMPLOYER)
     public String employerPortal() {return "employer_portal";}
 
+    @GetMapping(GET_EMPLOYER_ALL_JOB_APPLICATIONS)
+    public String getAllJobApplications() {return "employer_portal_job_applications";}
 
-    @GetMapping(value = EMPLOYER_NEW_JOB_OFFER)
+    @GetMapping(GET_EMPLOYER_FIND_A_CANDIDATE)
+    public String findACandidate() {return "employer_portal_find_a_candidate";}
+
+
+    @GetMapping(value = GET_EMPLOYER_NEW_JOB_OFFER_FORM)
     public String showJobOfferForm(Model model) {
         model.addAttribute("jobOfferDTO", new JobOfferDTO());
         return "employer_portal_new_job_offer";
     }
 
-    @PostMapping(EMPLOYER_NEW_JOB_OFFER_ADD)
+    @PostMapping(ADD_EMPLOYER_NEW_JOB_OFFER)
     public String addJobOffer(
             @ModelAttribute("jobOfferDTO") JobOfferDTO jobOfferDTO,
             Authentication authentication)

@@ -45,4 +45,10 @@ public class EmployerRepository implements EmployerDAO {
                 });
 
     }
+
+    @Override
+    public Optional<Employer> findEmployerByEmail(String employerEmail) {
+        return employerJpaRepository.findByEmail(employerEmail)
+                .map(employerEntityMapper::mapToDomain);
+    }
 }

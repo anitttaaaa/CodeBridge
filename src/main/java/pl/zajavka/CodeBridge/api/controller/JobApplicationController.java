@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 public class JobApplicationController {
 
     private static final String APPLY_FOR_A_JOB = "/apply/{jobOfferId}";
+    private static final String GET_MY_APPLICATIONS = "/candidate-applications";
 
     private final JobApplicationService jobApplicationService;
     private final CandidateService candidateService;
@@ -37,19 +38,15 @@ public class JobApplicationController {
         return "redirect:/candidate-applications";
     }
 
-    @GetMapping("/candidate-applications")
+    @GetMapping(GET_MY_APPLICATIONS)
     public String showAllCandidateApplications(Authentication authentication, Model model) {
-        // Pobierz aplikacje kandydata
-
 
         List<JobApplicationDTO> jobApplications = jobApplicationService.getCandidateApplications(authentication).stream()
                 .sorted(Comparator.comparingInt(JobApplicationDTO::getApplicationId).reversed())
-                .collect(Collectors.toList());;
+                .collect(Collectors.toList());
 
-        // Dodaj listę aplikacji do modelu
         model.addAttribute("jobApplications", jobApplications);
 
-        // Zwróć nazwę widoku, który ma być renderowany
         return "candidate_applications";  // Ścieżka do pliku HTML
     }
 

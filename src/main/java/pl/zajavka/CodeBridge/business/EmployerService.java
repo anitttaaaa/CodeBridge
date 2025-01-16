@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.zajavka.CodeBridge.business.dao.EmployerDAO;
+import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.exception.NotFoundException;
 
@@ -30,4 +31,15 @@ public class EmployerService {
 
     }
 
+    @Transactional
+    public Employer findEmployerByEmail(String employerEmail) {
+        Optional<Employer> employerByEmail = employerDAO.findEmployerByEmail(employerEmail);
+        if (employerByEmail.isEmpty()) {
+            throw new NotFoundException("Could not find employer by email: [%s]".formatted(employerByEmail));
+        }
+        return employerByEmail.get();
+    }
+
 }
+
+

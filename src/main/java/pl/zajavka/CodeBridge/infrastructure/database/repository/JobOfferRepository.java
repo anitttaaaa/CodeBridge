@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.CodeBridge.business.dao.JobOfferDAO;
 import pl.zajavka.CodeBridge.domain.JobOffer;
+import pl.zajavka.CodeBridge.infrastructure.database.entity.JobApplicationEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.JobOfferJpaRepository;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.JobOfferEntityMapper;
@@ -43,6 +44,15 @@ public class JobOfferRepository implements JobOfferDAO {
     public Optional<JobOffer> findById(Integer jobOfferId) {
         return jobOfferJpaRepository.findById(jobOfferId)
                 .map(jobOfferEntityMapper::mapToDomain);    }
+
+    @Override
+    public List<JobOffer> findJobOffersByEmployerId(Integer employerId) {
+        List<JobOfferEntity> jobOfferEntities= jobOfferJpaRepository.findJobOffersByEmployerId(employerId);
+
+        return jobOfferEntities.stream()
+                .map(jobOfferEntityMapper::mapToDomain)
+                .collect(Collectors.toList());
+    }
 
 
 }
