@@ -17,4 +17,6 @@ public interface JobApplicationJpaRepository extends JpaRepository<JobApplicatio
 
     @Query("SELECT ja FROM JobApplicationEntity ja WHERE ja.candidate.candidateId = :candidateId")
     List<JobApplicationEntity> findApplicationsByCandidateId(@Param("candidateId") Integer candidateId);
+    @Query("SELECT ja FROM JobApplicationEntity ja WHERE ja.employer.employerId = :employerId")
+    List<JobApplicationEntity> findJobApplicationsByEmployerId(Integer employerId);
 }

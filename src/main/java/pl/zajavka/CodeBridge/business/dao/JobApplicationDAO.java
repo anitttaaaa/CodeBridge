@@ -11,4 +11,5 @@ public interface JobApplicationDAO {
 
     List<JobApplication> findApplicationsByCandidateId(Integer candidateId);
 
+    List<JobApplication> findEmployerJobApplicationsByEmployerId(Integer employerId);
 }

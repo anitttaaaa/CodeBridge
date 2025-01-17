@@ -39,7 +39,22 @@ public class EmployerPortalController {
     private final JobOfferMapper jobOfferMapper;
     private final JobOfferService jobOfferService;
     private final EmployerService employerService;
+    private final JobApplicationService jobApplicationService;
 
+
+    @GetMapping(GET_EMPLOYER_ALL_JOB_APPLICATIONS)
+    public String getAllJobApplications(
+            Authentication authentication,
+            Model model) {
+
+        List<JobApplicationDTO> employerJobApplications = jobApplicationService.getAllJobApplicationsByEmployerId(authentication);
+
+        model.addAttribute("employerJobApplications", employerJobApplications);
+
+
+
+        return "employer_portal_job_applications";
+    }
 
     @GetMapping(GET_EMPLOYER_MY_JOB_OFFERS)
     public String getAllMyJobOffers(Authentication authentication,
@@ -53,13 +68,6 @@ public class EmployerPortalController {
 
 
         return "employer_portal_my_job_offers";
-    }
-
-    @GetMapping(GET_EMPLOYER_ALL_JOB_APPLICATIONS)
-    public String getAllJobApplications() {
-
-
-        return "employer_portal_job_applications";
     }
 
     @GetMapping(value = GET_EMPLOYER)

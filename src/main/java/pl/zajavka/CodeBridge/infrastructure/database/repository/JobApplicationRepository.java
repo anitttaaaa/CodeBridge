@@ -41,5 +41,12 @@ public class JobApplicationRepository implements JobApplicationDAO {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<JobApplication> findEmployerJobApplicationsByEmployerId(Integer employerId) {
+
+        List<JobApplicationEntity> jobApplicationEntities = jobApplicationJpaRepository.findJobApplicationsByEmployerId(employerId);
+        return jobApplicationEntities.stream().map(jobApplicationEntityMapper::mapToDomain).collect(Collectors.toList());
+    }
+
 
 }

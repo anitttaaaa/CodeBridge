@@ -26,11 +26,11 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class JobApplicationService {
 
-    CandidateService candidateService;
-    JobApplicationDAO jobApplicationDAO;
-    JobOfferService jobOfferService;
-    CodeBridgeUserDetailsService codeBridgeUserDetailsService;
-    JobApplicationMapper jobApplicationMapper;
+    private final CandidateService candidateService;
+    private final JobApplicationDAO jobApplicationDAO;
+    private final JobOfferService jobOfferService;
+    private final JobApplicationMapper jobApplicationMapper;
+    private final EmployerService employerService;
 
     @Transactional
     public void applyForJob(Integer jobOfferId, Authentication authentication) {
@@ -70,5 +70,28 @@ public class JobApplicationService {
                 .map(jobApplicationMapper::mapToDto)
                 .collect(Collectors.toList());
 
+    }
+
+    public List<JobApplicationDTO> getAllJobApplicationsByEmployerId(Authentication authentication) {
+
+        String employerEmail = authentication.getName();
+        Integer employerId = employerService.findEmployerByEmail(employerEmail).getEmployerId();
+
+        List<JobApplication> employerJobApplications = jobApplicationDAO.findEmployerJobApplicationsByEmployerId(employerId);
+
+
+
+//
+//        employerJobApplications.forEach(application -> {
+//            if (application.getCandidate() == null) {
+//                System.out.println("Candidate is null for application: " + application.getApplicationId());
+//            }
+//        });
+        List<JobApplicationDTO> collect = employerJobApplications.stream()
+                .map(jobApplicationMapper::mapToDto)
+                .collect(Collectors.toList());
+
+        System.out.println(collect);
+        return collect;
     }
 }
