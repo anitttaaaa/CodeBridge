@@ -102,6 +102,7 @@
         <div class="candidate-card" th:each="jobOffer : ${jobOffers}">
             <div class="card-body">
                 <div class="title-frame d-flex justify-content-between align-items-center">
+
                     <h4 class="mb-0" th:text="${jobOffer.jobOfferTitle}">Job Title</h4>
 
                     <!-- Jeśli użytkownik nie jest zalogowany -->

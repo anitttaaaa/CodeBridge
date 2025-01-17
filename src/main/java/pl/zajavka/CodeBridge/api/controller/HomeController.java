@@ -19,13 +19,13 @@ import java.util.stream.Collectors;
 public class HomeController {
 
 
-    private static final String SHOW_ALL_JOB_OFFERS = "/";
+    private static final String GET_ALL_JOB_OFFERS = "/";
 
-    private static final String SHOW_FILTERED_JOB_OFFERS = "/filtered-job-offers";
+    private static final String GET_FILTERED_JOB_OFFERS = "/filtered-job-offers";
 
     private final JobOfferService jobOfferService;
 
-    @GetMapping(SHOW_ALL_JOB_OFFERS)
+    @GetMapping(GET_ALL_JOB_OFFERS)
     public String getAllJobOffers(Model model) {
 
         List<JobOffer> jobOffers = jobOfferService.getAllJobOffers().stream()
@@ -38,7 +38,7 @@ public class HomeController {
     }
 
 
-    @GetMapping(SHOW_FILTERED_JOB_OFFERS)
+    @GetMapping(GET_FILTERED_JOB_OFFERS)
     public String getFilteredJobOffers(
             @RequestParam(required = false) String techSpecialization,
             @RequestParam(required = false) String workType,

@@ -548,6 +548,11 @@ body {
 
 }
 
+.button-group {
+    display: inline-flex;
+    gap: 5px; /* Odległość między przyciskami */
+}
+
 
 
 

@@ -7,10 +7,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import pl.zajavka.CodeBridge.api.dto.CandidateDTO;
 import pl.zajavka.CodeBridge.api.dto.JobApplicationDTO;
 import pl.zajavka.CodeBridge.api.dto.JobOfferDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.JobOfferMapper;
+import pl.zajavka.CodeBridge.business.EmployerService;
+import pl.zajavka.CodeBridge.business.JobApplicationService;
 import pl.zajavka.CodeBridge.business.JobOfferService;
+import pl.zajavka.CodeBridge.domain.Candidate;
+import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.JobOffer;
 
 import java.util.Comparator;
@@ -26,12 +32,13 @@ public class EmployerPortalController {
     private static final String GET_EMPLOYER_NEW_JOB_OFFER_FORM = "/employer-portal/new-job-offer";
     private static final String GET_EMPLOYER_MY_JOB_OFFERS = "/employer-portal/my-job-offers";
     private static final String GET_EMPLOYER_ALL_JOB_APPLICATIONS = "/employer-portal/job-applications";
-    private static final String GET_EMPLOYER_FIND_A_CANDIDATE = "/employer-portal/find-a-candidate";
+    private static final String GET_ALL_CANDIDATES = "/employer-portal/find-a-candidate";
+    private static final String GET_FILTERED_CANDIDATES = "/employer-portal/find-a-candidate/filtered-candidates";
     private static final String ADD_EMPLOYER_NEW_JOB_OFFER = "/employer-portal/new-job-offer/add";
 
     private final JobOfferMapper jobOfferMapper;
     private final JobOfferService jobOfferService;
-
+    private final EmployerService employerService;
 
 
     @GetMapping(GET_EMPLOYER_MY_JOB_OFFERS)
@@ -40,7 +47,7 @@ public class EmployerPortalController {
 
         List<JobOfferDTO> employerJobOffers = jobOfferService.getJobOffersByEmployerId(authentication).stream()
                 .sorted(Comparator.comparingInt(JobOfferDTO::getJobOfferId).reversed())
-                .collect(Collectors.toList());;;
+                .collect(Collectors.toList());
 
         model.addAttribute("employerJobOffers", employerJobOffers);
 
@@ -48,14 +55,45 @@ public class EmployerPortalController {
         return "employer_portal_my_job_offers";
     }
 
-    @GetMapping(value = GET_EMPLOYER)
-    public String employerPortal() {return "employer_portal";}
-
     @GetMapping(GET_EMPLOYER_ALL_JOB_APPLICATIONS)
-    public String getAllJobApplications() {return "employer_portal_job_applications";}
+    public String getAllJobApplications() {
 
-    @GetMapping(GET_EMPLOYER_FIND_A_CANDIDATE)
-    public String findACandidate() {return "employer_portal_find_a_candidate";}
+
+        return "employer_portal_job_applications";
+    }
+
+    @GetMapping(value = GET_EMPLOYER)
+    public String employerPortal() {
+        return "employer_portal";
+    }
+
+
+    @GetMapping(GET_ALL_CANDIDATES)
+    public String getAllCandidates(Model model) {
+
+        List<Candidate> allCandidates = employerService.getAllCandidates().stream()
+                .sorted(Comparator.comparingInt(Candidate::getCandidateId).reversed())
+                .collect(Collectors.toList());
+
+        model.addAttribute("allCandidates", allCandidates);
+
+
+        return "employer_portal_find_a_candidate";
+    }
+
+    @GetMapping(GET_FILTERED_CANDIDATES)
+    public String getFilteredCandidates(
+            @RequestParam(required = false) String techSpecialization,
+            @RequestParam(required = false) String status,
+            Model model) {
+        List<Candidate> filteredCandidates = employerService.getFilteredCandidates(techSpecialization,status)
+                .stream() .sorted(Comparator.comparingInt(Candidate::getCandidateId).reversed())
+                .collect(Collectors.toList());;
+
+        model.addAttribute("allCandidates", filteredCandidates);
+
+        return "employer_portal_find_a_candidate";
+    }
 
 
     @GetMapping(value = GET_EMPLOYER_NEW_JOB_OFFER_FORM)
@@ -67,8 +105,7 @@ public class EmployerPortalController {
     @PostMapping(ADD_EMPLOYER_NEW_JOB_OFFER)
     public String addJobOffer(
             @ModelAttribute("jobOfferDTO") JobOfferDTO jobOfferDTO,
-            Authentication authentication)
-    {
+            Authentication authentication) {
 
         JobOffer request = jobOfferMapper.mapToDomain(jobOfferDTO);
         jobOfferService.createJobOfferData(request, authentication);

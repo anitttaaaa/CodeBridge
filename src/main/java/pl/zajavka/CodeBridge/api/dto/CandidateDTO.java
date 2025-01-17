@@ -23,11 +23,11 @@ public class CandidateDTO {
     private String techSpecialization;
     private String aboutMe;
     private String hobby;
-    private List<String> candidateSkills;
     private Integer userId;
 
     private byte[] profilePhoto;
 
+    private List<String> candidateSkills;
     private List<CandidateExperienceDTO> candidateExperiences;
     private List<CandidateProjectDTO> candidateProjects;
     private List<CandidateEducationDTO> candidateEducationStages;

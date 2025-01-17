@@ -1,7 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/fragments/layouts/employer_portal_base}">
 
 <head>
@@ -11,8 +9,90 @@
 <body>
 
 <div layout:fragment="employerContent" class="find-a-candidate-page-container">
-    <h2> FIND A CANDIDATE </h2>
+    <div class="h1-home">
+        <h2>Find a candidate!</h2>
+    </div>
+    <div class="search-container ">
+        <div class="container mt-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Search Filters</h4>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/employer-portal/find-a-candidate/filtered-candidates}" method="get">
+                        <!-- Row to align the filters horizontally -->
+                        <div class="row g-3">
+                            <!-- Tech Specialization Dropdown -->
+                            <div class="col-md-3">
+                                <label for="techSpecializationSelect" class="form-label">Specialization</label>
+                                <select class="form-select" id="techSpecializationSelect" name="techSpecialization">
+                                    <option value="" disabled selected>Choose...</option>
+                                    <option th:each="techSpecialization : ${T(pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum).values()}"
+                                            th:value="${techSpecialization}" th:text="${techSpecialization}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="statusSelect" class="form-label">Status</label>
+                                <select class="form-select" id="statusSelect" name="status">
+                                    <option value="" disabled selected>Choose...</option>
+                                    <option th:each="status : ${T(pl.zajavka.CodeBridge.api.enums.StatusEnum).values()}"
+                                            th:value="${status.description}" th:text="${status.description}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="skillsSelect" class="form-label">Skills (future feature)</label>
+                                <select class="form-select" id="skillsSelect" name="skills">
+                                    <option value="" disabled selected>Skills</option>
+<!--                                    <option th:each="status : ${T(pl.zajavka.CodeBridge.api.enums.StatusEnum).values()}"-->
+<!--                                            th:value="${status.description}" th:text="${status.description}">-->
+                                    </option>
+                                </select>
+                            </div>
+
+
+                        </div>
+                        <button type="submit" class="add-job-offer-button btn btn-primary">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Section to display filtered candidates -->
+    <div class="job-offers-container">
+        <div class="candidate-card" th:each="candidate, iterStat : ${allCandidates}">
+            <div class="card-body">
+                <div class="title-frame d-flex justify-content-between align-items-center">
+
+                    <h5 class="mb-0" th:text="'Candidate Number: ' + ${iterStat.count}">Number</h5>
+                    <button type="submit" class="add-job-offer-button btn btn-primary apply-button">
+                        View Profile
+                    </button>
+                </div>
+                <div class="frame-card info-frame ">
+                    <div class="short-information">
+
+                        <p><strong>Name:</strong> <span th:text="${candidate.name}"></span></p>
+                        <p><strong>Surname:</strong> <span th:text="${candidate.surname}"></span></p>
+                        <p><strong>Email:</strong> <span th:text="${candidate.email}"></span></p>
+                        <p><strong>Phone:</strong> <span th:text="${candidate.phone}"></span></p>
+                        <p class="w-100"><strong>Skills:</strong>
+                        <ul>
+                            <li th:each="skill : ${candidate.candidateSkills}" th:text="${skill + '.'}"></li>
+                        </ul>
+                        </p>
+                        <p class="w-100"><strong>Specialization:</strong> <span th:text="${candidate.techSpecialization}"></span></p>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
 </div>
-</div>
+
 </body>
 </html>

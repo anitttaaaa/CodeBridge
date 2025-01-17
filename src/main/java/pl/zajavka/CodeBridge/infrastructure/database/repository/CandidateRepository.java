@@ -4,14 +4,18 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.CodeBridge.business.dao.CandidateDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
+import pl.zajavka.CodeBridge.domain.JobOffer;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateEntity;
+import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.CandidateExperienceJpaRepository;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.CandidateJpaRepository;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.CandidateEntityMapper;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.CandidateExperienceEntityMapper;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
@@ -38,12 +42,26 @@ public class CandidateRepository implements CandidateDAO {
         saveCandidateEntity(candidate);
     }
 
+    @Override
+    public List<Candidate> findAll() {
+        List<CandidateEntity> candidateEntities = candidateJpaRepository.findAll();
+
+        return candidateEntities.stream().
+                map(candidateEntityMapper::mapFromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Candidate> findAllCandidates() {
+
+        List<Candidate> candidates = candidateJpaRepository.findAll().stream()
+                .map(candidateEntityMapper::mapFromEntity)
+                .collect(Collectors.toList());
+        return  candidates;
+    }
+
 
 }
-
-
-
-
 
 
 
