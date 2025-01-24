@@ -19,6 +19,7 @@ import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.JobOffer;
 
+import javax.swing.plaf.PanelUI;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,30 +32,17 @@ public class EmployerPortalController {
     private static final String GET_EMPLOYER = "/employer-portal";
     private static final String GET_EMPLOYER_NEW_JOB_OFFER_FORM = "/employer-portal/new-job-offer";
     private static final String GET_EMPLOYER_MY_JOB_OFFERS = "/employer-portal/my-job-offers";
-    private static final String GET_EMPLOYER_ALL_JOB_APPLICATIONS = "/employer-portal/job-applications";
     private static final String GET_ALL_CANDIDATES = "/employer-portal/find-a-candidate";
     private static final String GET_FILTERED_CANDIDATES = "/employer-portal/find-a-candidate/filtered-candidates";
+
     private static final String ADD_EMPLOYER_NEW_JOB_OFFER = "/employer-portal/new-job-offer/add";
 
     private final JobOfferMapper jobOfferMapper;
     private final JobOfferService jobOfferService;
     private final EmployerService employerService;
-    private final JobApplicationService jobApplicationService;
-
-
-    @GetMapping(GET_EMPLOYER_ALL_JOB_APPLICATIONS)
-    public String getAllJobApplications(
-            Authentication authentication,
-            Model model) {
-
-        List<JobApplicationDTO> employerJobApplications = jobApplicationService.getAllJobApplicationsByEmployerId(authentication);
-
-        model.addAttribute("employerJobApplications", employerJobApplications);
 
 
 
-        return "employer_portal_job_applications";
-    }
 
     @GetMapping(GET_EMPLOYER_MY_JOB_OFFERS)
     public String getAllMyJobOffers(Authentication authentication,

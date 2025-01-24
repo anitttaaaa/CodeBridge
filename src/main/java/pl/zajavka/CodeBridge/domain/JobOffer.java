@@ -9,7 +9,7 @@ import java.util.List;
 @Value
 @Builder
 @EqualsAndHashCode(of = "jobOfferTitle")
-@ToString(of = {"jobOfferTitle"})
+@ToString(of = {"jobOfferTitle","jobOfferId"})
 public class JobOffer {
 
 

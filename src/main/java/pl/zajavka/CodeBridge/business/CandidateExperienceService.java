@@ -21,24 +21,25 @@ public class CandidateExperienceService {
 
 
     @Transactional
-    public void createExperienceData(CandidateExperience candidateExperienceFromRequest) {
+    public void createExperienceData(CandidateExperience candidateExperienceFromRequest, Authentication authentication) {
 
-        Candidate candidate = candidateService.findLoggedInCandidate();
+        String candidateEmail = authentication.getName();
+        Integer candidateId = candidateService.findCandidateByEmail(candidateEmail).getCandidateId();
 
 
-        CandidateExperience candidateExperience = buildCandidateExperience(candidateExperienceFromRequest, candidate);
+        CandidateExperience candidateExperience = buildCandidateExperience(candidateExperienceFromRequest, candidateId);
         candidateExperienceDAO.createExperience(candidateExperience);
     }
 
 
-    private CandidateExperience buildCandidateExperience(CandidateExperience candidateExperienceFromRequest, Candidate candidate) {
+    private CandidateExperience buildCandidateExperience(CandidateExperience candidateExperienceFromRequest, Integer candidateId) {
         return CandidateExperience.builder()
                 .companyName(candidateExperienceFromRequest.getCompanyName())
                 .candidatePosition(candidateExperienceFromRequest.getCandidatePosition())
                 .description(candidateExperienceFromRequest.getDescription())
                 .fromDate(candidateExperienceFromRequest.getFromDate())
                 .toDate(candidateExperienceFromRequest.getToDate())
-                .candidateId(candidate.getCandidateId())
+                .candidateId(candidateId)
                 .build();
     }
 

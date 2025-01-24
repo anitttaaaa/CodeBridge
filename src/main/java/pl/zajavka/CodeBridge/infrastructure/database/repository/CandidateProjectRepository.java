@@ -34,6 +34,7 @@ public class CandidateProjectRepository implements CandidateProjectDAO {
 
     @Override
     public void deleteById(Integer candidateProjectId) {
+
         candidateProjectJpaRepository.deleteById(candidateProjectId);
     }
 }

@@ -182,11 +182,11 @@ public class CandidatePortalController {
     }
 
     @PostMapping(ADD_CANDIDATE_EXPERIENCE)
-    public String addExperience(
+    public String addExperience(Authentication authentication,
             @ModelAttribute("candidateExperienceDTO") CandidateExperienceDTO candidateExperienceDTO) {
 
         CandidateExperience candidateExperience = candidateExperienceMapper.mapToDomain(candidateExperienceDTO);
-        candidateExperienceService.createExperienceData(candidateExperience);
+        candidateExperienceService.createExperienceData(candidateExperience,authentication);
 
         return "redirect:/candidate-portal";
     }

@@ -221,7 +221,7 @@ body {
 }
 
 .candidate-card {
-    width: 90%; /* 80% szerokości rodzica */
+    width: 90%;  80% szerokości rodzica */
     max-width: 1200px; /* Maksymalna szerokość */
     background-color: #DAD7D2;
     margin: 20px auto; /* Wyśrodkowanie w poziomie i dodanie odstępu od góry */

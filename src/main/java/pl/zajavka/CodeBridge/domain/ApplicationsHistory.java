@@ -6,11 +6,11 @@ import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
 @With
 @Value
 @Builder
-@EqualsAndHashCode(of = "applicationId")
-@ToString(of = {"applicationId", "jobOffer", "employer", "candidate", "applicationStatus"})
-public class JobApplication {
-
-    Integer applicationId;
+@EqualsAndHashCode(of = "applicationHistoryId")
+@ToString(of = {"applicationHistoryId"})
+public class ApplicationsHistory
+{
+    Integer applicationHistoryId;
     JobOffer jobOffer;
     Employer employer;
     Candidate candidate;

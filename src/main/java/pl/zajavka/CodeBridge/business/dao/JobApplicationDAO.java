@@ -1,5 +1,6 @@
 package pl.zajavka.CodeBridge.business.dao;
 
+import pl.zajavka.CodeBridge.domain.ApplicationsHistory;
 import pl.zajavka.CodeBridge.domain.JobApplication;
 
 import java.util.List;
@@ -12,4 +13,11 @@ public interface JobApplicationDAO {
     List<JobApplication> findApplicationsByCandidateId(Integer candidateId);
 
     List<JobApplication> findEmployerJobApplicationsByEmployerId(Integer employerId);
+
+    Optional<JobApplication> findApplicationById(Integer applicationId);
+
+    void save(JobApplication jobApplicationWithStatus);
+
+
+    void deleteById(Integer applicationId);
 }

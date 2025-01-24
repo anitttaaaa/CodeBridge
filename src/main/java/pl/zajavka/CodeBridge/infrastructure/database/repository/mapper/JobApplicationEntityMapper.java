@@ -7,6 +7,7 @@ import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.JobApplication;
 import pl.zajavka.CodeBridge.domain.JobOffer;
+import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.EmployerEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.JobApplicationEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
@@ -17,7 +18,7 @@ public interface JobApplicationEntityMapper {
     JobApplicationEntity mapToEntity(JobApplication jobApplication);
 
 
-    @Mapping(target = "candidate", ignore = true)
+    @Mapping(target = "candidate", expression = "java(mapCandidate(jobApplicationEntity.getCandidate()))")
     @Mapping(target = "employer", expression = "java(mapEmployer(jobApplicationEntity.getEmployer()))")
     @Mapping(target = "jobOffer", expression = "java(mapJobOffer(jobApplicationEntity.getJobOffer()))")
     JobApplication mapToDomain(JobApplicationEntity jobApplicationEntity);
@@ -25,6 +26,7 @@ public interface JobApplicationEntityMapper {
     default JobOffer mapJobOffer(JobOfferEntity jobOfferEntity) {
         // Mapowanie pól z JobOfferEntity na JobOffer
         return JobOffer.builder()
+                .jobOfferId(jobOfferEntity.getJobOfferId())
                 .jobOfferTitle(jobOfferEntity.getJobOfferTitle())
                 .description(jobOfferEntity.getDescription())
                 .techSpecialization(jobOfferEntity.getTechSpecialization().name())
@@ -40,7 +42,22 @@ public interface JobApplicationEntityMapper {
     // Dodajemy metodę mapującą tylko companyName z EmployerEntity
     default Employer mapEmployer(EmployerEntity employerEntity) {
         return Employer.builder()
+                .employerId(employerEntity.getEmployerId())
                 .companyName(employerEntity.getCompanyName())
+                .build();
+    }
+
+
+    default Candidate mapCandidate(CandidateEntity candidateEntity) {
+        return Candidate.builder()
+                .candidateId(candidateEntity.getCandidateId())
+                .userId(candidateEntity.getUserId())
+                .name(candidateEntity.getName())
+                .surname(candidateEntity.getSurname())
+                .email(candidateEntity.getEmail())
+                .phone(candidateEntity.getPhone())
+                .techSpecialization(candidateEntity.getTechSpecialization())
+                .candidateSkills(candidateEntity.getCandidateSkills())
                 .build();
     }
 }

@@ -17,3 +17,22 @@ CREATE TABLE job_application
                 REFERENCES candidate (candidate_id)
                 );
 
+CREATE TABLE applications_history
+(
+    application_history_id          SERIAL         NOT NULL,
+    job_offer_id            INT         NOT NULL,
+    employer_id             INT         NOT NULL,
+    candidate_id            INT         NOT NULL,
+    application_status                  VARCHAR     NOT NULL,
+    PRIMARY KEY (application_history_id),
+        CONSTRAINT fk_applications_history_employer
+            FOREIGN KEY (employer_id)
+                REFERENCES employer (employer_id),
+        CONSTRAINT fk_applications_history_job_offer
+            FOREIGN KEY (job_offer_id)
+                REFERENCES job_offer (job_offer_id),
+        CONSTRAINT fk_applications_history_candidate
+            FOREIGN KEY (candidate_id)
+                REFERENCES candidate (candidate_id)
+                );
+

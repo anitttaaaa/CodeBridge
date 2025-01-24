@@ -20,7 +20,7 @@ public class CandidateService {
     @Transactional(readOnly = true)
     public Candidate findLoggedInCandidate() {
 
-                                                                                                                                                                                                                                                                                                                                                   Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         return findCandidateByEmail(email);
     }
@@ -37,6 +37,12 @@ public class CandidateService {
 
     @Transactional
     public void updateCandidate(Candidate candidate, Authentication authentication) {
+
+        String candidateEmail = authentication.getName();
+        Integer candidateId = findCandidateByEmail(candidateEmail).getCandidateId();
+
+        candidate.withCandidateId(candidateId);
+
         candidateDAO.updateCandidate(candidate);
     }
 

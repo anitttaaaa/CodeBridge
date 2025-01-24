@@ -45,8 +45,8 @@
                                 <label for="skillsSelect" class="form-label">Skills (future feature)</label>
                                 <select class="form-select" id="skillsSelect" name="skills">
                                     <option value="" disabled selected>Skills</option>
-<!--                                    <option th:each="status : ${T(pl.zajavka.CodeBridge.api.enums.StatusEnum).values()}"-->
-<!--                                            th:value="${status.description}" th:text="${status.description}">-->
+                                    <!--                                    <option th:each="status : ${T(pl.zajavka.CodeBridge.api.enums.StatusEnum).values()}"-->
+                                    <!--                                            th:value="${status.description}" th:text="${status.description}">-->
                                     </option>
                                 </select>
                             </div>
@@ -81,8 +81,8 @@
                         <ul>
                             <li th:each="skill : ${candidate.candidateSkills}" th:text="${skill + '.'}"></li>
                         </ul>
-                        </p>
-                        <p class="w-100"><strong>Specialization:</strong> <span th:text="${candidate.techSpecialization}"></span></p>
+                        <p class="w-100"><strong>Specialization:</strong> <span
+                                th:text="${candidate.techSpecialization}"></span></p>
 
                     </div>
                 </div>

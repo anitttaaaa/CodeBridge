@@ -4,13 +4,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.CodeBridge.business.dao.JobApplicationDAO;
 import pl.zajavka.CodeBridge.domain.JobApplication;
-import pl.zajavka.CodeBridge.domain.JobOffer;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.JobApplicationEntity;
-import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.JobApplicationJpaRepository;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.JobApplicationEntityMapper;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,7 +31,7 @@ public class JobApplicationRepository implements JobApplicationDAO {
     @Override
     public List<JobApplication> findApplicationsByCandidateId(Integer candidateId) {
 
-        List<JobApplicationEntity> jobApplicationEntities= jobApplicationJpaRepository.findApplicationsByCandidateId(candidateId);
+        List<JobApplicationEntity> jobApplicationEntities = jobApplicationJpaRepository.findApplicationsByCandidateId(candidateId);
 
         return jobApplicationEntities.stream()
                 .map(jobApplicationEntityMapper::mapToDomain)
@@ -46,6 +43,24 @@ public class JobApplicationRepository implements JobApplicationDAO {
 
         List<JobApplicationEntity> jobApplicationEntities = jobApplicationJpaRepository.findJobApplicationsByEmployerId(employerId);
         return jobApplicationEntities.stream().map(jobApplicationEntityMapper::mapToDomain).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<JobApplication> findApplicationById(Integer applicationId) {
+        return jobApplicationJpaRepository.findById(applicationId)
+                .map(jobApplicationEntityMapper::mapToDomain);
+    }
+
+    @Override
+    public void save(JobApplication jobApplicationWithStatus) {
+        JobApplicationEntity jobApplicationToSave = jobApplicationEntityMapper.mapToEntity(jobApplicationWithStatus);
+        jobApplicationJpaRepository.saveAndFlush(jobApplicationToSave);
+
+    }
+
+    @Override
+    public void deleteById(Integer applicationId) {
+        jobApplicationJpaRepository.deleteById(applicationId);
     }
 
 

@@ -9,7 +9,6 @@ import pl.zajavka.CodeBridge.domain.Candidate;
 public interface CandidateMapper {
 
     CandidateDTO mapToDto(Candidate candidate);
-    @Mapping(target = "candidateExperiences", ignore = true)
     Candidate mapToDomain(CandidateDTO candidateDTO);
 
 

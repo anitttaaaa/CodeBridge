@@ -21,46 +21,74 @@
 <body>
 
 <div layout:fragment="candidateContent" class="candidate-page-container ">
+    <div class="h1-home">
+        <h2>MY JOB APPLICATIONS</h2>
+    </div>
+    <div class="job-offers-container">
+        <div class="container mt-4">
 
-    <div class="job-applications-container">
-        <div class="candidate-application-card" th:each="jobApplication : ${jobApplications}">
-            <div class="card-body">
-                <div class="title-frame d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0" th:text="${jobApplication.jobOffer.jobOfferTitle}">Job Title</h4>
-                </div>
-                <div class="frame-card info-frame">
-                    <div class="short-information">
-                        <p><strong>Specialization:</strong> <span th:text="${jobApplication.jobOffer.techSpecialization}">Tech Specialization</span></p>
-                        <p><strong>Work Type:</strong> <span th:text="${jobApplication.jobOffer.workType}">Work Type</span></p>
-                        <p><strong>City:</strong> <span th:text="${jobApplication.jobOffer.city}">City</span></p>
-                        <p><strong>Experience:</strong> <span th:text="${jobApplication.jobOffer.experience}">Experience</span></p>
-                        <p><strong>Salary:</strong> <span th:text="${jobApplication.jobOffer.salary}">Salary</span></p>
-                        <p><strong>Company:</strong> <span th:text="${jobApplication.employer.companyName}">Company Name</span></p>
-                        <!-- New fields -->
-                        <p><strong>Status:</strong> <span th:text="${jobApplication.applicationStatus}">Status</span></p>
-                    </div>
-                    <hr>
-                    <div class="description-information">
-                        <p><strong>Description:</strong> <span th:text="${jobApplication.jobOffer.description}">Description</span></p>
-                    </div>
-                    <hr>
-                    <div class="skills-information">
-                        <p><strong>Must Have Skills:</strong></p>
-                        <ul class="skills-list">
-                            <li th:each="skill : ${jobApplication.jobOffer.mustHaveSkills}" th:text="${skill}">Skill</li>
-                        </ul>
+            <div class="card-body" th:each="jobApplication : ${jobApplications}">
+                <div class="candidate-card">
+                        <div class="title-frame d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0" th:text="${jobApplication.jobOffer.jobOfferTitle}">Job Title</h5>
+                            <div class="button-group">
+                                <button type="button"
+                                        class="add-job-offer-button btn btn-primary apply-button">
+                                    Delete (future feature)
+                                </button>
+                            </div>
+                        </div>
+                        <div class="frame-card info-frame">
+                            <div class="short-information">
+                                <p><strong>Specialization:</strong> <span
+                                        th:text="${jobApplication.jobOffer.techSpecialization}">Tech Specialization</span>
+                                </p>
+                                <p><strong>Work Type:</strong> <span
+                                        th:text="${jobApplication.jobOffer.workType}">Work Type</span></p>
+                                <p><strong>City:</strong> <span
+                                        th:text="${jobApplication.jobOffer.city}">City</span>
+                                </p>
+                                <p><strong>Experience:</strong> <span
+                                        th:text="${jobApplication.jobOffer.experience}">Experience</span></p>
+                                <p ><strong>Salary:</strong> <span
+                                        th:text="${jobApplication.jobOffer.salary}">Salary</span></p>
+                                <p><strong>Company:</strong> <span
+                                        th:text="${jobApplication.employer.companyName}">Company Name</span></p>
+                                <!-- New fields -->
+                                <p ><strong>Status:</strong> <span
+                                        th:text="${jobApplication.applicationStatus}">Status</span>
+                                </p>
+                            </div>
 
-                        <p><strong>Nice to Have Skills:</strong></p>
-                        <ul class="skills-list">
-                            <li th:each="skill : ${jobApplication.jobOffer.niceToHaveSkills}" th:text="${skill}">Skill</li>
-                        </ul>
+                            <hr>
+                            <div class="description-information">
+                                <p><strong>Description:</strong> <span
+                                        th:text="${jobApplication.jobOffer.description}">Description</span>
+                                </p>
+                            </div>
+                            <hr>
+                            <div class="skills-information">
+                                <p><strong>Must Have Skills:</strong></p>
+                                <ul class="skills-list">
+                                    <li th:each="skill : ${jobApplication.jobOffer.mustHaveSkills}"
+                                        th:text="${skill}">
+                                        Skill
+                                    </li>
+                                </ul>
+
+                                <p><strong>Nice to Have Skills:</strong></p>
+                                <ul class="skills-list">
+                                    <li th:each="skill : ${jobApplication.jobOffer.niceToHaveSkills}"
+                                        th:text="${skill}">Skill
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 </div>
 </body>
 </html>

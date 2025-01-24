@@ -6,19 +6,20 @@ import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = "applicationId")
-@ToString(of = "applicationId")
+@EqualsAndHashCode(of = "applicationHistoryId")
+@ToString(of = "applicationHistoryId")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "job_application")
-public class JobApplicationEntity {
+@Table(name = "applications_history")
+public class ApplicationsHistoryEntity {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "application_id", nullable = false)
-    private Integer applicationId;
+    @Column(name = "application_history_id", nullable = false)
+    private Integer applicationHistoryId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_offer_id", nullable = false)

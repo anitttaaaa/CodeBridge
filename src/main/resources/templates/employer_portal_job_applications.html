@@ -17,20 +17,22 @@
     <div class="job-offers-container">
         <div class="container mt-4">
 
-            <!-- Pętla po wszystkich aplikacjach -->
             <div class="card-body" th:each="employerJobApplication : ${employerJobApplications}">
                 <div class="candidate-card">
                     <div class="card-body">
                         <div class="title-frame d-flex justify-content-between align-items-center">
-                            <!-- Tytuł oferty pracy -->
                             <h5 class="mb-0" th:text="${employerJobApplication.jobOffer.jobOfferTitle}">Job Offer Title</h5>
                             <div class="button-group">
-                                <!-- Przyciski Akceptuj i Odrzuć -->
-                                <button type="button"
-                                        class="add-job-offer-button btn btn-primary apply-button">
-<!--                                        th:onclick="'/accept/' + ${employerJobApplication.applicationId}">-->
-                                    Accept
-                                </button>
+                                <form th:action="@{/employer-portal/job_applications/accept}" method="post">
+                                    <!-- Ukryty input z applicationId -->
+                                    <input type="hidden" name="applicationId" th:value="${employerJobApplication.applicationId}">
+
+                                    <!-- Przycisk "Accept" -->
+                                    <button type="submit" class="add-job-offer-button btn btn-primary apply-button">
+                                        Accept
+                                    </button>
+                                </form>
+
                                 <button type="button"
                                         class="add-job-offer-button btn btn-primary apply-button">
 <!--                                        th:onclick="'/reject/' + ${employerJobApplication.applicationId}">-->
@@ -46,20 +48,22 @@
 
                             <!-- Przycisk profilu kandydata -->
                             <button type="button"
-                                    class="add-job-offer-button btn btn-primary apply-button">
+                                    class="add-job-offer-button btn btn-primary apply-button"
+                                    th:onclick="'location.href=\'/CodeBridge/candidate-portal?candidateId=\' + ' + ${employerJobApplication.candidate.candidateId}">
                                 Candidate Profile
                             </button>
 
                             <!-- Szczegóły kandydata -->
                             <h5><strong>Candidate Overview:</strong></h5>
-<!--                            <hr>-->
-<!--                            <p><strong>Name:</strong> <span th:text="${employerJobApplication.candidate.name}">Name</span></p>-->
-<!--                            <p><strong>Surname:</strong> <span th:text="${employerJobApplication.candidate.surname}">Surname</span></p>-->
-<!--                            <p><strong>Email:</strong> <span th:text="${employerJobApplication.candidate.email}">Email</span></p>-->
-<!--                            <p><strong>Phone:</strong> <span th:text="${employerJobApplication.candidate.phone}">Phone</span></p>-->
-<!--                            <p class="w-100"><strong>Skills:</strong>-->
-<!--                                <span th:text="${employerJobApplication.candidate.skills}">Skills</span>-->
-<!--                            </p>-->
+                            <hr>
+                            <p><strong>Name:</strong> <span th:text="${employerJobApplication.candidate.name}">Name</span></p>
+                            <p><strong>Surname:</strong> <span th:text="${employerJobApplication.candidate.surname}">Surname</span></p>
+                            <p><strong>Email:</strong> <span th:text="${employerJobApplication.candidate.email}">Email</span></p>
+                            <p><strong>Phone:</strong> <span th:text="${employerJobApplication.candidate.phone}">Phone</span></p>
+                            <p><strong>Tech Specialization:</strong> <span th:text="${employerJobApplication.candidate.techSpecialization}">Tech Specialization</span></p>
+                            <p class="w-100"><strong>Skills:</strong>
+                                <span th:text="${employerJobApplication.candidate.candidateSkills}">Skills</span>
+                            </p>
                         </div>
                     </div>
                 </div>
