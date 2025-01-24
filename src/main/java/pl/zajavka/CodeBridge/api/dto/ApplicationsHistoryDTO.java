@@ -9,7 +9,7 @@ import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
 @AllArgsConstructor
 public class ApplicationsHistoryDTO {
 
-    private Integer applicationId;
+    private Integer applicationHistoryId;
 
     private JobOfferDTO jobOffer;
     private EmployerDTO employer;

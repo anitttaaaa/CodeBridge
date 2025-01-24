@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.zajavka.CodeBridge.api.dto.ApplicationsHistoryDTO;
 import pl.zajavka.CodeBridge.api.dto.JobApplicationDTO;
+import pl.zajavka.CodeBridge.api.dto.mapper.ApplicationsHistoryMapper;
 import pl.zajavka.CodeBridge.api.dto.mapper.JobApplicationMapper;
 import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
 import pl.zajavka.CodeBridge.api.enums.StatusEnum;
@@ -27,6 +29,7 @@ public class JobApplicationService {
     private final CandidateDAO candidateDAO;
     private final JobOfferService jobOfferService;
     private final JobApplicationMapper jobApplicationMapper;
+    private final ApplicationsHistoryMapper applicationsHistoryMapper;
     private final EmployerService employerService;
 
     @Transactional
@@ -114,6 +117,21 @@ public class JobApplicationService {
 
         List<JobApplicationDTO> collect = employerJobApplications.stream()
                 .map(jobApplicationMapper::mapToDto)
+                .collect(Collectors.toList());
+
+        return collect;
+    }
+
+    public List<ApplicationsHistoryDTO> getAllHistoryJobApplications(Authentication authentication) {
+
+        String employerEmail = authentication.getName();
+        Integer employerId = employerService.findEmployerByEmail(employerEmail).getEmployerId();
+
+
+        List<ApplicationsHistory> employerHistoryApplications = jobApplicationDAO.findEmployerHistoryApplicationsByEmployerId(employerId);
+
+        List<ApplicationsHistoryDTO> collect = employerHistoryApplications.stream()
+                .map(applicationsHistoryMapper::mapToDto)
                 .collect(Collectors.toList());
 
         return collect;

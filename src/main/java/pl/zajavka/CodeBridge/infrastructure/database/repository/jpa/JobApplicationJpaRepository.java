@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.CodeBridge.domain.JobApplication;
+import pl.zajavka.CodeBridge.infrastructure.database.entity.ApplicationsHistoryEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.JobApplicationEntity;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface JobApplicationJpaRepository extends JpaRepository<JobApplicatio
     List<JobApplicationEntity> findApplicationsByCandidateId(@Param("candidateId") Integer candidateId);
     @Query("SELECT ja FROM JobApplicationEntity ja WHERE ja.employer.employerId = :employerId")
     List<JobApplicationEntity> findJobApplicationsByEmployerId(Integer employerId);
+    @Query("SELECT ja FROM ApplicationsHistoryEntity ja WHERE ja.employer.employerId = :employerId")
+    List<ApplicationsHistoryEntity> findHistoryApplicationsByEmployerId(Integer employerId);
 }

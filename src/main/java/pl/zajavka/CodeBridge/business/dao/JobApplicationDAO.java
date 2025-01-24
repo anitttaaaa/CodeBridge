@@ -20,4 +20,6 @@ public interface JobApplicationDAO {
 
 
     void deleteById(Integer applicationId);
+
+    List<ApplicationsHistory> findEmployerHistoryApplicationsByEmployerId(Integer employerId);
 }
