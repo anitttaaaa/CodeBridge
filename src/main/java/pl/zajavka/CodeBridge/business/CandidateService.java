@@ -53,7 +53,6 @@ public class CandidateService {
     public CandidateDTO findCandidateByCandidateId(Integer candidateId) {
 
         Optional<Candidate> candidate = candidateDAO.findById(candidateId);
-        System.out.println(candidate);
 
         return candidate.map(candidateMapper::mapToDto)
                 .orElseThrow(() -> new RuntimeException("Candidate not found for ID: " + candidateId));
