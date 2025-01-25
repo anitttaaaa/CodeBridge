@@ -9,13 +9,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.zajavka.CodeBridge.api.dto.CandidateDTO;
+import pl.zajavka.CodeBridge.api.dto.EmployerDTO;
 import pl.zajavka.CodeBridge.api.dto.JobOfferDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.CandidateMapper;
+import pl.zajavka.CodeBridge.api.dto.mapper.EmployerMapper;
 import pl.zajavka.CodeBridge.api.dto.mapper.JobOfferMapper;
 import pl.zajavka.CodeBridge.business.CandidateService;
 import pl.zajavka.CodeBridge.business.EmployerService;
 import pl.zajavka.CodeBridge.business.JobOfferService;
 import pl.zajavka.CodeBridge.domain.Candidate;
+import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.JobOffer;
 
 import java.util.Comparator;
@@ -37,10 +40,24 @@ public class EmployerPortalController {
     private static final String ADD_EMPLOYER_NEW_JOB_OFFER = "/employer-portal/new-job-offer/add";
 
     private final JobOfferMapper jobOfferMapper;
-    private final CandidateMapper candidateMapper;
+    private final EmployerMapper employerMapper;
     private final JobOfferService jobOfferService;
     private final EmployerService employerService;
     private final CandidateService candidateService;
+
+
+
+    @GetMapping(value = GET_EMPLOYER)
+    public String employerPortal(Model model) {
+
+        Employer employer = employerService.findLoggedInEmployer();
+        EmployerDTO employerDetails = employerMapper.mapToDto(employer);
+
+        model.addAttribute("employer", employerDetails);
+
+
+        return "employer_portal";
+    }
 
 
     @GetMapping(GET_EMPLOYER_VIEW_CANDIDATE_PROFILE)
@@ -50,9 +67,6 @@ public class EmployerPortalController {
 
         CandidateDTO candidateDetails = candidateService.findCandidateByCandidateId(candidateId);
         model.addAttribute("candidateDetails", candidateDetails);
-
-
-
 
         return "/employer_view_candidate_profile";
     }
@@ -70,11 +84,6 @@ public class EmployerPortalController {
 
 
         return "employer_portal_my_job_offers";
-    }
-
-    @GetMapping(value = GET_EMPLOYER)
-    public String employerPortal() {
-        return "employer_portal";
     }
 
 
