@@ -32,11 +32,16 @@
                                     </button>
                                 </form>
 
-                                <button type="button"
-                                        class="add-job-offer-button btn btn-primary apply-button">
-<!--                                        th:onclick="'/reject/' + ${employerJobApplication.applicationId}">-->
-                                    Reject
-                                </button>
+                                <form th:action="@{/employer-portal/job_applications/reject}" method="post">
+                                    <!-- Ukryty input z applicationId -->
+                                    <input type="hidden" name="applicationId" th:value="${employerJobApplication.applicationId}">
+
+                                    <!-- Przycisk "Accept" -->
+                                    <button type="submit" class="add-job-offer-button btn btn-primary apply-button">
+                                        Reject
+                                    </button>
+                                </form>
+
                             </div>
                         </div>
 

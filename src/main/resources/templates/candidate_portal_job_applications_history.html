@@ -11,8 +11,69 @@
 <body>
 
 <div layout:fragment="candidateContent" class="job-applications-history-page-container">
-    <h2>JOB APPLICATIONS HISTORY</h2>
+    <div class="h1-home">
+        <h2>JOB APPLICATIONS HISTORY</h2>
+    </div>
+    <div class="job-offers-container">
+        <div class="container mt-4">
+            <div class="card-body" th:each="candidateHistoryApplication : ${candidateHistoryApplications}">
+                <div class="candidate-card">
+                    <div class="card-body">
+                        <div class="title-frame d-flex justify-content-between align-items-center">
+                        </div>
+                        <h5 style="margin-left: 30px;" class="mb-0" th:text="${candidateHistoryApplication.jobOffer.jobOfferTitle}">Job Offer
+                            Title</h5>
+                        <div class="frame-card info-frame">
+                            <div class="short-information">
+                                <p><strong>Specialization:</strong> <span
+                                        th:text="${candidateHistoryApplication.jobOffer.techSpecialization}">Tech Specialization</span>
+                                </p>
+                                <p><strong>Work Type:</strong> <span
+                                        th:text="${candidateHistoryApplication.jobOffer.workType}">Work Type</span></p>
+                                <p><strong>City:</strong> <span
+                                        th:text="${candidateHistoryApplication.jobOffer.city}">City</span>
+                                </p>
+                                <p><strong>Experience:</strong> <span
+                                        th:text="${candidateHistoryApplication.jobOffer.experience}">Experience</span></p>
+                                <p ><strong>Salary:</strong> <span
+                                        th:text="${candidateHistoryApplication.jobOffer.salary}">Salary</span></p>
+                                <p><strong>Company:</strong> <span
+                                        th:text="${candidateHistoryApplication.employer.companyName}">Company Name</span></p>
+                                <!-- New fields -->
+                                <p ><strong>Status:</strong> <span
+                                        th:text="${candidateHistoryApplication.applicationStatus}">Status</span>
+                                </p>
+                            </div>
 
+                            <hr>
+                            <div class="description-information">
+                                <p><strong>Description:</strong> <span
+                                        th:text="${candidateHistoryApplication.jobOffer.description}">Description</span>
+                                </p>
+                            </div>
+                            <hr>
+                            <div class="skills-information">
+                                <p><strong>Must Have Skills:</strong></p>
+                                <ul class="skills-list">
+                                    <li th:each="skill : ${candidateHistoryApplication.jobOffer.mustHaveSkills}"
+                                        th:text="${skill}">
+                                        Skill
+                                    </li>
+                                </ul>
+
+                                <p><strong>Nice to Have Skills:</strong></p>
+                                <ul class="skills-list">
+                                    <li th:each="skill : ${candidateHistoryApplication.jobOffer.niceToHaveSkills}"
+                                        th:text="${skill}">Skill
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </div>
 </body>

@@ -28,6 +28,7 @@ public class JobApplicationController {
 
     private static final String GET_EMPLOYER_ALL_JOB_APPLICATIONS = "/employer-portal/job-applications";
     private static final String POST_EMPLOYER_JOB_APPLICATION_ACCEPT = "/employer-portal/job_applications/accept";
+    private static final String POST_EMPLOYER_JOB_APPLICATION_REJECT = "/employer-portal/job_applications/reject";
 
 
     private final JobApplicationService jobApplicationService;
@@ -39,6 +40,16 @@ public class JobApplicationController {
             Authentication authentication) {
 
         jobApplicationService.acceptJobApplication(applicationId, authentication);
+
+        return "redirect:/employer-portal/applications-history";
+    }
+
+    @PostMapping(POST_EMPLOYER_JOB_APPLICATION_REJECT)
+    public String rejectJobApplication(
+            @RequestParam("applicationId") Integer applicationId,
+            Authentication authentication) {
+
+        jobApplicationService.rejectJobApplication(applicationId, authentication);
 
         return "redirect:/employer-portal/applications-history";
     }
@@ -83,9 +94,7 @@ public class JobApplicationController {
             Authentication authentication,
             Model model) {
 
-        System.out.println("hejaaaa");
-
-        List<ApplicationsHistoryDTO> employerHistoryApplications = jobApplicationService.getAllHistoryJobApplications(authentication);
+        List<ApplicationsHistoryDTO> employerHistoryApplications = jobApplicationService.getAllEmployerHistoryJobApplications(authentication);
         model.addAttribute("employerHistoryApplications", employerHistoryApplications);
 
 
@@ -96,6 +105,10 @@ public class JobApplicationController {
     public String getMyApplicationsHistory(
             Authentication authentication,
             Model model) {
+
+
+     List<ApplicationsHistoryDTO> candidateHistoryApplications = jobApplicationService.getAllCandidateHistoryJobApplications(authentication);
+     model.addAttribute("candidateHistoryApplications", candidateHistoryApplications);
 
 
         return "/candidate_portal_job_applications_history";

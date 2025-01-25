@@ -21,7 +21,7 @@
                     <div class="card-body">
                         <div class="title-frame d-flex justify-content-between align-items-center">
                         </div>
-                        <h5 class="mb-0" th:text="${employerHistoryApplication.jobOffer.jobOfferTitle}">Job Offer
+                        <h5 style="margin-left: 30px;" class="mb-0" th:text="${employerHistoryApplication.jobOffer.jobOfferTitle}">Job Offer
                             Title</h5>
                         <div class="frame-card info-frame">
                             <div class="short-information">
@@ -44,6 +44,9 @@
                             </p>
                             <p class="w-100"><strong>Skills:</strong>
                                 <span th:text="${employerHistoryApplication.candidate.candidateSkills}">Skills</span>
+                            </p>
+                            <p class="w-100"><strong>Application Status:</strong>
+                                <span th:text="${employerHistoryApplication.applicationStatus}">Status</span>
                             </p>
                         </div>
                     </div>

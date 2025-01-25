@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class JobApplicationService {
-
     private final CandidateService candidateService;
+
     private final JobApplicationDAO jobApplicationDAO;
     private final ApplicationsHistoryDAO applicationsHistoryDAO;
     private final CandidateDAO candidateDAO;
@@ -33,18 +33,47 @@ public class JobApplicationService {
     private final EmployerService employerService;
 
     @Transactional
+    public void rejectJobApplication(Integer applicationId, Authentication authentication) {
+
+        JobApplication jobApplication = jobApplicationDAO.findApplicationById(applicationId)
+                .orElseThrow(() -> new EntityNotFoundException("Job application not found for id: " + applicationId));
+
+        jobApplication = jobApplication.withApplicationStatus(ApplicationStatus.REJECTED);
+        jobApplicationDAO.save(jobApplication);
+
+        Candidate candidate = jobApplication.getCandidate();
+        Employer employer = jobApplication.getEmployer();
+        JobOffer jobOffer = jobApplication.getJobOffer();
+        ApplicationStatus applicationStatus = jobApplication.getApplicationStatus();
+
+
+        ApplicationsHistory jobApplicationRejected = ApplicationsHistory.builder()
+                .applicationHistoryId(applicationId)
+                .jobOffer(jobOffer)
+                .candidate(candidate)
+                .employer(employer)
+                .applicationStatus(applicationStatus)
+                .build();
+
+        applicationsHistoryDAO.saveInHistory(jobApplicationRejected);
+
+        jobApplicationDAO.deleteById(applicationId);
+    }
+
+    @Transactional
     public void acceptJobApplication(Integer applicationId, Authentication authentication) {
 
 
         JobApplication jobApplication = jobApplicationDAO.findApplicationById(applicationId)
                 .orElseThrow(() -> new EntityNotFoundException("Job application not found for id: " + applicationId));
 
-        jobApplicationDAO.save(jobApplication.withApplicationStatus(ApplicationStatus.ACCEPTED));
 
         Candidate updatedCandidate = jobApplication.getCandidate()
                 .withStatus(StatusEnum.HIRED.getDescription());
         candidateDAO.updateCandidate(updatedCandidate);
 
+        jobApplication = jobApplication.withApplicationStatus(ApplicationStatus.ACCEPTED);
+        jobApplicationDAO.save(jobApplication);
 
 
         Candidate candidate = jobApplication.getCandidate();
@@ -61,7 +90,7 @@ public class JobApplicationService {
                 .applicationStatus(applicationStatus)
                 .build();
 
-        applicationsHistoryDAO.save(jobApplicationAccepted);
+        applicationsHistoryDAO.saveInHistory(jobApplicationAccepted);
 
         jobApplicationDAO.deleteById(applicationId);
 
@@ -122,7 +151,7 @@ public class JobApplicationService {
         return collect;
     }
 
-    public List<ApplicationsHistoryDTO> getAllHistoryJobApplications(Authentication authentication) {
+    public List<ApplicationsHistoryDTO> getAllEmployerHistoryJobApplications(Authentication authentication) {
 
         String employerEmail = authentication.getName();
         Integer employerId = employerService.findEmployerByEmail(employerEmail).getEmployerId();
@@ -131,6 +160,20 @@ public class JobApplicationService {
         List<ApplicationsHistory> employerHistoryApplications = jobApplicationDAO.findEmployerHistoryApplicationsByEmployerId(employerId);
 
         List<ApplicationsHistoryDTO> collect = employerHistoryApplications.stream()
+                .map(applicationsHistoryMapper::mapToDto)
+                .collect(Collectors.toList());
+
+        return collect;
+    }
+
+    public List<ApplicationsHistoryDTO> getAllCandidateHistoryJobApplications(Authentication authentication) {
+
+        String candidateEmail = authentication.getName();
+        Integer candidateId = candidateService.findCandidateByEmail(candidateEmail).getCandidateId();
+
+        List<ApplicationsHistory> candidateHistoryApplications = jobApplicationDAO.findCandidateHistoryApplicationsByCandidateId(candidateId);
+
+        List<ApplicationsHistoryDTO> collect = candidateHistoryApplications.stream()
                 .map(applicationsHistoryMapper::mapToDto)
                 .collect(Collectors.toList());
 

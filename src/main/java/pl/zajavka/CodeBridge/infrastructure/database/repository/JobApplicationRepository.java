@@ -70,7 +70,12 @@ public class JobApplicationRepository implements JobApplicationDAO {
     @Override
     public List<ApplicationsHistory> findEmployerHistoryApplicationsByEmployerId(Integer employerId) {
         List<ApplicationsHistoryEntity> historyApplicationEntities = jobApplicationJpaRepository.findHistoryApplicationsByEmployerId(employerId);
-        return historyApplicationEntities.stream().map(applicationsHistoryEntityMapper::mapToDomain).collect(Collectors.toList());    }
+        return historyApplicationEntities.stream().map(applicationsHistoryEntityMapper::mapToDomain).collect(Collectors.toList());
+    }
 
-
+    @Override
+    public List<ApplicationsHistory> findCandidateHistoryApplicationsByCandidateId(Integer candidateId) {
+        List<ApplicationsHistoryEntity> historyApplicationEntities = jobApplicationJpaRepository.findHistoryApplicationsByCandidateId(candidateId);
+        return historyApplicationEntities.stream().map(applicationsHistoryEntityMapper::mapToDomain).collect(Collectors.toList());
+    }
 }

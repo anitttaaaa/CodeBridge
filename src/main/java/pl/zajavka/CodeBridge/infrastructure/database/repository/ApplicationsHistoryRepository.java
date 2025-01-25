@@ -17,7 +17,7 @@ public class ApplicationsHistoryRepository implements ApplicationsHistoryDAO {
 
 
     @Override
-    public void save(ApplicationsHistory jobApplicationAccepted) {
+    public void saveInHistory(ApplicationsHistory jobApplicationAccepted) {
 
         ApplicationsHistoryEntity jobApplicationAddToHistory = applicationsHistoryEntityMapper.mapToEntity(jobApplicationAccepted);
         applicationsHistoryJpaRepository.saveAndFlush(jobApplicationAddToHistory);
