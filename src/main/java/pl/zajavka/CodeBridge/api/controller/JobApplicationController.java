@@ -27,8 +27,8 @@ public class JobApplicationController {
     private static final String CANDIDATE_GET_MY_APPLICATIONS_HISTORY = "/candidate-portal/applications-history";
 
     private static final String GET_EMPLOYER_ALL_JOB_APPLICATIONS = "/employer-portal/job-applications";
-    private static final String POST_EMPLOYER_JOB_APPLICATION_ACCEPT = "/employer-portal/job_applications/accept";
-    private static final String POST_EMPLOYER_JOB_APPLICATION_REJECT = "/employer-portal/job_applications/reject";
+    private static final String POST_EMPLOYER_JOB_APPLICATION_ACCEPT = "/employer-portal/job-applications/accept";
+    private static final String POST_EMPLOYER_JOB_APPLICATION_REJECT = "/employer-portal/job-applications/reject";
 
 
     private final JobApplicationService jobApplicationService;

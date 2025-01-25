@@ -1,0 +1,302 @@
+<!DOCTYPE HTML>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/fragments/layouts/employer_portal_base}">
+<head>
+    <title>Code Bridge</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div layout:fragment="employerContent">
+
+    <h3 class="text-center">Candidate Profile</h3>
+
+    <div class="candidate-card">
+        <div class="card-body ">
+            <h3 style="margin-bottom: 40px;">Basic Info</h3>
+            <div class="card-body d-flex align-items-center">
+                <div id="photo-container" class="me-4">
+                    <img th:src="@{/images/avatar.png}"
+                         alt="Default Avatar"
+                         class="img-fluid rounded-circle"
+                         style="width: 150px; height: 150px;"/>
+                </div>
+                <div class="candidate-details frame-card-basic-info">
+                    <div class="left-column">
+                        <h5 class="card-title" style="font-size: 1.5em;"
+                            th:text="${candidateDetails.name + ' ' + candidateDetails.surname}"></h5>
+                        <p class="card-text">
+                            <i class="bi bi-envelope-fill icon-color"></i>
+                            <span th:text="${candidateDetails.email}"></span>
+                        </p>
+                        <p class="card-text">
+                            <i class="bi bi-telephone-fill icon-color"></i>
+                            <span th:text="'tel. ' + ${candidateDetails.phone}"></span>
+                        </p>
+                    </div>
+                    <div class="right-column">
+                        <p class="card-text" style="visibility: hidden;">&nbsp;</p>
+                        <p class="card-text">
+                            <i class="bi bi-linkedin icon-color"></i>
+                            <a class="custom-link" th:href="${candidateDetails.linkedIn}" target="_blank"
+                               th:text="${candidateDetails.linkedIn != null ? candidateDetails.linkedIn : 'Profile LinkedIn'}"
+                               th:if="${candidateDetails.linkedIn != null}"></a>
+                        </p>
+                        <p class="card-text">
+                            <i class="bi bi-github icon-color"></i>
+                            <a class="custom-link" th:href="${candidateDetails.gitHub}" target="_blank"
+                               th:text="${candidateDetails.gitHub != null ? candidateDetails.gitHub : 'Profile GitHub'}"
+                               th:if="${candidateDetails.gitHub != null}"></a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-----status view------------------------------------------------------------------------------------------------------->
+            <div class="candidateDetails-status frame-card frame-card-status">
+                <p class="card-text-status">
+                    <i class="bi me-2"
+                       th:classappend="${candidateDetails.status == 'Actively looking for a job' ? 'bi-person-fill text-success' : (candidateDetails.status == 'Currently employed' ? 'bi-person-fill text-danger' : 'bi-question-circle')}"></i>
+                    <!-- Sprawdzenie, czy status kandydata jest pusty -->
+                    <span th:if="${candidateDetails.status == null}">Status: No information</span>
+                    <span th:if="${candidateDetails.status != null}" th:text="${candidateDetails.status}"></span>
+
+                </p>
+            </div>
+        </div>
+    </div>
+    <!---BIO------------------------------------------------------------------------------------------------------------------------------------------------->
+    <div class="candidate-card">
+        <div class="card-body">
+            <h4 class="mb-0">About me</h4>
+            <p class="card-text text-justify frame-card" th:text="${candidateDetails.aboutMe}">No information
+                available</p>
+        </div>
+    </div>
+    <div class="candidate-card">
+        <div class="card-body">
+            <h4 class="mb-0">My Tech Specialization</h4>
+            <p></p>
+            <p class="card-text frame-card">
+                <!-- Check if the tech specialization is empty -->
+                <span th:if="${candidateDetails.techSpecialization == null}">No Specialization</span>
+                <span th:if="${candidateDetails.techSpecialization != null}"
+                      th:text="${candidateDetails.techSpecialization}"></span>
+            </p>
+        </div>
+    </div>
+    <div class="candidate-card">
+        <div class="card-body">
+            <h4 class="mb-0 ">My Skills</h4>
+            <p></p>
+            <ul class="frame-card-skills ">
+                <!-- Check if there are any skills -->
+                <li th:if="${#lists.isEmpty(candidateDetails.candidateSkills)}">No Skills</li>
+                <li th:each="skill : ${candidateDetails.candidateSkills}" th:text="${skill}"></li>
+            </ul>
+        </div>
+    </div>
+    <div class="candidate-card">
+        <div class="card-body">
+            <h4 class="mb-0">My Work Experience</h4>
+            <p></p>
+            <div class="experience-list">
+                <!-- Pętla po doświadczeniu zawodowym kandydata -->
+                <div th:each="experience : ${candidatExperiences}" class="frame-card card mb-3">
+                    <div class="card-body">
+                        <!-- Główna sekcja: stanowisko, firma, daty i przyciski -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Lewa sekcja: Pozycja i firma -->
+                            <div>
+                                <!-- Informacyjne teksty w ramkach -->
+                                <div class="experience-info">Position: <span class="experience-info-value"
+                                                                             th:text="${experience.candidatePosition}"></span>
+                                </div>
+                                <div class="experience-info">Company: <span class="experience-info-value"
+                                                                            th:text="${experience.companyName}"></span>
+                                </div>
+                            </div>
+
+                            <!-- Sekcja z datami -->
+                            <div class="experience-dates text-right">
+                                <p class="mb-1"><strong>From:</strong> <span
+                                        th:text="${experience.fromDate}"></span></p>
+                                <p class="mb-1"><strong>To:</strong> <span
+                                        th:text="${experience.toDate}"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Opis -->
+                        <div class="mt-3">
+                            <div class="experience-info">Description:</div>  <!-- Etykieta Description -->
+                            <div class="experience-info-value description"
+                                 th:text="${experience.description}"></div> <!-- Wartość description -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="candidate-card">
+        <div class="card-body">
+            <h4 class="mb-0">My Projects</h4>
+            <p></p>
+            <div class="experience-list">
+                <!-- Pętla po projektach kandydata -->
+                <div th:each="project : ${candidateProjects}" class="frame-card card mb-3">
+                    <div class="card-body">
+                        <!-- Główna sekcja: tytuł projektu, technologie, daty i przyciski -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Lewa sekcja: Tytuł projektu i technologie -->
+                            <div>
+                                <!-- Informacyjne teksty w ramkach -->
+                                <div class="experience-info">Title: <span class="experience-info-value"
+                                                                          th:text="${project.projectTitle}"></span>
+                                </div>
+                                <div class="experience-info">Technologies: <span class="experience-info-value"
+                                                                                 th:text="${project.technologies}"></span>
+                                </div>
+                            </div>
+
+                            <!-- Sekcja z datami -->
+                            <div class="experience-dates text-right">
+                                <p class="mb-1"><strong>From:</strong> <span
+                                        th:text="${project.fromDate}"></span></p>
+                                <p class="mb-1"><strong>To:</strong> <span th:text="${project.toDate}"></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Opis -->
+                        <div class="mt-3">
+                            <div class="experience-info">Description:</div> <!-- Etykieta Description -->
+                            <div class="experience-info-value description"
+                                 th:text="${project.description}"></div>
+                            <!-- Wartość description -->
+                        </div>
+
+                        <!-- Link do projektu -->
+                        <div class="mt-3">
+                            <div class="experience-info">Project Link:</div> <!-- Etykieta Project Link -->
+                            <a th:href="${project.projectLink}" target="_blank" class="experience-info-value"
+                               th:text="${project.projectLink}"></a> <!-- Wartość link -->
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="candidate-card">
+        <div class="card-body">
+            <h4 class="mb-0">My Education</h4>
+            <p></p>
+            <div class="experience-list">
+                <!-- Pętla po edukacji kandydata -->
+                <div th:each="education : ${candidateEducationStages}" class="frame-card card mb-3">
+                    <div class="card-body">
+                        <!-- Główna sekcja: instytucja, stopień, daty i przyciski -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Lewa sekcja: Instytucja i stopień -->
+                            <div>
+                                <!-- Informacyjne teksty w ramkach -->
+                                <div class="education-info">Institution: <span class="experience-info-value"
+                                                                               th:text="${education.institution}"></span>
+                                </div>
+                                <div class="education-info">Degree: <span class="experience-info-value"
+                                                                          th:text="${education.degree}"></span>
+                                </div>
+                                <div class="education-info">Field of Study: <span class="experience-info-value"
+                                                                                  th:text="${education.fieldOfStudy}"></span>
+                                </div>
+                            </div>
+
+                            <!-- Sekcja z datami -->
+                            <div class="experience-dates text-right">
+                                <p class="mb-1"><strong>From:</strong> <span
+                                        th:text="${education.fromDate}"></span></p>
+                                <p class="mb-1"><strong>To:</strong> <span th:text="${education.toDate}"></span>
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="candidate-card">
+        <div class="card-body">
+            <h4 class="mb-0">My Courses</h4>
+            <p></p>
+            <div class="experience-list">
+                <!-- Pętla po kursach kandydata -->
+                <div th:each="course : ${candidateCourses}" class="frame-card card mb-3">
+                    <div class="card-body">
+                        <!-- Główna sekcja: instytucja, tytuł kursu, technologie, daty i przyciski -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Lewa sekcja: Instytucja, Tytuł kursu i Technologie -->
+                            <div>
+                                <!-- Informacyjne teksty w ramkach -->
+                                <div class="course-info">Institution: <span class="experience-info-value"
+                                                                            th:text="${course.institution}"></span>
+                                </div>
+                                <div class="course-info">Course Title: <span class="experience-info-value"
+                                                                             th:text="${course.courseTitle}"></span>
+                                </div>
+                                <div class="course-info">Technologies: <span class="experience-info-value"
+                                                                             th:text="${course.technologies}"></span>
+                                </div>
+                            </div>
+
+                            <!-- Sekcja z datami -->
+                            <div class="experience-dates text-right">
+                                <p class="mb-1"><strong>From:</strong> <span
+                                        th:text="${course.fromDate}"></span></p>
+                                <p class="mb-1"><strong>To:</strong> <span th:text="${course.toDate}"></span>
+                                </p>
+                            </div>
+                            <!-- Opis -->
+                            <div class="mt-3">
+                                <div class="course-info">Description:</div> <!-- Etykieta Description -->
+                                <div class="course-info-value description"
+                                     th:text="${course.description}"></div>
+                                <!-- Wartość description -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="candidate-card">
+        <div class="card-body">
+            <h4 class="mb-0">My hobby</h4>
+            <p class="card-text text-justify frame-card" th:text="${candidateDetails.hobby}">No information
+                available</p>
+        </div>
+    </div>
+
+
+</div>
+</div>
+</div>
+</div>
+
+</body>
+
+
+</html>

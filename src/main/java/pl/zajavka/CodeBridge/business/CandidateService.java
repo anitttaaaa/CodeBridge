@@ -5,6 +5,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.zajavka.CodeBridge.api.dto.CandidateDTO;
+import pl.zajavka.CodeBridge.api.dto.mapper.CandidateMapper;
 import pl.zajavka.CodeBridge.business.dao.CandidateDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.exception.NotFoundException;
@@ -16,6 +18,7 @@ import java.util.Optional;
 public class CandidateService {
 
     private final CandidateDAO candidateDAO;
+    private final CandidateMapper candidateMapper;
 
     @Transactional(readOnly = true)
     public Candidate findLoggedInCandidate() {
@@ -46,6 +49,15 @@ public class CandidateService {
         candidateDAO.updateCandidate(candidate);
     }
 
+    @Transactional
+    public CandidateDTO findCandidateByCandidateId(Integer candidateId) {
+
+        Optional<Candidate> candidate = candidateDAO.findById(candidateId);
+        System.out.println(candidate);
+
+        return candidate.map(candidateMapper::mapToDto)
+                .orElseThrow(() -> new RuntimeException("Candidate not found for ID: " + candidateId));
+    }
 }
 
 

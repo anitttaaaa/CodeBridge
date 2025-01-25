@@ -22,7 +22,7 @@
                         <div class="title-frame d-flex justify-content-between align-items-center">
                             <h5 class="mb-0" th:text="${employerJobApplication.jobOffer.jobOfferTitle}">Job Offer Title</h5>
                             <div class="button-group">
-                                <form th:action="@{/employer-portal/job_applications/accept}" method="post">
+                                <form th:action="@{/employer-portal/job-applications/accept}" method="post">
                                     <!-- Ukryty input z applicationId -->
                                     <input type="hidden" name="applicationId" th:value="${employerJobApplication.applicationId}">
 
@@ -32,7 +32,7 @@
                                     </button>
                                 </form>
 
-                                <form th:action="@{/employer-portal/job_applications/reject}" method="post">
+                                <form th:action="@{/employer-portal/job-applications/reject}" method="post">
                                     <!-- Ukryty input z applicationId -->
                                     <input type="hidden" name="applicationId" th:value="${employerJobApplication.applicationId}">
 
@@ -47,15 +47,15 @@
 
                         <div class="frame-card info-frame">
                             <div class="short-information">
-                                <!-- Możesz tutaj dodać inne krótkie informacje -->
                             </div>
 
-                            <!-- Przycisk profilu kandydata -->
-                            <button type="button"
-                                    class="add-job-offer-button btn btn-primary apply-button"
-                                    th:onclick="'location.href=\'/CodeBridge/candidate-portal?candidateId=\' + ' + ${employerJobApplication.candidate.candidateId}">
-                                Candidate Profile
-                            </button>
+                            <a th:href="'/CodeBridge/employer-portal/job-applications/candidate-profile?candidateId=' + ${employerJobApplication.candidate.candidateId}"
+                               target="_blank">
+                                <button type="button" class="add-job-offer-button btn btn-primary apply-button">
+                                    Candidate Profile
+                                </button>
+                            </a>
+
 
                             <!-- Szczegóły kandydata -->
                             <h5><strong>Candidate Overview:</strong></h5>

@@ -9,17 +9,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.zajavka.CodeBridge.api.dto.CandidateDTO;
-import pl.zajavka.CodeBridge.api.dto.JobApplicationDTO;
 import pl.zajavka.CodeBridge.api.dto.JobOfferDTO;
+import pl.zajavka.CodeBridge.api.dto.mapper.CandidateMapper;
 import pl.zajavka.CodeBridge.api.dto.mapper.JobOfferMapper;
+import pl.zajavka.CodeBridge.business.CandidateService;
 import pl.zajavka.CodeBridge.business.EmployerService;
-import pl.zajavka.CodeBridge.business.JobApplicationService;
 import pl.zajavka.CodeBridge.business.JobOfferService;
 import pl.zajavka.CodeBridge.domain.Candidate;
-import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.JobOffer;
 
-import javax.swing.plaf.PanelUI;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +28,7 @@ import java.util.stream.Collectors;
 public class EmployerPortalController {
 
     private static final String GET_EMPLOYER = "/employer-portal";
+    private static final String GET_EMPLOYER_VIEW_CANDIDATE_PROFILE = "/employer-portal/job-applications/candidate-profile";
     private static final String GET_EMPLOYER_NEW_JOB_OFFER_FORM = "/employer-portal/new-job-offer";
     private static final String GET_EMPLOYER_MY_JOB_OFFERS = "/employer-portal/my-job-offers";
     private static final String GET_ALL_CANDIDATES = "/employer-portal/find-a-candidate";
@@ -38,10 +37,25 @@ public class EmployerPortalController {
     private static final String ADD_EMPLOYER_NEW_JOB_OFFER = "/employer-portal/new-job-offer/add";
 
     private final JobOfferMapper jobOfferMapper;
+    private final CandidateMapper candidateMapper;
     private final JobOfferService jobOfferService;
     private final EmployerService employerService;
+    private final CandidateService candidateService;
 
 
+    @GetMapping(GET_EMPLOYER_VIEW_CANDIDATE_PROFILE)
+    public String getEmployerCandidateDetails(
+            @RequestParam("candidateId") Integer candidateId,
+            Model model) {
+
+        CandidateDTO candidateDetails = candidateService.findCandidateByCandidateId(candidateId);
+        model.addAttribute("candidateDetails", candidateDetails);
+
+
+
+
+        return "/employer_view_candidate_profile";
+    }
 
 
     @GetMapping(GET_EMPLOYER_MY_JOB_OFFERS)
@@ -82,9 +96,10 @@ public class EmployerPortalController {
             @RequestParam(required = false) String techSpecialization,
             @RequestParam(required = false) String status,
             Model model) {
-        List<Candidate> filteredCandidates = employerService.getFilteredCandidates(techSpecialization,status)
-                .stream() .sorted(Comparator.comparingInt(Candidate::getCandidateId).reversed())
-                .collect(Collectors.toList());;
+        List<Candidate> filteredCandidates = employerService.getFilteredCandidates(techSpecialization, status)
+                .stream().sorted(Comparator.comparingInt(Candidate::getCandidateId).reversed())
+                .collect(Collectors.toList());
+        ;
 
         model.addAttribute("allCandidates", filteredCandidates);
 
