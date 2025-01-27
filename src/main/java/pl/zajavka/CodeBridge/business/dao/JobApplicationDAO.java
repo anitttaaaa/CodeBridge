@@ -18,10 +18,10 @@ public interface JobApplicationDAO {
 
     void save(JobApplication jobApplicationWithStatus);
 
-
     void deleteById(Integer applicationId);
 
     List<ApplicationsHistory> findEmployerHistoryApplicationsByEmployerId(Integer employerId);
 
     List<ApplicationsHistory> findCandidateHistoryApplicationsByCandidateId(Integer candidateId);
+
 }

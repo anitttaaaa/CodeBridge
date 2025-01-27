@@ -23,8 +23,6 @@ public class CandidateProjectService {
         Candidate candidate = candidateService.findLoggedInCandidate();
         CandidateProject candidateProject = buildCandidateProject(candidateProjectFromRequest, candidate);
         candidateProjectDAO.createProject(candidateProject);
-
-
     }
 
     private CandidateProject buildCandidateProject(CandidateProject candidateProjectFromRequest, Candidate candidate) {
@@ -48,8 +46,8 @@ public class CandidateProjectService {
             throw new AccessDeniedException("Unauthorized access.");
         }
         candidateProjectDAO.updateCandidateProject(candidateProject);
-
     }
+
 
     public void deleteCandidateProjectById(Integer candidateProjectId) {
         candidateProjectDAO.deleteById(candidateProjectId);

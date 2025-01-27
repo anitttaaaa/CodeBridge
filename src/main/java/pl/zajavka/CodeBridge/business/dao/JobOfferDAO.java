@@ -12,6 +12,7 @@ public interface JobOfferDAO {
     List<JobOffer> findAllJobOffers();
 
     List<JobOffer> findAll();
+
     Optional<JobOffer> findById(Integer jobOfferId);
 
     List<JobOffer> findJobOffersByEmployerId(Integer employerId);

@@ -53,6 +53,5 @@ public class CandidateEducationService {
 
         candidateEducationDAO.deleteById(candidateEducationId);
 
-
     }
 }

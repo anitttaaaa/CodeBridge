@@ -19,13 +19,11 @@ public class CandidateExperienceService {
     private final CandidateExperienceDAO candidateExperienceDAO;
 
 
-
     @Transactional
     public void createExperienceData(CandidateExperience candidateExperienceFromRequest, Authentication authentication) {
 
         String candidateEmail = authentication.getName();
         Integer candidateId = candidateService.findCandidateByEmail(candidateEmail).getCandidateId();
-
 
         CandidateExperience candidateExperience = buildCandidateExperience(candidateExperienceFromRequest, candidateId);
         candidateExperienceDAO.createExperience(candidateExperience);
@@ -55,6 +53,7 @@ public class CandidateExperienceService {
 
         candidateExperienceDAO.updateCandidateExperience(candidateExperience);
     }
+
 
     public void deleteCandidateExperienceById(Integer candidateExperienceId) {
 
