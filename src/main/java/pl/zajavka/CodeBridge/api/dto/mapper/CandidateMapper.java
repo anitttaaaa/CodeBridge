@@ -12,7 +12,4 @@ public interface CandidateMapper {
     Candidate mapToDomain(CandidateDTO candidateDTO);
 
 
-
-
-
 }

@@ -7,6 +7,7 @@ import pl.zajavka.CodeBridge.domain.Employer;
 
 @Mapper(componentModel = "spring")
 public interface EmployerMapper {
+
     @Mapping(target = "jobOffers", ignore = true)
     @Mapping(target = "jobApplications", ignore = true)
     EmployerDTO mapToDto(Employer employer);

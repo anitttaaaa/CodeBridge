@@ -114,7 +114,7 @@ public class CandidatePortalController {
         return "redirect:/candidate-portal";
     }
 
-        @PostMapping(UPDATE_CANDIDATE_STATUS)
+    @PostMapping(UPDATE_CANDIDATE_STATUS)
     public String updateCandidateStatus(
             @RequestParam(value = "status", required = false) String status,
             Authentication authentication
@@ -183,10 +183,10 @@ public class CandidatePortalController {
 
     @PostMapping(ADD_CANDIDATE_EXPERIENCE)
     public String addExperience(Authentication authentication,
-            @ModelAttribute("candidateExperienceDTO") CandidateExperienceDTO candidateExperienceDTO) {
+                                @ModelAttribute("candidateExperienceDTO") CandidateExperienceDTO candidateExperienceDTO) {
 
         CandidateExperience candidateExperience = candidateExperienceMapper.mapToDomain(candidateExperienceDTO);
-        candidateExperienceService.createExperienceData(candidateExperience,authentication);
+        candidateExperienceService.createExperienceData(candidateExperience, authentication);
 
         return "redirect:/candidate-portal";
     }
@@ -316,9 +316,8 @@ public class CandidatePortalController {
     ) {
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
 
-        // Sprawdzanie, czy techSpecialization jest null lub pustym ciągiem
         if (hobby == null || hobby.trim().isEmpty()) {
-            hobby = null; // Ustawiamy na null, jeśli nie wybrano specjalizacji
+            hobby = null;
         }
 
         candidate = candidate.withHobby(hobby);
@@ -335,9 +334,8 @@ public class CandidatePortalController {
     ) {
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
 
-        // Sprawdzanie, czy candidateSkills jest null lub pusta
         if (candidateSkills == null || candidateSkills.isEmpty()) {
-            candidateSkills = null; // Ustawiamy na null, jeśli nie wybrano umiejętności
+            candidateSkills = null;
         }
 
         candidate = candidate.withCandidateSkills(candidateSkills);
@@ -354,9 +352,8 @@ public class CandidatePortalController {
     ) {
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
 
-        // Sprawdzanie, czy candidateSkills jest null lub pusta
         if (aboutMe == null || aboutMe.isEmpty()) {
-            aboutMe = null; // Ustawiamy na null, jeśli nie wybrano umiejętności
+            aboutMe = null;
         }
 
         candidate = candidate.withAboutMe(aboutMe);

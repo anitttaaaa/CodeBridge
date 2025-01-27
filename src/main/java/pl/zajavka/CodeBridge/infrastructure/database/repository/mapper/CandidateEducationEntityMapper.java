@@ -12,6 +12,7 @@ public interface CandidateEducationEntityMapper {
 
     CandidateEducation mapFromEntity(CandidateEducationEntity candidateEducationEntity);
 
+    @Mapping(target = "candidate.candidateId", source = "candidateId")
     CandidateEducationEntity mapToEntity(CandidateEducation candidateEducation);
 
 }

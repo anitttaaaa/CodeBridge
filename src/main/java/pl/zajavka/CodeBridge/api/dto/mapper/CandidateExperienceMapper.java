@@ -7,10 +7,6 @@ import pl.zajavka.CodeBridge.domain.CandidateExperience;
 @Mapper(componentModel = "spring")
 public interface CandidateExperienceMapper {
 
-
-
     CandidateExperienceDTO mapToDto(CandidateExperience candidateExperience);
-
-
     CandidateExperience mapToDomain(CandidateExperienceDTO candidateExperienceDTO);
 }

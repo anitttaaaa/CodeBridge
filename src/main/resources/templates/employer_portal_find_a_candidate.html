@@ -80,17 +80,50 @@
                     <p><strong>Surname:</strong> <span th:text="${candidate.surname}">Surname</span></p>
                     <p><strong>Email:</strong> <span th:text="${candidate.email}">Email</span></p>
                     <p><strong>Phone:</strong> <span th:text="${candidate.phone}">Phone</span></p>
-                    <p><strong>Tech Specialization:</strong> <span th:text="${candidate.techSpecialization}">Tech Specialization</span></p>
+                    <p><strong>Tech Specialization:</strong> <span th:text="${candidate.techSpecialization}">Tech Specialization</span>
+                    </p>
                     <p><strong>Skills:</strong>
                     <ul>
                         <li th:each="skill : ${candidate.candidateSkills}" th:text="${skill}"></li>
                     </ul>
                     </p>
+                    <p><strong>Courses:</strong>
+                    <ul>
+                        <li th:each="course : ${candidate.candidateCourses}" th:text="${course}"></li>
+                    </ul>
+                    </p>
+
+                    <p><strong>Courses:</strong>
+                    <ul>
+                        <li th:each="course : ${candidate.candidateCourses}" th:text="${course}"></li>
+                    </ul>
+                    </p>
+
+                    <!-- Sekcja doświadczenia zawodowego -->
+                    <p><strong>Doświadczenie zawodowe:</strong>
+                    <ul>
+                        <li th:each="experience : ${candidate.candidateExperiences}" th:text="${experience.candidatePosition}"></li>
+                    </ul>
+                    </p>
+
+                    <!-- Sekcja projektów -->
+                    <p><strong>Projekty:</strong>
+                    <ul>
+                        <li th:each="project : ${candidate.candidateProjects}" th:text="${project.projectTitle}"></li>
+                    </ul>
+                    </p>
+
+                    <!-- Sekcja edukacji -->
+                    <p><strong>Edukacja:</strong>
+                    <ul>
+                        <li th:each="education : ${candidate.candidateEducationStages}" th:text="${education.institution}"></li>
+                    </ul>
+                    </p>
+
                 </div>
             </div>
         </div>
     </div>
-
 
 
 </div>

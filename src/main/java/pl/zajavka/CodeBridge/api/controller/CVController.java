@@ -31,50 +31,36 @@ public class CVController {
 
     @GetMapping(SHOW_CANDIDATE_CV)
     public String generateCv(Model model) {
-        // Pobierz dane kandydata
         Candidate candidate = candidateService.findLoggedInCandidate();
 
-        // Mapowanie kandydata na DTO
         CandidateCVDTO cvDetails = candidateCVMapper.mapToDto(candidate);
 
-        // Sprawdź, czy profilowe zdjęcie jest dostępne
         if (cvDetails.getProfilePhoto() != null) {
-            // Zakoduj zdjęcie w Base64
             String encodedImage = Base64.getEncoder().encodeToString(cvDetails.getProfilePhoto());
-            // Dodaj zakodowane zdjęcie do modelu
             model.addAttribute("encodedImage", encodedImage);
         }
 
-        // Dodaj pozostałe dane do modelu
         model.addAttribute("candidateCv", cvDetails);
 
-        // Zwróć widok z HTML do wyświetlenia
-        return "cv";  // Nazwa szablonu Thymeleaf (plik cv.html)
+        return "cv";
     }
 
 
-    // Endpoint do generowania PDF
     @GetMapping(CANDIDATE_GENERATE_PDF)
     public void generatePdf(HttpServletResponse response) throws IOException {
-        // Pobierz dane kandydata
         Candidate candidate = candidateService.findLoggedInCandidate();
         CandidateCVDTO cvDetails = candidateCVMapper.mapToDto(candidate);
-
-        // Renderuj HTML z Thymeleaf
         String htmlContent = generateHtmlContent(cvDetails);
 
-        // Konwertuj HTML na PDF
         generatePdfFromHtml(htmlContent, response);
     }
 
-    // Metoda do generowania HTML z Thymeleaf
     private String generateHtmlContent(CandidateCVDTO cvDetails) {
         Context context = new Context();
         context.setVariable("candidateCv", cvDetails);
         return templateEngine.process("cv", context);
     }
 
-    // Metoda do konwersji HTML na PDF
     private void generatePdfFromHtml(String htmlContent, HttpServletResponse response) throws IOException {
         ITextRenderer renderer = new ITextRenderer();
         renderer.setDocumentFromString(htmlContent);

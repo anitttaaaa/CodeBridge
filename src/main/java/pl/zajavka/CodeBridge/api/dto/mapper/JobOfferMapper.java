@@ -8,8 +8,6 @@ import pl.zajavka.CodeBridge.domain.JobOffer;
 public interface JobOfferMapper {
 
     JobOffer mapToDomain(JobOfferDTO dto);
-
     JobOfferDTO mapToDTO(JobOffer jobOffer);
-
 
 }

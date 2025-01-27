@@ -11,6 +11,8 @@ import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateProjectEnti
 public interface CandidateProjectEntityMapper {
 
     CandidateProject mapToDomain(CandidateProjectEntity candidateProjectEntity);
+
+    @Mapping(target = "candidate.candidateId", source = "candidateId")
     CandidateProjectEntity mapToEntity(CandidateProject candidateProject);
 
 

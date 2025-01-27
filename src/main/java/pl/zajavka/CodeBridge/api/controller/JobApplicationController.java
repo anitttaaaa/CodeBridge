@@ -60,7 +60,6 @@ public class JobApplicationController {
             Authentication authentication) {
         jobApplicationService.applyForJob(jobOfferId, authentication);
 
-        // Przekierowanie na stronę z ofertami pracy lub stronę główną
         return "redirect:/candidate-applications";
     }
 
@@ -85,10 +84,9 @@ public class JobApplicationController {
 
         model.addAttribute("employerJobApplications", employerJobApplications);
 
-
-
         return "employer_portal_job_applications";
     }
+
     @GetMapping(EMPLOYER_GET_APPLICATIONS_HISTORY)
     public String getApplicationsHistory(
             Authentication authentication,
@@ -97,19 +95,16 @@ public class JobApplicationController {
         List<ApplicationsHistoryDTO> employerHistoryApplications = jobApplicationService.getAllEmployerHistoryJobApplications(authentication);
         model.addAttribute("employerHistoryApplications", employerHistoryApplications);
 
-
         return "/employer_portal_job_applications_history";
     }
 
- @GetMapping(CANDIDATE_GET_MY_APPLICATIONS_HISTORY)
+    @GetMapping(CANDIDATE_GET_MY_APPLICATIONS_HISTORY)
     public String getMyApplicationsHistory(
             Authentication authentication,
             Model model) {
 
-
-     List<ApplicationsHistoryDTO> candidateHistoryApplications = jobApplicationService.getAllCandidateHistoryJobApplications(authentication);
-     model.addAttribute("candidateHistoryApplications", candidateHistoryApplications);
-
+        List<ApplicationsHistoryDTO> candidateHistoryApplications = jobApplicationService.getAllCandidateHistoryJobApplications(authentication);
+        model.addAttribute("candidateHistoryApplications", candidateHistoryApplications);
 
         return "/candidate_portal_job_applications_history";
     }

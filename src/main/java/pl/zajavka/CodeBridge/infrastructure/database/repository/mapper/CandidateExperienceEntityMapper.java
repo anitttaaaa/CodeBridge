@@ -11,7 +11,7 @@ import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateExperienceE
 public interface CandidateExperienceEntityMapper {
 
     CandidateExperience mapFromEntity(CandidateExperienceEntity candidateExperienceEntity);
-
+    @Mapping(target = "candidate.candidateId", source = "candidateId")
     CandidateExperienceEntity mapToEntity(CandidateExperience candidateExperience);
 
 

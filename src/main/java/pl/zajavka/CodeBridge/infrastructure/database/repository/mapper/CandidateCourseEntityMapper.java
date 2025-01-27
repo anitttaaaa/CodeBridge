@@ -10,7 +10,10 @@ import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateEntity;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CandidateCourseEntityMapper {
 
+    @Mapping(target = "candidateId", source = "candidate.candidateId")
     CandidateCourse mapFromEntity(CandidateCourseEntity candidateCourseEntity);
+
+    @Mapping(target = "candidate.candidateId", source = "candidateId")
     CandidateCourseEntity mapToEntity(CandidateCourse candidateCourse);
 
 

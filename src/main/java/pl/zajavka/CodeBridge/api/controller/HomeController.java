@@ -5,8 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.zajavka.CodeBridge.api.dto.JobApplicationDTO;
-import pl.zajavka.CodeBridge.api.dto.JobOfferDTO;
 import pl.zajavka.CodeBridge.business.JobOfferService;
 import pl.zajavka.CodeBridge.domain.JobOffer;
 
@@ -33,7 +31,7 @@ public class HomeController {
 
         model.addAttribute("jobOffers", jobOffers);
 
-    return "home";
+        return "home";
     }
 
 
@@ -47,13 +45,13 @@ public class HomeController {
 
             Model model) {
 
-        // Przekazanie parametrów do serwisu
         List<JobOffer> filteredJobOffers = jobOfferService.getFilteredJobOffers(
-                techSpecialization, workType, city, experience, salary
-        ).stream() .sorted(Comparator.comparingInt(JobOffer::getJobOfferId).reversed())
-                .collect(Collectors.toList());;;
+                        techSpecialization, workType, city, experience, salary)
+                .stream()
+                .sorted(Comparator.comparingInt(JobOffer::getJobOfferId).reversed())
+                .collect(Collectors.toList());
 
-        // Dodanie wyniku do modelu
+
         model.addAttribute("jobOffers", filteredJobOffers);
 
         return "home";
