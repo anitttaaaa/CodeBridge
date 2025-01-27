@@ -32,7 +32,7 @@
                          style="width: 150px; height: 150px;"/>
                 </div>
                 <div class="candidate-details frame-card-basic-info">
-                    <div class="left-column">
+                    <div class="mb-3">
                         <h5 class="card-title" style="font-size: 1.5em;"
                             th:text="${candidateDetails.name + ' ' + candidateDetails.surname}"></h5>
                         <p class="card-text">
@@ -43,9 +43,6 @@
                             <i class="bi bi-telephone-fill icon-color"></i>
                             <span th:text="'tel. ' + ${candidateDetails.phone}"></span>
                         </p>
-                    </div>
-                    <div class="right-column">
-                        <p class="card-text" style="visibility: hidden;">&nbsp;</p>
                         <p class="card-text">
                             <i class="bi bi-linkedin icon-color"></i>
                             <a class="custom-link" th:href="${candidateDetails.linkedIn}" target="_blank"
@@ -58,22 +55,17 @@
                                th:text="${candidateDetails.gitHub != null ? candidateDetails.gitHub : 'Profile GitHub'}"
                                th:if="${candidateDetails.gitHub != null}"></a>
                         </p>
+                        <i class="bi me-2"
+                           th:classappend="${candidateDetails.status == 'Actively looking for a job' ? 'bi-person-fill text-success' : (candidateDetails.status == 'Currently employed' ? 'bi-person-fill text-danger' : 'bi-question-circle')}"></i>
+                        <!-- Sprawdzenie, czy status kandydata jest pusty -->
+                        <span th:if="${candidateDetails.status == null}">Status: No information</span>
+                        <span th:if="${candidateDetails.status != null}" th:text="${candidateDetails.status}"></span>
                     </div>
                 </div>
 
             </div>
 
-            <!-----status view------------------------------------------------------------------------------------------------------->
-            <div class="candidateDetails-status frame-card frame-card-status">
-                <p class="card-text-status">
-                    <i class="bi me-2"
-                       th:classappend="${candidateDetails.status == 'Actively looking for a job' ? 'bi-person-fill text-success' : (candidateDetails.status == 'Currently employed' ? 'bi-person-fill text-danger' : 'bi-question-circle')}"></i>
-                    <!-- Sprawdzenie, czy status kandydata jest pusty -->
-                    <span th:if="${candidateDetails.status == null}">Status: No information</span>
-                    <span th:if="${candidateDetails.status != null}" th:text="${candidateDetails.status}"></span>
 
-                </p>
-            </div>
         </div>
     </div>
     <!---BIO------------------------------------------------------------------------------------------------------------------------------------------------->

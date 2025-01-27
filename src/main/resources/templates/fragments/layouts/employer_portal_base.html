@@ -6,10 +6,10 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title layout:title-pattern="$CONTENT_TITLE"></title>
 
     <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
-
     <script th:src="@{/js/custom.min.js}"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           rel="stylesheet"
@@ -17,62 +17,76 @@
           crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="" th:href="@{/css/style.css}">
 </head>
+
 <body>
 <div id="wrapper">
     <div id="header">
+        <div class="container-fluid">
+            <nav class="navbar-expand-lg navbar-light bg-light fixed-top">
+                <div class="navbar container-fluid">
+                    <!-- Logo Container -->
+                    <a class="navbar-brand" href="/" th:href="@{/}">
+                        <img th:src="@{/images/logo.png}" alt="Logo CodeBridge" style="max-height: 50px;">
+                    </a>
 
-        <nav class="navbar navbar-expand-lg fixed-top">
-            <div class="container-fluid d-flex align-items-center">
-                <div class="logo-container">
-                    <img th:src="@{/images/logo.png}" class="navbar-brand me-4" alt="Logo CodeBridge"
-                         onclick="window.location.href='/CodeBridge';"
-                         style="cursor: pointer;">
+                    <!-- Hamburger Button -->
+                    <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarContent"
+                            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!-- Navbar Content (Links and Auth Buttons) -->
+                    <div class="collapse navbar-collapse" id="navbarContent">
+                        <div class="header-navigation me-auto">
+                            <ul class=" navbar-nav me-auto mb-2 mb-lg-0">
+                                <span class="separator">|</span>
+                                <li class="nav-item"><a href="/CodeBridge/employer-portal" class="nav-link">MY
+                                    PROFILE</a></li>
+                                <span class="separator">|</span>
+                                <li class="nav-item"><a href="/CodeBridge/employer-portal/my-job-offers"
+                                                        class="nav-link">MY JOB OFFERS</a></li>
+                                <span class="separator">|</span>
+                                <li class="nav-item"><a href="/CodeBridge/employer-portal/new-job-offer"
+                                                        class="nav-link">NEW JOB OFFER</a></li>
+                                <span class="separator">|</span>
+                                <li class="nav-item"><a href="/CodeBridge/employer-portal/job-applications"
+                                                        class="nav-link">JOB APPLICATIONS</a></li>
+                                <span class="separator">|</span>
+                                <li class="nav-item"><a href="/CodeBridge/employer-portal/find-a-candidate"
+                                                        class="nav-link">FIND A CANDIDATE</a></li>
+                                <span class="separator">|</span>
+                                <li class="nav-item"><a href="/CodeBridge/employer-portal/applications-history"
+                                                        class="nav-link">HISTORY</a></li>
+                                <span class="separator">|</span>
+                            </ul>
+                        </div>
+
+                        <!-- Authentication Buttons -->
+                        <div class="auth-buttons ms-auto">
+                            <a sec:authorize="!isAuthenticated()" class="login-button btn btn-primary"
+                               th:href="@{/login}">Log in</a>
+                            <a sec:authorize="isAuthenticated()" class="login-button btn btn-primary"
+                               th:href="@{/logout}">Log out</a>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="header-navigation">
-                    <span class="separator">|</span>
-                    <a href="/CodeBridge/employer-portal" class="nav-link">MY PROFILE</a>
-                    <span class="separator">|</span>
-                    <a href="/CodeBridge/employer-portal/my-job-offers" class="nav-link">MY JOB OFFERS</a>
-                    <span class="separator">|</span>
-                    <a href="/CodeBridge/employer-portal/new-job-offer" class="nav-link">NEW JOB OFFER</a>
-                    <span class="separator">|</span>
-                    <a href="/CodeBridge/employer-portal/job-applications" class="nav-link">JOB APPLICATIONS</a>
-                    <span class="separator">|</span>
-                    <a href="/CodeBridge/employer-portal/find-a-candidate" class="nav-link">FIND A CANDIDATE</a>
-                    <span class="separator">|</span>
-                    <a href="/CodeBridge/employer-portal/applications-history" class="nav-link">HISTORY</a>
-                    <span class="separator">|</span>
-
-                </div>
-
-
-                <div class="auth-buttons ms-auto">
-                    <a sec:authorize="!isAuthenticated()" class="login-button btn btn-primary" th:href="@{/login}">Log in</a>
-                    <a sec:authorize="isAuthenticated()" class="login-button btn btn-primary" th:href="@{/logout}">Log out</a>
-                </div>
-            </div>
-        </nav>
-    </div>
-    <div id="main">
-
-        <div id="employer_container" layout:fragment="employerContent">
-
-
+            </nav>
         </div>
+    </div>
 
+    <div id="main">
+        <div id="employer_container" layout:fragment="employerContent">
+            <!-- Content Goes Here -->
+        </div>
     </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 
 </body>
-
-
 </html>
-
-

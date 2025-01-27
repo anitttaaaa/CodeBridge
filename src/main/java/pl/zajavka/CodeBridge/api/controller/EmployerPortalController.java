@@ -72,6 +72,7 @@ public class EmployerPortalController {
     }
 
 
+
     @GetMapping(GET_EMPLOYER_MY_JOB_OFFERS)
     public String getAllMyJobOffers(Authentication authentication,
                                     Model model) {

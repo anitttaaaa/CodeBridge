@@ -1,3 +1,38 @@
+.navbar-collapse {
+    background-color: transparent;
+     transition: none;
+     font-size: 16px !important;
+         font-weight: 600 !important;
+         line-height: 1.5 !important;
+         text-decoration: none !important;
+         color: #444444 !important;
+}
+
+.navbar-collapse.show {
+    background-color: rgba(255, 255, 255, 0.9); /* Jasne półprzezroczyste tło */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Lekki cień */
+    padding: 1rem; /* Odstęp wewnątrz menu */
+}
+
+
+.separator {
+    display: inline-block;
+    position: relative;
+    top: 6px;
+}
+
+
+/* Ukrycie separatorów w wersji mobilnej (dla hamburgera) */
+@media (max-width: 991px) {
+    .navbar-collapse.show .separator {
+        display: none;
+    }
+}
+
+
+
+
+
 body {
     background-color: #CCC3B1 !important;
     height: 100vh !important;
@@ -9,7 +44,6 @@ body {
 }
 
 .navbar {
-
     background-color: #E2DBD1 !important;
     height: 100px !important;
     color: #444444 !important;
@@ -18,9 +52,10 @@ body {
 
 
 }
+.navbar.scrolled {
+    background-color: #E2DBD1 !important;
+}
 
-
-/* Stylizacja dla nagłówków z pionowymi kreskami */
 .header-navigation {
     font-size: 16px !important;
     font-weight: 600 !important;
@@ -139,7 +174,7 @@ body {
 }
 
 .new-job-offer-card {
-    width: 40%; /* 80% szerokości rodzica */
+    width: 80%; /* 80% szerokości rodzica */
     max-width: 1200px; /* Maksymalna szerokość */
     background-color: #DAD7D2;
     margin: 20px auto; /* Wyśrodkowanie w poziomie i dodanie odstępu od góry */
@@ -259,6 +294,7 @@ body {
     display: flex; /* Użyj flexboxa do układu kolumn */
     justify-content: space-between; /* Rozmieść kolumny na całą szerokość */
     margin-left: 20px; /* Dodatkowa przestrzeń po lewej stronie */
+    width: 70%;
 }
 
 .left-column {
@@ -362,6 +398,7 @@ body {
     font-family: 'YourFontFamily', sans-serif;
     font-size: 16px;
     color: #333;
+
 }
 .frame-card-skills{
     padding-left: 50px;

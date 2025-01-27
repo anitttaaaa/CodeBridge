@@ -6,44 +6,66 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title layout:title-pattern="$CONTENT_TITLE"></title>
 
     <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
     <script th:src="@{/js/custom.min.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
           crossorigin="anonymous">
+
     <link rel="stylesheet" type="text/css" href="" th:href="@{/css/style.css}">
 </head>
 <body>
 <div id="wrapper">
     <div id="header">
 
-        <nav class="navbar navbar-expand-lg fixed-top">
-            <div class="container-fluid d-flex justify-content-between align-items-center"> <!-- Flex container with justify-content-between -->
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+                <div class="container-fluid">
+                    <!-- Logo -->
+                    <a class="navbar-brand" href="/" th:href="@{/}">
+                        <img th:src="@{/images/logo.png}" alt="Logo CodeBridge" style="max-height: 50px;">
+                    </a>
 
-                <div class="d-flex align-items-center"> <!-- Flex for logo and navigation links -->
-                    <img th:src="@{/images/logo.png}" class="navbar-brand me-4" alt="Logo CodeBridge"
-                         onclick="window.location.href='/CodeBridge';"
-                         style="cursor: pointer;">
+                    <!-- Hamburger Button -->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-                    <div class="header-navigation d-flex align-items-center"> <!-- Flex for navigation links -->
-                        <span class="separator">|</span>
-                        <a th:href="@{/employer-portal}" class="nav-link">EMPLOYER PORTAL</a>
-                        <span class="separator">|</span>
-                        <a th:href="@{/candidate-portal}" class="nav-link">CANDIDATE PORTAL</a>
-                        <span class="separator">|</span>
+                    <!-- Navbar Content -->
+                    <div class="collapse navbar-collapse" id="navbarContent">
+                        <!-- Navigation Links -->
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <span class="separator">|</span>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/employer-portal}">EMPLOYER PORTAL</a>
+                            </li>
+                            <span class="separator">|</span>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/candidate-portal}">CANDIDATE PORTAL</a>
+                            </li>
+                            <span class="separator">|</span>
+                        </ul>
+
+                        <!-- Authentication Buttons -->
+                        <div class="d-flex">
+                            <a sec:authorize="!isAuthenticated()" class="add-job-offer-button btn btn-primary me-2" th:href="@{/login}">Log in</a>
+                            <a sec:authorize="isAuthenticated()" class="add-job-offer-button btn btn-primary" th:href="@{/logout}">Log out</a>
+                        </div>
                     </div>
                 </div>
+            </nav>
 
-                <div class="auth-buttons"> <!-- Separate div for login/logout buttons -->
-                    <a sec:authorize="!isAuthenticated()" class="login-button btn btn-primary" th:href="@{/login}">Log in</a>
-                    <a sec:authorize="isAuthenticated()" class="login-button btn btn-primary" th:href="@{/logout}">Log out</a>
-                </div>
+        </div>
 
-            </div>
-        </nav>
     </div>
     <div id="main">
 
@@ -54,10 +76,10 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- Bootstrap 5 JavaScript Bundle (includes Popper.js) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-WoMFnkWtGc8kUtR0uwvmweIovxnZwPXwhTgTwjWEZsB3B1KQgiSZHFO6B5IzLxcP"
+        crossorigin="anonymous"></script>
 
 </body>
-
 </html>

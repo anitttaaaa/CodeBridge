@@ -20,7 +20,6 @@ public class HomeController {
 
 
     private static final String GET_ALL_JOB_OFFERS = "/";
-
     private static final String GET_FILTERED_JOB_OFFERS = "/filtered-job-offers";
 
     private final JobOfferService jobOfferService;
