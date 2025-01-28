@@ -9,7 +9,6 @@ import pl.zajavka.CodeBridge.infrastructure.database.entity.EmployerEntity;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface EmployerEntityMapper {
 
-
     @Mapping(target = "jobOffers", ignore = true)
     @Mapping(target = "jobApplications", ignore = true)
     Employer mapToDomain(EmployerEntity employerEntity);

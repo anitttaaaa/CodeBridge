@@ -21,7 +21,6 @@ public class Employer {
     Set<JobOffer> jobOffers;
     Set<JobApplication> jobApplications;
 
-
     public Set<JobOffer> getJobOffers () {
         return Objects.isNull(jobOffers) ? new HashSet<>() : jobOffers;
     }
@@ -29,7 +28,6 @@ public class Employer {
     public Set<JobApplication> getJobApplications () {
         return Objects.isNull(jobApplications) ? new HashSet<>() : jobApplications;
     }
-
 
 
 }

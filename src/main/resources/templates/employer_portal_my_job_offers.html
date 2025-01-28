@@ -16,14 +16,12 @@
     </div>
     <div class="job-offers-container">
         <div class="container mt-4">
-
             <div class="card-body" th:each="employerJobOffer : ${employerJobOffers}">
                 <div class="candidate-card">
                     <div class="card-body">
                         <div class="title-frame d-flex justify-content-between align-items-center">
                             <h4 class="mb-0" th:text="${employerJobOffer.jobOfferTitle}">Job Offer Title</h4>
                             <div class="button-group">
-                                <!-- Przyciski Akceptuj i Odrzuć -->
                                 <button type="button" class="add-job-offer-button btn btn-primary apply-button">
                                     Edit JobOffer (future feature)
                                 </button>
@@ -61,7 +59,6 @@
                                 </ul>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

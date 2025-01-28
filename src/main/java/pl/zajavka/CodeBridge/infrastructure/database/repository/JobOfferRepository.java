@@ -20,7 +20,6 @@ public class JobOfferRepository implements JobOfferDAO {
     private final JobOfferJpaRepository jobOfferJpaRepository;
     private final JobOfferEntityMapper jobOfferEntityMapper;
 
-
     @Override
     public List<JobOffer> findAllJobOffers() {
 

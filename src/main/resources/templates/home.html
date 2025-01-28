@@ -21,9 +21,7 @@
                 </div>
                 <div class="card-body">
                     <form th:action="@{/filtered-job-offers}" method="get">
-                        <!-- Row to align the filters horizontally -->
                         <div class="row g-3">
-                            <!-- Tech Specialization Dropdown -->
                             <div class="col-md-3">
                                 <label for="techSpecializationSelect" class="form-label">Specialization</label>
                                 <select class="form-select" id="techSpecializationSelect" name="techSpecialization">
@@ -33,8 +31,6 @@
                                     </option>
                                 </select>
                             </div>
-
-                            <!-- Work Type Dropdown -->
                             <div class="col-md-3">
                                 <label for="workTypeSelect" class="form-label">Work Type</label>
                                 <select class="form-select" id="workTypeSelect" name="workType">
@@ -44,8 +40,6 @@
                                     </option>
                                 </select>
                             </div>
-
-                            <!-- City Dropdown -->
                             <div class="col-md-3">
                                 <label for="citySelect" class="form-label">City</label>
                                 <select class="form-select" id="citySelect" name="city">
@@ -55,8 +49,6 @@
                                     </option>
                                 </select>
                             </div>
-
-                            <!-- Experience Dropdown -->
                             <div class="col-md-3">
                                 <label for="experienceSelect" class="form-label">Experience</label>
                                 <select class="form-select" id="experienceSelect" name="experience">
@@ -66,8 +58,6 @@
                                     </option>
                                 </select>
                             </div>
-
-                            <!-- Salary Dropdown -->
                             <div class="col-md-3">
                                 <label for="salarySelect" class="form-label">Salary</label>
                                 <select class="form-select" id="salarySelect" name="salary">
@@ -77,8 +67,6 @@
                                     </option>
                                 </select>
                             </div>
-
-                            <!-- Skills Fields -->
                             <div class="col-md-3">
                                 <label for="mustHaveSkills" class="form-label">Must Have Skills (future feature)</label>
                                 <input type="text" class="form-control" id="mustHaveSkills" name="mustHaveSkills"
@@ -104,15 +92,11 @@
                 <div class="title-frame d-flex justify-content-between align-items-center">
 
                     <h4 class="mb-0" th:text="${jobOffer.jobOfferTitle}">Job Title</h4>
-
-                    <!-- Jeśli użytkownik nie jest zalogowany -->
                     <div sec:authorize="!isAuthenticated()">
                         <a href="/CodeBridge/login" class="add-job-offer-button btn btn-primary apply-button">
                             Apply Now
                         </a>
                     </div>
-
-                    <!-- Jeśli użytkownik jest zalogowany i ma rolę CANDIDATE -->
                     <div sec:authorize="hasAuthority('CANDIDATE')">
                         <form th:action="@{/apply/{jobOfferId}(jobOfferId=${jobOffer.jobOfferId})}" method="post">
                             <button type="submit" class="add-job-offer-button btn btn-primary apply-button">
@@ -120,8 +104,6 @@
                             </button>
                         </form>
                     </div>
-
-
                 </div>
                 <div class="frame-card info-frame">
                     <div class="short-information">
@@ -154,8 +136,7 @@
             </div>
         </div>
     </div>
+</div>
 
-</div>
-</div>
 </body>
 </html>

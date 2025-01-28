@@ -85,8 +85,6 @@
                     </option>
                 </select>
             </div>
-
-
             <h6>Must have skills</h6>
             <div class="input-group mb-3" th:each="skill : ${T(pl.zajavka.CodeBridge.api.enums.SkillsEnum).values()}">
                 <div class="input-group-text">
@@ -98,9 +96,7 @@
                 <label class="form-control" aria-label="Text input with checkbox"
                        th:for="'skill_' + ${skill.name()}"
                        th:text="${skill.getSkill}"></label>
-
             </div>
-
             <h6>Nice to have skills</h6>
             <div class="input-group mb-3" th:each="skill : ${T(pl.zajavka.CodeBridge.api.enums.SkillsEnum).values()}">
                 <div class="input-group-text">
@@ -112,12 +108,10 @@
                 <label class="form-control" aria-label="Text input with checkbox"
                        th:for="'skill_' + ${skill.name()}"
                        th:text="${skill.getSkill}"></label>
-
             </div>
             <div>
                 <input class="add-job-offer-button btn btn-primary" type="submit" value="Add Job Offer">
             </div>
-
         </form>
     </div>
 </div>

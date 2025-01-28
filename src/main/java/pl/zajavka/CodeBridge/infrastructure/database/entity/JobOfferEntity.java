@@ -29,7 +29,6 @@ public class JobOfferEntity {
     @Column(name = "description")
     private String description;
 
-
     @Enumerated(EnumType.STRING)
     @Column(name = "tech_specialization")
     private TechSpecializationsEnum techSpecialization;
@@ -46,11 +45,9 @@ public class JobOfferEntity {
     @Column(name = "experience")
     private ExperiencesEnum experience;
 
-
     @Enumerated(EnumType.STRING)
     @Column(name = "salary")
     private SalaryRangeEnum salary;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employer_id")

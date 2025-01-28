@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.CodeBridge.business.dao.CandidateDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
-import pl.zajavka.CodeBridge.domain.JobOffer;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.CandidateExperienceJpaRepository;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.CandidateJpaRepository;
@@ -20,10 +19,7 @@ import java.util.stream.Collectors;
 public class CandidateRepository implements CandidateDAO {
 
     private final CandidateJpaRepository candidateJpaRepository;
-    private final CandidateExperienceJpaRepository candidateExperienceJpaRepository;
-
     private final CandidateEntityMapper candidateEntityMapper;
-    private final CandidateExperienceEntityMapper candidateExperienceEntityMapper;
 
     @Override
     public Optional<Candidate> findCandidateByEmail(String email) {
@@ -31,9 +27,9 @@ public class CandidateRepository implements CandidateDAO {
                 .map(candidateEntityMapper::mapFromEntity);
     }
 
-    private CandidateEntity saveCandidateEntity(Candidate candidate) {
+    private void saveCandidateEntity(Candidate candidate) {
         CandidateEntity candidateEntity = candidateEntityMapper.mapToEntity(candidate);
-        return candidateJpaRepository.saveAndFlush(candidateEntity);
+        candidateJpaRepository.saveAndFlush(candidateEntity);
     }
 
     public void updateCandidate(Candidate candidate) {
@@ -55,11 +51,11 @@ public class CandidateRepository implements CandidateDAO {
         List<Candidate> candidates = candidateJpaRepository.findAll().stream()
                 .map(candidateEntityMapper::mapFromEntity)
                 .collect(Collectors.toList());
-        return  candidates;
+        return candidates;
     }
 
     @Override
-    public Optional <Candidate> findById(Integer candidateId) {
+    public Optional<Candidate> findById(Integer candidateId) {
         return candidateJpaRepository.findById(candidateId)
                 .map(candidateEntityMapper::mapFromEntity);
     }

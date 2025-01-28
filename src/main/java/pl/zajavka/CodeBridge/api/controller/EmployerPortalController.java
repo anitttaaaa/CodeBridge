@@ -1,13 +1,12 @@
 package pl.zajavka.CodeBridge.api.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.zajavka.CodeBridge.api.dto.*;
 import pl.zajavka.CodeBridge.api.dto.mapper.EmployerMapper;
 import pl.zajavka.CodeBridge.api.dto.mapper.JobOfferMapper;
@@ -56,12 +55,29 @@ public class EmployerPortalController {
     }
 
 
+    @GetMapping("/images/{candidateId}/profile-photo")
+    public ResponseEntity<byte[]> getProfilePhoto(
+            @PathVariable("candidateId") Integer candidateId) {
+
+        CandidateDTO candidateDetails = candidateService.findCandidateByCandidateId(candidateId);
+
+        byte[] profilePhoto = candidateDetails.getProfilePhoto();
+
+        if (profilePhoto == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(profilePhoto);
+    }
+
     @GetMapping(GET_EMPLOYER_VIEW_CANDIDATE_PROFILE)
     public String getEmployerCandidateDetails(
             @RequestParam("candidateId") Integer candidateId,
             Model model) {
 
         CandidateDTO candidateDetails = candidateService.findCandidateByCandidateId(candidateId);
+
         List<CandidateExperienceDTO> sortedExperiences = candidateDetails.getCandidateExperiences()
                 .stream()
                 .sorted(Comparator.comparing(CandidateExperienceDTO::getFromDate))

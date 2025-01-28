@@ -26,10 +26,8 @@ public class JobApplicationRepository implements JobApplicationDAO {
     @Override
     public void createJobApplication(JobApplication jobApplication) {
 
-
         JobApplicationEntity jobApplicationToSave = jobApplicationEntityMapper.mapToEntity(jobApplication);
         JobApplicationEntity jobApplicationSavedSaved = jobApplicationJpaRepository.saveAndFlush(jobApplicationToSave);
-
     }
 
     @Override
@@ -59,7 +57,6 @@ public class JobApplicationRepository implements JobApplicationDAO {
     public void save(JobApplication jobApplicationWithStatus) {
         JobApplicationEntity jobApplicationToSave = jobApplicationEntityMapper.mapToEntity(jobApplicationWithStatus);
         jobApplicationJpaRepository.saveAndFlush(jobApplicationToSave);
-
     }
 
     @Override

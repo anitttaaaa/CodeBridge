@@ -130,7 +130,6 @@ public class JobApplicationService {
 
         List<JobApplication> jobApplications = jobApplicationDAO.findApplicationsByCandidateId(candidateId);
 
-        // Mapa JobApplication na JobApplicationDTO
         return jobApplications.stream()
                 .map(jobApplicationMapper::mapToDto)
                 .collect(Collectors.toList());
@@ -155,7 +154,6 @@ public class JobApplicationService {
 
         String employerEmail = authentication.getName();
         Integer employerId = employerService.findEmployerByEmail(employerEmail).getEmployerId();
-
 
         List<ApplicationsHistory> employerHistoryApplications = jobApplicationDAO.findEmployerHistoryApplicationsByEmployerId(employerId);
 

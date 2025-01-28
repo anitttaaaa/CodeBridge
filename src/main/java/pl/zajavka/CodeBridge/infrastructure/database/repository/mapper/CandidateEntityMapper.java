@@ -12,8 +12,6 @@ public interface CandidateEntityMapper {
     @Mapping(source = "profilePhoto", target = "profilePhoto")
     Candidate mapFromEntity(CandidateEntity candidateEntity);
 
-
-
     @Mapping(source = "profilePhoto", target = "profilePhoto")
     CandidateEntity mapToEntity(Candidate candidate);
 

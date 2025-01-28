@@ -36,7 +36,6 @@ public class CandidateExperienceEntity {
     @Column(name = "to_date")
     private LocalDate toDate;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "candidate_id", nullable = false)
     private CandidateEntity candidate;

@@ -20,9 +20,7 @@
                 </div>
                 <div class="card-body">
                     <form th:action="@{/employer-portal/find-a-candidate/filtered-candidates}" method="get">
-                        <!-- Row to align the filters horizontally -->
                         <div class="row g-3">
-                            <!-- Tech Specialization Dropdown -->
                             <div class="col-md-3">
                                 <label for="techSpecializationSelect" class="form-label">Specialization</label>
                                 <select class="form-select" id="techSpecializationSelect" name="techSpecialization">
@@ -45,8 +43,6 @@
                                 <label for="skillsSelect" class="form-label">Skills (future feature)</label>
                                 <select class="form-select" id="skillsSelect" name="skills">
                                     <option value="" disabled selected>Skills</option>
-                                    <!--                                    <option th:each="status : ${T(pl.zajavka.CodeBridge.api.enums.StatusEnum).values()}"-->
-                                    <!--                                            th:value="${status.description}" th:text="${status.description}">-->
                                     </option>
                                 </select>
                             </div>
@@ -98,23 +94,17 @@
                         <li th:each="course : ${candidate.candidateCourses}" th:text="${course}"></li>
                     </ul>
                     </p>
-
-                    <!-- Sekcja doświadczenia zawodowego -->
-                    <p><strong>Doświadczenie zawodowe:</strong>
+                    <p><strong>Work Experience:</strong>
                     <ul>
                         <li th:each="experience : ${candidate.candidateExperiences}" th:text="${experience.candidatePosition}"></li>
                     </ul>
                     </p>
-
-                    <!-- Sekcja projektów -->
-                    <p><strong>Projekty:</strong>
+                    <p><strong>Projects:</strong>
                     <ul>
                         <li th:each="project : ${candidate.candidateProjects}" th:text="${project.projectTitle}"></li>
                     </ul>
                     </p>
-
-                    <!-- Sekcja edukacji -->
-                    <p><strong>Edukacja:</strong>
+                    <p><strong>Education:</strong>
                     <ul>
                         <li th:each="education : ${candidate.candidateEducationStages}" th:text="${education.institution}"></li>
                     </ul>

@@ -35,23 +35,16 @@ public class Candidate {
 
     public List<CandidateExperience> getCandidateExperiences() {
         return Objects.isNull(candidateExperiences) ? new ArrayList<>() : candidateExperiences;
-
     }
     public List<CandidateProject> getCandidateProjects() {
         return Objects.isNull(candidateProjects) ? new ArrayList<>() : candidateProjects;
-
     }
 
     public List<CandidateEducation> getCandidateEducationStages() {
         return Objects.isNull(candidateEducationStages) ? new ArrayList<>() : candidateEducationStages;
-
     }
-
 
     public List<CandidateCourse> getCandidateCourses() {
         return Objects.isNull(candidateCourses) ? new ArrayList<>() : candidateCourses;
-
     }
-
-
 }

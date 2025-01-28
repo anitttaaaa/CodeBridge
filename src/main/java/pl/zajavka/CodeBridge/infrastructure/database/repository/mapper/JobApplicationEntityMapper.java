@@ -17,7 +17,6 @@ public interface JobApplicationEntityMapper {
 
     JobApplicationEntity mapToEntity(JobApplication jobApplication);
 
-
     @Mapping(target = "candidate", expression = "java(mapCandidate(jobApplicationEntity.getCandidate()))")
     @Mapping(target = "employer", expression = "java(mapEmployer(jobApplicationEntity.getEmployer()))")
     @Mapping(target = "jobOffer", expression = "java(mapJobOffer(jobApplicationEntity.getJobOffer()))")
@@ -39,14 +38,12 @@ public interface JobApplicationEntityMapper {
                 .build();
     }
 
-    // Dodajemy metodę mapującą tylko companyName z EmployerEntity
     default Employer mapEmployer(EmployerEntity employerEntity) {
         return Employer.builder()
                 .employerId(employerEntity.getEmployerId())
                 .companyName(employerEntity.getCompanyName())
                 .build();
     }
-
 
     default Candidate mapCandidate(CandidateEntity candidateEntity) {
         return Candidate.builder()

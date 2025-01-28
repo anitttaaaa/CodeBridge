@@ -66,7 +66,6 @@ public class CandidateEntity {
     @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
     private List<CandidateExperienceEntity> candidateExperiences;
 
-
     @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
     private List<CandidateProjectEntity> candidateProjects;
 

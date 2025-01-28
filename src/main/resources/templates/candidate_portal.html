@@ -6,13 +6,10 @@
 
 <head>
     <title>Find your job!</title>
-    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
-    <!-- Bootstrap JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -26,7 +23,6 @@
 
     <div class="candidate-card">
         <div class="card-body ">
-            <!-- Przycisk do edycji profilu - przeniesiony na górę -->
             <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
                     data-target="#editProfileModal">
                 <i class="fas fa-pencil-alt"></i> Edit Details
@@ -143,14 +139,8 @@
                             <i class="fas fa-pencil-alt"></i> Edit Status
                         </button>
                     </div>
-
                 </div>
-
-
-
             </div>
-
-
             <!-------status modal------------------------------------------------------------------------>
             <div class="modal fade" id="editStatusModal" tabindex="-1" role="dialog"
                  aria-labelledby="editStatusModalLabel" aria-hidden="true">
@@ -259,14 +249,11 @@
                 </div>
             </div>
         </div>
-
-
         <!-- Jeśli kandydat jest nullem, wyświetl komunikat -->
         <div th:if="${candidate == null}">
             <p>No candidate details available. Please provide a valid email.</p>
         </div>
     </div>
-
     <!---BIO------------------------------------------------------------------------------------------------------------------------------------------------->
     <div class="candidate-card">
         <div class="card-body">
@@ -323,7 +310,6 @@
             </p>
         </div>
     </div>
-
     <!-- Nowe Okno Modal do edycji specjalizacji technicznej -->
     <div class="modal fade" id="editTechSpecializationModal" tabindex="-1" role="dialog"
          aria-labelledby="editTechSpecializationModalLabel" aria-hidden="true">
@@ -354,7 +340,6 @@
         </div>
     </div>
     <!--SKILLS------------------------------------------------------------------------------------------->
-
     <div class="candidate-card">
         <div class="card-body">
             <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
@@ -370,7 +355,6 @@
             </ul>
         </div>
     </div>
-
     <!-- Modal do edycji umiejętności -->
     <div class="modal fade" id="editSkillsModal" tabindex="-1" role="dialog" aria-labelledby="editSkillsModalLabel"
          aria-hidden="true">
@@ -394,7 +378,6 @@
                                         th:value="${skill.getSkill()}"
                                         th:text="${skill.getSkill()}"></option>
                             </select>
-
                             <div class="input-group mb-3"
                                  th:each="skill : ${T(pl.zajavka.CodeBridge.api.enums.SkillsEnum).values()}">
                                 <div class="input-group-text">
@@ -416,7 +399,6 @@
         </div>
     </div>
     <!----EXPERIENCE---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-
     <div class="candidate-card">
         <div class="card-body">
             <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
@@ -441,7 +423,6 @@
                                                                             th:text="${experience.companyName}"></span>
                                 </div>
                             </div>
-
                             <!-- Sekcja z datami -->
                             <div class="experience-dates text-right">
                                 <p class="mb-1"><strong>From:</strong> <span
@@ -449,8 +430,6 @@
                                 <p class="mb-1"><strong>To:</strong> <span th:text="${experience.toDate}"></span>
                                 </p>
                             </div>
-
-                            <!-- Przyciski -->
                             <div class="experience-actions ml-3">
                                 <!-- Edycja doświadczenia -->
                                 <button type="button" class="btn btn-primary change-photo-button"
@@ -458,7 +437,6 @@
                                         data-toggle="modal" title="Edit">
                                     <i class="fas fa-pencil-alt icon-size"></i>
                                 </button>
-
                                 <!-- Usuwanie doświadczenia -->
                                 <form th:action="@{/candidate-portal/delete-experience}" method="post"
                                       class="d-inline">
@@ -482,7 +460,6 @@
             </div>
         </div>
     </div>
-
     <!-- Modal edycji doświadczenia dla każdego obiektu -->
     <div th:each="experience : ${candidateExperiences}" class="modal fade"
          th:id="'editExperienceModal-' + ${experience.candidateExperienceId}" tabindex="-1" role="dialog"
@@ -532,8 +509,6 @@
             </div>
         </div>
     </div>
-
-
     <!-- Modal ADD -->
     <div class="modal fade" id="addExperienceModal" tabindex="-1" role="dialog"
          aria-labelledby="addExperienceModalLabel" aria-hidden="true">
@@ -553,35 +528,30 @@
                             <input type="text" class="form-control" id="companyName" name="companyName"
                                    th:value="${candidateExperienceDTO != null ? candidateExperienceDTO.companyName : ''}">
                         </div>
-
                         <!-- Position -->
                         <div class="form-group">
                             <label for="candidatePosition">Position</label>
                             <input type="text" class="form-control" id="candidatePosition" name="candidatePosition"
                                    th:value="${candidateExperienceDTO != null ? candidateExperienceDTO.candidatePosition : ''}">
                         </div>
-
                         <!-- Description -->
                         <div class="form-group">
                             <label for="description">Description</label>
                             <textarea class="form-control" id="description" name="description"
                                       th:text="${candidateExperienceDTO != null ? candidateExperienceDTO.description : ''}"></textarea>
                         </div>
-
                         <!-- From Date -->
                         <div class="form-group">
                             <label for="fromDate">From</label>
                             <input type="date" class="form-control" id="fromDate" name="fromDate"
                                    th:value="${candidateExperienceDTO != null ? candidateExperienceDTO.fromDate : ''}">
                         </div>
-
                         <!-- To Date -->
                         <div class="form-group">
                             <label for="toDate">To</label>
                             <input type="date" class="form-control" id="toDate" name="toDate"
                                    th:value="${candidateExperienceDTO != null ? candidateExperienceDTO.toDate : ''}">
                         </div>
-
                         <!-- Submit Button -->
                         <button type="submit" class="add-job-offer-button btn btn-primary">Save changes</button>
                     </form>
@@ -589,7 +559,6 @@
             </div>
         </div>
     </div>
-
     <!-----PROJECT--------------------------------------------------------------------------------------------------------------------------------------->
     <div class="candidate-card">
         <div class="card-body">
@@ -603,11 +572,8 @@
                 <!-- Pętla po projektach kandydata -->
                 <div th:each="project : ${candidateProjects}" class="frame-card card mb-3">
                     <div class="card-body">
-                        <!-- Główna sekcja: tytuł projektu, technologie, daty i przyciski -->
                         <div class="d-flex justify-content-between align-items-center">
-                            <!-- Lewa sekcja: Tytuł projektu i technologie -->
                             <div>
-                                <!-- Informacyjne teksty w ramkach -->
                                 <div class="experience-info">Title: <span class="experience-info-value"
                                                                           th:text="${project.projectTitle}"></span>
                                 </div>
@@ -615,14 +581,10 @@
                                                                                  th:text="${project.technologies}"></span>
                                 </div>
                             </div>
-
-                            <!-- Sekcja z datami -->
                             <div class="experience-dates text-right">
                                 <p class="mb-1"><strong>From:</strong> <span th:text="${project.fromDate}"></span></p>
                                 <p class="mb-1"><strong>To:</strong> <span th:text="${project.toDate}"></span></p>
                             </div>
-
-                            <!-- Przyciski -->
                             <div class="experience-actions ml-3">
                                 <!-- Edycja projektu -->
                                 <button type="button" class="btn btn-primary change-photo-button"
@@ -630,7 +592,6 @@
                                         data-toggle="modal" title="Edit">
                                     <i class="fas fa-pencil-alt icon-size"></i>
                                 </button>
-
                                 <!-- Usuwanie projektu -->
                                 <form th:action="@{/candidate-portal/delete-project}" method="post" class="d-inline">
                                     <input type="hidden" name="candidateProjectId"
@@ -642,26 +603,23 @@
                                 </form>
                             </div>
                         </div>
-
                         <!-- Opis -->
                         <div class="mt-3">
-                            <div class="experience-info">Description:</div> <!-- Etykieta Description -->
+                            <div class="experience-info">Description:</div>
                             <div class="experience-info-value description" th:text="${project.description}"></div>
-                            <!-- Wartość description -->
                         </div>
 
                         <!-- Link do projektu -->
                         <div class="mt-3">
-                            <div class="experience-info">Project Link:</div> <!-- Etykieta Project Link -->
+                            <div class="experience-info">Project Link:</div>
                             <a th:href="${project.projectLink}" target="_blank" class="experience-info-value"
-                               th:text="${project.projectLink}"></a> <!-- Wartość link -->
+                               th:text="${project.projectLink}"></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Modal ADD -->
     <div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="addProjectModalLabel"
          aria-hidden="true">
@@ -675,56 +633,42 @@
                 </div>
                 <div class="modal-body">
                     <form action="#" th:action="@{/candidate-portal/add-candidate-project}" method="post">
-                        <!-- Project Title -->
                         <div class="form-group">
                             <label for="projectTitle">Project Title</label>
                             <input type="text" class="form-control" id="projectTitle" name="projectTitle"
                                    th:value="${candidateProjectDTO != null ? candidateProjectDTO.projectTitle : ''}">
                         </div>
-
-                        <!-- Technologies -->
                         <div class="form-group">
                             <label for="technologies">Technologies</label>
                             <input type="text" class="form-control" id="projectTechnologies" name="technologies"
                                    th:value="${candidateProjectDTO != null ? candidateProjectDTO.technologies : ''}">
                         </div>
-
-                        <!-- Description -->
                         <div class="form-group">
                             <label for="description">Description</label>
                             <textarea class="form-control" id="projectDescription" name="description"
                                       th:text="${candidateProjectDTO != null ? candidateProjectDTO.description : ''}"></textarea>
                         </div>
-
-                        <!-- From Date -->
                         <div class="form-group">
                             <label for="fromDate">From</label>
                             <input type="date" class="form-control" id="fromDateProject" name="fromDate"
                                    th:value="${candidateProjectDTO != null ? candidateProjectDTO.fromDate : ''}">
                         </div>
-
-                        <!-- To Date -->
                         <div class="form-group">
                             <label for="toDate">To</label>
                             <input type="date" class="form-control" id="toDateProject" name="toDate"
                                    th:value="${candidateProjectDTO != null ? candidateProjectDTO.toDate : ''}">
                         </div>
-
-                        <!-- Project Link -->
                         <div class="form-group">
                             <label for="projectLink">Project Link</label>
                             <input type="text" class="form-control" id="projectLink" name="projectLink"
                                    th:value="${candidateProjectDTO != null ? candidateProjectDTO.projectLink : ''}">
                         </div>
-
-                        <!-- Submit Button -->
                         <button type="submit" class="add-job-offer-button btn btn-primary">Save changes</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Modal edycji projektu dla każdego obiektu -->
     <div th:each="project : ${candidateProjects}" class="modal fade"
          th:id="'editProjectModal-' + ${project.candidateProjectId}" tabindex="-1" role="dialog"
@@ -738,54 +682,39 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- Formularz edycji -->
                     <form th:action="@{/candidate-portal/update-candidate-project}" method="post">
                         <input type="hidden" name="candidateProjectId" th:value="${project.candidateProjectId}"/>
                         <input type="hidden" name="candidateId" th:value="${project.candidateId}"/>
-
-                        <!-- Project Title -->
                         <div class="form-group">
                             <label for="editProjectTitle">Project Title</label>
                             <input type="text" class="form-control" id="editProjectTitle" name="projectTitle"
                                    th:value="${project.projectTitle}">
                         </div>
-
-                        <!-- Technologies -->
                         <div class="form-group">
                             <label for="editTechnologies">Technologies</label>
                             <input type="text" class="form-control" id="editProjectTechnologies" name="technologies"
                                    th:value="${project.technologies}">
                         </div>
-
-                        <!-- Description -->
                         <div class="form-group">
                             <label for="editDescription">Description</label>
                             <textarea class="form-control" id="editProjectDescription" name="description"
                                       th:text="${project.description}"></textarea>
                         </div>
-
-                        <!-- From Date -->
                         <div class="form-group">
                             <label for="editFromDate">From</label>
                             <input type="date" class="form-control" id="editFromDateProject" name="fromDate"
                                    th:value="${project.fromDate}">
                         </div>
-
-                        <!-- To Date -->
                         <div class="form-group">
                             <label for="editToDate">To</label>
                             <input type="date" class="form-control" id="editToDateProject" name="toDate"
                                    th:value="${project.toDate}">
                         </div>
-
-                        <!-- Project Link -->
                         <div class="form-group">
                             <label for="editProjectLink">Project Link</label>
                             <input type="text" class="form-control" id="editProjectLink" name="projectLink"
                                    th:value="${project.projectLink}">
                         </div>
-
-                        <!-- Submit Button -->
                         <button type="submit" class="add-job-offer-button btn btn-primary mb-3">Save changes</button>
                     </form>
                 </div>
@@ -793,7 +722,6 @@
         </div>
     </div>
     <!---EDUCATION-------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-
     <div class="candidate-card">
         <div class="card-body">
             <button type="button" class="add-job-offer-button btn btn-primary mb-3" data-toggle="modal"
@@ -803,14 +731,10 @@
             <h4 class="mb-0">My Education</h4>
             <p></p>
             <div class="experience-list">
-                <!-- Pętla po edukacji kandydata -->
                 <div th:each="education : ${candidateEducationStages}" class="frame-card card mb-3">
                     <div class="card-body">
-                        <!-- Główna sekcja: instytucja, stopień, daty i przyciski -->
                         <div class="d-flex justify-content-between align-items-center">
-                            <!-- Lewa sekcja: Instytucja i stopień -->
                             <div>
-                                <!-- Informacyjne teksty w ramkach -->
                                 <div class="education-info">Institution: <span class="experience-info-value"
                                                                                th:text="${education.institution}"></span>
                                 </div>
@@ -821,14 +745,10 @@
                                                                                   th:text="${education.fieldOfStudy}"></span>
                                 </div>
                             </div>
-
-                            <!-- Sekcja z datami -->
                             <div class="experience-dates text-right">
                                 <p class="mb-1"><strong>From:</strong> <span th:text="${education.fromDate}"></span></p>
                                 <p class="mb-1"><strong>To:</strong> <span th:text="${education.toDate}"></span></p>
                             </div>
-
-                            <!-- Przyciski -->
                             <div class="experience-actions ml-3">
                                 <!-- Edycja edukacji -->
                                 <button type="button" class="btn btn-primary change-photo-button"
@@ -853,7 +773,6 @@
             </div>
         </div>
     </div>
-
     <!-- Modal ADD Education -->
     <div class="modal fade" id="addEducationModal" tabindex="-1" role="dialog" aria-labelledby="addEducationModalLabel"
          aria-hidden="true">
@@ -867,49 +786,37 @@
                 </div>
                 <div class="modal-body">
                     <form action="#" th:action="@{/candidate-portal/add-candidate-education}" method="post">
-                        <!-- Institution -->
                         <div class="form-group">
                             <label for="institution">Institution</label>
                             <input type="text" class="form-control" id="educationInstitution" name="institution"
                                    th:value="${candidateEducationDTO != null ? candidateEducationDTO.institution : ''}">
                         </div>
-
-                        <!-- Degree -->
                         <div class="form-group">
                             <label for="degree">Degree</label>
                             <input type="text" class="form-control" id="degree" name="degree"
                                    th:value="${candidateEducationDTO != null ? candidateEducationDTO.degree : ''}">
                         </div>
-
-                        <!-- Field of Study -->
                         <div class="form-group">
                             <label for="fieldOfStudy">Field of Study</label>
                             <input type="text" class="form-control" id="fieldOfStudy" name="fieldOfStudy"
                                    th:value="${candidateEducationDTO != null ? candidateEducationDTO.fieldOfStudy : ''}">
                         </div>
-
-                        <!-- From Date -->
                         <div class="form-group">
                             <label for="fromDateEducation">From</label>
                             <input type="date" class="form-control" id="fromDateEducation" name="fromDate"
                                    th:value="${candidateEducationDTO != null ? candidateEducationDTO.fromDate : ''}">
                         </div>
-
-                        <!-- To Date -->
                         <div class="form-group">
                             <label for="toDateEducation">To</label>
                             <input type="date" class="form-control" id="toDateEducation" name="toDate"
                                    th:value="${candidateEducationDTO != null ? candidateEducationDTO.toDate : ''}">
                         </div>
-
-                        <!-- Submit Button -->
                         <button type="submit" class="add-job-offer-button btn btn-primary">Save changes</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Modal edycji edukacji dla każdego obiektu -->
     <div th:each="education : ${candidateEducationStages}" class="modal fade"
          th:id="'editEducationModal-' + ${education.candidateEducationId}" tabindex="-1" role="dialog"
@@ -927,51 +834,37 @@
                     <form th:action="@{/candidate-portal/update-candidate-education}" method="post">
                         <input type="hidden" name="candidateEducationId" th:value="${education.candidateEducationId}"/>
                         <input type="hidden" name="candidateId" th:value="${education.candidateId}"/>
-
-                        <!-- Institution -->
                         <div class="form-group">
                             <label for="editInstitution">Institution</label>
                             <input type="text" class="form-control" id="editEducationInstitution" name="institution"
                                    th:value="${education.institution}">
                         </div>
-
-                        <!-- Degree -->
                         <div class="form-group">
                             <label for="editDegree">Degree</label>
                             <input type="text" class="form-control" id="editDegree" name="degree"
                                    th:value="${education.degree}">
                         </div>
-
-                        <!-- Field of Study -->
                         <div class="form-group">
                             <label for="editFieldOfStudy">Field of Study</label>
                             <input type="text" class="form-control" id="editFieldOfStudy" name="fieldOfStudy"
                                    th:value="${education.fieldOfStudy}">
                         </div>
-
-                        <!-- From Date -->
                         <div class="form-group">
                             <label for="editFromDateEducation">From</label>
                             <input type="date" class="form-control" id="editFromDateEducation" name="fromDate"
                                    th:value="${education.fromDate}">
                         </div>
-
-                        <!-- To Date -->
                         <div class="form-group">
                             <label for="editToDateEducation">To</label>
                             <input type="date" class="form-control" id="editToDateEducation" name="toDate"
                                    th:value="${education.toDate}">
                         </div>
-
-                        <!-- Submit Button -->
                         <button type="submit" class="add-job-offer-button btn btn-primary mb-3">Save changes</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
-
     <!--COURSE----------------------------------------------------------------------------------------------------------------------------------------------------->
     <div class="candidate-card">
         <div class="card-body">
@@ -982,14 +875,10 @@
             <h4 class="mb-0">My Courses</h4>
             <p></p>
             <div class="experience-list">
-                <!-- Pętla po kursach kandydata -->
                 <div th:each="course : ${candidateCourses}" class="frame-card card mb-3">
                     <div class="card-body">
-                        <!-- Główna sekcja: instytucja, tytuł kursu, technologie, daty i przyciski -->
                         <div class="d-flex justify-content-between align-items-center">
-                            <!-- Lewa sekcja: Instytucja, Tytuł kursu i Technologie -->
                             <div>
-                                <!-- Informacyjne teksty w ramkach -->
                                 <div class="course-info">Institution: <span class="experience-info-value"
                                                                             th:text="${course.institution}"></span>
                                 </div>
@@ -1000,14 +889,10 @@
                                                                              th:text="${course.technologies}"></span>
                                 </div>
                             </div>
-
-                            <!-- Sekcja z datami -->
                             <div class="experience-dates text-right">
                                 <p class="mb-1"><strong>From:</strong> <span th:text="${course.fromDate}"></span></p>
                                 <p class="mb-1"><strong>To:</strong> <span th:text="${course.toDate}"></span></p>
                             </div>
-
-                            <!-- Przyciski -->
                             <div class="experience-actions ml-3">
                                 <!-- Edycja kursu -->
                                 <button type="button" class="btn btn-primary change-photo-button"
@@ -1015,7 +900,6 @@
                                         data-toggle="modal" title="Edit">
                                     <i class="fas fa-pencil-alt icon-size"></i>
                                 </button>
-
                                 <!-- Usuwanie kursu -->
                                 <form th:action="@{/candidate-portal/delete-course}" method="post" class="d-inline">
                                     <input type="hidden" name="candidateCourseId"
@@ -1027,19 +911,15 @@
                                 </form>
                             </div>
                         </div>
-
-                        <!-- Opis -->
                         <div class="mt-3">
                             <div class="course-info">Description:</div> <!-- Etykieta Description -->
                             <div class="course-info-value description" th:text="${course.description}"></div>
-                            <!-- Wartość description -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Modal ADD Course -->
     <div class="modal fade" id="addCourseModal" tabindex="-1" role="dialog" aria-labelledby="addCourseModalLabel"
          aria-hidden="true">
@@ -1053,56 +933,42 @@
                 </div>
                 <div class="modal-body">
                     <form action="#" th:action="@{/candidate-portal/add-candidate-course}" method="post">
-                        <!-- Institution -->
                         <div class="form-group">
                             <label for="institution">Institution</label>
                             <input type="text" class="form-control" id="institution" name="institution"
                                    th:value="${candidateCourseDTO != null ? candidateCourseDTO.institution : ''}">
                         </div>
-
-                        <!-- Course Title -->
                         <div class="form-group">
                             <label for="courseTitle">Course Title</label>
                             <input type="text" class="form-control" id="courseTitle" name="courseTitle"
                                    th:value="${candidateCourseDTO != null ? candidateCourseDTO.courseTitle : ''}">
                         </div>
-
-                        <!-- Description -->
                         <div class="form-group">
                             <label for="description">Description</label>
                             <textarea class="form-control" id="courseDescription" name="description"
                                       th:text="${candidateCourseDTO != null ? candidateCourseDTO.description : ''}"></textarea>
                         </div>
-
-                        <!-- Technologies -->
                         <div class="form-group">
                             <label for="technologies">Technologies</label>
                             <input type="text" class="form-control" id="technologies" name="technologies"
                                    th:value="${candidateCourseDTO != null ? candidateCourseDTO.technologies : ''}">
                         </div>
-
-                        <!-- From Date -->
                         <div class="form-group">
                             <label for="fromDateCourse">From</label>
                             <input type="date" class="form-control" id="fromDateCourse" name="fromDate"
                                    th:value="${candidateCourseDTO != null ? candidateCourseDTO.fromDate : ''}">
                         </div>
-
-                        <!-- To Date -->
                         <div class="form-group">
                             <label for="toDateCourse">To</label>
                             <input type="date" class="form-control" id="toDateCourse" name="toDate"
                                    th:value="${candidateCourseDTO != null ? candidateCourseDTO.toDate : ''}">
                         </div>
-
-                        <!-- Submit Button -->
                         <button type="submit" class="add-job-offer-button btn btn-primary">Save changes</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Modal edycji kursu dla każdego obiektu -->
     <div th:each="course : ${candidateCourses}" class="modal fade"
          th:id="'editCourseModal-' + ${course.candidateCourseId}" tabindex="-1" role="dialog"
@@ -1120,58 +986,42 @@
                     <form th:action="@{/candidate-portal/update-candidate-course}" method="post">
                         <input type="hidden" name="candidateCourseId" th:value="${course.candidateCourseId}"/>
                         <input type="hidden" name="candidateId" th:value="${course.candidateId}"/>
-
-                        <!-- Institution -->
                         <div class="form-group">
                             <label for="editInstitution">Institution</label>
                             <input type="text" class="form-control" id="editInstitution" name="institution"
                                    th:value="${course.institution}">
                         </div>
-
-                        <!-- Course Title -->
                         <div class="form-group">
                             <label for="editCourseTitle">Course Title</label>
                             <input type="text" class="form-control" id="editCourseTitle" name="courseTitle"
                                    th:value="${course.courseTitle}">
                         </div>
-
-                        <!-- Description -->
                         <div class="form-group">
                             <label for="editDescription">Description</label>
                             <textarea class="form-control" id="editCourseDescription" name="description"
                                       th:text="${course.description}"></textarea>
                         </div>
-
-                        <!-- Technologies -->
                         <div class="form-group">
                             <label for="editTechnologies">Technologies</label>
                             <input type="text" class="form-control" id="editTechnologies" name="technologies"
                                    th:value="${course.technologies}">
                         </div>
-
-                        <!-- From Date -->
                         <div class="form-group">
                             <label for="editFromDateCourse">From</label>
                             <input type="date" class="form-control" id="editFromDateCourse" name="fromDate"
                                    th:value="${course.fromDate}">
                         </div>
-
-                        <!-- To Date -->
                         <div class="form-group">
                             <label for="editToDateCourse">To</label>
                             <input type="date" class="form-control" id="editToDateCourse" name="toDate"
                                    th:value="${course.toDate}">
                         </div>
-
-                        <!-- Submit Button -->
                         <button type="submit" class="add-job-offer-button btn btn-primary mb-3">Save changes</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
-
     <!------HOBBY--------------------------------------------------------------------------------------------------------------------------------------------------------->
     <div class="candidate-card">
         <div class="card-body">
@@ -1196,7 +1046,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- Form for updating personal details -->
                     <form th:action="@{/candidate-portal/update-candidate-hobby}" method="post">
                         <div class="form-group ">
                             <label for="aboutMe">My hobby:</label>
@@ -1210,8 +1059,6 @@
             </div>
         </div>
     </div>
-
-
 </div>
 </body>
 </html>

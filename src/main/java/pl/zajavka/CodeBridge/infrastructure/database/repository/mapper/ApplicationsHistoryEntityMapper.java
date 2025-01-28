@@ -22,7 +22,6 @@ public interface ApplicationsHistoryEntityMapper {
     ApplicationsHistory mapToDomain(ApplicationsHistoryEntity applicationsHistoryEntity);
 
     default JobOffer mapJobOffer(JobOfferEntity jobOfferEntity) {
-        // Mapowanie pól z JobOfferEntity na JobOffer
         return JobOffer.builder()
                 .jobOfferId(jobOfferEntity.getJobOfferId())
                 .jobOfferTitle(jobOfferEntity.getJobOfferTitle())
@@ -37,7 +36,6 @@ public interface ApplicationsHistoryEntityMapper {
                 .build();
     }
 
-    // Dodajemy metodę mapującą tylko companyName z EmployerEntity
     default Employer mapEmployer(EmployerEntity employerEntity) {
         return Employer.builder()
                 .employerId(employerEntity.getEmployerId())

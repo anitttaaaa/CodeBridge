@@ -29,7 +29,6 @@ public class CandidateProjectRepository implements CandidateProjectDAO {
 
         CandidateProjectEntity projectToUpdate = candidateProjectEntityMapper.mapToEntity(candidateProjectToUpdate);
         candidateProjectJpaRepository.saveAndFlush(projectToUpdate);
-
     }
 
     @Override

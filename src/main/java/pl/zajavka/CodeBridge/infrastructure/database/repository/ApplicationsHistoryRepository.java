@@ -15,12 +15,10 @@ public class ApplicationsHistoryRepository implements ApplicationsHistoryDAO {
     ApplicationsHistoryEntityMapper applicationsHistoryEntityMapper;
     ApplicationsHistoryJpaRepository applicationsHistoryJpaRepository;
 
-
     @Override
     public void saveInHistory(ApplicationsHistory jobApplicationAccepted) {
 
         ApplicationsHistoryEntity jobApplicationAddToHistory = applicationsHistoryEntityMapper.mapToEntity(jobApplicationAccepted);
         applicationsHistoryJpaRepository.saveAndFlush(jobApplicationAddToHistory);
-
     }
 }

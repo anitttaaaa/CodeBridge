@@ -70,9 +70,7 @@ public class JobOfferService {
     public List<JobOffer> getAllJobOffers() {
 
         return jobOfferDAO.findAllJobOffers();
-
     }
-
 
 
     public List<JobOffer> getFilteredJobOffers(
@@ -82,10 +80,8 @@ public class JobOfferService {
             String experience,
             String salary) {
 
-        // Pobranie wszystkich ofert z bazy
         List<JobOffer> allJobOffers = jobOfferDAO.findAll();
 
-        // Filtrowanie ofert
         return allJobOffers.stream()
                 .filter(job -> techSpecialization == null || techSpecialization.equals(job.getTechSpecialization()))
                 .filter(job -> workType == null || workType.equals(job.getWorkType()))
@@ -93,7 +89,6 @@ public class JobOfferService {
                 .filter(job -> experience == null || experience.equals(job.getExperience()))
                 .filter(job -> salary == null || job.getSalary().equals(salary))
                 .collect(Collectors.toList());
-
     }
 
     @Transactional

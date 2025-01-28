@@ -49,8 +49,8 @@ public class CodeBridgeUserDetailsService implements UserDetailsService {
     @Transactional
     public Integer getUserId(String email) {
         return userRepository.findByEmail(email).getId();
-    }
 
+    }
 
 
 }
