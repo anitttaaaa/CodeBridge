@@ -68,15 +68,14 @@ public class JobApplicationService {
                 .orElseThrow(() -> new EntityNotFoundException("Job application not found for id: " + applicationId));
 
 
-        Candidate updatedCandidate = jobApplication.getCandidate()
-                .withStatus(StatusEnum.HIRED.getDescription());
-        candidateDAO.updateCandidate(updatedCandidate);
+        String candidateEmail = jobApplication.getCandidate().getEmail();
+        Candidate candidateToUpdate = candidateService.findCandidateByEmail(candidateEmail);
+        Candidate candidateUpdated = candidateToUpdate.withStatus(StatusEnum.HIRED.getDescription());
+        candidateDAO.updateCandidate(candidateUpdated);
 
         jobApplication = jobApplication.withApplicationStatus(ApplicationStatus.ACCEPTED);
         jobApplicationDAO.save(jobApplication);
 
-
-        Candidate candidate = jobApplication.getCandidate();
         Employer employer = jobApplication.getEmployer();
         JobOffer jobOffer = jobApplication.getJobOffer();
         ApplicationStatus applicationStatus = jobApplication.getApplicationStatus();
@@ -85,7 +84,7 @@ public class JobApplicationService {
         ApplicationsHistory jobApplicationAccepted = ApplicationsHistory.builder()
                 .applicationHistoryId(applicationId)
                 .jobOffer(jobOffer)
-                .candidate(candidate)
+                .candidate(candidateUpdated)
                 .employer(employer)
                 .applicationStatus(applicationStatus)
                 .build();
