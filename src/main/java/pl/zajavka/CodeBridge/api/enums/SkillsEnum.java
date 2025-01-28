@@ -30,6 +30,7 @@ public enum SkillsEnum {
     REST_API("REST API"),
     RUBY("Ruby"),
     SPRING("Spring"),
+    SPRING_BOOT("Spring Boot"),
     TYPE_SCRIPT("TypeScript"),
     VISUAL_STUDIO_CODE("Visual Studio Code"),
     WEB_STORM("WebStorm");

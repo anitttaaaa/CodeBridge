@@ -10,7 +10,11 @@ import pl.zajavka.CodeBridge.api.dto.mapper.CandidateMapper;
 import pl.zajavka.CodeBridge.business.dao.CandidateDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.exception.NotFoundException;
+import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateEntity;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 @Service
@@ -19,6 +23,8 @@ public class CandidateService {
 
     private final CandidateDAO candidateDAO;
     private final CandidateMapper candidateMapper;
+
+
 
     @Transactional(readOnly = true)
     public Candidate findLoggedInCandidate() {
