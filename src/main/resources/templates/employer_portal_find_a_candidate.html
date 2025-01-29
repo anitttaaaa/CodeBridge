@@ -56,6 +56,8 @@
         </div>
     </div>
     <!-- Section to display filtered candidates -->
+    <h2 style="margin-left: 100px; margin-top: 30px; margin-bottom: 30px;">Candidates:</h2>
+
     <div class="job-offers-container">
         <div class="candidate-card" th:each="candidate : ${allCandidates}">
             <div class="card-body">
@@ -63,6 +65,9 @@
                     <h5 class="mb-0" th:text="${candidate.name + ' ' + candidate.surname}">Candidate Name</h5>
                     <a th:href="'/CodeBridge/employer-portal/job-applications/candidate-profile?candidateId=' + ${candidate.candidateId}"
                        target="_blank">
+                        <button type="button" class="add-job-offer-button btn btn-primary apply-button">
+                            Offer a Job (future feature)
+                        </button>
                         <button type="button" class="add-job-offer-button btn btn-primary apply-button">
                             Candidate Profile
                         </button>
