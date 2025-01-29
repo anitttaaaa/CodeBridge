@@ -24,6 +24,7 @@
 @media (max-width: 991px) {
     .navbar-collapse.show .separator {
         display: none;
+
     }
 }
 

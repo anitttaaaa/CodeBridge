@@ -60,7 +60,7 @@ public class JobApplicationController {
             Authentication authentication) {
         jobApplicationService.applyForJob(jobOfferId, authentication);
 
-        return "redirect:/candidate-applications";
+        return "redirect:/candidate-portal/candidate-applications";
     }
 
     @GetMapping(CANDIDATE_GET_MY_APPLICATIONS)
