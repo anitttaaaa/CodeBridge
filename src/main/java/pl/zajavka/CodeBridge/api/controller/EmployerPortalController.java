@@ -142,6 +142,14 @@ public class EmployerPortalController {
             @RequestParam(required = false) String techSpecialization,
             @RequestParam(required = false) String status,
             Model model) {
+
+        if (techSpecialization != null && techSpecialization.isEmpty()) {
+            techSpecialization = null;
+        }
+        if (status != null && status.isEmpty()) {
+            status = null;
+        }
+
         List<Candidate> filteredCandidates = employerService.getFilteredCandidates(techSpecialization, status)
                 .stream().sorted(Comparator.comparingInt(Candidate::getCandidateId).reversed())
                 .collect(Collectors.toList());

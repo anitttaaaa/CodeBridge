@@ -25,7 +25,7 @@
                             <div class="col-md-3">
                                 <label for="techSpecializationSelect" class="form-label">Specialization</label>
                                 <select class="form-select" id="techSpecializationSelect" name="techSpecialization">
-                                    <option value="" disabled selected>Choose...</option>
+                                    <option value="" selected>Choose...</option>
                                     <option th:each="techSpecialization : ${T(pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum).values()}"
                                             th:value="${techSpecialization}" th:text="${techSpecialization}">
                                     </option>
@@ -34,7 +34,7 @@
                             <div class="col-md-3">
                                 <label for="workTypeSelect" class="form-label">Work Type</label>
                                 <select class="form-select" id="workTypeSelect" name="workType">
-                                    <option value="" disabled selected>Choose...</option>
+                                    <option value="" selected>Choose...</option>
                                     <option th:each="workType : ${T(pl.zajavka.CodeBridge.api.enums.WorkTypesEnum).values()}"
                                             th:value="${workType}" th:text="${workType}">
                                     </option>
@@ -43,7 +43,7 @@
                             <div class="col-md-3">
                                 <label for="citySelect" class="form-label">City</label>
                                 <select class="form-select" id="citySelect" name="city">
-                                    <option value="" disabled selected>Choose...</option>
+                                    <option value="" selected>Choose...</option>
                                     <option th:each="city : ${T(pl.zajavka.CodeBridge.api.enums.CitiesEnum).values()}"
                                             th:value="${city}" th:text="${city}">
                                     </option>
@@ -52,7 +52,7 @@
                             <div class="col-md-3">
                                 <label for="experienceSelect" class="form-label">Experience</label>
                                 <select class="form-select" id="experienceSelect" name="experience">
-                                    <option value="" disabled selected>Choose...</option>
+                                    <option value="" selected>Choose...</option>
                                     <option th:each="experience : ${T(pl.zajavka.CodeBridge.api.enums.ExperiencesEnum).values()}"
                                             th:value="${experience}" th:text="${experience}">
                                     </option>
@@ -61,7 +61,7 @@
                             <div class="col-md-3">
                                 <label for="salarySelect" class="form-label">Salary</label>
                                 <select class="form-select" id="salarySelect" name="salary">
-                                    <option value="" disabled selected>Choose...</option>
+                                    <option value="" selected>Choose...</option>
                                     <option th:each="salary : ${T(pl.zajavka.CodeBridge.api.enums.SalaryRangeEnum).values()}"
                                             th:value="${salary.name}" th:text="${salary.getRange()}">
                                     </option>
@@ -92,11 +92,11 @@
                 <div class="title-frame d-flex justify-content-between align-items-center">
 
                     <h4 class="mb-0" th:text="${jobOffer.jobOfferTitle}">Job Title</h4>
-                    <div sec:authorize="!isAuthenticated()">
-                        <a href="/CodeBridge/login" class="add-job-offer-button btn btn-primary apply-button">
-                            Apply Now
-                        </a>
-                    </div>
+<!--                    <div sec:authorize="!isAuthenticated()">-->
+<!--                        <a href="/CodeBridge/login" class="add-job-offer-button btn btn-primary apply-button">-->
+<!--                            Apply Now-->
+<!--                        </a>-->
+<!--                    </div>-->
                     <div sec:authorize="hasAuthority('CANDIDATE')">
                         <form th:action="@{/apply/{jobOfferId}(jobOfferId=${jobOffer.jobOfferId})}" method="post">
                             <button type="submit" class="add-job-offer-button btn btn-primary apply-button">

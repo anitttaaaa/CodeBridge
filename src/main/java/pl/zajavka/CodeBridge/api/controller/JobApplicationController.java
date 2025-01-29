@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class JobApplicationController {
 
     private static final String CANDIDATE_APPLY_FOR_A_JOB = "/apply/{jobOfferId}";
-    private static final String CANDIDATE_GET_MY_APPLICATIONS = "/candidate-applications";
+    private static final String CANDIDATE_GET_MY_APPLICATIONS = "/candidate-portal/candidate-applications";
     private static final String EMPLOYER_GET_APPLICATIONS_HISTORY = "/employer-portal/applications-history";
     private static final String CANDIDATE_GET_MY_APPLICATIONS_HISTORY = "/candidate-portal/applications-history";
 

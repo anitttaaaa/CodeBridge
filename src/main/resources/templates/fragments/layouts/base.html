@@ -26,7 +26,7 @@
     <div id="header">
 
         <div class="container-fluid">
-            <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg fixed-top">
                 <div class="container-fluid">
                     <!-- Logo -->
                     <a class="navbar-brand" href="/" th:href="@{/}">
@@ -34,7 +34,8 @@
                     </a>
 
                     <!-- Hamburger Button -->
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarContent"
                             aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -43,33 +44,64 @@
                     <div class="collapse navbar-collapse" id="navbarContent">
                         <!-- Navigation Links -->
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <span class="separator">|</span>
-
                             <!-- Dla użytkownika zalogowanego jako EMPLOYER -->
                             <li class="nav-item" sec:authorize="hasAuthority('EMPLOYER')">
-                                <a class="nav-link" th:href="@{/employer-portal}">EMPLOYER PORTAL</a>
+                                <div class="header-navigation me-auto">
+                                    <ul class=" navbar-nav me-auto mb-2 mb-lg-0">
+                                        <span class="separator">|</span>
+                                        <li class="nav-item"><a href="/CodeBridge/employer-portal" class="nav-link">MY
+                                            PROFILE</a></li>
+                                        <span class="separator">|</span>
+                                        <li class="nav-item"><a href="/CodeBridge/employer-portal/my-job-offers"
+                                                                class="nav-link">MY JOB OFFERS</a></li>
+                                        <span class="separator">|</span>
+                                        <li class="nav-item"><a href="/CodeBridge/employer-portal/new-job-offer"
+                                                                class="nav-link">NEW JOB OFFER</a></li>
+                                        <span class="separator">|</span>
+                                        <li class="nav-item"><a href="/CodeBridge/employer-portal/job-applications"
+                                                                class="nav-link">JOB APPLICATIONS</a></li>
+                                        <span class="separator">|</span>
+                                        <li class="nav-item"><a href="/CodeBridge/employer-portal/find-a-candidate"
+                                                                class="nav-link">FIND A CANDIDATE</a></li>
+                                        <span class="separator">|</span>
+                                        <li class="nav-item"><a href="/CodeBridge/employer-portal/applications-history"
+                                                                class="nav-link">HISTORY</a></li>
+                                        <span class="separator">|</span>
+                                    </ul>
+                                </div>
                             </li>
 
                             <!-- Dla użytkownika zalogowanego jako CANDIDATE -->
                             <li class="nav-item" sec:authorize="hasAuthority('CANDIDATE')">
-                                <a class="nav-link" th:href="@{/candidate-portal}">CANDIDATE PORTAL</a>
+                                <div class="header-navigation me-auto">
+                                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                        <span class="separator">|</span>
+                                        <li class="nav-item"><a th:href="@{/candidate-portal}"
+                                                                class="nav-link">MY
+                                            PROFILE</a></li>
+                                        <span class="separator">|</span>
+                                        <li class="nav-item"><a th:href="@{/candidate-portal/candidate-applications}"
+                                                                class="nav-link">MY
+                                            APPLICATIONS</a></li>
+                                        <span class="separator">|</span>
+                                        <li class="nav-item"><a th:href="@{/candidate-portal/applications-history}"
+                                                                class="nav-link">MY APPLICATIONS HISTORY</a></li>
+                                        <span class="separator">|</span>
+                                        <li class="nav-item"><a th:href="@{/candidate-portal/generate-cv}"
+                                                                class="nav-link" target="_blank">GENERATE CV (Under
+                                            Development)</a></li>
+                                        <span class="separator">|</span>
+                                    </ul>
+                                </div>
                             </li>
-
-                            <!-- Dla użytkownika niezalogowanego -->
-                            <li class="nav-item" sec:authorize="!isAuthenticated()">
-                                <a class="nav-link" th:href="@{/employer-portal}">EMPLOYER PORTAL</a>
-                            </li>
-                            <li class="nav-item" sec:authorize="!isAuthenticated()">
-                                <a class="nav-link" th:href="@{/candidate-portal}">CANDIDATE PORTAL</a>
-                            </li>
-
-                            <span class="separator">|</span>
                         </ul>
 
                         <!-- Authentication Buttons -->
                         <div class="d-flex">
-                            <a sec:authorize="!isAuthenticated()" class="add-job-offer-button btn btn-primary me-2" th:href="@{/login}">Log in</a>
-                            <a sec:authorize="isAuthenticated()" class="add-job-offer-button btn btn-primary" th:href="@{/logout}">Log out</a>
+                            <a sec:authorize="!isAuthenticated()" class="add-job-offer-button btn btn-primary me-2"
+                               th:href="@{/login}">Log in</a>
+                            <a sec:authorize="isAuthenticated()" class="add-job-offer-button btn btn-primary"
+                               th:href="@{/logout}">Log out</a>
                         </div>
                     </div>
                 </div>
@@ -79,15 +111,16 @@
 
     </div>
     <div id="main">
-
-        <div id="main_container" layout:fragment="mainContent">
-
-        </div>
-
+        <div id="main_container" layout:fragment="mainContent"></div>
+    </div>
+    <div id="candidate_container">
+        <div layout:fragment="candidateContent"></div>
+    </div>
+    <div id="employer_container">
+        <div layout:fragment="employerContent"></div>
     </div>
 </div>
 
-<!-- Bootstrap 5 JavaScript Bundle (includes Popper.js) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-WoMFnkWtGc8kUtR0uwvmweIovxnZwPXwhTgTwjWEZsB3B1KQgiSZHFO6B5IzLxcP"
         crossorigin="anonymous"></script>

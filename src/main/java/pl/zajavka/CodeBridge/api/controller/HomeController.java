@@ -42,8 +42,23 @@ public class HomeController {
             @RequestParam(required = false) String city,
             @RequestParam(required = false) String experience,
             @RequestParam(required = false) String salary,
-
             Model model) {
+
+        if (techSpecialization != null && techSpecialization.isEmpty()) {
+            techSpecialization = null;
+        }
+        if (workType != null && workType.isEmpty()) {
+            workType = null;
+        }
+        if (city != null && city.isEmpty()) {
+            city = null;
+        }
+        if (experience != null && experience.isEmpty()) {
+            experience = null;
+        }
+        if (salary != null && salary.isEmpty()) {
+            salary = null;
+        }
 
         List<JobOffer> filteredJobOffers = jobOfferService.getFilteredJobOffers(
                         techSpecialization, workType, city, experience, salary)

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/fragments/layouts/employer_portal_base}">
+      layout:decorate="~{/fragments/layouts/base}">
 
 <head>
     <title>Code Bridge!</title>
@@ -24,7 +24,7 @@
                             <div class="col-md-3">
                                 <label for="techSpecializationSelect" class="form-label">Specialization</label>
                                 <select class="form-select" id="techSpecializationSelect" name="techSpecialization">
-                                    <option value="" disabled selected>Choose...</option>
+                                    <option value="" selected>Choose...</option>
                                     <option th:each="techSpecialization : ${T(pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum).values()}"
                                             th:value="${techSpecialization}" th:text="${techSpecialization}">
                                     </option>
@@ -33,7 +33,7 @@
                             <div class="col-md-3">
                                 <label for="statusSelect" class="form-label">Status</label>
                                 <select class="form-select" id="statusSelect" name="status">
-                                    <option value="" disabled selected>Choose...</option>
+                                    <option value="" selected>Choose...</option>
                                     <option th:each="status : ${T(pl.zajavka.CodeBridge.api.enums.StatusEnum).values()}"
                                             th:value="${status.description}" th:text="${status.description}">
                                     </option>
@@ -42,7 +42,7 @@
                             <div class="col-md-3">
                                 <label for="skillsSelect" class="form-label">Skills (future feature)</label>
                                 <select class="form-select" id="skillsSelect" name="skills">
-                                    <option value="" disabled selected>Skills</option>
+                                    <option value="" selected>Skills</option>
                                     </option>
                                 </select>
                             </div>
