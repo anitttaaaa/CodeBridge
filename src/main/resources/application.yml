@@ -1,5 +1,4 @@
 server:
-  # default-owo jest 8080
   port: 8080
   servlet:
     context-path: /CodeBridge
@@ -32,3 +31,5 @@ spring:
       max-file-size: 2MB
       max-request-size: 2MB
       file-size-threshold: 3MB
+  resources:
+    static-locations: classpath:/static/, file:/app/static/

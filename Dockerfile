@@ -1,13 +1,11 @@
-#FROM eclipse-temurin:17
-#COPY build/libs/*.jar asdf.jar
-#ENTRYPOINT ["java", "-jar", "/asdf.jar"]
-
-# Zainstaluj Javę na obrazie bazowym alpine
-# Możesz wykorzystać inny obraz
+# Wybór obrazu bazowego
 FROM eclipse-temurin:17-jdk-alpine
-# Utwórz katalog roboczy
-WORKDIR /app
-# Skopiuj plik JAR z aplikacją do katalogu roboczego
-COPY build/libs/myapp.jar .
-# Uruchom aplikację
-CMD ["java", "-jar", "myapp.jar"]
+
+# Skopiowanie plików statycznych do kontenera, zachowując strukturę folderów
+COPY ./src/main/resources/static /static
+
+# Skopiowanie pliku JAR aplikacji
+COPY build/libs/myapp.jar /myapp.jar
+
+# Uruchomienie aplikacji
+CMD ["java", "-jar", "/myapp.jar"]

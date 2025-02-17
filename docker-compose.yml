@@ -1,23 +1,26 @@
-version: '3.1'
+version: '3.8'
+
 services:
   backend:
     build: .
     ports:
-      - 8080:8080
+      - "8080:8080"
     environment:
-      #      - SPRING_PROFILES_ACTIVE=local
+      - SPRING_PROFILES_ACTIVE=local
       - SPRING_DATASOURCE_URL=jdbc:postgresql://PostgreSQL:5432/code_bridge
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
     networks:
       - spring-boot-postgres
-  #    depends_on:
-  #      PostgreSdoQL:
-  #        condition: service_healthy
-  PostgreSQL:
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    restart: always
+
+  postgresql:
     image: postgres:15.0
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       - POSTGRES_DB=code_bridge
       - POSTGRES_USER=postgres
@@ -27,12 +30,14 @@ services:
     networks:
       - spring-boot-postgres
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: always
+
 volumes:
   db-data:
+
 networks:
   spring-boot-postgres:
-
