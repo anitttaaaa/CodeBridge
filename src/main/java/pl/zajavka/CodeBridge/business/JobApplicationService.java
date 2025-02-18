@@ -16,6 +16,7 @@ import pl.zajavka.CodeBridge.business.dao.CandidateDAO;
 import pl.zajavka.CodeBridge.business.dao.JobApplicationDAO;
 import pl.zajavka.CodeBridge.domain.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -168,7 +169,13 @@ public class JobApplicationService {
         String candidateEmail = authentication.getName();
         Integer candidateId = candidateService.findCandidateByEmail(candidateEmail).getCandidateId();
 
+
+
         List<ApplicationsHistory> candidateHistoryApplications = jobApplicationDAO.findCandidateHistoryApplicationsByCandidateId(candidateId);
+        // Zapewnienie, że lista nie będzie null
+        if (candidateHistoryApplications == null) {
+            return Collections.emptyList();
+        }
 
         List<ApplicationsHistoryDTO> collect = candidateHistoryApplications.stream()
                 .map(applicationsHistoryMapper::mapToDto)

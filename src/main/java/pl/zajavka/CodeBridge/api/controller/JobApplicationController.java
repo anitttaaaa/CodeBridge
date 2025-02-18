@@ -12,6 +12,7 @@ import pl.zajavka.CodeBridge.api.dto.ApplicationsHistoryDTO;
 import pl.zajavka.CodeBridge.api.dto.JobApplicationDTO;
 import pl.zajavka.CodeBridge.business.JobApplicationService;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -95,7 +96,7 @@ public class JobApplicationController {
         List<ApplicationsHistoryDTO> employerHistoryApplications = jobApplicationService.getAllEmployerHistoryJobApplications(authentication);
         model.addAttribute("employerHistoryApplications", employerHistoryApplications);
 
-        return "/employer_portal_job_applications_history";
+        return "employer_portal_job_applications_history";
     }
 
     @GetMapping(CANDIDATE_GET_MY_APPLICATIONS_HISTORY)
@@ -103,10 +104,16 @@ public class JobApplicationController {
             Authentication authentication,
             Model model) {
 
+
         List<ApplicationsHistoryDTO> candidateHistoryApplications = jobApplicationService.getAllCandidateHistoryJobApplications(authentication);
+
+        if (candidateHistoryApplications == null) {
+            candidateHistoryApplications = new ArrayList<>();
+        }
+
         model.addAttribute("candidateHistoryApplications", candidateHistoryApplications);
 
-        return "/candidate_portal_job_applications_history";
+        return "candidate_portal_job_applications_history";
     }
 
 
