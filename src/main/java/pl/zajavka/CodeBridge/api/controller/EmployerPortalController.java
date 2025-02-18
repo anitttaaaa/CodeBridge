@@ -105,7 +105,7 @@ public class EmployerPortalController {
         model.addAttribute("candidateCourses", sortedCourses);
 
 
-        return "/employer_view_candidate_profile";
+        return "employer_view_candidate_profile";
     }
 
 
