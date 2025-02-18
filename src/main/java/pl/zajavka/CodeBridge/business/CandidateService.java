@@ -9,6 +9,7 @@ import pl.zajavka.CodeBridge.api.dto.CandidateDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.CandidateMapper;
 import pl.zajavka.CodeBridge.business.dao.CandidateDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
+import pl.zajavka.CodeBridge.domain.CandidateExperience;
 import pl.zajavka.CodeBridge.domain.exception.NotFoundException;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateEntity;
 
@@ -23,7 +24,6 @@ public class CandidateService {
 
     private final CandidateDAO candidateDAO;
     private final CandidateMapper candidateMapper;
-
 
 
     @Transactional(readOnly = true)

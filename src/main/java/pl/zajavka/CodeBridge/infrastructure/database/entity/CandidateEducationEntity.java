@@ -36,8 +36,7 @@ public class CandidateEducationEntity {
     @Column(name = "to_date")
     private LocalDate toDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "candidate_id", nullable = false)
-    private CandidateEntity candidate;
+    @Column(name = "candidate_id")
+    private Integer candidateId;
 
 }

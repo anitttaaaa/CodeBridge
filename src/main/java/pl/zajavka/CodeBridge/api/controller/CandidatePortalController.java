@@ -94,6 +94,7 @@ public class CandidatePortalController {
         model.addAttribute("candidateCourses", sortedCourses);
         model.addAttribute("candidate", candidateDetails);
 
+        System.out.println(sortedExperiences);
         return "candidate_portal";
     }
 

@@ -39,8 +39,7 @@ public class CandidateProjectEntity {
     @Column(name = "project_link")
     private String projectLink;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "candidate_id", nullable = false)
-    private CandidateEntity candidate;
+    @Column(name = "candidate_id")
+    private Integer candidateId;
 
 }

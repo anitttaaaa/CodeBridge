@@ -63,16 +63,16 @@ public class CandidateEntity {
     @Column(name = "profile_photo", columnDefinition="bytea")
     private byte[] profilePhoto;
 
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "candidateId", fetch = FetchType.LAZY)
     private List<CandidateExperienceEntity> candidateExperiences;
 
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "candidateId", fetch = FetchType.LAZY)
     private List<CandidateProjectEntity> candidateProjects;
 
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "candidateId", fetch = FetchType.LAZY)
     private List<CandidateEducationEntity> candidateEducationStages;
 
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "candidateId", fetch = FetchType.LAZY)
     private List<CandidateCourseEntity> candidateCourses;
 
     @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
