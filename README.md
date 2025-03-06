@@ -24,7 +24,6 @@ The platform provides tools to:
 - Spring Data JPA - version 3.0.7
 - Spring Security - version 6.0.3
 - Hibernate - version 6.1.7.Final
-- Hibernate Validator - version 8.0.0.Final
 - Flying Saucer PDF - version 9.11.2
 
 **Build Tool:** 
