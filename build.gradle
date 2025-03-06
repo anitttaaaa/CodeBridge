@@ -32,7 +32,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
 	// thymeleaf
-	implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity6:${thymeleafExtrasSpringsecurity6Version}"
+	implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity6:${thymeleafExtrasSpringsecurityVersion}"
 	implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:${thymeleafLayoutDialectVersion}"
 
 
@@ -50,11 +50,8 @@ dependencies {
 	// Flying Saucer PDF rendering
 	implementation 'org.xhtmlrenderer:flying-saucer-pdf:9.11.2'
 
-	// iText (iText 7, ale sprawdź zależności)
-	implementation 'com.itextpdf:itext7-core:9.0.0'
-
-	// SLF4J for logging (Flying Saucer needs it)
-	runtimeOnly 'org.slf4j:slf4j-simple:1.7.32'  // Użyj nowszej wersji SLF4J
+	// SLF4J for logging
+	runtimeOnly 'org.slf4j:slf4j-simple:1.7.32'
 
 //	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

@@ -21,10 +21,11 @@ The platform provides tools to:
 **Backend:** 
 - Java - version 17.0.10 LTS
 - SpringBoot - version 3.0.7
-- Spring Data JPA
-- Spring Security
-- Hibernate - version 8.0.0.Final
-- JPA
+- Spring Data JPA - version 3.0.7
+- Spring Security - version 6.0.3
+- Hibernate - version 6.1.7.Final
+- Hibernate Validator - version 8.0.0.Final
+- Flying Saucer PDF - version 9.11.2
 
 **Build Tool:** 
 - Gradle version 8.8
@@ -39,6 +40,8 @@ The platform provides tools to:
 - HTML, 
 - CSS, 
 - Thymeleaf - version 3.1.1.RELEASE
+- Thymeleaf Extras Spring Security 6 - version 3.1.2.RELEASE
+- Thymeleaf Layout Dialect - version 3.3.0
 
 **Containerization:** 
 - Docker - version 26.1.1 
