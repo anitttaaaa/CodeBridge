@@ -2,7 +2,7 @@
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
-* [Platform Features](#more-detailed-information-about-modules)
+* [Platform Features](#platform-features)
 
 # General Info
 **CodeBridge**  is a full-stack platform that connects developers with employers, streamlining the recruitment process and job offer management. The application includes both a backend and a frontend, allowing employers to filter candidates and enabling developers to apply for job positions.
