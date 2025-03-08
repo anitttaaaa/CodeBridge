@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.infrastructure.database.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -81,6 +80,17 @@ public class CandidateEntity {
         this.surname = surname;
         this.email = email;
         this.phone = phone;
+        this.techSpecialization = techSpecialization;
+        this.candidateSkills = candidateSkills;
+    }
+
+    public CandidateEntity(Integer candidateId, String name, String surname, String email, String phone, Integer userId, String techSpecialization, List<String> candidateSkills) {
+        this.candidateId = candidateId;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.phone = phone;
+        this.userId = userId;
         this.techSpecialization = techSpecialization;
         this.candidateSkills = candidateSkills;
     }

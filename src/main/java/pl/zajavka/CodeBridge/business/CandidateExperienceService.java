@@ -1,6 +1,5 @@
 package pl.zajavka.CodeBridge.business;
 
-import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,9 +10,13 @@ import pl.zajavka.CodeBridge.domain.CandidateExperience;
 import java.nio.file.AccessDeniedException;
 
 @Service
-@AllArgsConstructor
 public class CandidateExperienceService {
 
+    public CandidateExperienceService(CandidateService candidateService,
+                                      CandidateExperienceDAO candidateExperienceDAO) {
+        this.candidateService = candidateService;
+        this.candidateExperienceDAO = candidateExperienceDAO;
+    }
 
     private final CandidateService candidateService;
     private final CandidateExperienceDAO candidateExperienceDAO;
@@ -49,7 +52,7 @@ public class CandidateExperienceService {
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
         Integer loggedInCandidateId = candidate.getCandidateId();
 
-        if (!candidateExperience.getCandidateId().equals(loggedInCandidateId)){
+        if (!candidateExperience.getCandidateId().equals(loggedInCandidateId)) {
             throw new AccessDeniedException("Unauthorized access.");
         }
 

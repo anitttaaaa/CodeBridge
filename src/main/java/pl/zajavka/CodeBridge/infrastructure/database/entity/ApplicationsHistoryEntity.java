@@ -6,9 +6,6 @@ import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
 
 import java.util.Objects;
 
-
-@Builder
-
 @Entity
 @Table(name = "applications_history")
 public class ApplicationsHistoryEntity {

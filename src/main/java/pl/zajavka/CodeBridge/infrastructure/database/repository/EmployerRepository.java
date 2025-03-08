@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import pl.zajavka.CodeBridge.business.dao.EmployerDAO;
 import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.EmployerEntity;
+import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.EmployerJpaRepository;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.JobOfferJpaRepository;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.EmployerEntityMapper;
@@ -33,18 +34,27 @@ public class EmployerRepository implements EmployerDAO {
 
     @Override
     public void createJobOffer(Employer employer) {
+        // Mapowanie do encji Employer
         EmployerEntity employerToSave = employerEntityMapper.mapToEntity(employer);
         EmployerEntity employerSaved = employerJpaRepository.saveAndFlush(employerToSave);
 
+        // Mapowanie ofert pracy i przypisanie pracodawcy
         employer.getJobOffers().stream()
                 .filter(jobOffer -> Objects.isNull(jobOffer.getJobOfferId()))
-                .map(jobOfferEntityMapper::mapToEntity)
+                .map(jobOffer -> jobOfferEntityMapper.mapToEntity(jobOffer))
                 .forEach(jobOfferEntity -> {
-                    jobOfferEntity.setEmployer(employerSaved);
-                    jobOfferJpaRepository.saveAndFlush(jobOfferEntity);
+                    // Tworzenie nowej encji JobOffer z przypisanym pracodawcą
+                    JobOfferEntity jobOfferEntityWithEmployer = new JobOfferEntity(
+                            jobOfferEntity.getJobOfferId(),
+                            jobOfferEntity.getJobOfferTitle(),
+                            jobOfferEntity.getDescription(),
+                            employerSaved // przypisanie pracodawcy do oferty
+                    );
+                    // Zapisz ofertę pracy w repozytorium
+                    jobOfferJpaRepository.saveAndFlush(jobOfferEntityWithEmployer);
                 });
-
     }
+
 
     @Override
     public Optional<Employer> findEmployerByEmail(String employerEmail) {

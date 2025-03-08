@@ -1,12 +1,10 @@
 package pl.zajavka.CodeBridge.infrastructure.database.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Builder
 
 @Entity
 @Table(name = "candidate_project")

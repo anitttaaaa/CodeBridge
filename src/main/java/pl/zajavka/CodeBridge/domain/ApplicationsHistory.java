@@ -1,19 +1,16 @@
 package pl.zajavka.CodeBridge.domain;
 
-import lombok.*;
 import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
 
 import java.util.Objects;
 
-@Builder
-public class ApplicationsHistory
-{
+
+public class ApplicationsHistory {
     Integer applicationHistoryId;
     JobOffer jobOffer;
     Employer employer;
     Candidate candidate;
     ApplicationStatus applicationStatus;
-
 
 
     @Override

@@ -8,12 +8,45 @@ import pl.zajavka.CodeBridge.infrastructure.database.entity.EmployerEntity;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface EmployerEntityMapper {
+    default Employer mapToDomain(EmployerEntity employerEntity) {
+        if (employerEntity == null) {
+            return null;
+        }
 
-    @Mapping(target = "jobOffers", ignore = true)
-    @Mapping(target = "jobApplications", ignore = true)
-    Employer mapToDomain(EmployerEntity employerEntity);
+        // Ręczna konwersja pól
+        Employer employer = new Employer(
+                employerEntity.getEmployerId(),
+                employerEntity.getCompanyName(),
+                employerEntity.getEmail(),
+                employerEntity.getNip(),
+                employerEntity.getUserId()
+        );
 
-    EmployerEntity mapToEntity(Employer employer);
+        // Możesz dodać inne pola, jeśli wymagają konwersji (np. jeśli są powiązane encje)
+
+        return employer;
+    }
+
+
+    default EmployerEntity mapToEntity(Employer employer) {
+        if (employer == null) {
+            return null;
+        }
+
+        // Ręczna konwersja pól
+        EmployerEntity employerEntity = new EmployerEntity(
+                employer.getEmployerId(),
+                employer.getCompanyName(),
+                employer.getEmail(),
+                employer.getNip(),
+                employer.getUserId()
+        );
+
+        // Możesz dodać inne pola, jeśli wymagają konwersji (np. jeśli są powiązane encje)
+
+        return employerEntity;
+    }
+
 
 
 }

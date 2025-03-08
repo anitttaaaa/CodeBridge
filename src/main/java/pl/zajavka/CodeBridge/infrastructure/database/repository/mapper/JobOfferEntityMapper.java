@@ -16,10 +16,7 @@ public interface JobOfferEntityMapper {
         if (companyName == null || employerId == null) {
             return null;
         }
-        return Employer.builder()
-                .companyName(companyName)
-                .employerId(employerId)
-                .build();
+        return new Employer(employerId, companyName);
     }
     default JobOffer mapToDomain(JobOfferEntity jobOfferEntity) {
         // Mapowanie prostych pól

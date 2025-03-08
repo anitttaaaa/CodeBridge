@@ -8,8 +8,6 @@ import pl.zajavka.CodeBridge.domain.JobOffer;
 import java.util.Objects;
 import java.util.Set;
 
-@Builder
-
 @Entity
 @Table (name = "employer")
 public class EmployerEntity {
@@ -36,6 +34,15 @@ public class EmployerEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employer")
     private Set<JobApplicationEntity> jobApplications;
+
+    public EmployerEntity(Integer employerId, String companyName, String email,
+                          String nip, Integer userId) {
+        this.employerId = employerId;
+        this.companyName = companyName;
+        this.email = email;
+        this.nip = nip;
+        this.userId = userId;
+    }
 
 
     @Override

@@ -1,7 +1,5 @@
 package pl.zajavka.CodeBridge.domain;
 
-import lombok.*;
-
 import java.time.LocalDate;
 import java.util.Objects;
 

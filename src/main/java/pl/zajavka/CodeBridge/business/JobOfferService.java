@@ -1,23 +1,19 @@
 package pl.zajavka.CodeBridge.business;
 
 
-import com.lowagie.text.pdf.PRAcroForm;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.zajavka.CodeBridge.api.dto.JobOfferDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.JobOfferMapper;
-import pl.zajavka.CodeBridge.business.dao.EmployerDAO;
 import pl.zajavka.CodeBridge.business.dao.JobOfferDAO;
 import pl.zajavka.CodeBridge.domain.Employer;
-import pl.zajavka.CodeBridge.domain.JobApplication;
 import pl.zajavka.CodeBridge.domain.JobOffer;
 import pl.zajavka.CodeBridge.domain.exception.NotFoundException;
 import pl.zajavka.CodeBridge.infrastructure.security.CodeBridgeUserDetailsService;
 
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -42,11 +38,18 @@ public class JobOfferService {
 
         JobOffer jobOffer = buildJobOffer(request);
 
-        Set<JobOffer> jobOffers = employer.getJobOffers();
-
+        Set<JobOffer> jobOffers = new HashSet<>(employer.getJobOffers()); // Tworzymy nowy set
         jobOffers.add(jobOffer);
 
-        Employer employerAndJobOffer = employer.withJobOffers(jobOffers);
+        Employer employerAndJobOffer = new Employer(
+                employer.getEmployerId(),
+                employer.getCompanyName(),
+                employer.getEmail(),
+                employer.getNip(),
+                employer.getUserId(),
+                jobOffers, // Nowy zestaw ofert
+                employer.getJobApplications()
+        );
 
         employerService.createJobOffer(employerAndJobOffer);
     }

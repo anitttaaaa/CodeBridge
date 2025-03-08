@@ -1,15 +1,9 @@
 package pl.zajavka.CodeBridge.domain;
 
-import lombok.*;
-import pl.zajavka.CodeBridge.infrastructure.database.entity.JobApplicationEntity;
-import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
-
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@With
-@Builder
 public class Employer {
 
     Integer employerId;
@@ -63,11 +57,11 @@ public class Employer {
                 '}';
     }
 
-    public Set<JobOffer> getJobOffers () {
+    public Set<JobOffer> getJobOffers() {
         return Objects.isNull(jobOffers) ? new HashSet<>() : jobOffers;
     }
 
-    public Set<JobApplication> getJobApplications () {
+    public Set<JobApplication> getJobApplications() {
         return Objects.isNull(jobApplications) ? new HashSet<>() : jobApplications;
     }
 

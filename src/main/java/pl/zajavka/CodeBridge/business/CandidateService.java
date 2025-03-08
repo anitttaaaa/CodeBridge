@@ -47,13 +47,38 @@ public class CandidateService {
     @Transactional
     public void updateCandidate(Candidate candidate, Authentication authentication) {
 
+        // Pobranie e-maila kandydata z uwierzytelnienia
         String candidateEmail = authentication.getName();
+
+        // Znalezienie identyfikatora kandydata po e-mailu
         Integer candidateId = findCandidateByEmail(candidateEmail).getCandidateId();
 
-        candidate.withCandidateId(candidateId);
+        // Tworzenie nowego obiektu kandydata z zaktualizowanym candidateId
+        candidate = new Candidate(
+                candidateId, // Ustawiamy zaktualizowany candidateId
+                candidate.getName(),
+                candidate.getSurname(),
+                candidate.getEmail(),
+                candidate.getPhone(),
+                candidate.getStatus(),
+                candidate.getLinkedIn(),
+                candidate.getGitHub(),
+                candidate.getTechSpecialization(),
+                candidate.getAboutMe(),
+                candidate.getHobby(),
+                candidate.getUserId(),
+                candidate.getProfilePhoto(),
+                candidate.getCandidateSkills(),
+                candidate.getCandidateExperiences(),
+                candidate.getCandidateProjects(),
+                candidate.getCandidateEducationStages(),
+                candidate.getCandidateCourses()
+        );
 
+        // Aktualizacja kandydata w bazie danych
         candidateDAO.updateCandidate(candidate);
     }
+
 
     @Transactional
     public CandidateDTO findCandidateByCandidateId(Integer candidateId) {

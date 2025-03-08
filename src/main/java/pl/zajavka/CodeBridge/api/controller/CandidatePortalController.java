@@ -104,32 +104,84 @@ public class CandidatePortalController {
             @RequestParam(value = "techSpecialization", required = false) String techSpecialization,
             Authentication authentication
     ) {
+        // Znalezienie kandydata po e-mailu
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
 
+        // Jeżeli specjalizacja technologiczna jest pusta lub null, ustawiamy ją na null
         if (techSpecialization == null || techSpecialization.trim().isEmpty()) {
             techSpecialization = null;
         }
-        candidate = candidate.withTechSpecialization(techSpecialization);
+
+        // Tworzymy nowego kandydata za pomocą konstruktora, przekazując zmienioną specjalizację technologiczną
+        candidate = new Candidate(
+                candidate.getCandidateId(),
+                candidate.getName(),
+                candidate.getSurname(),
+                candidate.getEmail(),
+                candidate.getPhone(),
+                candidate.getStatus(),
+                candidate.getLinkedIn(),
+                candidate.getGitHub(),
+                techSpecialization,
+                candidate.getAboutMe(),
+                candidate.getHobby(),
+                candidate.getUserId(),
+                candidate.getProfilePhoto(),
+                candidate.getCandidateSkills(),
+                candidate.getCandidateExperiences(),
+                candidate.getCandidateProjects(),
+                candidate.getCandidateEducationStages(),
+                candidate.getCandidateCourses()
+        );
+
+        // Aktualizacja kandydata w bazie danych
         candidateService.updateCandidate(candidate, authentication);
 
         return "redirect:/candidate-portal";
     }
+
 
     @PostMapping(UPDATE_CANDIDATE_STATUS)
     public String updateCandidateStatus(
             @RequestParam(value = "status", required = false) String status,
             Authentication authentication
     ) {
+        // Znalezienie kandydata po e-mailu
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
 
+        // Jeżeli status jest pusty lub null, ustawiamy go na null
         if (status == null || status.trim().isEmpty()) {
             status = null;
         }
-        candidate = candidate.withStatus(status);
+
+        // Tworzenie nowego kandydata z nowym statusem
+        candidate = new Candidate(
+                candidate.getCandidateId(),
+                candidate.getName(),
+                candidate.getSurname(),
+                candidate.getEmail(),
+                candidate.getPhone(),
+                status, // Nowy status
+                candidate.getLinkedIn(),
+                candidate.getGitHub(),
+                candidate.getTechSpecialization(),
+                candidate.getAboutMe(),
+                candidate.getHobby(),
+                candidate.getUserId(),
+                candidate.getProfilePhoto(),
+                candidate.getCandidateSkills(),
+                candidate.getCandidateExperiences(),
+                candidate.getCandidateProjects(),
+                candidate.getCandidateEducationStages(),
+                candidate.getCandidateCourses()
+        );
+
+        // Aktualizacja kandydata w bazie danych
         candidateService.updateCandidate(candidate, authentication);
 
         return "redirect:/candidate-portal";
     }
+
 
     @GetMapping(PROFILE_PHOTO_DISPLAY)
     public ResponseEntity<byte[]> getProfilePhoto(
@@ -149,17 +201,43 @@ public class CandidatePortalController {
     public String updateCandidateProfilePhoto(
             @RequestParam("profilePhoto") MultipartFile profilePhoto,
             Authentication authentication
-
     ) throws IOException {
+        // Znalezienie kandydata po e-mailu
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
 
+        // Sprawdzanie, czy plik nie jest pusty
         if (!profilePhoto.isEmpty()) {
             byte[] profilePhotoData = profilePhoto.getBytes();
-            candidate = candidate.withProfilePhoto(profilePhotoData);
+
+            // Tworzymy nowego kandydata z nowym zdjęciem profilowym
+            candidate = new Candidate(
+                    candidate.getCandidateId(),
+                    candidate.getName(),
+                    candidate.getSurname(),
+                    candidate.getEmail(),
+                    candidate.getPhone(),
+                    candidate.getStatus(),
+                    candidate.getLinkedIn(),
+                    candidate.getGitHub(),
+                    candidate.getTechSpecialization(),
+                    candidate.getAboutMe(),
+                    candidate.getHobby(),
+                    candidate.getUserId(),
+                    profilePhotoData, // Nowe zdjęcie profilowe
+                    candidate.getCandidateSkills(),
+                    candidate.getCandidateExperiences(),
+                    candidate.getCandidateProjects(),
+                    candidate.getCandidateEducationStages(),
+                    candidate.getCandidateCourses()
+            );
+
+            // Aktualizacja kandydata w bazie danych
             candidateService.updateCandidate(candidate, authentication);
         }
+
         return "redirect:/candidate-portal";
     }
+
 
     @PostMapping(UPDATE_CANDIDATE_BASIC_INFO)
     public String updateCandidateAllDetails(
@@ -170,17 +248,37 @@ public class CandidatePortalController {
             @RequestParam(value = "gitHub", required = false) String gitHub,
             Authentication authentication
     ) {
+        // Znalezienie kandydata po e-mailu
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
 
-        candidate = candidate.withName(name)
-                .withSurname(surname)
-                .withPhone(phone)
-                .withLinkedIn(linkedIn)
-                .withGitHub(gitHub);
+        // Tworzenie nowego obiektu kandydata z nowymi danymi
+        candidate = new Candidate(
+                candidate.getCandidateId(),
+                name, // Nowe imię
+                surname, // Nowe nazwisko
+                candidate.getEmail(),
+                phone, // Nowy numer telefonu
+                candidate.getStatus(),
+                linkedIn, // Nowy LinkedIn
+                gitHub, // Nowy GitHub
+                candidate.getTechSpecialization(),
+                candidate.getAboutMe(),
+                candidate.getHobby(),
+                candidate.getUserId(),
+                candidate.getProfilePhoto(),
+                candidate.getCandidateSkills(),
+                candidate.getCandidateExperiences(),
+                candidate.getCandidateProjects(),
+                candidate.getCandidateEducationStages(),
+                candidate.getCandidateCourses()
+        );
+
+        // Aktualizacja kandydata w bazie danych
         candidateService.updateCandidate(candidate, authentication);
 
         return "redirect:/candidate-portal";
     }
+
 
     @PostMapping(ADD_CANDIDATE_EXPERIENCE)
     public String addExperience(Authentication authentication,
@@ -315,13 +413,37 @@ public class CandidatePortalController {
             @RequestParam(value = "hobby", required = false) String hobby,
             Authentication authentication
     ) {
+        // Znalezienie kandydata po e-mailu
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
 
+        // Sprawdzenie, czy hobby nie jest puste
         if (hobby == null || hobby.trim().isEmpty()) {
             hobby = null;
         }
 
-        candidate = candidate.withHobby(hobby);
+        // Tworzenie nowego obiektu kandydata z zaktualizowanym hobby
+        candidate = new Candidate(
+                candidate.getCandidateId(),
+                candidate.getName(),
+                candidate.getSurname(),
+                candidate.getEmail(),
+                candidate.getPhone(),
+                candidate.getStatus(),
+                candidate.getLinkedIn(),
+                candidate.getGitHub(),
+                candidate.getTechSpecialization(),
+                candidate.getAboutMe(),
+                hobby, // Nowe hobby
+                candidate.getUserId(),
+                candidate.getProfilePhoto(),
+                candidate.getCandidateSkills(),
+                candidate.getCandidateExperiences(),
+                candidate.getCandidateProjects(),
+                candidate.getCandidateEducationStages(),
+                candidate.getCandidateCourses()
+        );
+
+        // Aktualizacja kandydata w bazie danych
         candidateService.updateCandidate(candidate, authentication);
 
         return "redirect:/candidate-portal";
@@ -333,17 +455,42 @@ public class CandidatePortalController {
             @RequestParam(value = "candidateSkills", required = false) List<String> candidateSkills,
             Authentication authentication
     ) {
+        // Znalezienie kandydata po e-mailu
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
 
+        // Sprawdzenie, czy lista umiejętności nie jest pusta
         if (candidateSkills == null || candidateSkills.isEmpty()) {
             candidateSkills = null;
         }
 
-        candidate = candidate.withCandidateSkills(candidateSkills);
+        // Tworzenie nowego obiektu kandydata z zaktualizowaną listą umiejętności
+        candidate = new Candidate(
+                candidate.getCandidateId(),
+                candidate.getName(),
+                candidate.getSurname(),
+                candidate.getEmail(),
+                candidate.getPhone(),
+                candidate.getStatus(),
+                candidate.getLinkedIn(),
+                candidate.getGitHub(),
+                candidate.getTechSpecialization(),
+                candidate.getAboutMe(),
+                candidate.getHobby(),
+                candidate.getUserId(),
+                candidate.getProfilePhoto(),
+                candidateSkills, // Nowa lista umiejętności
+                candidate.getCandidateExperiences(),
+                candidate.getCandidateProjects(),
+                candidate.getCandidateEducationStages(),
+                candidate.getCandidateCourses()
+        );
+
+        // Aktualizacja kandydata w bazie danych
         candidateService.updateCandidate(candidate, authentication);
 
         return "redirect:/candidate-portal";
     }
+
 
 
     @PostMapping(UPDATE_CANDIDATE_ABOUT_ME)
@@ -351,31 +498,79 @@ public class CandidatePortalController {
             @RequestParam(value = "aboutMe", required = false) String aboutMe,
             Authentication authentication
     ) {
+        // Znalezienie kandydata po e-mailu
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
 
+        // Sprawdzenie, czy "aboutMe" nie jest puste
         if (aboutMe == null || aboutMe.isEmpty()) {
             aboutMe = null;
         }
 
-        candidate = candidate.withAboutMe(aboutMe);
+        // Tworzenie nowego obiektu kandydata z zaktualizowanym "aboutMe"
+        candidate = new Candidate(
+                candidate.getCandidateId(),
+                candidate.getName(),
+                candidate.getSurname(),
+                candidate.getEmail(),
+                candidate.getPhone(),
+                candidate.getStatus(),
+                candidate.getLinkedIn(),
+                candidate.getGitHub(),
+                candidate.getTechSpecialization(),
+                aboutMe, // Nowe "aboutMe"
+                candidate.getHobby(),
+                candidate.getUserId(),
+                candidate.getProfilePhoto(),
+                candidate.getCandidateSkills(),
+                candidate.getCandidateExperiences(),
+                candidate.getCandidateProjects(),
+                candidate.getCandidateEducationStages(),
+                candidate.getCandidateCourses()
+        );
+
+        // Aktualizacja kandydata w bazie danych
         candidateService.updateCandidate(candidate, authentication);
 
         return "redirect:/candidate-portal";
     }
 
 
-    @DeleteMapping(DELETE_CANDIDATE_PHOTO)
-    public String deleteCandidatePhoto(
-            Authentication authentication) {
 
+    @DeleteMapping(DELETE_CANDIDATE_PHOTO)
+    public String deleteCandidatePhoto(Authentication authentication) {
+
+        // Znalezienie kandydata po e-mailu
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
 
+        // Sprawdzenie, czy istnieje zdjęcie profilowe
         if (!Objects.isNull(candidate.getProfilePhoto())) {
 
-            candidate = candidate.withProfilePhoto(null);
-            candidateService.updateCandidate(candidate, authentication);
+            // Tworzymy nowego kandydata z ustawionym profilePhoto na null
+            candidate = new Candidate(
+                    candidate.getCandidateId(),
+                    candidate.getName(),
+                    candidate.getSurname(),
+                    candidate.getEmail(),
+                    candidate.getPhone(),
+                    candidate.getStatus(),
+                    candidate.getLinkedIn(),
+                    candidate.getGitHub(),
+                    candidate.getTechSpecialization(),
+                    candidate.getAboutMe(),
+                    candidate.getHobby(),
+                    candidate.getUserId(),
+                    null, // Usuwamy zdjęcie (ustawiamy na null)
+                    candidate.getCandidateSkills(),
+                    candidate.getCandidateExperiences(),
+                    candidate.getCandidateProjects(),
+                    candidate.getCandidateEducationStages(),
+                    candidate.getCandidateCourses()
+            );
 
+            // Aktualizacja kandydata w bazie danych
+            candidateService.updateCandidate(candidate, authentication);
         }
+
         return "redirect:/candidate-portal";
     }
 

@@ -8,10 +8,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-@Setter
-
-@Builder
-
 @Entity
 @Table(name = "job_offer")
 public class JobOfferEntity {
@@ -73,6 +69,13 @@ public class JobOfferEntity {
         this.niceToHaveSkills = niceToHaveSkills;
 
     }
+
+    public JobOfferEntity(Integer jobOfferId, String jobOfferTitle, String description, EmployerEntity employerEntity) {
+        this.jobOfferId = jobOfferId;
+        this.jobOfferTitle = jobOfferTitle;
+        this.description = description;
+    }
+
 
     @Override
     public boolean equals(Object o) {

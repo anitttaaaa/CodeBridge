@@ -1,11 +1,10 @@
 package pl.zajavka.CodeBridge.domain;
 
-import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@With
+
 
 public class Candidate {
 
@@ -57,6 +56,7 @@ public class Candidate {
         this.candidateSkills = candidateSkills;
 
     }
+
 
     @Override
     public boolean equals(Object o) {

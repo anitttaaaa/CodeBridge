@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import pl.zajavka.CodeBridge.domain.ApplicationsHistory;
 import pl.zajavka.CodeBridge.domain.Candidate;
@@ -11,19 +10,22 @@ import pl.zajavka.CodeBridge.infrastructure.database.entity.ApplicationsHistoryE
 import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.EmployerEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
-
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
-
 public interface ApplicationsHistoryEntityMapper {
 
-    @Mapping(target = "candidate", expression = "java(mapCandidate(applicationsHistoryEntity.getCandidate()))")
-    @Mapping(target = "employer", expression = "java(mapEmployer(applicationsHistoryEntity.getEmployer()))")
-    @Mapping(target = "jobOffer", expression = "java(mapJobOffer(applicationsHistoryEntity.getJobOffer()))")
-    ApplicationsHistory mapToDomain(ApplicationsHistoryEntity applicationsHistoryEntity);
-
+    default ApplicationsHistory mapToDomain(ApplicationsHistoryEntity entity) {
+        // Mapowanie aplikacji do obiektu domenowego
+        return new ApplicationsHistory(
+                entity.getApplicationHistoryId(),
+                mapJobOffer(entity.getJobOffer()),
+                mapEmployer(entity.getEmployer()),
+                mapCandidate(entity.getCandidate()),
+                entity.getApplicationStatus()
+        );
+    }
 
     default JobOffer mapJobOffer(JobOfferEntity jobOfferEntity) {
-        // Konwersja EmployerEntity na Employer
+        // Konwersja JobOfferEntity na JobOffer
         Employer employer = jobOfferEntity.getEmployer() != null
                 ? new Employer(
                 jobOfferEntity.getEmployer().getEmployerId(),
@@ -34,13 +36,12 @@ public interface ApplicationsHistoryEntityMapper {
         )
                 : null;
 
-        // Tworzymy nowy obiekt JobOffer przy użyciu konstruktora
         return new JobOffer(
                 jobOfferEntity.getJobOfferId(),
                 jobOfferEntity.getJobOfferTitle(),
                 jobOfferEntity.getDescription(),
                 jobOfferEntity.getTechSpecialization() != null ? jobOfferEntity.getTechSpecialization().name() : null,
-                employer,  // Używamy zamapowanego obiektu Employer
+                employer,
                 jobOfferEntity.getWorkType() != null ? jobOfferEntity.getWorkType().name() : null,
                 jobOfferEntity.getCity() != null ? jobOfferEntity.getCity().name() : null,
                 jobOfferEntity.getExperience() != null ? jobOfferEntity.getExperience().name() : null,
@@ -51,12 +52,15 @@ public interface ApplicationsHistoryEntityMapper {
     }
 
     default Employer mapEmployer(EmployerEntity employerEntity) {
-        return Employer.builder()
-                .employerId(employerEntity.getEmployerId())
-                .companyName(employerEntity.getCompanyName())
-                .build();
-
+        return new Employer(
+                employerEntity.getEmployerId(),
+                employerEntity.getCompanyName(),
+                employerEntity.getEmail(),
+                employerEntity.getNip(),
+                employerEntity.getUserId()
+        );
     }
+
     default Candidate mapCandidate(CandidateEntity candidateEntity) {
         return new Candidate(
                 candidateEntity.getCandidateId(),
@@ -70,6 +74,58 @@ public interface ApplicationsHistoryEntityMapper {
         );
     }
 
-    ApplicationsHistoryEntity mapToEntity(ApplicationsHistory applicationsHistory);
+    // Jeśli potrzebujesz, możesz dodać mapowanie z domeny do encji.
+    default ApplicationsHistoryEntity mapToEntity(ApplicationsHistory applicationsHistory) {
+        return new ApplicationsHistoryEntity(
+                applicationsHistory.getApplicationHistoryId(),
+                mapJobOfferEntity(applicationsHistory.getJobOffer()),
+                mapEmployerEntity(applicationsHistory.getEmployer()),
+                mapCandidateEntity(applicationsHistory.getCandidate()),
+                applicationsHistory.getApplicationStatus()
+        );
+    }
 
+    default JobOfferEntity mapJobOfferEntity(JobOffer jobOffer) {
+        EmployerEntity employerEntity = jobOffer.getEmployer() != null
+                ? new EmployerEntity(
+                jobOffer.getEmployer().getEmployerId(),
+                jobOffer.getEmployer().getCompanyName(),
+                jobOffer.getEmployer().getEmail(),
+                jobOffer.getEmployer().getNip(),
+                jobOffer.getEmployer().getUserId()
+        )
+                : null;
+
+        return new JobOfferEntity(
+                jobOffer.getJobOfferId(),
+                jobOffer.getJobOfferTitle(),
+                jobOffer.getDescription(),
+                employerEntity
+        );
+    }
+
+
+
+    default EmployerEntity mapEmployerEntity(Employer employer) {
+        return new EmployerEntity(
+                employer.getEmployerId(),
+                employer.getCompanyName(),
+                employer.getEmail(),
+                employer.getNip(),
+                employer.getUserId()
+        );
+    }
+
+    default CandidateEntity mapCandidateEntity(Candidate candidate) {
+        return new CandidateEntity(
+                candidate.getCandidateId(),
+                candidate.getName(),
+                candidate.getSurname(),
+                candidate.getEmail(),
+                candidate.getPhone(),
+                candidate.getUserId(),
+                candidate.getTechSpecialization(),
+                candidate.getCandidateSkills()
+        );
+    }
 }

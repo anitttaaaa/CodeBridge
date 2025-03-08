@@ -1,14 +1,9 @@
 package pl.zajavka.CodeBridge.infrastructure.database.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Objects;
-
-
-
-@Builder
 
 @Entity
 @Table(name = "candidate_course")
@@ -39,9 +34,6 @@ public class CandidateCourseEntity {
 
     @Column(name = "candidate_id")
     private Integer candidateId;
-
-
-
 
 
     @Override

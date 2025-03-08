@@ -36,64 +36,111 @@ public class JobApplicationService {
     @Transactional
     public void rejectJobApplication(Integer applicationId, Authentication authentication) {
 
+        // Znalezienie aplikacji
         JobApplication jobApplication = jobApplicationDAO.findApplicationById(applicationId)
                 .orElseThrow(() -> new EntityNotFoundException("Job application not found for id: " + applicationId));
 
-        jobApplication = jobApplication.withApplicationStatus(ApplicationStatus.REJECTED);
-        jobApplicationDAO.save(jobApplication);
+        // Utworzenie nowego obiektu JobApplication z nowym statusem REJECTED
+        JobApplication updatedJobApplication = new JobApplication(
+                jobApplication.getApplicationId(),  // ID aplikacji (zachowane)
+                jobApplication.getJobOffer(),        // Oferta pracy
+                jobApplication.getEmployer(),        // Pracodawca
+                jobApplication.getCandidate(),       // Kandydat
+                ApplicationStatus.REJECTED           // Nowy status
+        );
 
-        Candidate candidate = jobApplication.getCandidate();
-        Employer employer = jobApplication.getEmployer();
-        JobOffer jobOffer = jobApplication.getJobOffer();
-        ApplicationStatus applicationStatus = jobApplication.getApplicationStatus();
+        // Zapisanie zaktualizowanej aplikacji
+        jobApplicationDAO.save(updatedJobApplication);
 
+        // Pobranie danych do historii aplikacji
+        Candidate candidate = updatedJobApplication.getCandidate();
+        Employer employer = updatedJobApplication.getEmployer();
+        JobOffer jobOffer = updatedJobApplication.getJobOffer();
+        ApplicationStatus applicationStatus = updatedJobApplication.getApplicationStatus();
 
-        ApplicationsHistory jobApplicationRejected = ApplicationsHistory.builder()
-                .applicationHistoryId(applicationId)
-                .jobOffer(jobOffer)
-                .candidate(candidate)
-                .employer(employer)
-                .applicationStatus(applicationStatus)
-                .build();
+        // Utworzenie wpisu do historii
+        ApplicationsHistory jobApplicationRejected = new ApplicationsHistory(
+                applicationId,
+                jobOffer,
+                employer,
+                candidate,
+                applicationStatus
+        );
 
+        // Zapisanie historii aplikacji
         applicationsHistoryDAO.saveInHistory(jobApplicationRejected);
 
+        // Usunięcie aplikacji z bazy (jeśli wymagane)
         jobApplicationDAO.deleteById(applicationId);
     }
 
     @Transactional
     public void acceptJobApplication(Integer applicationId, Authentication authentication) {
 
-
+        // Znalezienie aplikacji
         JobApplication jobApplication = jobApplicationDAO.findApplicationById(applicationId)
                 .orElseThrow(() -> new EntityNotFoundException("Job application not found for id: " + applicationId));
 
-
+        // Znalezienie kandydata na podstawie e-maila
         String candidateEmail = jobApplication.getCandidate().getEmail();
         Candidate candidateToUpdate = candidateService.findCandidateByEmail(candidateEmail);
-        Candidate candidateUpdated = candidateToUpdate.withStatus(StatusEnum.HIRED.getDescription());
+
+        // Utworzenie nowego obiektu kandydata z nowym statusem "HIRED"
+        Candidate candidateUpdated = new Candidate(
+                candidateToUpdate.getCandidateId(),
+                candidateToUpdate.getName(),
+                candidateToUpdate.getSurname(),
+                candidateToUpdate.getEmail(),
+                candidateToUpdate.getPhone(),
+                StatusEnum.HIRED.getDescription(),
+                candidateToUpdate.getLinkedIn(),
+                candidateToUpdate.getGitHub(),
+                candidateToUpdate.getTechSpecialization(),
+                candidateToUpdate.getAboutMe(),
+                candidateToUpdate.getHobby(),
+                candidateToUpdate.getUserId(),
+                candidateToUpdate.getProfilePhoto(),
+                candidateToUpdate.getCandidateSkills(),
+                candidateToUpdate.getCandidateExperiences(),
+                candidateToUpdate.getCandidateProjects(),
+                candidateToUpdate.getCandidateEducationStages(),
+                candidateToUpdate.getCandidateCourses()
+        );
+
+        // Aktualizacja kandydata
         candidateDAO.updateCandidate(candidateUpdated);
 
-        jobApplication = jobApplication.withApplicationStatus(ApplicationStatus.ACCEPTED);
+        // Utworzenie nowego obiektu JobApplication z nowym statusem "ACCEPTED"
+        jobApplication = new JobApplication(
+                jobApplication.getApplicationId(), // ID aplikacji (zachowane)
+                jobApplication.getJobOffer(),       // Oferta pracy
+                jobApplication.getEmployer(),       // Pracodawca
+                jobApplication.getCandidate(),      // Kandydat
+                ApplicationStatus.ACCEPTED          // Nowy status aplikacji
+        );
+
+        // Zapisanie zaktualizowanej aplikacji
         jobApplicationDAO.save(jobApplication);
 
+        // Pobranie danych do historii aplikacji
         Employer employer = jobApplication.getEmployer();
         JobOffer jobOffer = jobApplication.getJobOffer();
         ApplicationStatus applicationStatus = jobApplication.getApplicationStatus();
 
+        // Utworzenie wpisu do historii aplikacji
+        ApplicationsHistory jobApplicationAccepted = new ApplicationsHistory(
+                applicationId,
+                jobOffer,
+                employer,
+                candidateUpdated,
+                applicationStatus
+        );
 
-        ApplicationsHistory jobApplicationAccepted = ApplicationsHistory.builder()
-                .applicationHistoryId(applicationId)
-                .jobOffer(jobOffer)
-                .candidate(candidateUpdated)
-                .employer(employer)
-                .applicationStatus(applicationStatus)
-                .build();
-
+        // Zapisanie historii aplikacji
         applicationsHistoryDAO.saveInHistory(jobApplicationAccepted);
 
+        // Usunięcie aplikacji po akceptacji
         jobApplicationDAO.deleteById(applicationId);
-
     }
 
 

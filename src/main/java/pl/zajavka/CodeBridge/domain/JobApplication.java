@@ -5,7 +5,6 @@ import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
 
 import java.util.Objects;
 
-@With
 public class JobApplication {
 
     Integer applicationId;
