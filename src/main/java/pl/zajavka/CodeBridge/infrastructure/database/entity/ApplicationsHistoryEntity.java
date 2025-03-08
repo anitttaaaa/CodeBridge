@@ -4,13 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
 
-@Getter
-@Setter
-@EqualsAndHashCode(of = "applicationHistoryId")
-@ToString(of = "applicationHistoryId")
+import java.util.Objects;
+
+
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 @Table(name = "applications_history")
 public class ApplicationsHistoryEntity {
@@ -37,4 +35,65 @@ public class ApplicationsHistoryEntity {
     @Column(name = "application_status", nullable = false)
     private ApplicationStatus applicationStatus;
 
+
+
+
+
+
+    public Integer getApplicationHistoryId() {
+        return applicationHistoryId;
+    }
+
+    public JobOfferEntity getJobOffer() {
+        return jobOffer;
+    }
+
+    public EmployerEntity getEmployer() {
+        return employer;
+    }
+
+    public CandidateEntity getCandidate() {
+        return candidate;
+    }
+
+    public ApplicationStatus getApplicationStatus() {
+        return applicationStatus;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ApplicationsHistoryEntity that = (ApplicationsHistoryEntity) o;
+        return Objects.equals(applicationHistoryId, that.applicationHistoryId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(applicationHistoryId);
+    }
+
+    @Override
+    public String toString() {
+        return "ApplicationsHistoryEntity{" +
+                "applicationHistoryId=" + applicationHistoryId +
+                ", jobOffer=" + jobOffer +
+                ", employer=" + employer +
+                ", candidate=" + candidate +
+                ", applicationStatus=" + applicationStatus +
+                '}';
+    }
+
+    public ApplicationsHistoryEntity() {
+    }
+
+    public ApplicationsHistoryEntity(Integer applicationHistoryId, JobOfferEntity jobOffer,
+                                     EmployerEntity employer, CandidateEntity candidate,
+                                     ApplicationStatus applicationStatus) {
+        this.applicationHistoryId = applicationHistoryId;
+        this.jobOffer = jobOffer;
+        this.employer = employer;
+        this.candidate = candidate;
+        this.applicationStatus = applicationStatus;
+    }
 }

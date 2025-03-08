@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.api.dto.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import pl.zajavka.CodeBridge.api.dto.CandidateDTO;
 import pl.zajavka.CodeBridge.api.dto.EmployerDTO;
 import pl.zajavka.CodeBridge.api.dto.JobApplicationDTO;
@@ -13,50 +12,94 @@ import pl.zajavka.CodeBridge.domain.JobOffer;
 
 @Mapper(componentModel = "spring")
 public interface JobApplicationMapper {
-
-    @Mapping(target = "candidate", expression = "java(mapCandidate(jobApplication.getCandidate()))")
-    @Mapping(target = "jobOffer", expression = "java(mapJobOffer(jobApplication.getJobOffer()))")
-    @Mapping(target = "employer", expression = "java(mapEmployer(jobApplication.getEmployer()))")
+    // Mapowanie z JobApplication do JobApplicationDTO
     JobApplicationDTO mapToDto(JobApplication jobApplication);
 
+    // Mapowanie z JobApplicationDTO do JobApplication
+    default JobApplication mapToDomain(JobApplicationDTO jobApplicationDTO) {
+        // Mapowanie z DTO na obiekt domenowy
+        JobOffer jobOffer = mapJobOfferFromDto(jobApplicationDTO.getJobOffer());
+        Employer employer = mapEmployerFromDto(jobApplicationDTO.getEmployer());
+        Candidate candidate = mapCandidateFromDto(jobApplicationDTO.getCandidate());
+
+        return new JobApplication(
+                jobApplicationDTO.getApplicationId(), // applicationId
+                jobOffer,   // jobOffer
+                employer,   // employer
+                candidate,  // candidate
+                jobApplicationDTO.getApplicationStatus() // applicationStatus
+        );
+    }
+
+    // Pomocnicze metody do mapowania z domenowych obiektów do DTO za pomocą konstruktorów
     default JobOfferDTO mapJobOffer(JobOffer jobOffer) {
-        return JobOfferDTO.builder()
-                .jobOfferId(jobOffer.getJobOfferId())
-                .jobOfferTitle(jobOffer.getJobOfferTitle())
-                .description(jobOffer.getDescription())
-                .techSpecialization(jobOffer.getTechSpecialization())
-                .city(jobOffer.getCity())
-                .workType(jobOffer.getWorkType())
-                .experience(jobOffer.getExperience())
-                .salary(jobOffer.getSalary())
-                .mustHaveSkills(jobOffer.getMustHaveSkills())
-                .niceToHaveSkills(jobOffer.getNiceToHaveSkills())
-                .build();
+        return new JobOfferDTO(
+                jobOffer.getJobOfferId(),
+                jobOffer.getJobOfferTitle(),
+                jobOffer.getDescription(),
+                jobOffer.getTechSpecialization(),
+                jobOffer.getCity(),
+                jobOffer.getWorkType(),
+                jobOffer.getExperience(),
+                jobOffer.getSalary(),
+                jobOffer.getMustHaveSkills(),
+                jobOffer.getNiceToHaveSkills()
+        );
     }
 
     default EmployerDTO mapEmployer(Employer employer) {
-        return EmployerDTO.builder()
-                .employerId(employer.getEmployerId())
-                .companyName(employer.getCompanyName())
-                .build();
+        return new EmployerDTO(
+                employer.getEmployerId(),
+                employer.getCompanyName()
+        );
     }
 
     default CandidateDTO mapCandidate(Candidate candidate) {
-        return CandidateDTO.builder()
-                .candidateId(candidate.getCandidateId())
-                .name(candidate.getName())
-                .surname(candidate.getSurname())
-                .email(candidate.getEmail())
-                .phone(candidate.getPhone())
-                .techSpecialization(candidate.getTechSpecialization())
-                .candidateSkills(candidate.getCandidateSkills())
-                .build();
+        return new CandidateDTO(
+                candidate.getCandidateId(),
+                candidate.getName(),
+                candidate.getSurname(),
+                candidate.getEmail(),
+                candidate.getPhone(),
+                candidate.getTechSpecialization(),
+                candidate.getCandidateSkills()
+        );
     }
 
+    // Pomocnicze metody do mapowania z DTO na obiekty domenowe za pomocą konstruktorów
+    default JobOffer mapJobOfferFromDto(JobOfferDTO jobOfferDTO) {
+        return new JobOffer(
+                jobOfferDTO.getJobOfferId(),
+                jobOfferDTO.getJobOfferTitle(),
+                jobOfferDTO.getDescription(),
+                jobOfferDTO.getTechSpecialization(),
+                jobOfferDTO.getCity(),
+                jobOfferDTO.getWorkType(),
+                jobOfferDTO.getExperience(),
+                jobOfferDTO.getSalary(),
+                jobOfferDTO.getMustHaveSkills(),
+                jobOfferDTO.getNiceToHaveSkills()
+        );
+    }
 
-    @Mapping(target = "employer", ignore = true)
-    @Mapping(target = "candidate", ignore = true)
-    @Mapping(target = "applicationStatus", ignore = true)
-    JobApplication mapToDomain(JobApplicationDTO jobApplicationDTO);
+    default Employer mapEmployerFromDto(EmployerDTO employerDTO) {
+        return new Employer(
+                employerDTO.getEmployerId(),
+                employerDTO.getCompanyName()
+        );
+    }
+
+    default Candidate mapCandidateFromDto(CandidateDTO candidateDTO) {
+        return new Candidate(
+                candidateDTO.getCandidateId(),
+                candidateDTO.getName(),
+                candidateDTO.getSurname(),
+                candidateDTO.getEmail(),
+                candidateDTO.getPhone(),
+                candidateDTO.getTechSpecialization(),
+                candidateDTO.getCandidateSkills()
+        );
+    }
 
 }
+

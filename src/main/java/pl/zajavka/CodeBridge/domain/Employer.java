@@ -1,16 +1,15 @@
 package pl.zajavka.CodeBridge.domain;
 
 import lombok.*;
+import pl.zajavka.CodeBridge.infrastructure.database.entity.JobApplicationEntity;
+import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @With
-@Value
 @Builder
-@EqualsAndHashCode(of = "employerId")
-@ToString(of = {"employerId", "companyName", "email", "nip"})
 public class Employer {
 
     Integer employerId;
@@ -21,6 +20,49 @@ public class Employer {
     Set<JobOffer> jobOffers;
     Set<JobApplication> jobApplications;
 
+    public Employer(Integer employerId) {
+        this.employerId = employerId;
+    }
+
+    public Employer(Integer employerId, String companyName, String email, String nip, Integer userId) {
+        this.employerId = employerId;
+        this.companyName = companyName;
+        this.email = email;
+        this.nip = nip;
+        this.userId = userId;
+    }
+
+    public Employer(Integer employerId, String companyName) {
+        this.employerId = employerId;
+        this.companyName = companyName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employer employer = (Employer) o;
+        return Objects.equals(employerId, employer.employerId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(employerId);
+    }
+
+    @Override
+    public String toString() {
+        return "Employer{" +
+                "employerId=" + employerId +
+                ", companyName='" + companyName + '\'' +
+                ", email='" + email + '\'' +
+                ", nip='" + nip + '\'' +
+                ", userId=" + userId +
+                ", jobOffers=" + jobOffers +
+                ", jobApplications=" + jobApplications +
+                '}';
+    }
+
     public Set<JobOffer> getJobOffers () {
         return Objects.isNull(jobOffers) ? new HashSet<>() : jobOffers;
     }
@@ -30,4 +72,37 @@ public class Employer {
     }
 
 
+    public Employer() {
+    }
+
+    public Employer(Integer employerId, String companyName, String email, String nip,
+                    Integer userId, Set<JobOffer> jobOffers, Set<JobApplication> jobApplications) {
+        this.employerId = employerId;
+        this.companyName = companyName;
+        this.email = email;
+        this.nip = nip;
+        this.userId = userId;
+        this.jobOffers = jobOffers;
+        this.jobApplications = jobApplications;
+    }
+
+    public Integer getEmployerId() {
+        return employerId;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getNip() {
+        return nip;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
 }

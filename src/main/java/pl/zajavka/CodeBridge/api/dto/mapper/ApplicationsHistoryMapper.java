@@ -11,9 +11,10 @@ import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.JobOffer;
 
+
+
 @Mapper(componentModel = "spring")
 public interface ApplicationsHistoryMapper {
-
 
     @Mapping(target = "candidate", expression = "java(mapCandidate(applicationsHistory.getCandidate()))")
     @Mapping(target = "jobOffer", expression = "java(mapJobOffer(applicationsHistory.getJobOffer()))")
@@ -21,39 +22,43 @@ public interface ApplicationsHistoryMapper {
     ApplicationsHistoryDTO mapToDto(ApplicationsHistory applicationsHistory);
 
     default JobOfferDTO mapJobOffer(JobOffer jobOffer) {
-        return JobOfferDTO.builder()
-                .jobOfferId(jobOffer.getJobOfferId())
-                .jobOfferTitle(jobOffer.getJobOfferTitle())
-                .description(jobOffer.getDescription())
-                .techSpecialization(jobOffer.getTechSpecialization())
-                .city(jobOffer.getCity())
-                .workType(jobOffer.getWorkType())
-                .experience(jobOffer.getExperience())
-                .salary(jobOffer.getSalary())
-                .mustHaveSkills(jobOffer.getMustHaveSkills())
-                .niceToHaveSkills(jobOffer.getNiceToHaveSkills())
-                .build();
+        return new JobOfferDTO(
+                jobOffer.getJobOfferId(),
+                jobOffer.getJobOfferTitle(),
+                jobOffer.getDescription(),
+                jobOffer.getTechSpecialization(),
+                jobOffer.getWorkType(),
+                jobOffer.getCity(),
+                jobOffer.getExperience(),
+                jobOffer.getSalary(),
+                jobOffer.getMustHaveSkills(),
+                jobOffer.getNiceToHaveSkills()
+        );
     }
 
     default EmployerDTO mapEmployer(Employer employer) {
-        return EmployerDTO.builder()
-                .employerId(employer.getEmployerId())
-                .companyName(employer.getCompanyName())
-                .build();
+        return new EmployerDTO(
+                employer.getEmployerId(),
+                employer.getCompanyName(),
+                employer.getEmail(),
+                employer.getNip(),
+                employer.getUserId()
+        );
     }
-
     default CandidateDTO mapCandidate(Candidate candidate) {
-        return CandidateDTO.builder()
-                .candidateId(candidate.getCandidateId())
-                .name(candidate.getName())
-                .surname(candidate.getSurname())
-                .email(candidate.getEmail())
-                .phone(candidate.getPhone())
-                .techSpecialization(candidate.getTechSpecialization())
-                .candidateSkills(candidate.getCandidateSkills())
-                .build();
+
+        return new CandidateDTO(
+                candidate.getCandidateId(),
+                candidate.getName(),
+                candidate.getSurname(),
+                candidate.getEmail(),
+                candidate.getPhone(),
+                candidate.getTechSpecialization(),
+                candidate.getCandidateSkills()
+        );
     }
-
-
-
 }
+
+
+
+

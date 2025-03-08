@@ -106,13 +106,14 @@ public class JobApplicationService {
 
         ApplicationStatus applicationStatus = ApplicationStatus.PENDING;
 
-        JobApplication jobApplication = JobApplication.builder()
-                .jobOffer(JobOffer.builder().jobOfferId(jobOfferId).build())
-                .employer(Employer.builder().employerId(employerId).build())
-                .candidate(Candidate.builder().candidateId(candidateId).build())
-                .applicationStatus(applicationStatus)
-                .build();
+        JobOffer jobOfferId1 = new JobOffer(jobOfferId);
+        Employer employerId1 = new Employer(employerId);
+        Candidate candidateId1= new Candidate(candidateId);
 
+        // Tworzenie JobApplication za pomocą konstruktorów
+        JobApplication jobApplication = new JobApplication(jobOfferId1, employerId1, candidateId1, applicationStatus);
+
+        // Zapisanie aplikacji do bazy danych
         jobApplicationDAO.createJobApplication(jobApplication);
 
     }

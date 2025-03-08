@@ -26,15 +26,16 @@ public class CandidateProjectService {
     }
 
     private CandidateProject buildCandidateProject(CandidateProject candidateProjectFromRequest, Candidate candidate) {
-        return CandidateProject.builder()
-                .projectTitle(candidateProjectFromRequest.getProjectTitle())
-                .technologies(candidateProjectFromRequest.getTechnologies())
-                .description(candidateProjectFromRequest.getDescription())
-                .fromDate(candidateProjectFromRequest.getFromDate())
-                .toDate(candidateProjectFromRequest.getToDate())
-                .projectLink(candidateProjectFromRequest.getProjectLink())
-                .candidateId(candidate.getCandidateId())
-                .build();
+        return new CandidateProject(
+                null,
+                candidateProjectFromRequest.getProjectTitle(),
+                candidateProjectFromRequest.getTechnologies(),
+                candidateProjectFromRequest.getDescription(),
+                candidateProjectFromRequest.getFromDate(),
+                candidateProjectFromRequest.getToDate(),
+                candidateProjectFromRequest.getProjectLink(),
+                candidate.getCandidateId()
+        );
     }
 
     public void updateCandidateProject(CandidateProject candidateProject, Authentication authentication) throws AccessDeniedException {

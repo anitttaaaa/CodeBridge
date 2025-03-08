@@ -4,13 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
 
-@Getter
-@Setter
-@EqualsAndHashCode(of = "applicationId")
-@ToString(of = "applicationId")
+import java.util.Objects;
+
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 @Table(name = "job_application")
 public class JobApplicationEntity {
@@ -36,4 +33,63 @@ public class JobApplicationEntity {
     @Column(name = "application_status", nullable = false)
     private ApplicationStatus applicationStatus;
 
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JobApplicationEntity that = (JobApplicationEntity) o;
+        return Objects.equals(applicationId, that.applicationId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(applicationId);
+    }
+
+    @Override
+    public String toString() {
+        return "JobApplicationEntity{" +
+                "applicationId=" + applicationId +
+                ", jobOffer=" + jobOffer +
+                ", employer=" + employer +
+                ", candidate=" + candidate +
+                ", applicationStatus=" + applicationStatus +
+                '}';
+    }
+
+    public JobApplicationEntity() {
+    }
+
+    public JobApplicationEntity(Integer applicationId, JobOfferEntity jobOffer,
+                                EmployerEntity employer, CandidateEntity candidate,
+                                ApplicationStatus applicationStatus) {
+        this.applicationId = applicationId;
+        this.jobOffer = jobOffer;
+        this.employer = employer;
+        this.candidate = candidate;
+        this.applicationStatus = applicationStatus;
+    }
+
+    public Integer getApplicationId() {
+        return applicationId;
+    }
+
+    public JobOfferEntity getJobOffer() {
+        return jobOffer;
+    }
+
+    public EmployerEntity getEmployer() {
+        return employer;
+    }
+
+    public CandidateEntity getCandidate() {
+        return candidate;
+    }
+
+    public ApplicationStatus getApplicationStatus() {
+        return applicationStatus;
+    }
 }

@@ -31,15 +31,17 @@ public class CandidateExperienceService {
 
 
     private CandidateExperience buildCandidateExperience(CandidateExperience candidateExperienceFromRequest, Integer candidateId) {
-        return CandidateExperience.builder()
-                .companyName(candidateExperienceFromRequest.getCompanyName())
-                .candidatePosition(candidateExperienceFromRequest.getCandidatePosition())
-                .description(candidateExperienceFromRequest.getDescription())
-                .fromDate(candidateExperienceFromRequest.getFromDate())
-                .toDate(candidateExperienceFromRequest.getToDate())
-                .candidateId(candidateId)
-                .build();
+        return new CandidateExperience(
+                candidateExperienceFromRequest.getCandidateExperienceId(),  // Jeśli chcesz zachować istniejący ID
+                candidateExperienceFromRequest.getCompanyName(),
+                candidateExperienceFromRequest.getCandidatePosition(),
+                candidateExperienceFromRequest.getDescription(),
+                candidateExperienceFromRequest.getFromDate(),
+                candidateExperienceFromRequest.getToDate(),
+                candidateId // Ustawiamy candidateId przekazany do metody
+        );
     }
+
 
     @Transactional
     public void updateCandidateExperience(CandidateExperience candidateExperience, Authentication authentication) throws AccessDeniedException {

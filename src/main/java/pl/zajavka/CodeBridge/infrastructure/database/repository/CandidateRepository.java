@@ -24,11 +24,11 @@ public class CandidateRepository implements CandidateDAO {
     @Override
     public Optional<Candidate> findCandidateByEmail(String email) {
         return candidateJpaRepository.findByEmail(email)
-                .map(candidateEntityMapper::mapFromEntity);
+                .map(candidateEntityMapper::mapCandidateEntityToDomain);
     }
 
     private void saveCandidateEntity(Candidate candidate) {
-        CandidateEntity candidateEntity = candidateEntityMapper.mapToEntity(candidate);
+        CandidateEntity candidateEntity = candidateEntityMapper.mapCandidateToEntity(candidate);
         candidateJpaRepository.saveAndFlush(candidateEntity);
     }
 
@@ -41,7 +41,7 @@ public class CandidateRepository implements CandidateDAO {
         List<CandidateEntity> candidateEntities = candidateJpaRepository.findAll();
 
         return candidateEntities.stream().
-                map(candidateEntityMapper::mapFromEntity)
+                map(candidateEntityMapper::mapCandidateEntityToDomain)
                 .collect(Collectors.toList());
     }
 
@@ -49,7 +49,7 @@ public class CandidateRepository implements CandidateDAO {
     public List<Candidate> findAllCandidates() {
 
         List<Candidate> candidates = candidateJpaRepository.findAll().stream()
-                .map(candidateEntityMapper::mapFromEntity)
+                .map(candidateEntityMapper::mapCandidateEntityToDomain)
                 .collect(Collectors.toList());
         return candidates;
     }
@@ -57,7 +57,7 @@ public class CandidateRepository implements CandidateDAO {
     @Override
     public Optional<Candidate> findById(Integer candidateId) {
         return candidateJpaRepository.findById(candidateId)
-                .map(candidateEntityMapper::mapFromEntity);
+                .map(candidateEntityMapper::mapCandidateEntityToDomain);
     }
 
 

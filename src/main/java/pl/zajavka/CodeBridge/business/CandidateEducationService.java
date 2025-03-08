@@ -27,14 +27,15 @@ public class CandidateEducationService {
     }
 
     private CandidateEducation buildCandidateEducation(CandidateEducation candidateEducationFromRequest, Candidate candidate) {
-        return CandidateEducation.builder()
-                .institution(candidateEducationFromRequest.getInstitution())
-                .degree(candidateEducationFromRequest.getDegree())
-                .fieldOfStudy(candidateEducationFromRequest.getFieldOfStudy())
-                .fromDate(candidateEducationFromRequest.getFromDate())
-                .toDate(candidateEducationFromRequest.getToDate())
-                .candidateId(candidate.getCandidateId())
-                .build();
+        return new CandidateEducation(
+                null,  // Zakładając, że `candidateEducationId` jest generowane automatycznie, więc ustawiamy je na null
+                candidateEducationFromRequest.getInstitution(),
+                candidateEducationFromRequest.getDegree(),
+                candidateEducationFromRequest.getFieldOfStudy(),
+                candidateEducationFromRequest.getFromDate(),
+                candidateEducationFromRequest.getToDate(),
+                candidate.getCandidateId()
+        );
     }
 
     public void updateCandidateEducation(CandidateEducation candidateEducation, Authentication authentication) throws AccessDeniedException {

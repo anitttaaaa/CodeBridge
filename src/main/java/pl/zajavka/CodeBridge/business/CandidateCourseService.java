@@ -27,15 +27,20 @@ public class CandidateCourseService {
     }
 
     private CandidateCourse buildCandidateCourse(CandidateCourse candidateCourseFromRequest, Candidate candidate) {
-        return CandidateCourse.builder()
-                .institution(candidateCourseFromRequest.getInstitution())
-                .courseTitle(candidateCourseFromRequest.getCourseTitle())
-                .description(candidateCourseFromRequest.getDescription())
-                .technologies(candidateCourseFromRequest.getTechnologies())
-                .fromDate(candidateCourseFromRequest.getFromDate())
-                .toDate(candidateCourseFromRequest.getToDate())
-                .candidateId(candidate.getCandidateId())
-                .build();
+        if (candidateCourseFromRequest == null || candidate == null) {
+            return null;
+        }
+
+        return new CandidateCourse(
+                candidateCourseFromRequest.getCandidateCourseId(),  // Zakładam, że 'CandidateCourseId' jest opcjonalne lub generowane po stronie bazy danych
+                candidateCourseFromRequest.getInstitution(),
+                candidateCourseFromRequest.getCourseTitle(),
+                candidateCourseFromRequest.getDescription(),
+                candidateCourseFromRequest.getTechnologies(),
+                candidateCourseFromRequest.getFromDate(),
+                candidateCourseFromRequest.getToDate(),
+                candidate.getCandidateId()  // Zakładam, że 'candidate.getCandidateId()' jest wymagany
+        );
     }
 
 

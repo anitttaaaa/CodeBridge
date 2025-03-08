@@ -4,14 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-
-@Getter
-@Setter
-@EqualsAndHashCode(of = "candidateEducationId")
-@ToString(of = {"candidateEducationId", "institution","degree"})
+import java.util.Objects;
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 @Table(name = "candidate_education")
 public class CandidateEducationEntity {
@@ -39,4 +34,73 @@ public class CandidateEducationEntity {
     @Column(name = "candidate_id")
     private Integer candidateId;
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CandidateEducationEntity that = (CandidateEducationEntity) o;
+        return Objects.equals(candidateEducationId, that.candidateEducationId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(candidateEducationId);
+    }
+
+    @Override
+    public String toString() {
+        return "CandidateEducationEntity{" +
+                "candidateEducationId=" + candidateEducationId +
+                ", institution='" + institution + '\'' +
+                ", degree='" + degree + '\'' +
+                ", fieldOfStudy='" + fieldOfStudy + '\'' +
+                ", fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                ", candidateId=" + candidateId +
+                '}';
+    }
+
+    public CandidateEducationEntity() {
+    }
+
+    public CandidateEducationEntity(Integer candidateEducationId, String institution,
+                                    String degree, String fieldOfStudy, LocalDate fromDate,
+                                    LocalDate toDate, Integer candidateId) {
+        this.candidateEducationId = candidateEducationId;
+        this.institution = institution;
+        this.degree = degree;
+        this.fieldOfStudy = fieldOfStudy;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.candidateId = candidateId;
+    }
+
+    public Integer getCandidateEducationId() {
+        return candidateEducationId;
+    }
+
+    public String getInstitution() {
+        return institution;
+    }
+
+    public String getDegree() {
+        return degree;
+    }
+
+    public String getFieldOfStudy() {
+        return fieldOfStudy;
+    }
+
+    public LocalDate getFromDate() {
+        return fromDate;
+    }
+
+    public LocalDate getToDate() {
+        return toDate;
+    }
+
+    public Integer getCandidateId() {
+        return candidateId;
+    }
 }

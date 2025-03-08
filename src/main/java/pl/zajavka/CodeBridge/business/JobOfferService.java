@@ -53,17 +53,19 @@ public class JobOfferService {
 
 
     private JobOffer buildJobOffer(JobOffer request) {
-        return JobOffer.builder()
-                .jobOfferTitle(request.getJobOfferTitle())
-                .description(request.getDescription())
-                .techSpecialization(request.getTechSpecialization())
-                .workType(request.getWorkType())
-                .city(request.getCity())
-                .experience(request.getExperience())
-                .salary(request.getSalary())
-                .mustHaveSkills(request.getMustHaveSkills())
-                .niceToHaveSkills(request.getNiceToHaveSkills())
-                .build();
+        return new JobOffer(
+                null, // jobOfferId, jeśli to pole ma być null w przypadku tworzenia nowego obiektu
+                request.getJobOfferTitle(),
+                request.getDescription(),
+                request.getTechSpecialization(),
+                request.getEmployer(), // Jeżeli Employer również jest częścią tego obiektu, można go przekazać
+                request.getWorkType(),
+                request.getCity(),
+                request.getExperience(),
+                request.getSalary(),
+                request.getMustHaveSkills(),
+                request.getNiceToHaveSkills()
+        );
     }
 
     @Transactional

@@ -8,9 +8,32 @@ import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateExperienceE
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CandidateExperienceEntityMapper {
 
-    CandidateExperience mapFromEntity(CandidateExperienceEntity candidateExperienceEntity);
+    default CandidateExperience mapFromEntity(CandidateExperienceEntity candidateExperienceEntity) {
+        // Tworzymy obiekt CandidateExperience za pomocą konstruktora
+        return new CandidateExperience(
+                candidateExperienceEntity.getCandidateExperienceId(),
+                candidateExperienceEntity.getCompanyName(),
+                candidateExperienceEntity.getCandidatePosition(),
+                candidateExperienceEntity.getDescription(),
+                candidateExperienceEntity.getFromDate(),
+                candidateExperienceEntity.getToDate(),
+                candidateExperienceEntity.getCandidateId()
+        );
+    }
 
-    CandidateExperienceEntity mapToEntity(CandidateExperience candidateExperience);
+    // Mapowanie z CandidateExperience do CandidateExperienceEntity za pomocą konstruktora
+    default CandidateExperienceEntity mapToEntity(CandidateExperience candidateExperience) {
+        // Tworzymy obiekt CandidateExperienceEntity za pomocą konstruktora
+        return new CandidateExperienceEntity(
+                candidateExperience.getCandidateExperienceId(),
+                candidateExperience.getCompanyName(),
+                candidateExperience.getCandidatePosition(),
+                candidateExperience.getDescription(),
+                candidateExperience.getFromDate(),
+                candidateExperience.getToDate(),
+                candidateExperience.getCandidateId()
+        );
+    }
 
 
 }
