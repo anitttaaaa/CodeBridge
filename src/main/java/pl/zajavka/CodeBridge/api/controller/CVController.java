@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.api.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,6 @@ import java.io.OutputStream;
 import java.util.Base64;
 
 @Controller
-@RequiredArgsConstructor
 public class CVController {
 
     private final CandidateCVMapper candidateCVMapper;
@@ -28,6 +26,13 @@ public class CVController {
     private static final String SHOW_CANDIDATE_CV = "/candidate-portal/generate-cv";
     private static final String CANDIDATE_GENERATE_PDF = "/candidate-portal/generate-pdf";
 
+    public CVController(CandidateCVMapper candidateCVMapper,
+                        CandidateService candidateService,
+                        TemplateEngine templateEngine) {
+        this.candidateCVMapper = candidateCVMapper;
+        this.candidateService = candidateService;
+        this.templateEngine = templateEngine;
+    }
 
     @GetMapping(SHOW_CANDIDATE_CV)
     public String generateCv(Model model) {

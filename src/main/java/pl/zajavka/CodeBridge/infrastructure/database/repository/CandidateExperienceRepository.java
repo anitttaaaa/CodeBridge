@@ -9,12 +9,16 @@ import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.CandidateExp
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.CandidateExperienceEntityMapper;
 
 @Repository
-@AllArgsConstructor
 public class CandidateExperienceRepository implements CandidateExperienceDAO {
 
     private final CandidateExperienceEntityMapper candidateExperienceEntityMapper;
     private final CandidateExperienceJpaRepository candidateExperienceJpaRepository;
 
+    public CandidateExperienceRepository(CandidateExperienceEntityMapper candidateExperienceEntityMapper,
+                                         CandidateExperienceJpaRepository candidateExperienceJpaRepository) {
+        this.candidateExperienceEntityMapper = candidateExperienceEntityMapper;
+        this.candidateExperienceJpaRepository = candidateExperienceJpaRepository;
+    }
 
     @Override
     public CandidateExperience createExperience(CandidateExperience candidateExperience) {

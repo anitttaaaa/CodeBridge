@@ -16,11 +16,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 public class EmployerService {
 
     private final EmployerDAO employerDAO;
     private final CandidateDAO candidateDAO;
+
+    public EmployerService(EmployerDAO employerDAO, CandidateDAO candidateDAO) {
+        this.employerDAO = employerDAO;
+        this.candidateDAO = candidateDAO;
+    }
 
     @Transactional
     public Employer findEmployer(Integer userId) {

@@ -9,17 +9,21 @@ import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateExperienceE
 public interface CandidateExperienceEntityMapper {
 
     default CandidateExperience mapFromEntity(CandidateExperienceEntity candidateExperienceEntity) {
-        // Tworzymy obiekt CandidateExperience za pomocą konstruktora
-        return new CandidateExperience(
-                candidateExperienceEntity.getCandidateExperienceId(),
-                candidateExperienceEntity.getCompanyName(),
-                candidateExperienceEntity.getCandidatePosition(),
-                candidateExperienceEntity.getDescription(),
-                candidateExperienceEntity.getFromDate(),
-                candidateExperienceEntity.getToDate(),
-                candidateExperienceEntity.getCandidateId()
-        );
+        if (candidateExperienceEntity == null) {
+            return null;
+        }
+
+        return new CandidateExperience.Builder()
+                .candidateExperienceId(candidateExperienceEntity.getCandidateExperienceId())
+                .companyName(candidateExperienceEntity.getCompanyName())
+                .candidatePosition(candidateExperienceEntity.getCandidatePosition())
+                .description(candidateExperienceEntity.getDescription())
+                .fromDate(candidateExperienceEntity.getFromDate())
+                .toDate(candidateExperienceEntity.getToDate())
+                .candidateId(candidateExperienceEntity.getCandidateId())
+                .build();
     }
+
 
     // Mapowanie z CandidateExperience do CandidateExperienceEntity za pomocą konstruktora
     default CandidateExperienceEntity mapToEntity(CandidateExperience candidateExperience) {

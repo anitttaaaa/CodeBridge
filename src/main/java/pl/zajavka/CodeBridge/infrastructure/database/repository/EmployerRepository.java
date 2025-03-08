@@ -16,7 +16,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Repository
-@AllArgsConstructor
 public class EmployerRepository implements EmployerDAO {
 
     private final EmployerJpaRepository employerJpaRepository;
@@ -25,6 +24,15 @@ public class EmployerRepository implements EmployerDAO {
     private final EmployerEntityMapper employerEntityMapper;
     private final JobOfferEntityMapper jobOfferEntityMapper;
 
+    public EmployerRepository(EmployerJpaRepository employerJpaRepository,
+                              JobOfferJpaRepository jobOfferJpaRepository,
+                              EmployerEntityMapper employerEntityMapper,
+                              JobOfferEntityMapper jobOfferEntityMapper) {
+        this.employerJpaRepository = employerJpaRepository;
+        this.jobOfferJpaRepository = jobOfferJpaRepository;
+        this.employerEntityMapper = employerEntityMapper;
+        this.jobOfferEntityMapper = jobOfferEntityMapper;
+    }
 
     @Override
     public Optional<Employer> findByUserId(Integer userId) {

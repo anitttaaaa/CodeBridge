@@ -14,10 +14,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class CodeBridgeUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
+
+    public CodeBridgeUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     @Transactional

@@ -14,16 +14,18 @@ public interface CandidateEducationEntityMapper {
         if (candidateEducationEntity == null) {
             return null;
         }
-        return new CandidateEducation(
-                candidateEducationEntity.getCandidateEducationId(),
-                candidateEducationEntity.getInstitution(),
-                candidateEducationEntity.getDegree(),
-                candidateEducationEntity.getFieldOfStudy(),
-                candidateEducationEntity.getFromDate(),
-                candidateEducationEntity.getToDate(),
-                candidateEducationEntity.getCandidateId()
-        );
+
+        return new CandidateEducation.Builder()
+                .candidateEducationId(candidateEducationEntity.getCandidateEducationId())
+                .institution(candidateEducationEntity.getInstitution())
+                .degree(candidateEducationEntity.getDegree())
+                .fieldOfStudy(candidateEducationEntity.getFieldOfStudy())
+                .fromDate(candidateEducationEntity.getFromDate())
+                .toDate(candidateEducationEntity.getToDate())
+                .candidateId(candidateEducationEntity.getCandidateId())
+                .build();
     }
+
 
     // Ręczne mapowanie z CandidateEducation na CandidateEducationEntity
     default CandidateEducationEntity mapToEntity(CandidateEducation candidateEducation) {

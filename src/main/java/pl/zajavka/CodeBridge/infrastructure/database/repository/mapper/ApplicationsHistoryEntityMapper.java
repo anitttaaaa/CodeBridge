@@ -62,17 +62,18 @@ public interface ApplicationsHistoryEntityMapper {
     }
 
     default Candidate mapCandidate(CandidateEntity candidateEntity) {
-        return new Candidate(
-                candidateEntity.getCandidateId(),
-                candidateEntity.getName(),
-                candidateEntity.getSurname(),
-                candidateEntity.getEmail(),
-                candidateEntity.getPhone(),
-                candidateEntity.getUserId(),
-                candidateEntity.getTechSpecialization(),
-                candidateEntity.getCandidateSkills()
-        );
+        return new Candidate.Builder()
+                .candidateId(candidateEntity.getCandidateId())
+                .name(candidateEntity.getName())
+                .surname(candidateEntity.getSurname())
+                .email(candidateEntity.getEmail())
+                .phone(candidateEntity.getPhone())
+                .userId(candidateEntity.getUserId())
+                .techSpecialization(candidateEntity.getTechSpecialization())
+                .candidateSkills(candidateEntity.getCandidateSkills())
+                .build();
     }
+
 
     // Jeśli potrzebujesz, możesz dodać mapowanie z domeny do encji.
     default ApplicationsHistoryEntity mapToEntity(ApplicationsHistory applicationsHistory) {

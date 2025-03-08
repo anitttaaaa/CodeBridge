@@ -14,11 +14,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
-@AllArgsConstructor
 public class JobOfferRepository implements JobOfferDAO {
 
     private final JobOfferJpaRepository jobOfferJpaRepository;
     private final JobOfferEntityMapper jobOfferEntityMapper;
+
+    public JobOfferRepository(JobOfferJpaRepository jobOfferJpaRepository,
+                              JobOfferEntityMapper jobOfferEntityMapper) {
+        this.jobOfferJpaRepository = jobOfferJpaRepository;
+        this.jobOfferEntityMapper = jobOfferEntityMapper;
+    }
 
     @Override
     public List<JobOffer> findAllJobOffers() {

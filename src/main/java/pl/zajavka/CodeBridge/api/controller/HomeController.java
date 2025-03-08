@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@RequiredArgsConstructor
 public class HomeController {
 
 
@@ -21,6 +20,10 @@ public class HomeController {
     private static final String GET_FILTERED_JOB_OFFERS = "/filtered-job-offers";
 
     private final JobOfferService jobOfferService;
+
+    public HomeController(JobOfferService jobOfferService) {
+        this.jobOfferService = jobOfferService;
+    }
 
     @GetMapping(GET_ALL_JOB_OFFERS)
     public String getAllJobOffers(Model model) {

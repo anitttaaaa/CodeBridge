@@ -20,7 +20,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 public class JobOfferService {
 
     private final CodeBridgeUserDetailsService codeBridgeUserDetailsService;
@@ -28,6 +27,15 @@ public class JobOfferService {
     private final JobOfferDAO jobOfferDAO;
     private final JobOfferMapper jobOfferMapper;
 
+    public JobOfferService(CodeBridgeUserDetailsService codeBridgeUserDetailsService,
+                           EmployerService employerService,
+                           JobOfferDAO jobOfferDAO,
+                           JobOfferMapper jobOfferMapper) {
+        this.codeBridgeUserDetailsService = codeBridgeUserDetailsService;
+        this.employerService = employerService;
+        this.jobOfferDAO = jobOfferDAO;
+        this.jobOfferMapper = jobOfferMapper;
+    }
 
     @Transactional
     public void createJobOfferData(JobOffer request, Authentication authentication) {

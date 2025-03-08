@@ -102,18 +102,18 @@ public interface JobApplicationEntityMapper {
         );
     }
 
-    // Ręczne mapowanie CandidateEntity -> Candidate
     private Candidate mapCandidate(CandidateEntity candidateEntity) {
-        return new Candidate(
-                candidateEntity.getCandidateId(),
-                candidateEntity.getName(),
-                candidateEntity.getSurname(),
-                candidateEntity.getEmail(),
-                candidateEntity.getPhone(),
-                candidateEntity.getTechSpecialization(),
-                candidateEntity.getCandidateSkills()
-        );
+        return new Candidate.Builder()
+                .candidateId(candidateEntity.getCandidateId())
+                .name(candidateEntity.getName())
+                .surname(candidateEntity.getSurname())
+                .email(candidateEntity.getEmail())
+                .phone(candidateEntity.getPhone())
+                .techSpecialization(candidateEntity.getTechSpecialization())
+                .candidateSkills(candidateEntity.getCandidateSkills())
+                .build();
     }
+
 
     // Ręczne mapowanie Candidate -> CandidateEntity
     private CandidateEntity mapCandidateToEntity(Candidate candidate) {

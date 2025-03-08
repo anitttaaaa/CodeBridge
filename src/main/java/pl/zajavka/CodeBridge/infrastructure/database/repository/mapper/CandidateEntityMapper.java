@@ -130,110 +130,113 @@ public interface CandidateEntityMapper {
             return null;
         }
 
-        // Tworzenie obiektu Candidate za pomocą konstruktora
-        return new Candidate(
-                candidateEntity.getCandidateId(),
-                candidateEntity.getName(),
-                candidateEntity.getSurname(),
-                candidateEntity.getEmail(),
-                candidateEntity.getPhone(),
-                candidateEntity.getStatus(),
-                candidateEntity.getUserId(),
-                candidateEntity.getLinkedIn(),
-                candidateEntity.getGitHub(),
-                candidateEntity.getTechSpecialization(),
-                candidateEntity.getAboutMe(),
-                candidateEntity.getHobby(),
-                candidateEntity.getCandidateSkills(),
-                mapCandidateExperienceEntitiesToDomain(candidateEntity.getCandidateExperiences()),
-                mapCandidateProjectEntitiesToDomain(candidateEntity.getCandidateProjects()),
-                mapCandidateEducationEntitiesToDomain(candidateEntity.getCandidateEducationStages()),
-                mapCandidateCourseEntitiesToDomain(candidateEntity.getCandidateCourses()),
-                candidateEntity.getProfilePhoto()
-        );
+        return new Candidate.Builder()
+                .candidateId(candidateEntity.getCandidateId())
+                .name(candidateEntity.getName())
+                .surname(candidateEntity.getSurname())
+                .email(candidateEntity.getEmail())
+                .phone(candidateEntity.getPhone())
+                .status(candidateEntity.getStatus())
+                .userId(candidateEntity.getUserId())
+                .linkedIn(candidateEntity.getLinkedIn())
+                .gitHub(candidateEntity.getGitHub())
+                .techSpecialization(candidateEntity.getTechSpecialization())
+                .aboutMe(candidateEntity.getAboutMe())
+                .hobby(candidateEntity.getHobby())
+                .candidateSkills(candidateEntity.getCandidateSkills())
+                .candidateExperiences(mapCandidateExperienceEntitiesToDomain(candidateEntity.getCandidateExperiences()))
+                .candidateProjects(mapCandidateProjectEntitiesToDomain(candidateEntity.getCandidateProjects()))
+                .candidateEducationStages(mapCandidateEducationEntitiesToDomain(candidateEntity.getCandidateEducationStages()))
+                .candidateCourses(mapCandidateCourseEntitiesToDomain(candidateEntity.getCandidateCourses()))
+                .profilePhoto(candidateEntity.getProfilePhoto())
+                .build();
     }
 
-    // Mapowanie CandidateExperienceEntity -> CandidateExperience
+
     default List<CandidateExperience> mapCandidateExperienceEntitiesToDomain(List<CandidateExperienceEntity> experiences) {
         if (experiences == null) {
             return null;
         }
+
         List<CandidateExperience> domainExperiences = new ArrayList<>();
         for (CandidateExperienceEntity experienceEntity : experiences) {
-            domainExperiences.add(new CandidateExperience(
-                    experienceEntity.getCandidateExperienceId(),
-                    experienceEntity.getCompanyName(),
-                    experienceEntity.getCandidatePosition(),
-                    experienceEntity.getDescription(),
-                    experienceEntity.getFromDate(),
-                    experienceEntity.getToDate(),
-                    experienceEntity.getCandidateId()
-            ));
+            domainExperiences.add(new CandidateExperience.Builder()
+                    .candidateExperienceId(experienceEntity.getCandidateExperienceId())
+                    .companyName(experienceEntity.getCompanyName())
+                    .candidatePosition(experienceEntity.getCandidatePosition())
+                    .description(experienceEntity.getDescription())
+                    .fromDate(experienceEntity.getFromDate())
+                    .toDate(experienceEntity.getToDate())
+                    .candidateId(experienceEntity.getCandidateId())
+                    .build());
         }
         return domainExperiences;
     }
 
-    // Mapowanie CandidateProjectEntity -> CandidateProject
+
     default List<CandidateProject> mapCandidateProjectEntitiesToDomain(List<CandidateProjectEntity> projects) {
         if (projects == null) {
             return null;
         }
+
         List<CandidateProject> domainProjects = new ArrayList<>();
         for (CandidateProjectEntity projectEntity : projects) {
-            domainProjects.add(new CandidateProject(
-                    projectEntity.getCandidateProjectId(),
-                    projectEntity.getProjectTitle(),
-                    projectEntity.getTechnologies(),
-                    projectEntity.getDescription(),
-                    projectEntity.getFromDate(),
-                    projectEntity.getToDate(),
-                    projectEntity.getProjectLink(),
-                    projectEntity.getCandidateId()
-            ));
+            domainProjects.add(new CandidateProject.Builder()
+                    .candidateProjectId(projectEntity.getCandidateProjectId())
+                    .projectTitle(projectEntity.getProjectTitle())
+                    .technologies(projectEntity.getTechnologies())
+                    .description(projectEntity.getDescription())
+                    .fromDate(projectEntity.getFromDate())
+                    .toDate(projectEntity.getToDate())
+                    .projectLink(projectEntity.getProjectLink())
+                    .candidateId(projectEntity.getCandidateId())
+                    .build());
         }
         return domainProjects;
     }
 
-    // Mapowanie CandidateEducationEntity -> CandidateEducation
+
     default List<CandidateEducation> mapCandidateEducationEntitiesToDomain(List<CandidateEducationEntity> education) {
         if (education == null) {
             return null;
         }
+
         List<CandidateEducation> domainEducation = new ArrayList<>();
         for (CandidateEducationEntity eduEntity : education) {
-            domainEducation.add(new CandidateEducation(
-                    eduEntity.getCandidateEducationId(),
-                    eduEntity.getInstitution(),
-                    eduEntity.getDegree(),
-                    eduEntity.getFieldOfStudy(),
-                    eduEntity.getFromDate(),
-                    eduEntity.getToDate(),
-                    eduEntity.getCandidateId()
-            ));
+            domainEducation.add(new CandidateEducation.Builder()
+                    .candidateEducationId(eduEntity.getCandidateEducationId())
+                    .institution(eduEntity.getInstitution())
+                    .degree(eduEntity.getDegree())
+                    .fieldOfStudy(eduEntity.getFieldOfStudy())
+                    .fromDate(eduEntity.getFromDate())
+                    .toDate(eduEntity.getToDate())
+                    .candidateId(eduEntity.getCandidateId())
+                    .build());
         }
         return domainEducation;
     }
 
-    // Mapowanie CandidateCourseEntity -> CandidateCourse
     default List<CandidateCourse> mapCandidateCourseEntitiesToDomain(List<CandidateCourseEntity> courses) {
         if (courses == null) {
             return null;
         }
+
         List<CandidateCourse> domainCourses = new ArrayList<>();
         for (CandidateCourseEntity courseEntity : courses) {
-            domainCourses.add(new CandidateCourse(
-                    courseEntity.getCandidateCourseId(),
-                    courseEntity.getInstitution(),
-                    courseEntity.getCourseTitle(),
-                    courseEntity.getDescription(),
-                    courseEntity.getTechnologies(),
-                    courseEntity.getFromDate(),
-                    courseEntity.getToDate(),
-                    courseEntity.getCandidateId()
-            ));
+            domainCourses.add(new CandidateCourse.Builder()
+                    .candidateCourseId(courseEntity.getCandidateCourseId())
+                    .institution(courseEntity.getInstitution())
+                    .courseTitle(courseEntity.getCourseTitle())
+                    .description(courseEntity.getDescription())
+                    .technologies(courseEntity.getTechnologies())
+                    .fromDate(courseEntity.getFromDate())
+                    .toDate(courseEntity.getToDate())
+                    .candidateId(courseEntity.getCandidateId())
+                    .build());
         }
         return domainCourses;
     }
+
 }
 
 

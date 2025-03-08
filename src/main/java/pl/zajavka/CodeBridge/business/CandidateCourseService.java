@@ -1,21 +1,24 @@
 package pl.zajavka.CodeBridge.business;
 
-import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import pl.zajavka.CodeBridge.business.dao.CandidateCourseDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.CandidateCourse;
-import pl.zajavka.CodeBridge.domain.CandidateEducation;
 
 import java.nio.file.AccessDeniedException;
 
 @Service
-@AllArgsConstructor
 public class CandidateCourseService {
 
     private final CandidateService candidateService;
     private final CandidateCourseDAO candidateCourseDAO;
+
+    public CandidateCourseService(CandidateService candidateService,
+                                  CandidateCourseDAO candidateCourseDAO) {
+        this.candidateService = candidateService;
+        this.candidateCourseDAO = candidateCourseDAO;
+    }
 
     public void createCourseData(CandidateCourse candidateCourseFromRequest) {
 
@@ -31,17 +34,18 @@ public class CandidateCourseService {
             return null;
         }
 
-        return new CandidateCourse(
-                candidateCourseFromRequest.getCandidateCourseId(),  // Zakładam, że 'CandidateCourseId' jest opcjonalne lub generowane po stronie bazy danych
-                candidateCourseFromRequest.getInstitution(),
-                candidateCourseFromRequest.getCourseTitle(),
-                candidateCourseFromRequest.getDescription(),
-                candidateCourseFromRequest.getTechnologies(),
-                candidateCourseFromRequest.getFromDate(),
-                candidateCourseFromRequest.getToDate(),
-                candidate.getCandidateId()  // Zakładam, że 'candidate.getCandidateId()' jest wymagany
-        );
+        return new CandidateCourse.Builder()
+                .candidateCourseId(candidateCourseFromRequest.getCandidateCourseId())  // Jeśli 'CandidateCourseId' jest opcjonalne
+                .institution(candidateCourseFromRequest.getInstitution())
+                .courseTitle(candidateCourseFromRequest.getCourseTitle())
+                .description(candidateCourseFromRequest.getDescription())
+                .technologies(candidateCourseFromRequest.getTechnologies())
+                .fromDate(candidateCourseFromRequest.getFromDate())
+                .toDate(candidateCourseFromRequest.getToDate())
+                .candidateId(candidate.getCandidateId())  // Przypisujemy 'candidateId' z obiektu 'candidate'
+                .build();
     }
+
 
 
     public void updateCandidateCourse(CandidateCourse candidateCourse, Authentication authentication) throws AccessDeniedException {
@@ -49,7 +53,7 @@ public class CandidateCourseService {
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
         Integer loggedInCandidateId = candidate.getCandidateId();
 
-        if (!candidateCourse.getCandidateId().equals(loggedInCandidateId)){
+        if (!candidateCourse.getCandidateId().equals(loggedInCandidateId)) {
             throw new AccessDeniedException("Unauthorized access.");
         }
 

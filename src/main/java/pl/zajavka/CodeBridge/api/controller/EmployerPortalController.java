@@ -1,6 +1,5 @@
 package pl.zajavka.CodeBridge.api.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -23,7 +22,6 @@ import java.util.stream.Collectors;
 
 
 @Controller
-@RequiredArgsConstructor
 public class EmployerPortalController {
 
     private static final String GET_EMPLOYER = "/employer-portal";
@@ -41,6 +39,18 @@ public class EmployerPortalController {
     private final EmployerService employerService;
     private final CandidateService candidateService;
 
+
+    public EmployerPortalController(JobOfferMapper jobOfferMapper,
+                                    EmployerMapper employerMapper,
+                                    JobOfferService jobOfferService,
+                                    EmployerService employerService,
+                                    CandidateService candidateService) {
+        this.jobOfferMapper = jobOfferMapper;
+        this.employerMapper = employerMapper;
+        this.jobOfferService = jobOfferService;
+        this.employerService = employerService;
+        this.candidateService = candidateService;
+    }
 
     @GetMapping(value = GET_EMPLOYER)
     public String employerPortal(Model model) {

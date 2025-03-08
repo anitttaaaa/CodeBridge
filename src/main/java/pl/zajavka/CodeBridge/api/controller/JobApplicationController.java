@@ -1,6 +1,5 @@
 package pl.zajavka.CodeBridge.api.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 
 
 @Controller
-@RequiredArgsConstructor
 public class JobApplicationController {
 
     private static final String CANDIDATE_APPLY_FOR_A_JOB = "/apply/{jobOfferId}";
@@ -34,6 +32,9 @@ public class JobApplicationController {
 
     private final JobApplicationService jobApplicationService;
 
+    public JobApplicationController(JobApplicationService jobApplicationService) {
+        this.jobApplicationService = jobApplicationService;
+    }
 
     @PostMapping(POST_EMPLOYER_JOB_APPLICATION_ACCEPT)
     public String acceptJobApplication(

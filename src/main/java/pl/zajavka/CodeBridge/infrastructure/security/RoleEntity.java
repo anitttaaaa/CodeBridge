@@ -6,10 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "code_bridge_role")
 public class RoleEntity {
@@ -21,4 +17,20 @@ public class RoleEntity {
 
     @Column(name = "role")
     private String role;
+
+    public RoleEntity(int id, String role) {
+        this.id = id;
+        this.role = role;
+    }
+
+    public RoleEntity() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getRole() {
+        return role;
+    }
 }

@@ -16,12 +16,19 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
-@AllArgsConstructor
 public class JobApplicationRepository implements JobApplicationDAO {
 
     JobApplicationEntityMapper jobApplicationEntityMapper;
     ApplicationsHistoryEntityMapper applicationsHistoryEntityMapper;
     JobApplicationJpaRepository jobApplicationJpaRepository;
+
+    public JobApplicationRepository(JobApplicationEntityMapper jobApplicationEntityMapper,
+                                    ApplicationsHistoryEntityMapper applicationsHistoryEntityMapper,
+                                    JobApplicationJpaRepository jobApplicationJpaRepository) {
+        this.jobApplicationEntityMapper = jobApplicationEntityMapper;
+        this.applicationsHistoryEntityMapper = applicationsHistoryEntityMapper;
+        this.jobApplicationJpaRepository = jobApplicationJpaRepository;
+    }
 
     @Override
     public void createJobApplication(JobApplication jobApplication) {

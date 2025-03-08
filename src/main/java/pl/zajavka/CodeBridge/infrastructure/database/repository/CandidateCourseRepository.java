@@ -9,11 +9,16 @@ import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.CandidateCou
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.CandidateCourseEntityMapper;
 
 @Repository
-@AllArgsConstructor
 public class CandidateCourseRepository implements CandidateCourseDAO {
 
     private final CandidateCourseEntityMapper candidateCourseEntityMapper;
     private final CandidateCourseJpaRepository candidateCourseJpaRepository;
+
+    public CandidateCourseRepository(CandidateCourseEntityMapper candidateCourseEntityMapper,
+                                     CandidateCourseJpaRepository candidateCourseJpaRepository) {
+        this.candidateCourseEntityMapper = candidateCourseEntityMapper;
+        this.candidateCourseJpaRepository = candidateCourseJpaRepository;
+    }
 
     @Override
     public CandidateCourse createCourse(CandidateCourse candidateCourse) {

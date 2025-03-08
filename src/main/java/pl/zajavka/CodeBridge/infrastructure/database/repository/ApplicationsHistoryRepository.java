@@ -1,6 +1,5 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository;
 
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.CodeBridge.business.dao.ApplicationsHistoryDAO;
 import pl.zajavka.CodeBridge.domain.ApplicationsHistory;
@@ -9,11 +8,16 @@ import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.Applications
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.ApplicationsHistoryEntityMapper;
 
 @Repository
-@AllArgsConstructor
 public class ApplicationsHistoryRepository implements ApplicationsHistoryDAO {
 
     ApplicationsHistoryEntityMapper applicationsHistoryEntityMapper;
     ApplicationsHistoryJpaRepository applicationsHistoryJpaRepository;
+
+    public ApplicationsHistoryRepository(ApplicationsHistoryEntityMapper applicationsHistoryEntityMapper,
+                                         ApplicationsHistoryJpaRepository applicationsHistoryJpaRepository) {
+        this.applicationsHistoryEntityMapper = applicationsHistoryEntityMapper;
+        this.applicationsHistoryJpaRepository = applicationsHistoryJpaRepository;
+    }
 
     @Override
     public void saveInHistory(ApplicationsHistory jobApplicationAccepted) {

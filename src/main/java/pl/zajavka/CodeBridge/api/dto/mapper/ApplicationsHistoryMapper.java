@@ -11,8 +11,6 @@ import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.JobOffer;
 
-
-
 @Mapper(componentModel = "spring")
 public interface ApplicationsHistoryMapper {
 
@@ -46,17 +44,17 @@ public interface ApplicationsHistoryMapper {
         );
     }
     default CandidateDTO mapCandidate(Candidate candidate) {
-
-        return new CandidateDTO(
-                candidate.getCandidateId(),
-                candidate.getName(),
-                candidate.getSurname(),
-                candidate.getEmail(),
-                candidate.getPhone(),
-                candidate.getTechSpecialization(),
-                candidate.getCandidateSkills()
-        );
+        return new CandidateDTO.Builder()
+                .candidateId(candidate.getCandidateId())
+                .name(candidate.getName())
+                .surname(candidate.getSurname())
+                .email(candidate.getEmail())
+                .phone(candidate.getPhone())
+                .techSpecialization(candidate.getTechSpecialization())
+                .candidateSkills(candidate.getCandidateSkills())
+                .build();
     }
+
 }
 
 

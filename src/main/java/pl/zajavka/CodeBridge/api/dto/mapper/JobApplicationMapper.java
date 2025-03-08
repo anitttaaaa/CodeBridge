@@ -55,16 +55,17 @@ public interface JobApplicationMapper {
     }
 
     default CandidateDTO mapCandidate(Candidate candidate) {
-        return new CandidateDTO(
-                candidate.getCandidateId(),
-                candidate.getName(),
-                candidate.getSurname(),
-                candidate.getEmail(),
-                candidate.getPhone(),
-                candidate.getTechSpecialization(),
-                candidate.getCandidateSkills()
-        );
+        return new CandidateDTO.Builder()
+                .candidateId(candidate.getCandidateId())
+                .name(candidate.getName())
+                .surname(candidate.getSurname())
+                .email(candidate.getEmail())
+                .phone(candidate.getPhone())
+                .techSpecialization(candidate.getTechSpecialization())
+                .candidateSkills(candidate.getCandidateSkills())
+                .build();
     }
+
 
     // Pomocnicze metody do mapowania z DTO na obiekty domenowe za pomocą konstruktorów
     default JobOffer mapJobOfferFromDto(JobOfferDTO jobOfferDTO) {
@@ -90,16 +91,17 @@ public interface JobApplicationMapper {
     }
 
     default Candidate mapCandidateFromDto(CandidateDTO candidateDTO) {
-        return new Candidate(
-                candidateDTO.getCandidateId(),
-                candidateDTO.getName(),
-                candidateDTO.getSurname(),
-                candidateDTO.getEmail(),
-                candidateDTO.getPhone(),
-                candidateDTO.getTechSpecialization(),
-                candidateDTO.getCandidateSkills()
-        );
+        return new Candidate.Builder()
+                .candidateId(candidateDTO.getCandidateId())
+                .name(candidateDTO.getName())
+                .surname(candidateDTO.getSurname())
+                .email(candidateDTO.getEmail())
+                .phone(candidateDTO.getPhone())
+                .techSpecialization(candidateDTO.getTechSpecialization())
+                .candidateSkills(candidateDTO.getCandidateSkills())
+                .build();
     }
+
 
 }
 

@@ -15,11 +15,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
-@AllArgsConstructor
 public class CandidateRepository implements CandidateDAO {
 
     private final CandidateJpaRepository candidateJpaRepository;
     private final CandidateEntityMapper candidateEntityMapper;
+
+    public CandidateRepository(CandidateJpaRepository candidateJpaRepository,
+                               CandidateEntityMapper candidateEntityMapper) {
+        this.candidateJpaRepository = candidateJpaRepository;
+        this.candidateEntityMapper = candidateEntityMapper;
+    }
 
     @Override
     public Optional<Candidate> findCandidateByEmail(String email) {

@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 public class JobApplicationService {
     private final CandidateService candidateService;
 
@@ -32,6 +31,24 @@ public class JobApplicationService {
     private final JobApplicationMapper jobApplicationMapper;
     private final ApplicationsHistoryMapper applicationsHistoryMapper;
     private final EmployerService employerService;
+
+    public JobApplicationService(CandidateService candidateService,
+                                 JobApplicationDAO jobApplicationDAO,
+                                 ApplicationsHistoryDAO applicationsHistoryDAO,
+                                 CandidateDAO candidateDAO,
+                                 JobOfferService jobOfferService,
+                                 JobApplicationMapper jobApplicationMapper,
+                                 ApplicationsHistoryMapper applicationsHistoryMapper,
+                                 EmployerService employerService) {
+        this.candidateService = candidateService;
+        this.jobApplicationDAO = jobApplicationDAO;
+        this.applicationsHistoryDAO = applicationsHistoryDAO;
+        this.candidateDAO = candidateDAO;
+        this.jobOfferService = jobOfferService;
+        this.jobApplicationMapper = jobApplicationMapper;
+        this.applicationsHistoryMapper = applicationsHistoryMapper;
+        this.employerService = employerService;
+    }
 
     @Transactional
     public void rejectJobApplication(Integer applicationId, Authentication authentication) {
@@ -85,27 +102,26 @@ public class JobApplicationService {
         String candidateEmail = jobApplication.getCandidate().getEmail();
         Candidate candidateToUpdate = candidateService.findCandidateByEmail(candidateEmail);
 
-        // Utworzenie nowego obiektu kandydata z nowym statusem "HIRED"
-        Candidate candidateUpdated = new Candidate(
-                candidateToUpdate.getCandidateId(),
-                candidateToUpdate.getName(),
-                candidateToUpdate.getSurname(),
-                candidateToUpdate.getEmail(),
-                candidateToUpdate.getPhone(),
-                StatusEnum.HIRED.getDescription(),
-                candidateToUpdate.getLinkedIn(),
-                candidateToUpdate.getGitHub(),
-                candidateToUpdate.getTechSpecialization(),
-                candidateToUpdate.getAboutMe(),
-                candidateToUpdate.getHobby(),
-                candidateToUpdate.getUserId(),
-                candidateToUpdate.getProfilePhoto(),
-                candidateToUpdate.getCandidateSkills(),
-                candidateToUpdate.getCandidateExperiences(),
-                candidateToUpdate.getCandidateProjects(),
-                candidateToUpdate.getCandidateEducationStages(),
-                candidateToUpdate.getCandidateCourses()
-        );
+        Candidate candidateUpdated = new Candidate.Builder()
+                .candidateId(candidateToUpdate.getCandidateId())
+                .name(candidateToUpdate.getName())
+                .surname(candidateToUpdate.getSurname())
+                .email(candidateToUpdate.getEmail())
+                .phone(candidateToUpdate.getPhone())
+                .status(StatusEnum.HIRED.getDescription())
+                .linkedIn(candidateToUpdate.getLinkedIn())
+                .gitHub(candidateToUpdate.getGitHub())
+                .techSpecialization(candidateToUpdate.getTechSpecialization())
+                .aboutMe(candidateToUpdate.getAboutMe())
+                .hobby(candidateToUpdate.getHobby())
+                .userId(candidateToUpdate.getUserId())
+                .profilePhoto(candidateToUpdate.getProfilePhoto())
+                .candidateSkills(candidateToUpdate.getCandidateSkills())
+                .candidateExperiences(candidateToUpdate.getCandidateExperiences())
+                .candidateProjects(candidateToUpdate.getCandidateProjects())
+                .candidateEducationStages(candidateToUpdate.getCandidateEducationStages())
+                .candidateCourses(candidateToUpdate.getCandidateCourses())
+                .build();
 
         // Aktualizacja kandydata
         candidateDAO.updateCandidate(candidateUpdated);
@@ -155,7 +171,10 @@ public class JobApplicationService {
 
         JobOffer jobOfferId1 = new JobOffer(jobOfferId);
         Employer employerId1 = new Employer(employerId);
-        Candidate candidateId1= new Candidate(candidateId);
+        Candidate candidateId1 = new Candidate.Builder()
+                .candidateId(candidateId)
+                .build();
+
 
         // Tworzenie JobApplication za pomocą konstruktorów
         JobApplication jobApplication = new JobApplication(jobOfferId1, employerId1, candidateId1, applicationStatus);

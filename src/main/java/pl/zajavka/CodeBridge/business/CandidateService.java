@@ -1,6 +1,5 @@
 package pl.zajavka.CodeBridge.business;
 
-import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -9,22 +8,20 @@ import pl.zajavka.CodeBridge.api.dto.CandidateDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.CandidateMapper;
 import pl.zajavka.CodeBridge.business.dao.CandidateDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
-import pl.zajavka.CodeBridge.domain.CandidateExperience;
 import pl.zajavka.CodeBridge.domain.exception.NotFoundException;
-import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateEntity;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
 public class CandidateService {
 
     private final CandidateDAO candidateDAO;
     private final CandidateMapper candidateMapper;
 
+    public CandidateService(CandidateDAO candidateDAO, CandidateMapper candidateMapper) {
+        this.candidateDAO = candidateDAO;
+        this.candidateMapper = candidateMapper;
+    }
 
     @Transactional(readOnly = true)
     public Candidate findLoggedInCandidate() {
@@ -53,31 +50,32 @@ public class CandidateService {
         // Znalezienie identyfikatora kandydata po e-mailu
         Integer candidateId = findCandidateByEmail(candidateEmail).getCandidateId();
 
-        // Tworzenie nowego obiektu kandydata z zaktualizowanym candidateId
-        candidate = new Candidate(
-                candidateId, // Ustawiamy zaktualizowany candidateId
-                candidate.getName(),
-                candidate.getSurname(),
-                candidate.getEmail(),
-                candidate.getPhone(),
-                candidate.getStatus(),
-                candidate.getLinkedIn(),
-                candidate.getGitHub(),
-                candidate.getTechSpecialization(),
-                candidate.getAboutMe(),
-                candidate.getHobby(),
-                candidate.getUserId(),
-                candidate.getProfilePhoto(),
-                candidate.getCandidateSkills(),
-                candidate.getCandidateExperiences(),
-                candidate.getCandidateProjects(),
-                candidate.getCandidateEducationStages(),
-                candidate.getCandidateCourses()
-        );
+        // Tworzenie nowego obiektu kandydata z zaktualizowanym candidateId za pomocą Buildera
+        candidate = new Candidate.Builder()
+                .candidateId(candidateId)  // Ustawiamy zaktualizowany candidateId
+                .name(candidate.getName())
+                .surname(candidate.getSurname())
+                .email(candidate.getEmail())
+                .phone(candidate.getPhone())
+                .status(candidate.getStatus())
+                .linkedIn(candidate.getLinkedIn())
+                .gitHub(candidate.getGitHub())
+                .techSpecialization(candidate.getTechSpecialization())
+                .aboutMe(candidate.getAboutMe())
+                .hobby(candidate.getHobby())
+                .userId(candidate.getUserId())
+                .profilePhoto(candidate.getProfilePhoto())
+                .candidateSkills(candidate.getCandidateSkills())
+                .candidateExperiences(candidate.getCandidateExperiences())
+                .candidateProjects(candidate.getCandidateProjects())
+                .candidateEducationStages(candidate.getCandidateEducationStages())
+                .candidateCourses(candidate.getCandidateCourses())
+                .build();
 
         // Aktualizacja kandydata w bazie danych
         candidateDAO.updateCandidate(candidate);
     }
+
 
 
     @Transactional

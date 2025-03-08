@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.api.controller;
 
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -21,7 +20,6 @@ import java.util.List;
 import java.util.Objects;
 
 @Controller
-@RequiredArgsConstructor
 public class CandidatePortalController {
 
     private static final String SHOW_CANDIDATE_PORTAL = "/candidate-portal";
@@ -61,6 +59,27 @@ public class CandidatePortalController {
     private final CandidateEducationMapper candidateEducationMapper;
     private final CandidateMapper candidateMapper;
 
+    public CandidatePortalController(CandidateService candidateService,
+                                     CandidateExperienceService candidateExperienceService,
+                                     CandidateProjectService candidateProjectService,
+                                     CandidateCourseService candidateCourseService,
+                                     CandidateEducationService candidateEducationService,
+                                     CandidateExperienceMapper candidateExperienceMapper,
+                                     CandidateProjectMapper candidateProjectMapper,
+                                     CandidateCourseMapper candidateCourseMapper,
+                                     CandidateEducationMapper candidateEducationMapper,
+                                     CandidateMapper candidateMapper) {
+        this.candidateService = candidateService;
+        this.candidateExperienceService = candidateExperienceService;
+        this.candidateProjectService = candidateProjectService;
+        this.candidateCourseService = candidateCourseService;
+        this.candidateEducationService = candidateEducationService;
+        this.candidateExperienceMapper = candidateExperienceMapper;
+        this.candidateProjectMapper = candidateProjectMapper;
+        this.candidateCourseMapper = candidateCourseMapper;
+        this.candidateEducationMapper = candidateEducationMapper;
+        this.candidateMapper = candidateMapper;
+    }
 
     @GetMapping(SHOW_CANDIDATE_PORTAL)
     public String getCandidateDetails(Model model) {
@@ -112,33 +131,30 @@ public class CandidatePortalController {
             techSpecialization = null;
         }
 
-        // Tworzymy nowego kandydata za pomocą konstruktora, przekazując zmienioną specjalizację technologiczną
-        candidate = new Candidate(
-                candidate.getCandidateId(),
-                candidate.getName(),
-                candidate.getSurname(),
-                candidate.getEmail(),
-                candidate.getPhone(),
-                candidate.getStatus(),
-                candidate.getLinkedIn(),
-                candidate.getGitHub(),
-                techSpecialization,
-                candidate.getAboutMe(),
-                candidate.getHobby(),
-                candidate.getUserId(),
-                candidate.getProfilePhoto(),
-                candidate.getCandidateSkills(),
-                candidate.getCandidateExperiences(),
-                candidate.getCandidateProjects(),
-                candidate.getCandidateEducationStages(),
-                candidate.getCandidateCourses()
-        );
+        // Tworzenie nowego kandydata z użyciem buildera
+        candidate = new Candidate.Builder()
+                .phone(candidate.getPhone())
+                .status(candidate.getStatus())
+                .linkedIn(candidate.getLinkedIn())
+                .gitHub(candidate.getGitHub())
+                .techSpecialization(techSpecialization)  // Nowa specjalizacja
+                .aboutMe(candidate.getAboutMe())
+                .hobby(candidate.getHobby())
+                .userId(candidate.getUserId())
+                .profilePhoto(candidate.getProfilePhoto())
+                .candidateSkills(candidate.getCandidateSkills())
+                .candidateExperiences(candidate.getCandidateExperiences())
+                .candidateProjects(candidate.getCandidateProjects())
+                .candidateEducationStages(candidate.getCandidateEducationStages())
+                .candidateCourses(candidate.getCandidateCourses())
+                .build();
 
         // Aktualizacja kandydata w bazie danych
         candidateService.updateCandidate(candidate, authentication);
 
         return "redirect:/candidate-portal";
     }
+
 
 
     @PostMapping(UPDATE_CANDIDATE_STATUS)
@@ -154,33 +170,30 @@ public class CandidatePortalController {
             status = null;
         }
 
-        // Tworzenie nowego kandydata z nowym statusem
-        candidate = new Candidate(
-                candidate.getCandidateId(),
-                candidate.getName(),
-                candidate.getSurname(),
-                candidate.getEmail(),
-                candidate.getPhone(),
-                status, // Nowy status
-                candidate.getLinkedIn(),
-                candidate.getGitHub(),
-                candidate.getTechSpecialization(),
-                candidate.getAboutMe(),
-                candidate.getHobby(),
-                candidate.getUserId(),
-                candidate.getProfilePhoto(),
-                candidate.getCandidateSkills(),
-                candidate.getCandidateExperiences(),
-                candidate.getCandidateProjects(),
-                candidate.getCandidateEducationStages(),
-                candidate.getCandidateCourses()
-        );
+        // Tworzenie nowego kandydata z użyciem buildera
+        candidate = new Candidate.Builder()
+                .phone(candidate.getPhone())
+                .status(status)  // Nowy status
+                .linkedIn(candidate.getLinkedIn())
+                .gitHub(candidate.getGitHub())
+                .techSpecialization(candidate.getTechSpecialization())
+                .aboutMe(candidate.getAboutMe())
+                .hobby(candidate.getHobby())
+                .userId(candidate.getUserId())
+                .profilePhoto(candidate.getProfilePhoto())
+                .candidateSkills(candidate.getCandidateSkills())
+                .candidateExperiences(candidate.getCandidateExperiences())
+                .candidateProjects(candidate.getCandidateProjects())
+                .candidateEducationStages(candidate.getCandidateEducationStages())
+                .candidateCourses(candidate.getCandidateCourses())
+                .build();
 
         // Aktualizacja kandydata w bazie danych
         candidateService.updateCandidate(candidate, authentication);
 
         return "redirect:/candidate-portal";
     }
+
 
 
     @GetMapping(PROFILE_PHOTO_DISPLAY)
@@ -209,27 +222,23 @@ public class CandidatePortalController {
         if (!profilePhoto.isEmpty()) {
             byte[] profilePhotoData = profilePhoto.getBytes();
 
-            // Tworzymy nowego kandydata z nowym zdjęciem profilowym
-            candidate = new Candidate(
-                    candidate.getCandidateId(),
-                    candidate.getName(),
-                    candidate.getSurname(),
-                    candidate.getEmail(),
-                    candidate.getPhone(),
-                    candidate.getStatus(),
-                    candidate.getLinkedIn(),
-                    candidate.getGitHub(),
-                    candidate.getTechSpecialization(),
-                    candidate.getAboutMe(),
-                    candidate.getHobby(),
-                    candidate.getUserId(),
-                    profilePhotoData, // Nowe zdjęcie profilowe
-                    candidate.getCandidateSkills(),
-                    candidate.getCandidateExperiences(),
-                    candidate.getCandidateProjects(),
-                    candidate.getCandidateEducationStages(),
-                    candidate.getCandidateCourses()
-            );
+            // Tworzenie nowego kandydata z użyciem buildera
+            candidate = new Candidate.Builder()
+                    .phone(candidate.getPhone())
+                    .status(candidate.getStatus())
+                    .linkedIn(candidate.getLinkedIn())
+                    .gitHub(candidate.getGitHub())
+                    .techSpecialization(candidate.getTechSpecialization())
+                    .aboutMe(candidate.getAboutMe())
+                    .hobby(candidate.getHobby())
+                    .userId(candidate.getUserId())
+                    .profilePhoto(profilePhotoData)  // Nowe zdjęcie profilowe
+                    .candidateSkills(candidate.getCandidateSkills())
+                    .candidateExperiences(candidate.getCandidateExperiences())
+                    .candidateProjects(candidate.getCandidateProjects())
+                    .candidateEducationStages(candidate.getCandidateEducationStages())
+                    .candidateCourses(candidate.getCandidateCourses())
+                    .build();
 
             // Aktualizacja kandydata w bazie danych
             candidateService.updateCandidate(candidate, authentication);
@@ -237,6 +246,7 @@ public class CandidatePortalController {
 
         return "redirect:/candidate-portal";
     }
+
 
 
     @PostMapping(UPDATE_CANDIDATE_BASIC_INFO)
@@ -251,33 +261,30 @@ public class CandidatePortalController {
         // Znalezienie kandydata po e-mailu
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
 
-        // Tworzenie nowego obiektu kandydata z nowymi danymi
-        candidate = new Candidate(
-                candidate.getCandidateId(),
-                name, // Nowe imię
-                surname, // Nowe nazwisko
-                candidate.getEmail(),
-                phone, // Nowy numer telefonu
-                candidate.getStatus(),
-                linkedIn, // Nowy LinkedIn
-                gitHub, // Nowy GitHub
-                candidate.getTechSpecialization(),
-                candidate.getAboutMe(),
-                candidate.getHobby(),
-                candidate.getUserId(),
-                candidate.getProfilePhoto(),
-                candidate.getCandidateSkills(),
-                candidate.getCandidateExperiences(),
-                candidate.getCandidateProjects(),
-                candidate.getCandidateEducationStages(),
-                candidate.getCandidateCourses()
-        );
+        // Tworzenie nowego kandydata z użyciem buildera
+        candidate = new Candidate.Builder()
+                .phone(phone)  // Nowy numer telefonu
+                .status(candidate.getStatus())  // Zachowanie dotychczasowego statusu
+                .linkedIn(linkedIn)  // Nowy LinkedIn
+                .gitHub(gitHub)  // Nowy GitHub
+                .techSpecialization(candidate.getTechSpecialization())  // Zachowanie dotychczasowej specjalizacji technologicznej
+                .aboutMe(candidate.getAboutMe())  // Zachowanie dotychczasowych danych o kandydacie
+                .hobby(candidate.getHobby())  // Zachowanie dotychczasowych hobby
+                .userId(candidate.getUserId())  // Zachowanie dotychczasowego ID użytkownika
+                .profilePhoto(candidate.getProfilePhoto())  // Zachowanie dotychczasowego zdjęcia profilowego
+                .candidateSkills(candidate.getCandidateSkills())  // Zachowanie dotychczasowych umiejętności
+                .candidateExperiences(candidate.getCandidateExperiences())  // Zachowanie dotychczasowych doświadczeń
+                .candidateProjects(candidate.getCandidateProjects())  // Zachowanie dotychczasowych projektów
+                .candidateEducationStages(candidate.getCandidateEducationStages())  // Zachowanie dotychczasowych etapów edukacji
+                .candidateCourses(candidate.getCandidateCourses())  // Zachowanie dotychczasowych kursów
+                .build();
 
         // Aktualizacja kandydata w bazie danych
         candidateService.updateCandidate(candidate, authentication);
 
         return "redirect:/candidate-portal";
     }
+
 
 
     @PostMapping(ADD_CANDIDATE_EXPERIENCE)
@@ -421,33 +428,30 @@ public class CandidatePortalController {
             hobby = null;
         }
 
-        // Tworzenie nowego obiektu kandydata z zaktualizowanym hobby
-        candidate = new Candidate(
-                candidate.getCandidateId(),
-                candidate.getName(),
-                candidate.getSurname(),
-                candidate.getEmail(),
-                candidate.getPhone(),
-                candidate.getStatus(),
-                candidate.getLinkedIn(),
-                candidate.getGitHub(),
-                candidate.getTechSpecialization(),
-                candidate.getAboutMe(),
-                hobby, // Nowe hobby
-                candidate.getUserId(),
-                candidate.getProfilePhoto(),
-                candidate.getCandidateSkills(),
-                candidate.getCandidateExperiences(),
-                candidate.getCandidateProjects(),
-                candidate.getCandidateEducationStages(),
-                candidate.getCandidateCourses()
-        );
+        // Tworzenie nowego kandydata z użyciem buildera
+        candidate = new Candidate.Builder()
+                .phone(candidate.getPhone())
+                .status(candidate.getStatus())
+                .linkedIn(candidate.getLinkedIn())
+                .gitHub(candidate.getGitHub())
+                .techSpecialization(candidate.getTechSpecialization())
+                .aboutMe(candidate.getAboutMe())
+                .hobby(hobby)  // Nowe hobby
+                .userId(candidate.getUserId())
+                .profilePhoto(candidate.getProfilePhoto())
+                .candidateSkills(candidate.getCandidateSkills())
+                .candidateExperiences(candidate.getCandidateExperiences())
+                .candidateProjects(candidate.getCandidateProjects())
+                .candidateEducationStages(candidate.getCandidateEducationStages())
+                .candidateCourses(candidate.getCandidateCourses())
+                .build();
 
         // Aktualizacja kandydata w bazie danych
         candidateService.updateCandidate(candidate, authentication);
 
         return "redirect:/candidate-portal";
     }
+
 
 
     @PostMapping(UPDATE_CANDIDATE_SKILLS)
@@ -463,27 +467,23 @@ public class CandidatePortalController {
             candidateSkills = null;
         }
 
-        // Tworzenie nowego obiektu kandydata z zaktualizowaną listą umiejętności
-        candidate = new Candidate(
-                candidate.getCandidateId(),
-                candidate.getName(),
-                candidate.getSurname(),
-                candidate.getEmail(),
-                candidate.getPhone(),
-                candidate.getStatus(),
-                candidate.getLinkedIn(),
-                candidate.getGitHub(),
-                candidate.getTechSpecialization(),
-                candidate.getAboutMe(),
-                candidate.getHobby(),
-                candidate.getUserId(),
-                candidate.getProfilePhoto(),
-                candidateSkills, // Nowa lista umiejętności
-                candidate.getCandidateExperiences(),
-                candidate.getCandidateProjects(),
-                candidate.getCandidateEducationStages(),
-                candidate.getCandidateCourses()
-        );
+        // Tworzenie nowego kandydata z użyciem buildera
+        candidate = new Candidate.Builder()
+                .phone(candidate.getPhone())
+                .status(candidate.getStatus())
+                .linkedIn(candidate.getLinkedIn())
+                .gitHub(candidate.getGitHub())
+                .techSpecialization(candidate.getTechSpecialization())
+                .aboutMe(candidate.getAboutMe())
+                .hobby(candidate.getHobby())
+                .userId(candidate.getUserId())
+                .profilePhoto(candidate.getProfilePhoto())
+                .candidateSkills(candidateSkills)  // Nowa lista umiejętności
+                .candidateExperiences(candidate.getCandidateExperiences())
+                .candidateProjects(candidate.getCandidateProjects())
+                .candidateEducationStages(candidate.getCandidateEducationStages())
+                .candidateCourses(candidate.getCandidateCourses())
+                .build();
 
         // Aktualizacja kandydata w bazie danych
         candidateService.updateCandidate(candidate, authentication);
@@ -506,27 +506,23 @@ public class CandidatePortalController {
             aboutMe = null;
         }
 
-        // Tworzenie nowego obiektu kandydata z zaktualizowanym "aboutMe"
-        candidate = new Candidate(
-                candidate.getCandidateId(),
-                candidate.getName(),
-                candidate.getSurname(),
-                candidate.getEmail(),
-                candidate.getPhone(),
-                candidate.getStatus(),
-                candidate.getLinkedIn(),
-                candidate.getGitHub(),
-                candidate.getTechSpecialization(),
-                aboutMe, // Nowe "aboutMe"
-                candidate.getHobby(),
-                candidate.getUserId(),
-                candidate.getProfilePhoto(),
-                candidate.getCandidateSkills(),
-                candidate.getCandidateExperiences(),
-                candidate.getCandidateProjects(),
-                candidate.getCandidateEducationStages(),
-                candidate.getCandidateCourses()
-        );
+        // Tworzenie nowego kandydata z użyciem buildera
+        candidate = new Candidate.Builder()
+                .phone(candidate.getPhone())
+                .status(candidate.getStatus())
+                .linkedIn(candidate.getLinkedIn())
+                .gitHub(candidate.getGitHub())
+                .techSpecialization(candidate.getTechSpecialization())
+                .aboutMe(aboutMe)  // Nowe "aboutMe"
+                .hobby(candidate.getHobby())
+                .userId(candidate.getUserId())
+                .profilePhoto(candidate.getProfilePhoto())
+                .candidateSkills(candidate.getCandidateSkills())
+                .candidateExperiences(candidate.getCandidateExperiences())
+                .candidateProjects(candidate.getCandidateProjects())
+                .candidateEducationStages(candidate.getCandidateEducationStages())
+                .candidateCourses(candidate.getCandidateCourses())
+                .build();
 
         // Aktualizacja kandydata w bazie danych
         candidateService.updateCandidate(candidate, authentication);
@@ -545,27 +541,23 @@ public class CandidatePortalController {
         // Sprawdzenie, czy istnieje zdjęcie profilowe
         if (!Objects.isNull(candidate.getProfilePhoto())) {
 
-            // Tworzymy nowego kandydata z ustawionym profilePhoto na null
-            candidate = new Candidate(
-                    candidate.getCandidateId(),
-                    candidate.getName(),
-                    candidate.getSurname(),
-                    candidate.getEmail(),
-                    candidate.getPhone(),
-                    candidate.getStatus(),
-                    candidate.getLinkedIn(),
-                    candidate.getGitHub(),
-                    candidate.getTechSpecialization(),
-                    candidate.getAboutMe(),
-                    candidate.getHobby(),
-                    candidate.getUserId(),
-                    null, // Usuwamy zdjęcie (ustawiamy na null)
-                    candidate.getCandidateSkills(),
-                    candidate.getCandidateExperiences(),
-                    candidate.getCandidateProjects(),
-                    candidate.getCandidateEducationStages(),
-                    candidate.getCandidateCourses()
-            );
+            // Tworzymy nowego kandydata z ustawionym profilePhoto na null za pomocą buildera
+            candidate = new Candidate.Builder()
+                    .phone(candidate.getPhone())
+                    .status(candidate.getStatus())
+                    .linkedIn(candidate.getLinkedIn())
+                    .gitHub(candidate.getGitHub())
+                    .techSpecialization(candidate.getTechSpecialization())
+                    .aboutMe(candidate.getAboutMe())
+                    .hobby(candidate.getHobby())
+                    .userId(candidate.getUserId())
+                    .profilePhoto(null)  // Usuwamy zdjęcie (ustawiamy na null)
+                    .candidateSkills(candidate.getCandidateSkills())
+                    .candidateExperiences(candidate.getCandidateExperiences())
+                    .candidateProjects(candidate.getCandidateProjects())
+                    .candidateEducationStages(candidate.getCandidateEducationStages())
+                    .candidateCourses(candidate.getCandidateCourses())
+                    .build();
 
             // Aktualizacja kandydata w bazie danych
             candidateService.updateCandidate(candidate, authentication);
@@ -573,6 +565,5 @@ public class CandidatePortalController {
 
         return "redirect:/candidate-portal";
     }
-
 
 }

@@ -16,6 +16,11 @@ public class JobApplicationEntity {
     private Integer applicationId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "candidate_id", nullable = false)
+    private CandidateEntity candidate;
+
+    @Enumerated(EnumType.STRING)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_offer_id", nullable = false)
     private JobOfferEntity jobOffer;
 
@@ -23,19 +28,14 @@ public class JobApplicationEntity {
     @JoinColumn(name = "employer_id", nullable = false)
     private EmployerEntity employer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "candidate_id", nullable = false)
-    private CandidateEntity candidate;
-
-    @Enumerated(EnumType.STRING)
     @Column(name = "application_status", nullable = false)
     private ApplicationStatus applicationStatus;
 
 
 
+    @Override    public boolean equals(Object o) {
 
-    @Override
-    public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         JobApplicationEntity that = (JobApplicationEntity) o;

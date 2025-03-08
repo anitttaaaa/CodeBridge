@@ -8,22 +8,23 @@ import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateCourseEntit
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CandidateCourseEntityMapper {
 
-    // Ręczne mapowanie z CandidateCourseEntity -> CandidateCourse
     default CandidateCourse mapFromEntity(CandidateCourseEntity entity) {
         if (entity == null) {
             return null;
         }
-        return new CandidateCourse(
-                entity.getCandidateCourseId(), // Przypisanie ID
-                entity.getInstitution(),
-                entity.getCourseTitle(),
-                entity.getDescription(),
-                entity.getTechnologies(),
-                entity.getFromDate(),
-                entity.getToDate(),
-                entity.getCandidateId() // ID kandydata
-        );
+
+        return new CandidateCourse.Builder()
+                .candidateCourseId(entity.getCandidateCourseId()) // Przypisanie ID
+                .institution(entity.getInstitution())
+                .courseTitle(entity.getCourseTitle())
+                .description(entity.getDescription())
+                .technologies(entity.getTechnologies())
+                .fromDate(entity.getFromDate())
+                .toDate(entity.getToDate())
+                .candidateId(entity.getCandidateId()) // ID kandydata
+                .build();
     }
+
 
     // Ręczne mapowanie z CandidateCourse -> CandidateCourseEntity
     default CandidateCourseEntity mapToEntity(CandidateCourse domain) {

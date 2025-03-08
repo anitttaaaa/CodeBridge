@@ -11,11 +11,16 @@ import pl.zajavka.CodeBridge.domain.CandidateProject;
 import java.nio.file.AccessDeniedException;
 
 @Service
-@AllArgsConstructor
 public class CandidateProjectService {
 
     private final CandidateService candidateService;
     private final CandidateProjectDAO candidateProjectDAO;
+
+    public CandidateProjectService(CandidateService candidateService,
+                                   CandidateProjectDAO candidateProjectDAO) {
+        this.candidateService = candidateService;
+        this.candidateProjectDAO = candidateProjectDAO;
+    }
 
     @Transactional
     public void createProjectData(CandidateProject candidateProjectFromRequest) {
@@ -26,16 +31,15 @@ public class CandidateProjectService {
     }
 
     private CandidateProject buildCandidateProject(CandidateProject candidateProjectFromRequest, Candidate candidate) {
-        return new CandidateProject(
-                null,
-                candidateProjectFromRequest.getProjectTitle(),
-                candidateProjectFromRequest.getTechnologies(),
-                candidateProjectFromRequest.getDescription(),
-                candidateProjectFromRequest.getFromDate(),
-                candidateProjectFromRequest.getToDate(),
-                candidateProjectFromRequest.getProjectLink(),
-                candidate.getCandidateId()
-        );
+        return new CandidateProject.Builder()
+                .projectTitle(candidateProjectFromRequest.getProjectTitle())
+                .technologies(candidateProjectFromRequest.getTechnologies())
+                .description(candidateProjectFromRequest.getDescription())
+                .fromDate(candidateProjectFromRequest.getFromDate())
+                .toDate(candidateProjectFromRequest.getToDate())
+                .projectLink(candidateProjectFromRequest.getProjectLink())
+                .candidateId(candidate.getCandidateId())
+                .build();  // Budowanie obiektu CandidateProject przy użyciu Buildera
     }
 
     public void updateCandidateProject(CandidateProject candidateProject, Authentication authentication) throws AccessDeniedException {

@@ -9,11 +9,16 @@ import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.CandidatePro
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.CandidateProjectEntityMapper;
 
 @Repository
-@AllArgsConstructor
 public class CandidateProjectRepository implements CandidateProjectDAO {
 
     CandidateProjectEntityMapper candidateProjectEntityMapper;
     CandidateProjectJpaRepository candidateProjectJpaRepository;
+
+    public CandidateProjectRepository(CandidateProjectEntityMapper candidateProjectEntityMapper,
+                                      CandidateProjectJpaRepository candidateProjectJpaRepository) {
+        this.candidateProjectEntityMapper = candidateProjectEntityMapper;
+        this.candidateProjectJpaRepository = candidateProjectJpaRepository;
+    }
 
     @Override
     public CandidateProject createProject(CandidateProject candidateProject) {

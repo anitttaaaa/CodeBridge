@@ -9,17 +9,22 @@ import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateProjectEnti
 public interface CandidateProjectEntityMapper {
 
     default CandidateProject mapToDomain(CandidateProjectEntity entity) {
-        return new CandidateProject(
-                entity.getCandidateProjectId(),
-                entity.getProjectTitle(),
-                entity.getTechnologies(),
-                entity.getDescription(),
-                entity.getFromDate(),
-                entity.getToDate(),
-                entity.getProjectLink(),
-                entity.getCandidateId()
-        );
+        if (entity == null) {
+            return null;
+        }
+
+        return new CandidateProject.Builder()
+                .candidateProjectId(entity.getCandidateProjectId())
+                .projectTitle(entity.getProjectTitle())
+                .technologies(entity.getTechnologies())
+                .description(entity.getDescription())
+                .fromDate(entity.getFromDate())
+                .toDate(entity.getToDate())
+                .projectLink(entity.getProjectLink())
+                .candidateId(entity.getCandidateId())
+                .build();
     }
+
 
     default CandidateProjectEntity mapToEntity(CandidateProject domain) {
         return new CandidateProjectEntity(

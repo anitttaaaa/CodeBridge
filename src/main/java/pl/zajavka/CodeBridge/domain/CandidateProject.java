@@ -6,14 +6,83 @@ import java.util.Objects;
 
 public class CandidateProject {
 
-    Integer candidateProjectId;
-    String projectTitle;
-    String technologies;
-    String description;
-    LocalDate fromDate;
-    LocalDate toDate;
-    String projectLink;
-    Integer candidateId;
+    private Integer candidateProjectId;
+    private String projectTitle;
+    private String technologies;
+    private String description;
+    private LocalDate fromDate;
+    private LocalDate toDate;
+    private String projectLink;
+    private Integer candidateId;
+
+    // Konstruktor prywatny, który przyjmuje obiekt Builder
+    private CandidateProject(Builder builder) {
+        this.candidateProjectId = builder.candidateProjectId;
+        this.projectTitle = builder.projectTitle;
+        this.technologies = builder.technologies;
+        this.description = builder.description;
+        this.fromDate = builder.fromDate;
+        this.toDate = builder.toDate;
+        this.projectLink = builder.projectLink;
+        this.candidateId = builder.candidateId;
+    }
+
+    // Klasa Builder
+    public static class Builder {
+        private Integer candidateProjectId;
+        private String projectTitle;
+        private String technologies;
+        private String description;
+        private LocalDate fromDate;
+        private LocalDate toDate;
+        private String projectLink;
+        private Integer candidateId;
+
+        public Builder candidateProjectId(Integer candidateProjectId) {
+            this.candidateProjectId = candidateProjectId;
+            return this;
+        }
+
+        public Builder projectTitle(String projectTitle) {
+            this.projectTitle = projectTitle;
+            return this;
+        }
+
+        public Builder technologies(String technologies) {
+            this.technologies = technologies;
+            return this;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder fromDate(LocalDate fromDate) {
+            this.fromDate = fromDate;
+            return this;
+        }
+
+        public Builder toDate(LocalDate toDate) {
+            this.toDate = toDate;
+            return this;
+        }
+
+        public Builder projectLink(String projectLink) {
+            this.projectLink = projectLink;
+            return this;
+        }
+
+        public Builder candidateId(Integer candidateId) {
+            this.candidateId = candidateId;
+            return this;
+        }
+
+        public CandidateProject build() {
+            return new CandidateProject(this);
+        }
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -40,20 +109,6 @@ public class CandidateProject {
                 ", projectLink='" + projectLink + '\'' +
                 ", candidateId=" + candidateId +
                 '}';
-    }
-
-    public CandidateProject() {
-    }
-
-    public CandidateProject(Integer candidateProjectId, String projectTitle, String technologies, String description, LocalDate fromDate, LocalDate toDate, String projectLink, Integer candidateId) {
-        this.candidateProjectId = candidateProjectId;
-        this.projectTitle = projectTitle;
-        this.technologies = technologies;
-        this.description = description;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
-        this.projectLink = projectLink;
-        this.candidateId = candidateId;
     }
 
     public Integer getCandidateProjectId() {
