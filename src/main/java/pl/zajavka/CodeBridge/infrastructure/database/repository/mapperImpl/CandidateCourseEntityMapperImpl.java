@@ -28,10 +28,6 @@ public class CandidateCourseEntityMapperImpl implements CandidateCourseEntityMap
 
     @Override
     public CandidateCourseEntity mapToEntity(CandidateCourse domain) {
-        if (domain == null) {
-            return null;
-        }
-
         return new CandidateCourseEntity.Builder()
                 .candidateCourseId(domain.getCandidateCourseId())
                 .institution(domain.getInstitution())
@@ -43,4 +39,5 @@ public class CandidateCourseEntityMapperImpl implements CandidateCourseEntityMap
                 .candidateId(domain.getCandidateId())
                 .build();
     }
+
 }

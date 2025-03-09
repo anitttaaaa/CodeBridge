@@ -82,9 +82,7 @@ public class JobApplicationEntityMapperImpl implements JobApplicationEntityMappe
                 employer.getCompanyName(),
                 employer.getEmail(),
                 employer.getNip(),
-                employer.getUserId(),
-                null,
-                null
+                employer.getUserId()
         );
     }
 

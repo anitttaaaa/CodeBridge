@@ -111,6 +111,13 @@ public class EmployerEntity {
                 '}';
     }
 
+
+    public static EmployerEntity.Builder builder() {
+
+        return new EmployerEntity.Builder();
+    }
+
+
     public static class Builder {
 
         private Integer employerId;

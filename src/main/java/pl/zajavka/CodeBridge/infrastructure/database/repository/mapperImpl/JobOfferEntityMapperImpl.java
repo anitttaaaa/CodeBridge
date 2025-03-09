@@ -8,8 +8,67 @@ import pl.zajavka.CodeBridge.infrastructure.database.entity.EmployerEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.JobOfferEntityMapper;
 
+import java.util.HashSet;
+
 @Component
 public class JobOfferEntityMapperImpl implements JobOfferEntityMapper {
+
+    @Override
+    public JobOffer mapToDomain(JobOfferEntity jobOfferEntity) {
+        return new JobOffer.JobOfferBuilder()
+                .jobOfferId(jobOfferEntity.getJobOfferId())
+                .jobOfferTitle(jobOfferEntity.getJobOfferTitle())
+                .description(jobOfferEntity.getDescription())
+                .techSpecialization(jobOfferEntity.getTechSpecialization().name())
+                .workType(jobOfferEntity.getWorkType().name())
+                .city(jobOfferEntity.getCity().name())
+                .experience(jobOfferEntity.getExperience().name())
+                .salary(jobOfferEntity.getSalary().name())
+                .employer(mapEmployerToDomain(jobOfferEntity.getEmployer()))
+                .mustHaveSkills(jobOfferEntity.getMustHaveSkills())
+                .niceToHaveSkills(jobOfferEntity.getNiceToHaveSkills())
+                .build();
+    }
+
+    private Employer mapEmployerToDomain(EmployerEntity employerEntity) {
+        return new Employer.EmployerBuilder()
+                .employerId(employerEntity.getEmployerId())
+                .companyName(employerEntity.getCompanyName())
+                .email(employerEntity.getEmail())
+                .nip(employerEntity.getNip())
+                .userId(employerEntity.getUserId())
+                .build();
+    }
+
+    @Override
+    public JobOfferEntity mapToEntity(JobOffer jobOffer) {
+        return JobOfferEntity.builder()
+                .jobOfferId(jobOffer.getJobOfferId())
+                .jobOfferTitle(jobOffer.getJobOfferTitle())
+                .description(jobOffer.getDescription())
+                .techSpecialization(TechSpecializationsEnum.valueOf(jobOffer.getTechSpecialization()))
+                .workType(WorkTypesEnum.valueOf(jobOffer.getWorkType()))
+                .city(CitiesEnum.valueOf(jobOffer.getCity()))
+                .experience(ExperiencesEnum.valueOf(jobOffer.getExperience()))
+                .salary(SalaryRangeEnum.valueOf(jobOffer.getSalary()))
+                .employer(mapEmployerToEntity(jobOffer.getEmployer()))
+                .jobApplications(new HashSet<>()) // Możesz ustawić pusty set zamiast `null`
+                .mustHaveSkills(jobOffer.getMustHaveSkills())
+                .niceToHaveSkills(jobOffer.getNiceToHaveSkills())
+                .build();
+    }
+
+    private EmployerEntity mapEmployerToEntity(Employer employer) {
+        return EmployerEntity.builder()
+                .employerId(employer.getEmployerId())
+                .companyName(employer.getCompanyName())
+                .email(employer.getEmail())
+                .nip(employer.getNip())
+                .userId(employer.getUserId())
+                .jobOffers(new HashSet<>()) // Pusty set zamiast `null`
+                .jobApplications(new HashSet<>()) // Pusty set zamiast `null`
+                .build();
+    }
 
     @Override
     public Employer mapEmployer(String companyName, Integer employerId) {
@@ -19,90 +78,6 @@ public class JobOfferEntityMapperImpl implements JobOfferEntityMapper {
         return new Employer.EmployerBuilder()
                 .employerId(employerId)
                 .companyName(companyName)
-                .build();
-    }
-
-    @Override
-    public JobOffer mapToDomain(JobOfferEntity jobOfferEntity) {
-        String techSpecialization = jobOfferEntity.getTechSpecialization() != null
-                ? jobOfferEntity.getTechSpecialization().name()
-                : null;
-        String workType = jobOfferEntity.getWorkType() != null
-                ? jobOfferEntity.getWorkType().name()
-                : null;
-        String city = jobOfferEntity.getCity() != null
-                ? jobOfferEntity.getCity().name()
-                : null;
-        String experience = jobOfferEntity.getExperience() != null
-                ? jobOfferEntity.getExperience().name()
-                : null;
-        String salary = jobOfferEntity.getSalary() != null
-                ? jobOfferEntity.getSalary().name()
-                : null;
-
-        Employer employer = jobOfferEntity.getEmployer() != null
-                ? new Employer.EmployerBuilder()
-                .employerId(jobOfferEntity.getEmployer().getEmployerId())
-                .companyName(jobOfferEntity.getEmployer().getCompanyName())
-                .email(null)
-                .nip(null)
-                .userId(null)
-                .build()
-                : null;
-
-        return new JobOffer.JobOfferBuilder()
-                .jobOfferId(jobOfferEntity.getJobOfferId())
-                .jobOfferTitle(jobOfferEntity.getJobOfferTitle())
-                .description(jobOfferEntity.getDescription())
-                .techSpecialization(techSpecialization)
-                .employer(employer)
-                .workType(workType)
-                .city(city)
-                .experience(experience)
-                .salary(salary)
-                .mustHaveSkills(jobOfferEntity.getMustHaveSkills())
-                .niceToHaveSkills(jobOfferEntity.getNiceToHaveSkills())
-                .build();
-    }
-
-    @Override
-    public JobOfferEntity mapToEntity(JobOffer jobOffer) {
-        // Mapowanie prostych pól
-        TechSpecializationsEnum techSpecialization = jobOffer.getTechSpecialization() != null
-                ? TechSpecializationsEnum.valueOf(jobOffer.getTechSpecialization())
-                : null;
-        WorkTypesEnum workType = jobOffer.getWorkType() != null
-                ? WorkTypesEnum.valueOf(jobOffer.getWorkType())
-                : null;
-        CitiesEnum city = jobOffer.getCity() != null
-                ? CitiesEnum.valueOf(jobOffer.getCity())
-                : null;
-        ExperiencesEnum experience = jobOffer.getExperience() != null
-                ? ExperiencesEnum.valueOf(jobOffer.getExperience())
-                : null;
-        SalaryRangeEnum salary = jobOffer.getSalary() != null
-                ? SalaryRangeEnum.valueOf(jobOffer.getSalary())
-                : null;
-
-        // Mapowanie obiektu Employer
-        EmployerEntity employerEntity = jobOffer.getEmployer() != null
-                ? new EmployerEntity(jobOffer.getEmployer().getEmployerId(), jobOffer.getEmployer().getCompanyName(),
-                null, null, null, null, null) // Możesz dodać dodatkowe pola, jeśli potrzebujesz
-                : null;
-
-        return new JobOfferEntity.Builder()
-                .jobOfferId(jobOffer.getJobOfferId())
-                .jobOfferTitle(jobOffer.getJobOfferTitle())
-                .description(jobOffer.getDescription())
-                .techSpecialization(techSpecialization)
-                .workType(workType)
-                .city(city)
-                .experience(experience)
-                .salary(salary)
-                .employer(employerEntity)
-                .jobApplications(null) // Możesz dodać mapowanie dla jobApplications, jeśli to konieczne
-                .mustHaveSkills(jobOffer.getMustHaveSkills())
-                .niceToHaveSkills(jobOffer.getNiceToHaveSkills())
                 .build();
     }
 }

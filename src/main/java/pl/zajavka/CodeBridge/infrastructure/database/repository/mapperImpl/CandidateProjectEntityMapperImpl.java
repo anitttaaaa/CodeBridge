@@ -10,9 +10,7 @@ public class CandidateProjectEntityMapperImpl implements CandidateProjectEntityM
 
     @Override
     public CandidateProject mapToDomain(CandidateProjectEntity entity) {
-        if (entity == null) {
-            return null;
-        }
+
 
         return new CandidateProject.Builder()
                 .candidateProjectId(entity.getCandidateProjectId())
@@ -28,9 +26,7 @@ public class CandidateProjectEntityMapperImpl implements CandidateProjectEntityM
 
     @Override
     public CandidateProjectEntity mapToEntity(CandidateProject domain) {
-        if (domain == null) {
-            return null;
-        }
+
 
         return new CandidateProjectEntity.Builder()
                 .candidateProjectId(domain.getCandidateProjectId())

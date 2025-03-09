@@ -10,9 +10,7 @@ public class CandidateEducationEntityMapperImpl implements CandidateEducationEnt
 
     @Override
     public CandidateEducation mapFromEntity(CandidateEducationEntity candidateEducationEntity) {
-        if (candidateEducationEntity == null) {
-            return null;
-        }
+
 
         return new CandidateEducation.Builder()
                 .candidateEducationId(candidateEducationEntity.getCandidateEducationId())
@@ -24,13 +22,9 @@ public class CandidateEducationEntityMapperImpl implements CandidateEducationEnt
                 .candidateId(candidateEducationEntity.getCandidateId())
                 .build();
     }
-
-    // Implementacja mapowania z CandidateEducation do CandidateEducationEntity
     @Override
     public CandidateEducationEntity mapToEntity(CandidateEducation candidateEducation) {
-        if (candidateEducation == null) {
-            return null;
-        }
+
 
         return new CandidateEducationEntity.Builder()
                 .candidateEducationId(candidateEducation.getCandidateEducationId())

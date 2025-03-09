@@ -13,9 +13,6 @@ public class CandidateMapperEntityImpl implements CandidateEntityMapper {
 
     @Override
     public CandidateEntity mapCandidateToEntity(Candidate candidate) {
-        if (candidate == null) {
-            return null;
-        }
         return new CandidateEntity.Builder()
                 .candidateId(candidate.getCandidateId())
                 .name(candidate.getName())
@@ -40,9 +37,6 @@ public class CandidateMapperEntityImpl implements CandidateEntityMapper {
 
     @Override
     public List<CandidateExperienceEntity> mapCandidateExperiencesToEntities(List<CandidateExperience> experiences) {
-        if (experiences == null) {
-            return null;
-        }
         List<CandidateExperienceEntity> entities = new ArrayList<>();
         for (CandidateExperience experience : experiences) {
             CandidateExperienceEntity entity = new CandidateExperienceEntity.Builder()
@@ -61,9 +55,6 @@ public class CandidateMapperEntityImpl implements CandidateEntityMapper {
 
     @Override
     public List<CandidateProjectEntity> mapCandidateProjectsToEntities(List<CandidateProject> projects) {
-        if (projects == null) {
-            return null;
-        }
         List<CandidateProjectEntity> entities = new ArrayList<>();
         for (CandidateProject project : projects) {
             entities.add(new CandidateProjectEntity(
@@ -102,9 +93,7 @@ public class CandidateMapperEntityImpl implements CandidateEntityMapper {
 
     @Override
     public List<CandidateCourseEntity> mapCandidateCoursesToEntities(List<CandidateCourse> courses) {
-        if (courses == null) {
-            return null;
-        }
+
         List<CandidateCourseEntity> entities = new ArrayList<>();
         for (CandidateCourse course : courses) {
             entities.add(new CandidateCourseEntity.Builder()
@@ -123,9 +112,7 @@ public class CandidateMapperEntityImpl implements CandidateEntityMapper {
 
     @Override
     public Candidate mapCandidateEntityToDomain(CandidateEntity candidateEntity) {
-        if (candidateEntity == null) {
-            return null;
-        }
+
         return new Candidate.Builder()
                 .candidateId(candidateEntity.getCandidateId())
                 .name(candidateEntity.getName())
@@ -150,9 +137,7 @@ public class CandidateMapperEntityImpl implements CandidateEntityMapper {
 
     @Override
     public List<CandidateExperience> mapCandidateExperienceEntitiesToDomain(List<CandidateExperienceEntity> experiences) {
-        if (experiences == null) {
-            return null;
-        }
+
         List<CandidateExperience> domainExperiences = new ArrayList<>();
         for (CandidateExperienceEntity experienceEntity : experiences) {
             domainExperiences.add(new CandidateExperience.Builder()
@@ -170,9 +155,7 @@ public class CandidateMapperEntityImpl implements CandidateEntityMapper {
 
     @Override
     public List<CandidateProject> mapCandidateProjectEntitiesToDomain(List<CandidateProjectEntity> projects) {
-        if (projects == null) {
-            return null;
-        }
+
         List<CandidateProject> domainProjects = new ArrayList<>();
         for (CandidateProjectEntity projectEntity : projects) {
             domainProjects.add(new CandidateProject.Builder()
@@ -191,9 +174,7 @@ public class CandidateMapperEntityImpl implements CandidateEntityMapper {
 
     @Override
     public List<CandidateEducation> mapCandidateEducationEntitiesToDomain(List<CandidateEducationEntity> education) {
-        if (education == null) {
-            return null;
-        }
+
         List<CandidateEducation> domainEducation = new ArrayList<>();
         for (CandidateEducationEntity eduEntity : education) {
             domainEducation.add(new CandidateEducation.Builder()
@@ -211,9 +192,7 @@ public class CandidateMapperEntityImpl implements CandidateEntityMapper {
 
     @Override
     public List<CandidateCourse> mapCandidateCourseEntitiesToDomain(List<CandidateCourseEntity> courses) {
-        if (courses == null) {
-            return null;
-        }
+
         List<CandidateCourse> domainCourses = new ArrayList<>();
         for (CandidateCourseEntity courseEntity : courses) {
             domainCourses.add(new CandidateCourse.Builder()

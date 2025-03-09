@@ -10,9 +10,7 @@ public class CandidateExperienceEntityMapperImpl implements CandidateExperienceE
 
     @Override
     public CandidateExperience mapFromEntity(CandidateExperienceEntity candidateExperienceEntity) {
-        if (candidateExperienceEntity == null) {
-            return null;
-        }
+
 
         return new CandidateExperience.Builder()
                 .candidateExperienceId(candidateExperienceEntity.getCandidateExperienceId())
@@ -27,9 +25,7 @@ public class CandidateExperienceEntityMapperImpl implements CandidateExperienceE
 
     @Override
     public CandidateExperienceEntity mapToEntity(CandidateExperience candidateExperience) {
-        if (candidateExperience == null) {
-            return null;
-        }
+
 
         return new CandidateExperienceEntity.Builder()
                 .candidateExperienceId(candidateExperience.getCandidateExperienceId())

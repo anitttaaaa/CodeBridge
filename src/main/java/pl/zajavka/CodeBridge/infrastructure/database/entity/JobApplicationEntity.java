@@ -26,11 +26,19 @@ public class JobApplicationEntity {
     @JoinColumn(name = "employer_id", nullable = false)
     private EmployerEntity employer;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "application_status", nullable = false)
     private ApplicationStatus applicationStatus;
 
     public JobApplicationEntity() {
     }
+
+
+    public static Builder builder() {
+
+        return new Builder();
+    }
+
 
     private JobApplicationEntity(Builder builder) {
         this.applicationId = builder.applicationId;

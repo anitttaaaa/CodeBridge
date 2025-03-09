@@ -27,30 +27,29 @@ public class ApplicationsHistoryEntityMapperImpl implements ApplicationsHistoryE
 
     @Override
     public JobOffer mapJobOffer(JobOfferEntity jobOfferEntity) {
-        Employer employer = jobOfferEntity.getEmployer() != null
-                ? new Employer.EmployerBuilder()
+        Employer employer = new Employer.EmployerBuilder()
                 .employerId(jobOfferEntity.getEmployer().getEmployerId())
                 .companyName(jobOfferEntity.getEmployer().getCompanyName())
                 .email(jobOfferEntity.getEmployer().getEmail())
                 .nip(jobOfferEntity.getEmployer().getNip())
                 .userId(jobOfferEntity.getEmployer().getUserId())
-                .build()
-                : null;
+                .build();
 
         return new JobOffer.JobOfferBuilder()
                 .jobOfferId(jobOfferEntity.getJobOfferId())
                 .jobOfferTitle(jobOfferEntity.getJobOfferTitle())
                 .description(jobOfferEntity.getDescription())
-                .techSpecialization(jobOfferEntity.getTechSpecialization() != null ? jobOfferEntity.getTechSpecialization().name() : null)
+                .techSpecialization(jobOfferEntity.getTechSpecialization().name())
                 .employer(employer)
-                .workType(jobOfferEntity.getWorkType() != null ? jobOfferEntity.getWorkType().name() : null)
-                .city(jobOfferEntity.getCity() != null ? jobOfferEntity.getCity().name() : null)
-                .experience(jobOfferEntity.getExperience() != null ? jobOfferEntity.getExperience().name() : null)
-                .salary(jobOfferEntity.getSalary() != null ? jobOfferEntity.getSalary().name() : null)
+                .workType(jobOfferEntity.getWorkType().name())
+                .city(jobOfferEntity.getCity().name())
+                .experience(jobOfferEntity.getExperience().name())
+                .salary(jobOfferEntity.getSalary().name())
                 .mustHaveSkills(jobOfferEntity.getMustHaveSkills())
                 .niceToHaveSkills(jobOfferEntity.getNiceToHaveSkills())
                 .build();
     }
+
 
     @Override
     public Employer mapEmployer(EmployerEntity employerEntity) {
@@ -91,15 +90,13 @@ public class ApplicationsHistoryEntityMapperImpl implements ApplicationsHistoryE
 
     @Override
     public JobOfferEntity mapJobOfferEntity(JobOffer jobOffer) {
-        EmployerEntity employerEntity = jobOffer.getEmployer() != null
-                ? new EmployerEntity(
+        EmployerEntity employerEntity = new EmployerEntity(
                 jobOffer.getEmployer().getEmployerId(),
                 jobOffer.getEmployer().getCompanyName(),
                 jobOffer.getEmployer().getEmail(),
                 jobOffer.getEmployer().getNip(),
                 jobOffer.getEmployer().getUserId()
-        )
-                : null;
+        );
 
         return new JobOfferEntity.Builder()
                 .jobOfferId(jobOffer.getJobOfferId())
@@ -108,6 +105,7 @@ public class ApplicationsHistoryEntityMapperImpl implements ApplicationsHistoryE
                 .employer(employerEntity)
                 .build();
     }
+
 
     @Override
     public EmployerEntity mapEmployerEntity(Employer employer) {
@@ -122,7 +120,6 @@ public class ApplicationsHistoryEntityMapperImpl implements ApplicationsHistoryE
 
     @Override
     public CandidateEntity mapCandidateEntity(Candidate candidate) {
-        // Użycie Buildera
         return new CandidateEntity.Builder()
                 .candidateId(candidate.getCandidateId())
                 .name(candidate.getName())
