@@ -6,16 +6,15 @@ import java.util.Objects;
 
 public class CandidateProject {
 
-    private Integer candidateProjectId;
-    private String projectTitle;
-    private String technologies;
-    private String description;
-    private LocalDate fromDate;
-    private LocalDate toDate;
-    private String projectLink;
-    private Integer candidateId;
+    private final Integer candidateProjectId;
+    private final String projectTitle;
+    private final String technologies;
+    private final String description;
+    private final LocalDate fromDate;
+    private final LocalDate toDate;
+    private final String projectLink;
+    private final Integer candidateId;
 
-    // Konstruktor prywatny, który przyjmuje obiekt Builder
     private CandidateProject(Builder builder) {
         this.candidateProjectId = builder.candidateProjectId;
         this.projectTitle = builder.projectTitle;
@@ -27,7 +26,6 @@ public class CandidateProject {
         this.candidateId = builder.candidateId;
     }
 
-    // Klasa Builder
     public static class Builder {
         private Integer candidateProjectId;
         private String projectTitle;

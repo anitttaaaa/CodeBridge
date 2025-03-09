@@ -51,12 +51,13 @@ public class EmployerRepository implements EmployerDAO {
                 .map(jobOffer -> jobOfferEntityMapper.mapToEntity(jobOffer))
                 .forEach(jobOfferEntity -> {
                     // Tworzenie nowej encji JobOffer z przypisanym pracodawcą
-                    JobOfferEntity jobOfferEntityWithEmployer = new JobOfferEntity(
-                            jobOfferEntity.getJobOfferId(),
-                            jobOfferEntity.getJobOfferTitle(),
-                            jobOfferEntity.getDescription(),
-                            employerSaved // przypisanie pracodawcy do oferty
-                    );
+                    JobOfferEntity jobOfferEntityWithEmployer = new JobOfferEntity.Builder()
+                            .jobOfferId(jobOfferEntity.getJobOfferId())
+                            .jobOfferTitle(jobOfferEntity.getJobOfferTitle())
+                            .description(jobOfferEntity.getDescription())
+                            .employer(employerSaved) // przypisanie pracodawcy do oferty
+                            .build();
+
                     // Zapisz ofertę pracy w repozytorium
                     jobOfferJpaRepository.saveAndFlush(jobOfferEntityWithEmployer);
                 });

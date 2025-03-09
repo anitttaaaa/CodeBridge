@@ -59,7 +59,6 @@ public class CandidateMapperImpl implements CandidateMapper {
                 .build();
     }
 
-    // Metody mapujące listy obiektów
     @Override
     public List<CandidateExperienceDTO> mapCandidateExperiences(List<CandidateExperience> experiences) {
         return experiences == null ? List.of() :
@@ -175,7 +174,6 @@ public class CandidateMapperImpl implements CandidateMapper {
                 .build();
     }
 
-    // Metody mapujące DTO -> domena
     private CandidateExperience mapToCandidateExperience(CandidateExperienceDTO experienceDTO) {
         return new CandidateExperience.Builder()
                 .candidateExperienceId(experienceDTO.getCandidateExperienceId())

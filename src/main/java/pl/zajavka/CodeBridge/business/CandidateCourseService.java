@@ -36,14 +36,14 @@ public class CandidateCourseService {
         }
 
         return new CandidateCourse.Builder()
-                .candidateCourseId(candidateCourseFromRequest.getCandidateCourseId())  // Jeśli 'CandidateCourseId' jest opcjonalne
+                .candidateCourseId(candidateCourseFromRequest.getCandidateCourseId())
                 .institution(candidateCourseFromRequest.getInstitution())
                 .courseTitle(candidateCourseFromRequest.getCourseTitle())
                 .description(candidateCourseFromRequest.getDescription())
                 .technologies(candidateCourseFromRequest.getTechnologies())
                 .fromDate(candidateCourseFromRequest.getFromDate())
                 .toDate(candidateCourseFromRequest.getToDate())
-                .candidateId(candidate.getCandidateId())  // Przypisujemy 'candidateId' z obiektu 'candidate'
+                .candidateId(candidate.getCandidateId())
                 .build();
     }
 

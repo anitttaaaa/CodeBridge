@@ -45,15 +45,12 @@ public class CandidateService {
     @Transactional
     public void updateCandidate(Candidate candidate, Authentication authentication) {
 
-        // Pobranie e-maila kandydata z uwierzytelnienia
         String candidateEmail = authentication.getName();
 
-        // Znalezienie identyfikatora kandydata po e-mailu
         Integer candidateId = findCandidateByEmail(candidateEmail).getCandidateId();
 
-        // Tworzenie nowego obiektu kandydata z zaktualizowanym candidateId za pomocą Buildera
         candidate = new Candidate.Builder()
-                .candidateId(candidateId)  // Ustawiamy zaktualizowany candidateId
+                .candidateId(candidateId)
                 .name(candidate.getName())
                 .surname(candidate.getSurname())
                 .email(candidate.getEmail())
@@ -73,7 +70,6 @@ public class CandidateService {
                 .candidateCourses(candidate.getCandidateCourses())
                 .build();
 
-        // Aktualizacja kandydata w bazie danych
         candidateDAO.updateCandidate(candidate);
     }
 

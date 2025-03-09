@@ -163,7 +163,6 @@ public class CandidateDTO {
         return new Builder();
     }
 
-    // Gettery
     public Integer getCandidateId() { return candidateId; }
     public String getName() { return name; }
     public String getSurname() { return surname; }

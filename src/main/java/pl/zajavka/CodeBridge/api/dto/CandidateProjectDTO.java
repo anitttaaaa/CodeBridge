@@ -13,7 +13,6 @@ public class CandidateProjectDTO {
     private final String projectLink;
     private final Integer candidateId;
 
-    // Konstruktor prywatny, który przyjmuje obiekt Builder
     private CandidateProjectDTO(Builder builder) {
         this.candidateProjectId = builder.candidateProjectId;
         this.projectTitle = builder.projectTitle;
@@ -25,7 +24,6 @@ public class CandidateProjectDTO {
         this.candidateId = builder.candidateId;
     }
 
-    // Klasa Builder
     public static class Builder {
         private Integer candidateProjectId;
         private String projectTitle;

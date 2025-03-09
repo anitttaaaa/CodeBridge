@@ -1,6 +1,7 @@
 package pl.zajavka.CodeBridge.infrastructure.database.entity;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -11,30 +12,32 @@ public class CandidateCourseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "candidate_course_id")
-    private final Integer candidateCourseId;
+    private Integer candidateCourseId;
 
     @Column(name = "institution")
-    private final String institution;
+    private String institution;
 
     @Column(name = "course_title")
-    private final String courseTitle;
+    private String courseTitle;
 
     @Column(name = "description")
-    private final String description;
+    private String description;
 
     @Column(name = "technologies")
-    private final String technologies;
+    private String technologies;
 
     @Column(name = "from_date")
-    private final LocalDate fromDate;
+    private LocalDate fromDate;
 
     @Column(name = "to_date")
-    private final LocalDate toDate;
+    private LocalDate toDate;
 
     @Column(name = "candidate_id")
-    private final Integer candidateId;
+    private Integer candidateId;
 
-    // Konstruktor prywatny, aby wymusić użycie buildera
+    public CandidateCourseEntity() {
+    }
+
     private CandidateCourseEntity(Builder builder) {
         this.candidateCourseId = builder.candidateCourseId;
         this.institution = builder.institution;
@@ -46,7 +49,6 @@ public class CandidateCourseEntity {
         this.candidateId = builder.candidateId;
     }
 
-    // Getter
     public Integer getCandidateCourseId() {
         return candidateCourseId;
     }
@@ -79,7 +81,6 @@ public class CandidateCourseEntity {
         return candidateId;
     }
 
-    // Wzorzec buildera
     public static class Builder {
 
         private Integer candidateCourseId;
@@ -91,7 +92,6 @@ public class CandidateCourseEntity {
         private LocalDate toDate;
         private Integer candidateId;
 
-        // Metody setterów zwracające Buildera
         public Builder candidateCourseId(Integer candidateCourseId) {
             this.candidateCourseId = candidateCourseId;
             return this;
@@ -132,13 +132,11 @@ public class CandidateCourseEntity {
             return this;
         }
 
-        // Metoda build() do zwrócenia obiektu CandidateCourseEntity
         public CandidateCourseEntity build() {
             return new CandidateCourseEntity(this);
         }
     }
 
-    // Równoważność obiektów na podstawie candidateCourseId
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -147,13 +145,11 @@ public class CandidateCourseEntity {
         return Objects.equals(candidateCourseId, that.candidateCourseId);
     }
 
-    // Haszowanie na podstawie candidateCourseId
     @Override
     public int hashCode() {
         return Objects.hash(candidateCourseId);
     }
 
-    // Reprezentacja tekstowa obiektu
     @Override
     public String toString() {
         return "CandidateCourseEntity{" +

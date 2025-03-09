@@ -145,7 +145,6 @@ public class CandidateCVDTO {
         }
     }
 
-    // Getters
     public byte[] getProfilePhoto() {
         return profilePhoto;
     }

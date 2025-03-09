@@ -43,18 +43,15 @@ public class JobOfferService {
         Integer userId = codeBridgeUserDetailsService.getUserId(username);
         Employer employer = employerService.findEmployer(userId);
 
-        // Create the JobOffer using the Builder pattern
         JobOffer jobOffer = new JobOffer.JobOfferBuilder()
-                .jobOfferTitle(request.getJobOfferTitle())  // Example fields, update with actual ones
-                .description(request.getDescription()) // Example fields, update with actual ones
-                .salary(request.getSalary()) // Example fields, update with actual ones
+                .jobOfferTitle(request.getJobOfferTitle())
+                .description(request.getDescription())
+                .salary(request.getSalary())
                 .build();
 
-        // Create a new Set of job offers and add the new job offer to it
         Set<JobOffer> jobOffers = new HashSet<>(employer.getJobOffers());
         jobOffers.add(jobOffer);
 
-        // Create the Employer object using the Builder pattern
         Employer employerAndJobOffer = new Employer.EmployerBuilder()
                 .employerId(employer.getEmployerId())
                 .companyName(employer.getCompanyName())
@@ -65,25 +62,24 @@ public class JobOfferService {
                 .jobApplications(employer.getJobApplications())
                 .build();
 
-        // Save the updated Employer object with the new job offer
         employerService.createJobOffer(employerAndJobOffer);
     }
 
 
     private JobOffer buildJobOffer(JobOffer request) {
         return new JobOffer.JobOfferBuilder()
-                .jobOfferId(null)  // Job offer ID will be null since it’s a new job offer
+                .jobOfferId(null)
                 .jobOfferTitle(request.getJobOfferTitle())
                 .description(request.getDescription())
                 .techSpecialization(request.getTechSpecialization())
-                .employer(request.getEmployer())  // Pass Employer if part of the object
+                .employer(request.getEmployer())
                 .workType(request.getWorkType())
                 .city(request.getCity())
                 .experience(request.getExperience())
                 .salary(request.getSalary())
                 .mustHaveSkills(request.getMustHaveSkills())
                 .niceToHaveSkills(request.getNiceToHaveSkills())
-                .build();  // Return the built JobOffer object
+                .build();
     }
 
 

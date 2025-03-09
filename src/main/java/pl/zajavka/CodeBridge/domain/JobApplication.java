@@ -12,7 +12,6 @@ public class JobApplication {
     private final Candidate candidate;
     private final ApplicationStatus applicationStatus;
 
-    // Prywatny konstruktor używany przez builder
     private JobApplication(JobApplicationBuilder builder) {
         this.applicationId = builder.applicationId;
         this.jobOffer = builder.jobOffer;
@@ -21,7 +20,7 @@ public class JobApplication {
         this.applicationStatus = builder.applicationStatus;
     }
 
-    // Gettery
+
     public Integer getApplicationId() {
         return applicationId;
     }
@@ -66,7 +65,6 @@ public class JobApplication {
                 '}';
     }
 
-    // Klasa Builder
     public static class JobApplicationBuilder {
 
         private Integer applicationId;
@@ -75,7 +73,6 @@ public class JobApplication {
         private Candidate candidate;
         private ApplicationStatus applicationStatus;
 
-        // Settery w Builderze
         public JobApplicationBuilder applicationId(Integer applicationId) {
             this.applicationId = applicationId;
             return this;
@@ -101,7 +98,6 @@ public class JobApplication {
             return this;
         }
 
-        // Metoda build, która zwraca gotowy obiekt JobApplication
         public JobApplication build() {
             return new JobApplication(this);
         }

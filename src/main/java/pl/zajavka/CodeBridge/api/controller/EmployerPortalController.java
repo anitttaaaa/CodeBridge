@@ -172,9 +172,8 @@ public class EmployerPortalController {
 
     @GetMapping(value = GET_EMPLOYER_NEW_JOB_OFFER_FORM)
     public String showJobOfferForm(Model model) {
-        // Create a JobOfferDTO using the Builder pattern
         JobOfferDTO jobOfferDTO = new JobOfferDTO.JobOfferDTOBuilder()
-                .build();  // You can add any initializations if needed
+                .build();
 
         model.addAttribute("jobOfferDTO", jobOfferDTO);
         return "employer_portal_new_job_offer";

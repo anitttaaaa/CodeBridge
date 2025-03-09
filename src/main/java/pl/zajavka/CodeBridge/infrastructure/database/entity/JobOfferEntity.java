@@ -59,22 +59,24 @@ public class JobOfferEntity {
     @Column(name = "nice_to_have_skills")
     private List<String> niceToHaveSkills;
 
-    public JobOfferEntity(Integer jobOfferId, String jobOfferTitle, String description, List<String> mustHaveSkills, List<String> niceToHaveSkills) {
 
-        this.jobOfferId = jobOfferId;
-        this.jobOfferTitle = jobOfferTitle;
-        this.description = description;
-        this.mustHaveSkills = mustHaveSkills;
-        this.niceToHaveSkills = niceToHaveSkills;
-
+    public JobOfferEntity() {
     }
 
-    public JobOfferEntity(Integer jobOfferId, String jobOfferTitle, String description, EmployerEntity employerEntity) {
-        this.jobOfferId = jobOfferId;
-        this.jobOfferTitle = jobOfferTitle;
-        this.description = description;
+    private JobOfferEntity(Builder builder) {
+        this.jobOfferId = builder.jobOfferId;
+        this.jobOfferTitle = builder.jobOfferTitle;
+        this.description = builder.description;
+        this.techSpecialization = builder.techSpecialization;
+        this.workType = builder.workType;
+        this.city = builder.city;
+        this.experience = builder.experience;
+        this.salary = builder.salary;
+        this.employer = builder.employer;
+        this.jobApplications = builder.jobApplications;
+        this.mustHaveSkills = builder.mustHaveSkills;
+        this.niceToHaveSkills = builder.niceToHaveSkills;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -107,26 +109,83 @@ public class JobOfferEntity {
                 '}';
     }
 
-    public JobOfferEntity() {
-    }
+    public static class Builder {
+        private Integer jobOfferId;
+        private String jobOfferTitle;
+        private String description;
+        private TechSpecializationsEnum techSpecialization;
+        private WorkTypesEnum workType;
+        private CitiesEnum city;
+        private ExperiencesEnum experience;
+        private SalaryRangeEnum salary;
+        private EmployerEntity employer;
+        private Set<JobApplicationEntity> jobApplications;
+        private List<String> mustHaveSkills;
+        private List<String> niceToHaveSkills;
 
-    public JobOfferEntity(Integer jobOfferId, String jobOfferTitle, String description,
-                          TechSpecializationsEnum techSpecialization, WorkTypesEnum workType,
-                          CitiesEnum city, ExperiencesEnum experience, SalaryRangeEnum salary,
-                          EmployerEntity employer, Set<JobApplicationEntity> jobApplications,
-                          List<String> mustHaveSkills, List<String> niceToHaveSkills) {
-        this.jobOfferId = jobOfferId;
-        this.jobOfferTitle = jobOfferTitle;
-        this.description = description;
-        this.techSpecialization = techSpecialization;
-        this.workType = workType;
-        this.city = city;
-        this.experience = experience;
-        this.salary = salary;
-        this.employer = employer;
-        this.jobApplications = jobApplications;
-        this.mustHaveSkills = mustHaveSkills;
-        this.niceToHaveSkills = niceToHaveSkills;
+        public Builder jobOfferId(Integer jobOfferId) {
+            this.jobOfferId = jobOfferId;
+            return this;
+        }
+
+        public Builder jobOfferTitle(String jobOfferTitle) {
+            this.jobOfferTitle = jobOfferTitle;
+            return this;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder techSpecialization(TechSpecializationsEnum techSpecialization) {
+            this.techSpecialization = techSpecialization;
+            return this;
+        }
+
+        public Builder workType(WorkTypesEnum workType) {
+            this.workType = workType;
+            return this;
+        }
+
+        public Builder city(CitiesEnum city) {
+            this.city = city;
+            return this;
+        }
+
+        public Builder experience(ExperiencesEnum experience) {
+            this.experience = experience;
+            return this;
+        }
+
+        public Builder salary(SalaryRangeEnum salary) {
+            this.salary = salary;
+            return this;
+        }
+
+        public Builder employer(EmployerEntity employer) {
+            this.employer = employer;
+            return this;
+        }
+
+        public Builder jobApplications(Set<JobApplicationEntity> jobApplications) {
+            this.jobApplications = jobApplications;
+            return this;
+        }
+
+        public Builder mustHaveSkills(List<String> mustHaveSkills) {
+            this.mustHaveSkills = mustHaveSkills;
+            return this;
+        }
+
+        public Builder niceToHaveSkills(List<String> niceToHaveSkills) {
+            this.niceToHaveSkills = niceToHaveSkills;
+            return this;
+        }
+
+        public JobOfferEntity build() {
+            return new JobOfferEntity(this);
+        }
     }
 
     public Integer getJobOfferId() {
@@ -177,5 +236,3 @@ public class JobOfferEntity {
         return niceToHaveSkills;
     }
 }
-
-

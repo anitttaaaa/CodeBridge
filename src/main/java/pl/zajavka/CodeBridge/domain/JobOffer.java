@@ -17,7 +17,6 @@ public class JobOffer {
     private final List<String> mustHaveSkills;
     private final List<String> niceToHaveSkills;
 
-    // Prywatny konstruktor, który będzie używany przez Buildera
     private JobOffer(JobOfferBuilder builder) {
         this.jobOfferId = builder.jobOfferId;
         this.jobOfferTitle = builder.jobOfferTitle;
@@ -32,7 +31,6 @@ public class JobOffer {
         this.niceToHaveSkills = builder.niceToHaveSkills;
     }
 
-    // Gettery
     public Integer getJobOfferId() {
         return jobOfferId;
     }
@@ -77,7 +75,6 @@ public class JobOffer {
         return niceToHaveSkills;
     }
 
-    // Klasa Builder
     public static class JobOfferBuilder {
 
         private Integer jobOfferId;

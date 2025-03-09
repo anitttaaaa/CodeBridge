@@ -9,7 +9,6 @@ import java.util.Objects;
 @Table(name = "applications_history")
 public class ApplicationsHistoryEntity {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "application_history_id", nullable = false)
@@ -31,10 +30,8 @@ public class ApplicationsHistoryEntity {
     @Column(name = "application_status", nullable = false)
     private ApplicationStatus applicationStatus;
 
-
-
-
-
+    public ApplicationsHistoryEntity() {
+    }
 
     public Integer getApplicationHistoryId() {
         return applicationHistoryId;
@@ -80,16 +77,48 @@ public class ApplicationsHistoryEntity {
                 '}';
     }
 
-    public ApplicationsHistoryEntity() {
+    private ApplicationsHistoryEntity(Builder builder) {
+        this.applicationHistoryId = builder.applicationHistoryId;
+        this.jobOffer = builder.jobOffer;
+        this.employer = builder.employer;
+        this.candidate = builder.candidate;
+        this.applicationStatus = builder.applicationStatus;
     }
 
-    public ApplicationsHistoryEntity(Integer applicationHistoryId, JobOfferEntity jobOffer,
-                                     EmployerEntity employer, CandidateEntity candidate,
-                                     ApplicationStatus applicationStatus) {
-        this.applicationHistoryId = applicationHistoryId;
-        this.jobOffer = jobOffer;
-        this.employer = employer;
-        this.candidate = candidate;
-        this.applicationStatus = applicationStatus;
+    public static class Builder {
+        private Integer applicationHistoryId;
+        private JobOfferEntity jobOffer;
+        private EmployerEntity employer;
+        private CandidateEntity candidate;
+        private ApplicationStatus applicationStatus;
+
+        public Builder applicationHistoryId(Integer applicationHistoryId) {
+            this.applicationHistoryId = applicationHistoryId;
+            return this;
+        }
+
+        public Builder jobOffer(JobOfferEntity jobOffer) {
+            this.jobOffer = jobOffer;
+            return this;
+        }
+
+        public Builder employer(EmployerEntity employer) {
+            this.employer = employer;
+            return this;
+        }
+
+        public Builder candidate(CandidateEntity candidate) {
+            this.candidate = candidate;
+            return this;
+        }
+
+        public Builder applicationStatus(ApplicationStatus applicationStatus) {
+            this.applicationStatus = applicationStatus;
+            return this;
+        }
+
+        public ApplicationsHistoryEntity build() {
+            return new ApplicationsHistoryEntity(this);
+        }
     }
 }

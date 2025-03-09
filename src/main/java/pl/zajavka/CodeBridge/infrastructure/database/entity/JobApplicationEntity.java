@@ -18,7 +18,6 @@ public class JobApplicationEntity {
     @JoinColumn(name = "candidate_id", nullable = false)
     private CandidateEntity candidate;
 
-    @Enumerated(EnumType.STRING)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_offer_id", nullable = false)
     private JobOfferEntity jobOffer;
@@ -30,44 +29,53 @@ public class JobApplicationEntity {
     @Column(name = "application_status", nullable = false)
     private ApplicationStatus applicationStatus;
 
-
-
-    @Override    public boolean equals(Object o) {
-
-
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        JobApplicationEntity that = (JobApplicationEntity) o;
-        return Objects.equals(applicationId, that.applicationId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(applicationId);
-    }
-
-    @Override
-    public String toString() {
-        return "JobApplicationEntity{" +
-                "applicationId=" + applicationId +
-                ", jobOffer=" + jobOffer +
-                ", employer=" + employer +
-                ", candidate=" + candidate +
-                ", applicationStatus=" + applicationStatus +
-                '}';
-    }
-
     public JobApplicationEntity() {
     }
 
-    public JobApplicationEntity(Integer applicationId, JobOfferEntity jobOffer,
-                                EmployerEntity employer, CandidateEntity candidate,
-                                ApplicationStatus applicationStatus) {
-        this.applicationId = applicationId;
-        this.jobOffer = jobOffer;
-        this.employer = employer;
-        this.candidate = candidate;
-        this.applicationStatus = applicationStatus;
+    private JobApplicationEntity(Builder builder) {
+        this.applicationId = builder.applicationId;
+        this.jobOffer = builder.jobOffer;
+        this.employer = builder.employer;
+        this.candidate = builder.candidate;
+        this.applicationStatus = builder.applicationStatus;
+    }
+
+    public static class Builder {
+
+        private Integer applicationId;
+        private JobOfferEntity jobOffer;
+        private EmployerEntity employer;
+        private CandidateEntity candidate;
+        private ApplicationStatus applicationStatus;
+
+        public Builder applicationId(Integer applicationId) {
+            this.applicationId = applicationId;
+            return this;
+        }
+
+        public Builder jobOffer(JobOfferEntity jobOffer) {
+            this.jobOffer = jobOffer;
+            return this;
+        }
+
+        public Builder employer(EmployerEntity employer) {
+            this.employer = employer;
+            return this;
+        }
+
+        public Builder candidate(CandidateEntity candidate) {
+            this.candidate = candidate;
+            return this;
+        }
+
+        public Builder applicationStatus(ApplicationStatus applicationStatus) {
+            this.applicationStatus = applicationStatus;
+            return this;
+        }
+
+        public JobApplicationEntity build() {
+            return new JobApplicationEntity(this);
+        }
     }
 
     public Integer getApplicationId() {
@@ -88,5 +96,29 @@ public class JobApplicationEntity {
 
     public ApplicationStatus getApplicationStatus() {
         return applicationStatus;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JobApplicationEntity that = (JobApplicationEntity) o;
+        return Objects.equals(applicationId, that.applicationId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(applicationId);
+    }
+
+    @Override
+    public String toString() {
+        return "JobApplicationEntity{" +
+                "applicationId=" + applicationId +
+                ", jobOffer=" + jobOffer +
+                ", employer=" + employer +
+                ", candidate=" + candidate +
+                ", applicationStatus=" + applicationStatus +
+                '}';
     }
 }

@@ -161,7 +161,6 @@ public class Candidate {
         }
     }
 
-    // Getters and other methods
 
     public Integer getCandidateId() {
         return candidateId;

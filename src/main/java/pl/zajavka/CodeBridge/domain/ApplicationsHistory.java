@@ -11,7 +11,6 @@ public class ApplicationsHistory {
     private final Candidate candidate;
     private final ApplicationStatus applicationStatus;
 
-    // Private constructor to enforce the use of the Builder
     private ApplicationsHistory(Builder builder) {
         this.applicationHistoryId = builder.applicationHistoryId;
         this.jobOffer = builder.jobOffer;
@@ -44,7 +43,6 @@ public class ApplicationsHistory {
                 '}';
     }
 
-    // Getters
     public Integer getApplicationHistoryId() {
         return applicationHistoryId;
     }
@@ -65,7 +63,6 @@ public class ApplicationsHistory {
         return applicationStatus;
     }
 
-    // Builder class
     public static class Builder {
         private Integer applicationHistoryId;
         private JobOffer jobOffer;
@@ -73,7 +70,6 @@ public class ApplicationsHistory {
         private Candidate candidate;
         private ApplicationStatus applicationStatus;
 
-        // Setter methods for each property
         public Builder applicationHistoryId(Integer applicationHistoryId) {
             this.applicationHistoryId = applicationHistoryId;
             return this;
@@ -99,7 +95,6 @@ public class ApplicationsHistory {
             return this;
         }
 
-        // Build method to return the final ApplicationsHistory object
         public ApplicationsHistory build() {
             return new ApplicationsHistory(this);
         }

@@ -52,7 +52,6 @@ public class Employer {
     }
 
 
-    // Klasa Builder
     public static class EmployerBuilder {
 
         private Integer employerId;

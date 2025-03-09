@@ -2,9 +2,7 @@ package pl.zajavka.CodeBridge.infrastructure.database.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -72,98 +70,150 @@ public class CandidateEntity {
     @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
     private Set<JobApplicationEntity> jobApplications;
 
-    public CandidateEntity(Integer candidateId, String name, String surname,
-                           String email, String phone, String techSpecialization,
-                           List<String> candidateSkills) {
-        this.candidateId = candidateId;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.phone = phone;
-        this.techSpecialization = techSpecialization;
-        this.candidateSkills = candidateSkills;
-    }
-
-    public CandidateEntity(Integer candidateId, String name, String surname, String email, String phone, Integer userId, String techSpecialization, List<String> candidateSkills) {
-        this.candidateId = candidateId;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.phone = phone;
-        this.userId = userId;
-        this.techSpecialization = techSpecialization;
-        this.candidateSkills = candidateSkills;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CandidateEntity that = (CandidateEntity) o;
-        return Objects.equals(candidateId, that.candidateId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(candidateId);
-    }
-
-    @Override
-    public String toString() {
-        return "CandidateEntity{" +
-                "candidateId=" + candidateId +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", status='" + status + '\'' +
-                ", userId=" + userId +
-                ", linkedIn='" + linkedIn + '\'' +
-                ", gitHub='" + gitHub + '\'' +
-                ", techSpecialization='" + techSpecialization + '\'' +
-                ", aboutMe='" + aboutMe + '\'' +
-                ", hobby='" + hobby + '\'' +
-                ", candidateSkills=" + candidateSkills +
-                ", profilePhoto=" + Arrays.toString(profilePhoto) +
-                ", candidateExperiences=" + candidateExperiences +
-                ", candidateProjects=" + candidateProjects +
-                ", candidateEducationStages=" + candidateEducationStages +
-                ", candidateCourses=" + candidateCourses +
-                ", jobApplications=" + jobApplications +
-                '}';
-    }
-
     public CandidateEntity() {
     }
 
-    public CandidateEntity(Integer candidateId, String name, String surname, String email,
-                           String phone, String status, Integer userId, String linkedIn,
-                           String gitHub, String techSpecialization, String aboutMe,
-                           String hobby, List<String> candidateSkills, byte[] profilePhoto,
-                           List<CandidateExperienceEntity> candidateExperiences,
-                           List<CandidateProjectEntity> candidateProjects,
-                           List<CandidateEducationEntity> candidateEducationStages,
-                           List<CandidateCourseEntity> candidateCourses,
-                           Set<JobApplicationEntity> jobApplications) {
-        this.candidateId = candidateId;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.phone = phone;
-        this.status = status;
-        this.userId = userId;
-        this.linkedIn = linkedIn;
-        this.gitHub = gitHub;
-        this.techSpecialization = techSpecialization;
-        this.aboutMe = aboutMe;
-        this.hobby = hobby;
-        this.candidateSkills = candidateSkills;
-        this.profilePhoto = profilePhoto;
-        this.candidateExperiences = candidateExperiences;
-        this.candidateProjects = candidateProjects;
-        this.candidateEducationStages = candidateEducationStages;
-        this.candidateCourses = candidateCourses;
-        this.jobApplications = jobApplications;
+    private CandidateEntity(Builder builder) {
+        this.candidateId = builder.candidateId;
+        this.name = builder.name;
+        this.surname = builder.surname;
+        this.email = builder.email;
+        this.phone = builder.phone;
+        this.status = builder.status;
+        this.userId = builder.userId;
+        this.linkedIn = builder.linkedIn;
+        this.gitHub = builder.gitHub;
+        this.techSpecialization = builder.techSpecialization;
+        this.aboutMe = builder.aboutMe;
+        this.hobby = builder.hobby;
+        this.candidateSkills = builder.candidateSkills;
+        this.profilePhoto = builder.profilePhoto;
+        this.candidateExperiences = builder.candidateExperiences;
+        this.candidateProjects = builder.candidateProjects;
+        this.candidateEducationStages = builder.candidateEducationStages;
+        this.candidateCourses = builder.candidateCourses;
+        this.jobApplications = builder.jobApplications;
+    }
+
+    public static class Builder {
+        private Integer candidateId;
+        private String name;
+        private String surname;
+        private String email;
+        private String phone;
+        private String status;
+        private Integer userId;
+        private String linkedIn;
+        private String gitHub;
+        private String techSpecialization;
+        private String aboutMe;
+        private String hobby;
+        private List<String> candidateSkills;
+        private byte[] profilePhoto;
+        private List<CandidateExperienceEntity> candidateExperiences;
+        private List<CandidateProjectEntity> candidateProjects;
+        private List<CandidateEducationEntity> candidateEducationStages;
+        private List<CandidateCourseEntity> candidateCourses;
+        private Set<JobApplicationEntity> jobApplications;
+
+        public Builder candidateId(Integer candidateId) {
+            this.candidateId = candidateId;
+            return this;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder surname(String surname) {
+            this.surname = surname;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder phone(String phone) {
+            this.phone = phone;
+            return this;
+        }
+
+        public Builder status(String status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder userId(Integer userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public Builder linkedIn(String linkedIn) {
+            this.linkedIn = linkedIn;
+            return this;
+        }
+
+        public Builder gitHub(String gitHub) {
+            this.gitHub = gitHub;
+            return this;
+        }
+
+        public Builder techSpecialization(String techSpecialization) {
+            this.techSpecialization = techSpecialization;
+            return this;
+        }
+
+        public Builder aboutMe(String aboutMe) {
+            this.aboutMe = aboutMe;
+            return this;
+        }
+
+        public Builder hobby(String hobby) {
+            this.hobby = hobby;
+            return this;
+        }
+
+        public Builder candidateSkills(List<String> candidateSkills) {
+            this.candidateSkills = candidateSkills;
+            return this;
+        }
+
+        public Builder profilePhoto(byte[] profilePhoto) {
+            this.profilePhoto = profilePhoto;
+            return this;
+        }
+
+        public Builder candidateExperiences(List<CandidateExperienceEntity> candidateExperiences) {
+            this.candidateExperiences = candidateExperiences;
+            return this;
+        }
+
+        public Builder candidateProjects(List<CandidateProjectEntity> candidateProjects) {
+            this.candidateProjects = candidateProjects;
+            return this;
+        }
+
+        public Builder candidateEducationStages(List<CandidateEducationEntity> candidateEducationStages) {
+            this.candidateEducationStages = candidateEducationStages;
+            return this;
+        }
+
+        public Builder candidateCourses(List<CandidateCourseEntity> candidateCourses) {
+            this.candidateCourses = candidateCourses;
+            return this;
+        }
+
+        public Builder jobApplications(Set<JobApplicationEntity> jobApplications) {
+            this.jobApplications = jobApplications;
+            return this;
+        }
+
+        public CandidateEntity build() {
+            return new CandidateEntity(this);
+        }
     }
 
     public Integer getCandidateId() {
@@ -242,4 +292,3 @@ public class CandidateEntity {
         return jobApplications;
     }
 }
-

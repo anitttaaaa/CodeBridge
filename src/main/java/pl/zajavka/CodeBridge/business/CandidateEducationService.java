@@ -37,13 +37,13 @@ public class CandidateEducationService {
         }
 
         return new CandidateEducation.Builder()
-                .candidateEducationId(null)  // Jeśli ID jest generowane automatycznie, pozostawiamy 'null'
+                .candidateEducationId(null)
                 .institution(candidateEducationFromRequest.getInstitution())
                 .degree(candidateEducationFromRequest.getDegree())
                 .fieldOfStudy(candidateEducationFromRequest.getFieldOfStudy())
                 .fromDate(candidateEducationFromRequest.getFromDate())
                 .toDate(candidateEducationFromRequest.getToDate())
-                .candidateId(candidate.getCandidateId())  // Używamy candidateId z obiektu Candidate
+                .candidateId(candidate.getCandidateId())
                 .build();
     }
 

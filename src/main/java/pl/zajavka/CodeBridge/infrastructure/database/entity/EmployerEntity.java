@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table (name = "employer")
+@Table(name = "employer")
 public class EmployerEntity {
 
     @Id
@@ -32,6 +32,9 @@ public class EmployerEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employer")
     private Set<JobApplicationEntity> jobApplications;
 
+    public EmployerEntity() {
+    }
+
     public EmployerEntity(Integer employerId, String companyName, String email,
                           String nip, Integer userId) {
         this.employerId = employerId;
@@ -39,36 +42,6 @@ public class EmployerEntity {
         this.email = email;
         this.nip = nip;
         this.userId = userId;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        EmployerEntity that = (EmployerEntity) o;
-        return Objects.equals(employerId, that.employerId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(employerId);
-    }
-
-    @Override
-    public String toString() {
-        return "EmployerEntity{" +
-                "employerId=" + employerId +
-                ", companyName='" + companyName + '\'' +
-                ", email='" + email + '\'' +
-                ", nip='" + nip + '\'' +
-                ", userId=" + userId +
-                ", jobOffers=" + jobOffers +
-                ", jobApplications=" + jobApplications +
-                '}';
-    }
-
-    public EmployerEntity() {
     }
 
     public EmployerEntity(Integer employerId, String companyName, String email, String nip,
@@ -109,5 +82,82 @@ public class EmployerEntity {
 
     public Set<JobApplicationEntity> getJobApplications() {
         return jobApplications;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EmployerEntity that = (EmployerEntity) o;
+        return Objects.equals(employerId, that.employerId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(employerId);
+    }
+
+    @Override
+    public String toString() {
+        return "EmployerEntity{" +
+                "employerId=" + employerId +
+                ", companyName='" + companyName + '\'' +
+                ", email='" + email + '\'' +
+                ", nip='" + nip + '\'' +
+                ", userId=" + userId +
+                ", jobOffers=" + jobOffers +
+                ", jobApplications=" + jobApplications +
+                '}';
+    }
+
+    public static class Builder {
+
+        private Integer employerId;
+        private String companyName;
+        private String email;
+        private String nip;
+        private Integer userId;
+        private Set<JobOfferEntity> jobOffers;
+        private Set<JobApplicationEntity> jobApplications;
+
+        public Builder employerId(Integer employerId) {
+            this.employerId = employerId;
+            return this;
+        }
+
+        public Builder companyName(String companyName) {
+            this.companyName = companyName;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder nip(String nip) {
+            this.nip = nip;
+            return this;
+        }
+
+        public Builder userId(Integer userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public Builder jobOffers(Set<JobOfferEntity> jobOffers) {
+            this.jobOffers = jobOffers;
+            return this;
+        }
+
+        public Builder jobApplications(Set<JobApplicationEntity> jobApplications) {
+            this.jobApplications = jobApplications;
+            return this;
+        }
+
+        public EmployerEntity build() {
+            return new EmployerEntity(employerId, companyName, email, nip, userId, jobOffers, jobApplications);
+        }
     }
 }

@@ -51,13 +51,11 @@ public class JobApplicationService {
     }
 
     @Transactional
-    public void rejectJobApplication(Integer applicationId, Authentication authentication) {
+    public void rejectJobApplication(Integer applicationId) {
 
-        // Znalezienie aplikacji
         JobApplication jobApplication = jobApplicationDAO.findApplicationById(applicationId)
                 .orElseThrow(() -> new EntityNotFoundException("Job application not found for id: " + applicationId));
 
-        // Utworzenie nowego obiektu JobApplication z nowym statusem REJECTED przy użyciu buildera
         JobApplication updatedJobApplication = new JobApplication.JobApplicationBuilder()
                 .applicationId(jobApplication.getApplicationId())
                 .jobOffer(jobApplication.getJobOffer())
@@ -66,16 +64,13 @@ public class JobApplicationService {
                 .jobApplicationStatus(ApplicationStatus.REJECTED)
                 .build();
 
-        // Zapisanie zaktualizowanej aplikacji
         jobApplicationDAO.save(updatedJobApplication);
 
-        // Pobranie danych do historii aplikacji
         Candidate candidate = updatedJobApplication.getCandidate();
         Employer employer = updatedJobApplication.getEmployer();
         JobOffer jobOffer = updatedJobApplication.getJobOffer();
         ApplicationStatus applicationStatus = updatedJobApplication.getApplicationStatus();
 
-        // Utworzenie wpisu do historii przy użyciu buildera
         ApplicationsHistory jobApplicationRejected = new ApplicationsHistory.Builder()
                 .applicationHistoryId(applicationId)
                 .jobOffer(jobOffer)
@@ -86,21 +81,17 @@ public class JobApplicationService {
 
 
 
-    // Zapisanie historii aplikacji
         applicationsHistoryDAO.saveInHistory(jobApplicationRejected);
 
-        // Usunięcie aplikacji z bazy (jeśli wymagane)
         jobApplicationDAO.deleteById(applicationId);
     }
 
     @Transactional
-    public void acceptJobApplication(Integer applicationId, Authentication authentication) {
+    public void acceptJobApplication(Integer applicationId) {
 
-        // Znalezienie aplikacji
         JobApplication jobApplication = jobApplicationDAO.findApplicationById(applicationId)
                 .orElseThrow(() -> new EntityNotFoundException("Job application not found for id: " + applicationId));
 
-        // Znalezienie kandydata na podstawie e-maila
         String candidateEmail = jobApplication.getCandidate().getEmail();
         Candidate candidateToUpdate = candidateService.findCandidateByEmail(candidateEmail);
 
@@ -125,23 +116,19 @@ public class JobApplicationService {
                 .candidateCourses(candidateToUpdate.getCandidateCourses())
                 .build();
 
-        // Aktualizacja kandydata
         candidateDAO.updateCandidate(candidateUpdated);
 
-        // Utworzenie nowego obiektu JobApplication z nowym statusem "ACCEPTED"
         jobApplication = new JobApplication.JobApplicationBuilder()
-                .applicationId(jobApplication.getApplicationId())  // ID aplikacji (zachowane)
-                .jobOffer(jobApplication.getJobOffer())             // Oferta pracy
-                .employer(jobApplication.getEmployer())             // Pracodawca
-                .candidate(jobApplication.getCandidate())           // Kandydat
-                .jobApplicationStatus(ApplicationStatus.ACCEPTED)     // Nowy status
-                .build();  // Build the JobApplication object
+                .applicationId(jobApplication.getApplicationId())
+                .jobOffer(jobApplication.getJobOffer())
+                .employer(jobApplication.getEmployer())
+                .candidate(jobApplication.getCandidate())
+                .jobApplicationStatus(ApplicationStatus.ACCEPTED)
+                .build();
 
 
-        // Zapisanie zaktualizowanej aplikacji
         jobApplicationDAO.save(jobApplication);
 
-        // Pobranie danych do historii aplikacji
         Employer employer = jobApplication.getEmployer();
         JobOffer jobOffer = jobApplication.getJobOffer();
         ApplicationStatus applicationStatus = jobApplication.getApplicationStatus();
@@ -155,10 +142,8 @@ public class JobApplicationService {
                 .build();
 
 
-        // Zapisanie historii aplikacji
         applicationsHistoryDAO.saveInHistory(jobApplicationAccepted);
 
-        // Usunięcie aplikacji po akceptacji
         jobApplicationDAO.deleteById(applicationId);
     }
 
@@ -172,7 +157,6 @@ public class JobApplicationService {
 
         ApplicationStatus applicationStatus = ApplicationStatus.PENDING;
 
-        // Tworzenie JobOffer i Employer przez builder (lub konstruktor)
         JobOffer jobOffer = new JobOffer.JobOfferBuilder()
                 .jobOfferId(jobOfferId)
                 .build();
@@ -180,20 +164,17 @@ public class JobApplicationService {
                 .employerId(employerId)
                 .build();
 
-        // Tworzenie kandydata za pomocą buildera
         Candidate candidate = new Candidate.Builder()
                 .candidateId(candidateId)
                 .build();
 
-        // Tworzenie JobApplication za pomocą wzorca builder
         JobApplication jobApplication = new JobApplication.JobApplicationBuilder()
-                .jobOffer(jobOffer)               // Ustawienie oferty pracy
-                .employer(employer)               // Ustawienie pracodawcy
-                .candidate(candidate)             // Ustawienie kandydata
-                .jobApplicationStatus(applicationStatus)  // Status aplikacji
-                .build();  // Budowanie JobApplication
+                .jobOffer(jobOffer)
+                .employer(employer)
+                .candidate(candidate)
+                .jobApplicationStatus(applicationStatus)
+                .build();
 
-        // Zapisanie aplikacji do bazy danych
         jobApplicationDAO.createJobApplication(jobApplication);
     }
 
@@ -252,7 +233,6 @@ public class JobApplicationService {
 
 
         List<ApplicationsHistory> candidateHistoryApplications = jobApplicationDAO.findCandidateHistoryApplicationsByCandidateId(candidateId);
-        // Zapewnienie, że lista nie będzie null
         if (candidateHistoryApplications == null) {
             return Collections.emptyList();
         }

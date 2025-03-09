@@ -42,7 +42,7 @@ public class CandidateExperienceService {
                 .description(candidateExperienceFromRequest.getDescription())
                 .fromDate(candidateExperienceFromRequest.getFromDate())
                 .toDate(candidateExperienceFromRequest.getToDate())
-                .candidateId(candidateId)  // Ustawiamy candidateId przekazany do metody
+                .candidateId(candidateId)
                 .build();
     }
 

@@ -10,7 +10,6 @@ public class JobApplicationDTO {
     private final CandidateDTO candidate;
     private final ApplicationStatus applicationStatus;
 
-    // Prywatny konstruktor używany przez builder
     private JobApplicationDTO(JobApplicationDTOBuilder builder) {
         this.applicationId = builder.applicationId;
         this.jobOffer = builder.jobOffer;
@@ -19,7 +18,6 @@ public class JobApplicationDTO {
         this.applicationStatus = builder.applicationStatus;
     }
 
-    // Gettery
     public Integer getApplicationId() {
         return applicationId;
     }
@@ -51,7 +49,6 @@ public class JobApplicationDTO {
                 '}';
     }
 
-    // Klasa Builder
     public static class JobApplicationDTOBuilder {
 
         private Integer applicationId;
@@ -60,7 +57,6 @@ public class JobApplicationDTO {
         private CandidateDTO candidate;
         private ApplicationStatus applicationStatus;
 
-        // Settery w Builderze
         public JobApplicationDTOBuilder applicationId(Integer applicationId) {
             this.applicationId = applicationId;
             return this;
@@ -86,7 +82,6 @@ public class JobApplicationDTO {
             return this;
         }
 
-        // Metoda build, która zwraca gotowy obiekt JobApplicationDTO
         public JobApplicationDTO build() {
             return new JobApplicationDTO(this);
         }

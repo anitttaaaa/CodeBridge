@@ -39,7 +39,7 @@ public class CandidateProjectService {
                 .toDate(candidateProjectFromRequest.getToDate())
                 .projectLink(candidateProjectFromRequest.getProjectLink())
                 .candidateId(candidate.getCandidateId())
-                .build();  // Budowanie obiektu CandidateProject przy użyciu Buildera
+                .build();
     }
 
     public void updateCandidateProject(CandidateProject candidateProject, Authentication authentication) throws AccessDeniedException {

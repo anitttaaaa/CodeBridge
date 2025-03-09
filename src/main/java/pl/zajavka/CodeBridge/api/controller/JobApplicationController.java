@@ -38,20 +38,18 @@ public class JobApplicationController {
 
     @PostMapping(POST_EMPLOYER_JOB_APPLICATION_ACCEPT)
     public String acceptJobApplication(
-            @RequestParam("applicationId") Integer applicationId,
-            Authentication authentication) {
+            @RequestParam("applicationId") Integer applicationId) {
 
-        jobApplicationService.acceptJobApplication(applicationId, authentication);
+        jobApplicationService.acceptJobApplication(applicationId);
 
         return "redirect:/employer-portal/applications-history";
     }
 
     @PostMapping(POST_EMPLOYER_JOB_APPLICATION_REJECT)
     public String rejectJobApplication(
-            @RequestParam("applicationId") Integer applicationId,
-            Authentication authentication) {
+            @RequestParam("applicationId") Integer applicationId) {
 
-        jobApplicationService.rejectJobApplication(applicationId, authentication);
+        jobApplicationService.rejectJobApplication(applicationId);
 
         return "redirect:/employer-portal/applications-history";
     }
@@ -74,7 +72,7 @@ public class JobApplicationController {
 
         model.addAttribute("jobApplications", jobApplications);
 
-        return "candidate_applications";  // Ścieżka do pliku HTML
+        return "candidate_applications";
     }
 
     @GetMapping(GET_EMPLOYER_ALL_JOB_APPLICATIONS)

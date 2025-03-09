@@ -10,7 +10,6 @@ public class ApplicationsHistoryDTO {
     private final CandidateDTO candidate;
     private final ApplicationStatus applicationStatus;
 
-    // Private constructor to enforce use of the Builder
     private ApplicationsHistoryDTO(Builder builder) {
         this.applicationHistoryId = builder.applicationHistoryId;
         this.jobOffer = builder.jobOffer;
@@ -39,7 +38,6 @@ public class ApplicationsHistoryDTO {
         return applicationStatus;
     }
 
-    // Builder class
     public static class Builder {
         private Integer applicationHistoryId;
         private JobOfferDTO jobOffer;
@@ -47,7 +45,6 @@ public class ApplicationsHistoryDTO {
         private CandidateDTO candidate;
         private ApplicationStatus applicationStatus;
 
-        // Setter methods for each property
         public Builder applicationHistoryId(Integer applicationHistoryId) {
             this.applicationHistoryId = applicationHistoryId;
             return this;
@@ -72,8 +69,6 @@ public class ApplicationsHistoryDTO {
             this.applicationStatus = applicationStatus;
             return this;
         }
-
-        // Build method to return the final ApplicationsHistoryDTO object
         public ApplicationsHistoryDTO build() {
             return new ApplicationsHistoryDTO(this);
         }

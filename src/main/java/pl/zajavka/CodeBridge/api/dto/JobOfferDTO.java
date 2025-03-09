@@ -18,7 +18,6 @@ public class JobOfferDTO {
     private final List<String> niceToHaveSkills;
     private final Employer employer;
 
-    // Prywatny konstruktor, który będzie używany przez Buildera
     private JobOfferDTO(JobOfferDTOBuilder builder) {
         this.jobOfferId = builder.jobOfferId;
         this.jobOfferTitle = builder.jobOfferTitle;
@@ -33,7 +32,7 @@ public class JobOfferDTO {
         this.employer = builder.employer;
     }
 
-    // Gettery
+
     public Integer getJobOfferId() {
         return jobOfferId;
     }
@@ -78,7 +77,6 @@ public class JobOfferDTO {
         return employer;
     }
 
-    // Builder
     public static class JobOfferDTOBuilder {
 
         private Integer jobOfferId;
