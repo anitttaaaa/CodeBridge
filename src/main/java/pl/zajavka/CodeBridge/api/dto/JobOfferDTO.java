@@ -4,59 +4,36 @@ import pl.zajavka.CodeBridge.domain.Employer;
 
 import java.util.List;
 
-
 public class JobOfferDTO {
 
-    private Integer jobOfferId;
+    private final Integer jobOfferId;
+    private final String jobOfferTitle;
+    private final String description;
+    private final String techSpecialization;
+    private final String workType;
+    private final String city;
+    private final String experience;
+    private final String salary;
+    private final List<String> mustHaveSkills;
+    private final List<String> niceToHaveSkills;
+    private final Employer employer;
 
-    private String jobOfferTitle;
-    private String description;
-    private String techSpecialization;
-    private String workType;
-    private String city;
-    private String experience;
-    private String salary;
-    private List<String> mustHaveSkills;
-    private List<String> niceToHaveSkills;
-
-    private Employer employer;
-
-    public JobOfferDTO() {
+    // Prywatny konstruktor, który będzie używany przez Buildera
+    private JobOfferDTO(JobOfferDTOBuilder builder) {
+        this.jobOfferId = builder.jobOfferId;
+        this.jobOfferTitle = builder.jobOfferTitle;
+        this.description = builder.description;
+        this.techSpecialization = builder.techSpecialization;
+        this.workType = builder.workType;
+        this.city = builder.city;
+        this.experience = builder.experience;
+        this.salary = builder.salary;
+        this.mustHaveSkills = builder.mustHaveSkills;
+        this.niceToHaveSkills = builder.niceToHaveSkills;
+        this.employer = builder.employer;
     }
 
-    public JobOfferDTO(Integer jobOfferId, String jobOfferTitle, String description,
-                       String techSpecialization, String workType, String city,
-                       String experience, String salary, List<String> mustHaveSkills,
-                       List<String> niceToHaveSkills) {
-        this.jobOfferId = jobOfferId;
-        this.jobOfferTitle = jobOfferTitle;
-        this.description = description;
-        this.techSpecialization = techSpecialization;
-        this.workType = workType;
-        this.city = city;
-        this.experience = experience;
-        this.salary = salary;
-        this.mustHaveSkills = mustHaveSkills;
-        this.niceToHaveSkills = niceToHaveSkills;
-    }
-
-    public JobOfferDTO(Integer jobOfferId, String jobOfferTitle, String description,
-                       String techSpecialization, String workType, String city,
-                       String experience, String salary, List<String> mustHaveSkills,
-                       List<String> niceToHaveSkills, Employer employer) {
-        this.jobOfferId = jobOfferId;
-        this.jobOfferTitle = jobOfferTitle;
-        this.description = description;
-        this.techSpecialization = techSpecialization;
-        this.workType = workType;
-        this.city = city;
-        this.experience = experience;
-        this.salary = salary;
-        this.mustHaveSkills = mustHaveSkills;
-        this.niceToHaveSkills = niceToHaveSkills;
-        this.employer = employer;
-    }
-
+    // Gettery
     public Integer getJobOfferId() {
         return jobOfferId;
     }
@@ -100,12 +77,80 @@ public class JobOfferDTO {
     public Employer getEmployer() {
         return employer;
     }
+
+    // Builder
+    public static class JobOfferDTOBuilder {
+
+        private Integer jobOfferId;
+        private String jobOfferTitle;
+        private String description;
+        private String techSpecialization;
+        private String workType;
+        private String city;
+        private String experience;
+        private String salary;
+        private List<String> mustHaveSkills;
+        private List<String> niceToHaveSkills;
+        private Employer employer;
+
+        public JobOfferDTOBuilder jobOfferId(Integer jobOfferId) {
+            this.jobOfferId = jobOfferId;
+            return this;
+        }
+
+        public JobOfferDTOBuilder jobOfferTitle(String jobOfferTitle) {
+            this.jobOfferTitle = jobOfferTitle;
+            return this;
+        }
+
+        public JobOfferDTOBuilder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public JobOfferDTOBuilder techSpecialization(String techSpecialization) {
+            this.techSpecialization = techSpecialization;
+            return this;
+        }
+
+        public JobOfferDTOBuilder workType(String workType) {
+            this.workType = workType;
+            return this;
+        }
+
+        public JobOfferDTOBuilder city(String city) {
+            this.city = city;
+            return this;
+        }
+
+        public JobOfferDTOBuilder experience(String experience) {
+            this.experience = experience;
+            return this;
+        }
+
+        public JobOfferDTOBuilder salary(String salary) {
+            this.salary = salary;
+            return this;
+        }
+
+        public JobOfferDTOBuilder mustHaveSkills(List<String> mustHaveSkills) {
+            this.mustHaveSkills = mustHaveSkills;
+            return this;
+        }
+
+        public JobOfferDTOBuilder niceToHaveSkills(List<String> niceToHaveSkills) {
+            this.niceToHaveSkills = niceToHaveSkills;
+            return this;
+        }
+
+        public JobOfferDTOBuilder employer(Employer employer) {
+            this.employer = employer;
+            return this;
+        }
+
+        public JobOfferDTO build() {
+            return new JobOfferDTO(this);
+        }
+    }
+
 }
-
-
-
-
-
-
-
-

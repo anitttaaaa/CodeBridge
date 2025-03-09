@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.Employer;
@@ -43,22 +42,21 @@ public interface JobApplicationEntityMapper {
     }
 
 
-    // Ręczne mapowanie JobApplicationEntity -> JobApplication
     default JobApplication mapToDomain(JobApplicationEntity jobApplicationEntity) {
         // Mapowanie JobOfferEntity -> JobOffer
-        JobOffer jobOffer = new JobOffer(
-                jobApplicationEntity.getJobOffer().getJobOfferId(),
-                jobApplicationEntity.getJobOffer().getJobOfferTitle(),
-                jobApplicationEntity.getJobOffer().getDescription(),
-                jobApplicationEntity.getJobOffer().getTechSpecialization().name(),
-                mapEmployer(jobApplicationEntity.getJobOffer().getEmployer()), // Employer mapowany z JobOffer
-                jobApplicationEntity.getJobOffer().getWorkType().name(),
-                jobApplicationEntity.getJobOffer().getCity().name(),
-                jobApplicationEntity.getJobOffer().getExperience().name(),
-                jobApplicationEntity.getJobOffer().getSalary().name(),
-                jobApplicationEntity.getJobOffer().getMustHaveSkills(),
-                jobApplicationEntity.getJobOffer().getNiceToHaveSkills()
-        );
+        JobOffer jobOffer = new JobOffer.JobOfferBuilder()
+                .jobOfferId(jobApplicationEntity.getJobOffer().getJobOfferId())
+                .jobOfferTitle(jobApplicationEntity.getJobOffer().getJobOfferTitle())
+                .description(jobApplicationEntity.getJobOffer().getDescription())
+                .techSpecialization(jobApplicationEntity.getJobOffer().getTechSpecialization().name())
+                .employer(mapEmployer(jobApplicationEntity.getJobOffer().getEmployer())) // Employer mapowany z JobOffer
+                .workType(jobApplicationEntity.getJobOffer().getWorkType().name())
+                .city(jobApplicationEntity.getJobOffer().getCity().name())
+                .experience(jobApplicationEntity.getJobOffer().getExperience().name())
+                .salary(jobApplicationEntity.getJobOffer().getSalary().name())
+                .mustHaveSkills(jobApplicationEntity.getJobOffer().getMustHaveSkills())
+                .niceToHaveSkills(jobApplicationEntity.getJobOffer().getNiceToHaveSkills())
+                .build();
 
         // Mapowanie EmployerEntity -> Employer
         Employer employer = mapEmployer(jobApplicationEntity.getEmployer());
@@ -66,28 +64,29 @@ public interface JobApplicationEntityMapper {
         // Mapowanie CandidateEntity -> Candidate
         Candidate candidate = mapCandidate(jobApplicationEntity.getCandidate());
 
-        // Tworzymy nowy obiekt JobApplication przy użyciu konstruktora
-        return new JobApplication(
-                jobApplicationEntity.getApplicationId(),
-                jobOffer, // Dodajemy mapowany JobOffer
-                employer, // Dodajemy mapowany Employer
-                candidate, // Dodajemy mapowanego kandydata
-                jobApplicationEntity.getApplicationStatus() // Status aplikacji
-        );
+        // Tworzymy nowy obiekt JobApplication przy użyciu wzorca builder
+        return new JobApplication.JobApplicationBuilder()
+                .applicationId(jobApplicationEntity.getApplicationId())
+                .jobOffer(jobOffer)  // Dodajemy mapowany JobOffer
+                .employer(employer)  // Dodajemy mapowany Employer
+                .candidate(candidate) // Dodajemy mapowanego kandydata
+                .jobApplicationStatus(jobApplicationEntity.getApplicationStatus()) // Status aplikacji
+                .build();
     }
 
 
 
-    // Ręczne mapowanie EmployerEntity -> Employer
+
     private Employer mapEmployer(EmployerEntity employerEntity) {
-        return new Employer(
-                employerEntity.getEmployerId(),
-                employerEntity.getCompanyName(),
-                employerEntity.getEmail(),
-                employerEntity.getNip(),
-                employerEntity.getUserId()
-        );
+        return new Employer.EmployerBuilder()
+                .employerId(employerEntity.getEmployerId())
+                .companyName(employerEntity.getCompanyName())
+                .email(employerEntity.getEmail())
+                .nip(employerEntity.getNip())
+                .userId(employerEntity.getUserId())
+                .build();
     }
+
 
     // Ręczne mapowanie Employer -> EmployerEntity
     private EmployerEntity mapEmployerToEntity(Employer employer) {

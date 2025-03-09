@@ -1,6 +1,6 @@
 package pl.zajavka.CodeBridge.business;
 
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class EmployerService {
 
     private final EmployerDAO employerDAO;
     private final CandidateDAO candidateDAO;
-
+@Autowired
     public EmployerService(EmployerDAO employerDAO, CandidateDAO candidateDAO) {
         this.employerDAO = employerDAO;
         this.candidateDAO = candidateDAO;

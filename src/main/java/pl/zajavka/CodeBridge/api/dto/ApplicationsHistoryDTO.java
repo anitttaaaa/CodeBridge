@@ -4,42 +4,19 @@ import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
 
 public class ApplicationsHistoryDTO {
 
-    private Integer applicationHistoryId;
+    private final Integer applicationHistoryId;
+    private final JobOfferDTO jobOffer;
+    private final EmployerDTO employer;
+    private final CandidateDTO candidate;
+    private final ApplicationStatus applicationStatus;
 
-    private JobOfferDTO jobOffer;
-    private EmployerDTO employer;
-    private CandidateDTO candidate;
-    private ApplicationStatus applicationStatus;
-
-    public ApplicationsHistoryDTO(Integer applicationHistoryId, JobOfferDTO jobOffer, EmployerDTO employer, CandidateDTO candidate, ApplicationStatus applicationStatus) {
-        this.applicationHistoryId = applicationHistoryId;
-        this.jobOffer = jobOffer;
-        this.employer = employer;
-        this.candidate = candidate;
-        this.applicationStatus = applicationStatus;
-    }
-
-    public ApplicationsHistoryDTO() {
-    }
-
-    public void setApplicationHistoryId(Integer applicationHistoryId) {
-        this.applicationHistoryId = applicationHistoryId;
-    }
-
-    public void setJobOffer(JobOfferDTO jobOffer) {
-        this.jobOffer = jobOffer;
-    }
-
-    public void setEmployer(EmployerDTO employer) {
-        this.employer = employer;
-    }
-
-    public void setCandidate(CandidateDTO candidate) {
-        this.candidate = candidate;
-    }
-
-    public void setApplicationStatus(ApplicationStatus applicationStatus) {
-        this.applicationStatus = applicationStatus;
+    // Private constructor to enforce use of the Builder
+    private ApplicationsHistoryDTO(Builder builder) {
+        this.applicationHistoryId = builder.applicationHistoryId;
+        this.jobOffer = builder.jobOffer;
+        this.employer = builder.employer;
+        this.candidate = builder.candidate;
+        this.applicationStatus = builder.applicationStatus;
     }
 
     public Integer getApplicationHistoryId() {
@@ -60,5 +37,45 @@ public class ApplicationsHistoryDTO {
 
     public ApplicationStatus getApplicationStatus() {
         return applicationStatus;
+    }
+
+    // Builder class
+    public static class Builder {
+        private Integer applicationHistoryId;
+        private JobOfferDTO jobOffer;
+        private EmployerDTO employer;
+        private CandidateDTO candidate;
+        private ApplicationStatus applicationStatus;
+
+        // Setter methods for each property
+        public Builder applicationHistoryId(Integer applicationHistoryId) {
+            this.applicationHistoryId = applicationHistoryId;
+            return this;
+        }
+
+        public Builder jobOffer(JobOfferDTO jobOffer) {
+            this.jobOffer = jobOffer;
+            return this;
+        }
+
+        public Builder employer(EmployerDTO employer) {
+            this.employer = employer;
+            return this;
+        }
+
+        public Builder candidate(CandidateDTO candidate) {
+            this.candidate = candidate;
+            return this;
+        }
+
+        public Builder applicationStatus(ApplicationStatus applicationStatus) {
+            this.applicationStatus = applicationStatus;
+            return this;
+        }
+
+        // Build method to return the final ApplicationsHistoryDTO object
+        public ApplicationsHistoryDTO build() {
+            return new ApplicationsHistoryDTO(this);
+        }
     }
 }

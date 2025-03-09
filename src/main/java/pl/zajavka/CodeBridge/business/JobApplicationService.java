@@ -1,7 +1,7 @@
 package pl.zajavka.CodeBridge.business;
 
 import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +31,7 @@ public class JobApplicationService {
     private final JobApplicationMapper jobApplicationMapper;
     private final ApplicationsHistoryMapper applicationsHistoryMapper;
     private final EmployerService employerService;
-
+@Autowired
     public JobApplicationService(CandidateService candidateService,
                                  JobApplicationDAO jobApplicationDAO,
                                  ApplicationsHistoryDAO applicationsHistoryDAO,
@@ -57,14 +57,14 @@ public class JobApplicationService {
         JobApplication jobApplication = jobApplicationDAO.findApplicationById(applicationId)
                 .orElseThrow(() -> new EntityNotFoundException("Job application not found for id: " + applicationId));
 
-        // Utworzenie nowego obiektu JobApplication z nowym statusem REJECTED
-        JobApplication updatedJobApplication = new JobApplication(
-                jobApplication.getApplicationId(),  // ID aplikacji (zachowane)
-                jobApplication.getJobOffer(),        // Oferta pracy
-                jobApplication.getEmployer(),        // Pracodawca
-                jobApplication.getCandidate(),       // Kandydat
-                ApplicationStatus.REJECTED           // Nowy status
-        );
+        // Utworzenie nowego obiektu JobApplication z nowym statusem REJECTED przy użyciu buildera
+        JobApplication updatedJobApplication = new JobApplication.JobApplicationBuilder()
+                .applicationId(jobApplication.getApplicationId())
+                .jobOffer(jobApplication.getJobOffer())
+                .employer(jobApplication.getEmployer())
+                .candidate(jobApplication.getCandidate())
+                .jobApplicationStatus(ApplicationStatus.REJECTED)
+                .build();
 
         // Zapisanie zaktualizowanej aplikacji
         jobApplicationDAO.save(updatedJobApplication);
@@ -75,16 +75,18 @@ public class JobApplicationService {
         JobOffer jobOffer = updatedJobApplication.getJobOffer();
         ApplicationStatus applicationStatus = updatedJobApplication.getApplicationStatus();
 
-        // Utworzenie wpisu do historii
-        ApplicationsHistory jobApplicationRejected = new ApplicationsHistory(
-                applicationId,
-                jobOffer,
-                employer,
-                candidate,
-                applicationStatus
-        );
+        // Utworzenie wpisu do historii przy użyciu buildera
+        ApplicationsHistory jobApplicationRejected = new ApplicationsHistory.Builder()
+                .applicationHistoryId(applicationId)
+                .jobOffer(jobOffer)
+                .employer(employer)
+                .candidate(candidate)
+                .applicationStatus(applicationStatus)
+                .build();
 
-        // Zapisanie historii aplikacji
+
+
+    // Zapisanie historii aplikacji
         applicationsHistoryDAO.saveInHistory(jobApplicationRejected);
 
         // Usunięcie aplikacji z bazy (jeśli wymagane)
@@ -127,13 +129,14 @@ public class JobApplicationService {
         candidateDAO.updateCandidate(candidateUpdated);
 
         // Utworzenie nowego obiektu JobApplication z nowym statusem "ACCEPTED"
-        jobApplication = new JobApplication(
-                jobApplication.getApplicationId(), // ID aplikacji (zachowane)
-                jobApplication.getJobOffer(),       // Oferta pracy
-                jobApplication.getEmployer(),       // Pracodawca
-                jobApplication.getCandidate(),      // Kandydat
-                ApplicationStatus.ACCEPTED          // Nowy status aplikacji
-        );
+        jobApplication = new JobApplication.JobApplicationBuilder()
+                .applicationId(jobApplication.getApplicationId())  // ID aplikacji (zachowane)
+                .jobOffer(jobApplication.getJobOffer())             // Oferta pracy
+                .employer(jobApplication.getEmployer())             // Pracodawca
+                .candidate(jobApplication.getCandidate())           // Kandydat
+                .jobApplicationStatus(ApplicationStatus.ACCEPTED)     // Nowy status
+                .build();  // Build the JobApplication object
+
 
         // Zapisanie zaktualizowanej aplikacji
         jobApplicationDAO.save(jobApplication);
@@ -143,14 +146,14 @@ public class JobApplicationService {
         JobOffer jobOffer = jobApplication.getJobOffer();
         ApplicationStatus applicationStatus = jobApplication.getApplicationStatus();
 
-        // Utworzenie wpisu do historii aplikacji
-        ApplicationsHistory jobApplicationAccepted = new ApplicationsHistory(
-                applicationId,
-                jobOffer,
-                employer,
-                candidateUpdated,
-                applicationStatus
-        );
+        ApplicationsHistory jobApplicationAccepted = new ApplicationsHistory.Builder()
+                .applicationHistoryId(applicationId)
+                .jobOffer(jobOffer)
+                .employer(employer)
+                .candidate(candidateUpdated)
+                .applicationStatus(applicationStatus)
+                .build();
+
 
         // Zapisanie historii aplikacji
         applicationsHistoryDAO.saveInHistory(jobApplicationAccepted);
@@ -169,26 +172,36 @@ public class JobApplicationService {
 
         ApplicationStatus applicationStatus = ApplicationStatus.PENDING;
 
-        JobOffer jobOfferId1 = new JobOffer(jobOfferId);
-        Employer employerId1 = new Employer(employerId);
-        Candidate candidateId1 = new Candidate.Builder()
+        // Tworzenie JobOffer i Employer przez builder (lub konstruktor)
+        JobOffer jobOffer = new JobOffer.JobOfferBuilder()
+                .jobOfferId(jobOfferId)
+                .build();
+        Employer employer = new Employer.EmployerBuilder()
+                .employerId(employerId)
+                .build();
+
+        // Tworzenie kandydata za pomocą buildera
+        Candidate candidate = new Candidate.Builder()
                 .candidateId(candidateId)
                 .build();
 
-
-        // Tworzenie JobApplication za pomocą konstruktorów
-        JobApplication jobApplication = new JobApplication(jobOfferId1, employerId1, candidateId1, applicationStatus);
+        // Tworzenie JobApplication za pomocą wzorca builder
+        JobApplication jobApplication = new JobApplication.JobApplicationBuilder()
+                .jobOffer(jobOffer)               // Ustawienie oferty pracy
+                .employer(employer)               // Ustawienie pracodawcy
+                .candidate(candidate)             // Ustawienie kandydata
+                .jobApplicationStatus(applicationStatus)  // Status aplikacji
+                .build();  // Budowanie JobApplication
 
         // Zapisanie aplikacji do bazy danych
         jobApplicationDAO.createJobApplication(jobApplication);
-
     }
 
     private Integer getEmployerId(Integer jobOfferId) {
         JobOffer jobOffer = jobOfferService.findJobOffer(jobOfferId);
-
         return jobOffer.getEmployer().getEmployerId();
     }
+
 
     public List<JobApplicationDTO> getCandidateApplications(Authentication authentication) {
 

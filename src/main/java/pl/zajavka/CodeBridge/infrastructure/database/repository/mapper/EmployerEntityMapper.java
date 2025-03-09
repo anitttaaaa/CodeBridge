@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.EmployerEntity;
@@ -14,13 +13,14 @@ public interface EmployerEntityMapper {
         }
 
         // Ręczna konwersja pól
-        Employer employer = new Employer(
-                employerEntity.getEmployerId(),
-                employerEntity.getCompanyName(),
-                employerEntity.getEmail(),
-                employerEntity.getNip(),
-                employerEntity.getUserId()
-        );
+        Employer employer = new Employer.EmployerBuilder()
+                .employerId(employerEntity.getEmployerId())
+                .companyName(employerEntity.getCompanyName())
+                .email(employerEntity.getEmail())
+                .nip(employerEntity.getNip())
+                .userId(employerEntity.getUserId())
+                .build();
+
 
         // Możesz dodać inne pola, jeśli wymagają konwersji (np. jeśli są powiązane encje)
 

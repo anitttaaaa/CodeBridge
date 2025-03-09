@@ -1,5 +1,6 @@
 package pl.zajavka.CodeBridge.business;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class CandidateService {
 
     private final CandidateDAO candidateDAO;
     private final CandidateMapper candidateMapper;
-
+@Autowired
     public CandidateService(CandidateDAO candidateDAO, CandidateMapper candidateMapper) {
         this.candidateDAO = candidateDAO;
         this.candidateMapper = candidateMapper;

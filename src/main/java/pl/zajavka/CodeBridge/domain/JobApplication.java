@@ -1,23 +1,45 @@
 package pl.zajavka.CodeBridge.domain;
 
-import lombok.*;
 import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
 
 import java.util.Objects;
 
 public class JobApplication {
 
-    Integer applicationId;
-    JobOffer jobOffer;
-    Employer employer;
-    Candidate candidate;
-    ApplicationStatus applicationStatus;
+    private final Integer applicationId;
+    private final JobOffer jobOffer;
+    private final Employer employer;
+    private final Candidate candidate;
+    private final ApplicationStatus applicationStatus;
 
-    public JobApplication(JobOffer jobOfferId, Employer employerId, Candidate candidateId, ApplicationStatus applicationStatus) {
-        this.jobOffer = jobOfferId;
-        this.employer = employerId;
-        this.candidate = candidateId;
-        this.applicationStatus = applicationStatus;
+    // Prywatny konstruktor używany przez builder
+    private JobApplication(JobApplicationBuilder builder) {
+        this.applicationId = builder.applicationId;
+        this.jobOffer = builder.jobOffer;
+        this.employer = builder.employer;
+        this.candidate = builder.candidate;
+        this.applicationStatus = builder.applicationStatus;
+    }
+
+    // Gettery
+    public Integer getApplicationId() {
+        return applicationId;
+    }
+
+    public JobOffer getJobOffer() {
+        return jobOffer;
+    }
+
+    public Employer getEmployer() {
+        return employer;
+    }
+
+    public Candidate getCandidate() {
+        return candidate;
+    }
+
+    public ApplicationStatus getApplicationStatus() {
+        return applicationStatus;
     }
 
     @Override
@@ -44,35 +66,44 @@ public class JobApplication {
                 '}';
     }
 
-    public JobApplication() {
-    }
+    // Klasa Builder
+    public static class JobApplicationBuilder {
 
-    public JobApplication(Integer applicationId, JobOffer jobOffer, Employer employer,
-                          Candidate candidate, ApplicationStatus applicationStatus) {
-        this.applicationId = applicationId;
-        this.jobOffer = jobOffer;
-        this.employer = employer;
-        this.candidate = candidate;
-        this.applicationStatus = applicationStatus;
-    }
+        private Integer applicationId;
+        private JobOffer jobOffer;
+        private Employer employer;
+        private Candidate candidate;
+        private ApplicationStatus applicationStatus;
 
-    public Integer getApplicationId() {
-        return applicationId;
-    }
+        // Settery w Builderze
+        public JobApplicationBuilder applicationId(Integer applicationId) {
+            this.applicationId = applicationId;
+            return this;
+        }
 
-    public JobOffer getJobOffer() {
-        return jobOffer;
-    }
+        public JobApplicationBuilder jobOffer(JobOffer jobOffer) {
+            this.jobOffer = jobOffer;
+            return this;
+        }
 
-    public Employer getEmployer() {
-        return employer;
-    }
+        public JobApplicationBuilder employer(Employer employer) {
+            this.employer = employer;
+            return this;
+        }
 
-    public Candidate getCandidate() {
-        return candidate;
-    }
+        public JobApplicationBuilder candidate(Candidate candidate) {
+            this.candidate = candidate;
+            return this;
+        }
 
-    public ApplicationStatus getApplicationStatus() {
-        return applicationStatus;
+        public JobApplicationBuilder jobApplicationStatus(ApplicationStatus applicationStatus) {
+            this.applicationStatus = applicationStatus;
+            return this;
+        }
+
+        // Metoda build, która zwraca gotowy obiekt JobApplication
+        public JobApplication build() {
+            return new JobApplication(this);
+        }
     }
 }

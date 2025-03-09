@@ -26,21 +26,23 @@ public interface CandidateCourseEntityMapper {
     }
 
 
-    // Ręczne mapowanie z CandidateCourse -> CandidateCourseEntity
     default CandidateCourseEntity mapToEntity(CandidateCourse domain) {
         if (domain == null) {
             return null;
         }
-        return new CandidateCourseEntity(
-                domain.getCandidateCourseId(), // Przypisanie ID
-                domain.getInstitution(),
-                domain.getCourseTitle(),
-                domain.getDescription(),
-                domain.getTechnologies(),
-                domain.getFromDate(),
-                domain.getToDate(),
-                domain.getCandidateId() // ID kandydata
-        );
+
+        // Zastosowanie wzorca builder do mapowania
+        return new CandidateCourseEntity.Builder()
+                .candidateCourseId(domain.getCandidateCourseId())  // Przypisanie ID
+                .institution(domain.getInstitution())
+                .courseTitle(domain.getCourseTitle())
+                .description(domain.getDescription())
+                .technologies(domain.getTechnologies())
+                .fromDate(domain.getFromDate())
+                .toDate(domain.getToDate())
+                .candidateId(domain.getCandidateId()) // ID kandydata
+                .build();
     }
+
 
 }

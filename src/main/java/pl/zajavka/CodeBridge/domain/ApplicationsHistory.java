@@ -4,14 +4,21 @@ import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
 
 import java.util.Objects;
 
-
 public class ApplicationsHistory {
-    Integer applicationHistoryId;
-    JobOffer jobOffer;
-    Employer employer;
-    Candidate candidate;
-    ApplicationStatus applicationStatus;
+    private final Integer applicationHistoryId;
+    private final JobOffer jobOffer;
+    private final Employer employer;
+    private final Candidate candidate;
+    private final ApplicationStatus applicationStatus;
 
+    // Private constructor to enforce the use of the Builder
+    private ApplicationsHistory(Builder builder) {
+        this.applicationHistoryId = builder.applicationHistoryId;
+        this.jobOffer = builder.jobOffer;
+        this.employer = builder.employer;
+        this.candidate = builder.candidate;
+        this.applicationStatus = builder.applicationStatus;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -37,19 +44,7 @@ public class ApplicationsHistory {
                 '}';
     }
 
-    public ApplicationsHistory() {
-    }
-
-    public ApplicationsHistory(Integer applicationHistoryId, JobOffer jobOffer,
-                               Employer employer, Candidate candidate,
-                               ApplicationStatus applicationStatus) {
-        this.applicationHistoryId = applicationHistoryId;
-        this.jobOffer = jobOffer;
-        this.employer = employer;
-        this.candidate = candidate;
-        this.applicationStatus = applicationStatus;
-    }
-
+    // Getters
     public Integer getApplicationHistoryId() {
         return applicationHistoryId;
     }
@@ -68,5 +63,45 @@ public class ApplicationsHistory {
 
     public ApplicationStatus getApplicationStatus() {
         return applicationStatus;
+    }
+
+    // Builder class
+    public static class Builder {
+        private Integer applicationHistoryId;
+        private JobOffer jobOffer;
+        private Employer employer;
+        private Candidate candidate;
+        private ApplicationStatus applicationStatus;
+
+        // Setter methods for each property
+        public Builder applicationHistoryId(Integer applicationHistoryId) {
+            this.applicationHistoryId = applicationHistoryId;
+            return this;
+        }
+
+        public Builder jobOffer(JobOffer jobOffer) {
+            this.jobOffer = jobOffer;
+            return this;
+        }
+
+        public Builder employer(Employer employer) {
+            this.employer = employer;
+            return this;
+        }
+
+        public Builder candidate(Candidate candidate) {
+            this.candidate = candidate;
+            return this;
+        }
+
+        public Builder applicationStatus(ApplicationStatus applicationStatus) {
+            this.applicationStatus = applicationStatus;
+            return this;
+        }
+
+        // Build method to return the final ApplicationsHistory object
+        public ApplicationsHistory build() {
+            return new ApplicationsHistory(this);
+        }
     }
 }

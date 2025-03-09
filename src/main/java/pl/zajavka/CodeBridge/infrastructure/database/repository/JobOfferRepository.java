@@ -1,10 +1,8 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository;
 
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.CodeBridge.business.dao.JobOfferDAO;
 import pl.zajavka.CodeBridge.domain.JobOffer;
-import pl.zajavka.CodeBridge.infrastructure.database.entity.JobApplicationEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.JobOfferJpaRepository;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.JobOfferEntityMapper;

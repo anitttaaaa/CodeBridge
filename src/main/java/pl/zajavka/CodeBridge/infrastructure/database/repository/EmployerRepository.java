@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository;
 
 
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.CodeBridge.business.dao.EmployerDAO;
 import pl.zajavka.CodeBridge.domain.Employer;

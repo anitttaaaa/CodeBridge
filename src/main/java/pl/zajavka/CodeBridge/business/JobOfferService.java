@@ -1,7 +1,7 @@
 package pl.zajavka.CodeBridge.business;
 
 
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +26,7 @@ public class JobOfferService {
     private final EmployerService employerService;
     private final JobOfferDAO jobOfferDAO;
     private final JobOfferMapper jobOfferMapper;
-
+@Autowired
     public JobOfferService(CodeBridgeUserDetailsService codeBridgeUserDetailsService,
                            EmployerService employerService,
                            JobOfferDAO jobOfferDAO,
@@ -39,45 +39,53 @@ public class JobOfferService {
 
     @Transactional
     public void createJobOfferData(JobOffer request, Authentication authentication) {
-
         String username = authentication.getName();
         Integer userId = codeBridgeUserDetailsService.getUserId(username);
         Employer employer = employerService.findEmployer(userId);
 
-        JobOffer jobOffer = buildJobOffer(request);
+        // Create the JobOffer using the Builder pattern
+        JobOffer jobOffer = new JobOffer.JobOfferBuilder()
+                .jobOfferTitle(request.getJobOfferTitle())  // Example fields, update with actual ones
+                .description(request.getDescription()) // Example fields, update with actual ones
+                .salary(request.getSalary()) // Example fields, update with actual ones
+                .build();
 
-        Set<JobOffer> jobOffers = new HashSet<>(employer.getJobOffers()); // Tworzymy nowy set
+        // Create a new Set of job offers and add the new job offer to it
+        Set<JobOffer> jobOffers = new HashSet<>(employer.getJobOffers());
         jobOffers.add(jobOffer);
 
-        Employer employerAndJobOffer = new Employer(
-                employer.getEmployerId(),
-                employer.getCompanyName(),
-                employer.getEmail(),
-                employer.getNip(),
-                employer.getUserId(),
-                jobOffers, // Nowy zestaw ofert
-                employer.getJobApplications()
-        );
+        // Create the Employer object using the Builder pattern
+        Employer employerAndJobOffer = new Employer.EmployerBuilder()
+                .employerId(employer.getEmployerId())
+                .companyName(employer.getCompanyName())
+                .email(employer.getEmail())
+                .nip(employer.getNip())
+                .userId(employer.getUserId())
+                .jobOffers(jobOffers)
+                .jobApplications(employer.getJobApplications())
+                .build();
 
+        // Save the updated Employer object with the new job offer
         employerService.createJobOffer(employerAndJobOffer);
     }
 
 
     private JobOffer buildJobOffer(JobOffer request) {
-        return new JobOffer(
-                null, // jobOfferId, jeśli to pole ma być null w przypadku tworzenia nowego obiektu
-                request.getJobOfferTitle(),
-                request.getDescription(),
-                request.getTechSpecialization(),
-                request.getEmployer(), // Jeżeli Employer również jest częścią tego obiektu, można go przekazać
-                request.getWorkType(),
-                request.getCity(),
-                request.getExperience(),
-                request.getSalary(),
-                request.getMustHaveSkills(),
-                request.getNiceToHaveSkills()
-        );
+        return new JobOffer.JobOfferBuilder()
+                .jobOfferId(null)  // Job offer ID will be null since it’s a new job offer
+                .jobOfferTitle(request.getJobOfferTitle())
+                .description(request.getDescription())
+                .techSpecialization(request.getTechSpecialization())
+                .employer(request.getEmployer())  // Pass Employer if part of the object
+                .workType(request.getWorkType())
+                .city(request.getCity())
+                .experience(request.getExperience())
+                .salary(request.getSalary())
+                .mustHaveSkills(request.getMustHaveSkills())
+                .niceToHaveSkills(request.getNiceToHaveSkills())
+                .build();  // Return the built JobOffer object
     }
+
 
     @Transactional
     public List<JobOffer> getAllJobOffers() {

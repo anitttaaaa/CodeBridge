@@ -1,5 +1,6 @@
 package pl.zajavka.CodeBridge.business;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,7 @@ public class CandidateEducationService {
 
     private final CandidateService candidateService;
     private final CandidateEducationDAO candidateEducationDAO;
-
+@Autowired
     public CandidateEducationService(CandidateService candidateService,
                                      CandidateEducationDAO candidateEducationDAO) {
         this.candidateService = candidateService;

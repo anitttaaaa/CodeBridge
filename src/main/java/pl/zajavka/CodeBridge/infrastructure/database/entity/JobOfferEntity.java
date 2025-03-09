@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.infrastructure.database.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
 import pl.zajavka.CodeBridge.api.enums.*;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package pl.zajavka.CodeBridge.business;
 
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +15,7 @@ public class CandidateProjectService {
 
     private final CandidateService candidateService;
     private final CandidateProjectDAO candidateProjectDAO;
-
+@Autowired
     public CandidateProjectService(CandidateService candidateService,
                                    CandidateProjectDAO candidateProjectDAO) {
         this.candidateService = candidateService;

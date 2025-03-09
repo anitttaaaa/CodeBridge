@@ -1,9 +1,6 @@
 package pl.zajavka.CodeBridge.infrastructure.database.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-import pl.zajavka.CodeBridge.domain.JobApplication;
-import pl.zajavka.CodeBridge.domain.JobOffer;
 
 import java.util.Objects;
 import java.util.Set;

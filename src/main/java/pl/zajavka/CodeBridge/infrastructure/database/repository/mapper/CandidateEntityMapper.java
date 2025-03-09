@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import pl.zajavka.CodeBridge.domain.*;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.*;
@@ -110,16 +109,16 @@ public interface CandidateEntityMapper {
         }
         List<CandidateCourseEntity> entities = new ArrayList<>();
         for (CandidateCourse course : courses) {
-            entities.add(new CandidateCourseEntity(
-                    course.getCandidateCourseId(),
-                    course.getInstitution(),
-                    course.getCourseTitle(),
-                    course.getDescription(),
-                    course.getTechnologies(),
-                    course.getFromDate(),
-                    course.getToDate(),
-                    course.getCandidateId()
-            ));
+            entities.add(new CandidateCourseEntity.Builder()
+                    .candidateCourseId(course.getCandidateCourseId())
+                    .institution(course.getInstitution())
+                    .courseTitle(course.getCourseTitle())
+                    .description(course.getDescription())
+                    .technologies(course.getTechnologies())
+                    .fromDate(course.getFromDate())
+                    .toDate(course.getToDate())
+                    .candidateId(course.getCandidateId())
+                    .build());
         }
         return entities;
     }

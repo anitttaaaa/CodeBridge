@@ -14,52 +14,55 @@ import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
 public interface ApplicationsHistoryEntityMapper {
 
     default ApplicationsHistory mapToDomain(ApplicationsHistoryEntity entity) {
-        // Mapowanie aplikacji do obiektu domenowego
-        return new ApplicationsHistory(
-                entity.getApplicationHistoryId(),
-                mapJobOffer(entity.getJobOffer()),
-                mapEmployer(entity.getEmployer()),
-                mapCandidate(entity.getCandidate()),
-                entity.getApplicationStatus()
-        );
+        // Mapowanie aplikacji do obiektu domenowego using Builder
+        return new ApplicationsHistory.Builder()
+                .applicationHistoryId(entity.getApplicationHistoryId())
+                .jobOffer(mapJobOffer(entity.getJobOffer()))
+                .employer(mapEmployer(entity.getEmployer()))
+                .candidate(mapCandidate(entity.getCandidate()))
+                .applicationStatus(entity.getApplicationStatus())
+                .build();
     }
+
 
     default JobOffer mapJobOffer(JobOfferEntity jobOfferEntity) {
-        // Konwersja JobOfferEntity na JobOffer
+        // Mapowanie JobOfferEntity do JobOffer przy użyciu wzorca Builder
         Employer employer = jobOfferEntity.getEmployer() != null
-                ? new Employer(
-                jobOfferEntity.getEmployer().getEmployerId(),
-                jobOfferEntity.getEmployer().getCompanyName(),
-                jobOfferEntity.getEmployer().getEmail(),
-                jobOfferEntity.getEmployer().getNip(),
-                jobOfferEntity.getEmployer().getUserId()
-        )
+                ? new Employer.EmployerBuilder()
+                .employerId(jobOfferEntity.getEmployer().getEmployerId())
+                .companyName(jobOfferEntity.getEmployer().getCompanyName())
+                .email(jobOfferEntity.getEmployer().getEmail())
+                .nip(jobOfferEntity.getEmployer().getNip())
+                .userId(jobOfferEntity.getEmployer().getUserId())
+                .build()
                 : null;
 
-        return new JobOffer(
-                jobOfferEntity.getJobOfferId(),
-                jobOfferEntity.getJobOfferTitle(),
-                jobOfferEntity.getDescription(),
-                jobOfferEntity.getTechSpecialization() != null ? jobOfferEntity.getTechSpecialization().name() : null,
-                employer,
-                jobOfferEntity.getWorkType() != null ? jobOfferEntity.getWorkType().name() : null,
-                jobOfferEntity.getCity() != null ? jobOfferEntity.getCity().name() : null,
-                jobOfferEntity.getExperience() != null ? jobOfferEntity.getExperience().name() : null,
-                jobOfferEntity.getSalary() != null ? jobOfferEntity.getSalary().name() : null,
-                jobOfferEntity.getMustHaveSkills(),
-                jobOfferEntity.getNiceToHaveSkills()
-        );
+        return new JobOffer.JobOfferBuilder()
+                .jobOfferId(jobOfferEntity.getJobOfferId())
+                .jobOfferTitle(jobOfferEntity.getJobOfferTitle())
+                .description(jobOfferEntity.getDescription())
+                .techSpecialization(jobOfferEntity.getTechSpecialization() != null ? jobOfferEntity.getTechSpecialization().name() : null)
+                .employer(employer)
+                .workType(jobOfferEntity.getWorkType() != null ? jobOfferEntity.getWorkType().name() : null)
+                .city(jobOfferEntity.getCity() != null ? jobOfferEntity.getCity().name() : null)
+                .experience(jobOfferEntity.getExperience() != null ? jobOfferEntity.getExperience().name() : null)
+                .salary(jobOfferEntity.getSalary() != null ? jobOfferEntity.getSalary().name() : null)
+                .mustHaveSkills(jobOfferEntity.getMustHaveSkills())
+                .niceToHaveSkills(jobOfferEntity.getNiceToHaveSkills())
+                .build();
     }
 
+
     default Employer mapEmployer(EmployerEntity employerEntity) {
-        return new Employer(
-                employerEntity.getEmployerId(),
-                employerEntity.getCompanyName(),
-                employerEntity.getEmail(),
-                employerEntity.getNip(),
-                employerEntity.getUserId()
-        );
+        return new Employer.EmployerBuilder()
+                .employerId(employerEntity.getEmployerId())
+                .companyName(employerEntity.getCompanyName())
+                .email(employerEntity.getEmail())
+                .nip(employerEntity.getNip())
+                .userId(employerEntity.getUserId())
+                .build();
     }
+
 
     default Candidate mapCandidate(CandidateEntity candidateEntity) {
         return new Candidate.Builder()

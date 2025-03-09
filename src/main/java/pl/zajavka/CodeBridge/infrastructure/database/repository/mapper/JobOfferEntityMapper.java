@@ -1,11 +1,10 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import pl.zajavka.CodeBridge.api.enums.*;
-import pl.zajavka.CodeBridge.domain.JobOffer;
 import pl.zajavka.CodeBridge.domain.Employer;
+import pl.zajavka.CodeBridge.domain.JobOffer;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.EmployerEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
 
@@ -16,7 +15,11 @@ public interface JobOfferEntityMapper {
         if (companyName == null || employerId == null) {
             return null;
         }
-        return new Employer(employerId, companyName);
+        return new Employer.EmployerBuilder()
+                .employerId(employerId)
+                .companyName(companyName)
+                .build();
+
     }
     default JobOffer mapToDomain(JobOfferEntity jobOfferEntity) {
         // Mapowanie prostych pól
@@ -38,24 +41,31 @@ public interface JobOfferEntityMapper {
 
         // Mapowanie obiektu Employer
         Employer employer = jobOfferEntity.getEmployer() != null
-                ? new Employer(jobOfferEntity.getEmployer().getEmployerId(),
-                jobOfferEntity.getEmployer().getCompanyName(), null, null, null, null, null) // Dostosuj do potrzebnych danych
+                ? new Employer.EmployerBuilder()
+                .employerId(jobOfferEntity.getEmployer().getEmployerId())
+                .companyName(jobOfferEntity.getEmployer().getCompanyName())
+                .email(null) // Adjust as needed
+                .nip(null)   // Adjust as needed
+                .userId(null) // Adjust as needed
+                .build()
                 : null;
 
-        // Tworzenie JobOffer
-        return new JobOffer(
-                jobOfferEntity.getJobOfferId(),
-                jobOfferEntity.getJobOfferTitle(),
-                jobOfferEntity.getDescription(),
-                techSpecialization,
-                employer,
-                workType,
-                city,
-                experience,
-                salary,
-                jobOfferEntity.getMustHaveSkills(),
-                jobOfferEntity.getNiceToHaveSkills()
-        );
+
+
+        return new JobOffer.JobOfferBuilder()
+                .jobOfferId(jobOfferEntity.getJobOfferId())
+                .jobOfferTitle(jobOfferEntity.getJobOfferTitle())
+                .description(jobOfferEntity.getDescription())
+                .techSpecialization(techSpecialization)
+                .employer(employer)
+                .workType(workType)
+                .city(city)
+                .experience(experience)
+                .salary(salary)
+                .mustHaveSkills(jobOfferEntity.getMustHaveSkills())
+                .niceToHaveSkills(jobOfferEntity.getNiceToHaveSkills())
+                .build();
+
     }
 
     default JobOfferEntity mapToEntity(JobOffer jobOffer) {
