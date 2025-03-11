@@ -123,55 +123,58 @@ public class CandidateMapperImpl implements CandidateMapper {
                         .collect(Collectors.toList());
     }
 
-    // Metody mapujące pojedyncze obiekty
     private CandidateExperienceDTO mapCandidateExperienceToDTO(CandidateExperience experience) {
-        return new CandidateExperienceDTO.Builder()
-                .candidateExperienceId(experience.getCandidateExperienceId())
-                .companyName(experience.getCompanyName())
-                .candidatePosition(experience.getCandidatePosition())
-                .description(experience.getDescription())
-                .fromDate(experience.getFromDate())
-                .toDate(experience.getToDate())
-                .candidateId(experience.getCandidateId())
-                .build();
+        if (experience == null) {
+            return null;
+        }
+
+        return new CandidateExperienceDTO(
+                experience.getCandidateExperienceId(),
+                experience.getCompanyName(),
+                experience.getCandidatePosition(),
+                experience.getDescription(),
+                experience.getFromDate(),
+                experience.getToDate(),
+                experience.getCandidateId()
+        );
     }
 
     private CandidateProjectDTO mapCandidateProjectToDTO(CandidateProject project) {
-        return new CandidateProjectDTO.Builder()
-                .candidateProjectId(project.getCandidateProjectId())
-                .projectTitle(project.getProjectTitle())
-                .technologies(project.getTechnologies())
-                .description(project.getDescription())
-                .fromDate(project.getFromDate())
-                .toDate(project.getToDate())
-                .projectLink(project.getProjectLink())
-                .candidateId(project.getCandidateId())
-                .build();
+        return new CandidateProjectDTO(
+                project.getCandidateProjectId(),
+                project.getProjectTitle(),
+                project.getTechnologies(),
+                project.getDescription(),
+                project.getFromDate(),
+                project.getToDate(),
+                project.getProjectLink(),
+                project.getCandidateId()
+                );
     }
 
     private CandidateEducationDTO mapCandidateEducationToDTO(CandidateEducation education) {
-        return new CandidateEducationDTO.Builder()
-                .candidateEducationId(education.getCandidateEducationId())
-                .institution(education.getInstitution())
-                .degree(education.getDegree())
-                .fieldOfStudy(education.getFieldOfStudy())
-                .fromDate(education.getFromDate())
-                .toDate(education.getToDate())
-                .candidateId(education.getCandidateId())
-                .build();
+        return new CandidateEducationDTO(
+                education.getCandidateEducationId(),
+                education.getInstitution(),
+                education.getDegree(),
+                education.getFieldOfStudy(),
+                education.getFromDate(),
+                education.getToDate(),
+                education.getCandidateId()
+        );
     }
 
     private CandidateCourseDTO mapCandidateCourseToDTO(CandidateCourse course) {
-        return new CandidateCourseDTO.Builder()
-                .candidateCourseId(course.getCandidateCourseId())
-                .institution(course.getInstitution())
-                .courseTitle(course.getCourseTitle())
-                .description(course.getDescription())
-                .technologies(course.getTechnologies())
-                .fromDate(course.getFromDate())
-                .toDate(course.getToDate())
-                .candidateId(course.getCandidateId())
-                .build();
+        return new CandidateCourseDTO(
+                course.getCandidateCourseId(),
+                course.getInstitution(),
+                course.getCourseTitle(),
+                course.getDescription(),
+                course.getTechnologies(),
+                course.getFromDate(),
+                course.getToDate(),
+                course.getCandidateId()
+                );
     }
 
     private CandidateExperience mapToCandidateExperience(CandidateExperienceDTO experienceDTO) {

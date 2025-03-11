@@ -33,6 +33,8 @@ public class CandidateExperience {
         private LocalDate toDate;
         private Integer candidateId;
 
+
+
         public Builder candidateExperienceId(Integer candidateExperienceId) {
             this.candidateExperienceId = candidateExperienceId;
             return this;
@@ -69,6 +71,7 @@ public class CandidateExperience {
         }
 
         public CandidateExperience build() {
+
             return new CandidateExperience(this);
         }
     }

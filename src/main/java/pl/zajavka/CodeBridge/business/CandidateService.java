@@ -18,7 +18,7 @@ public class CandidateService {
 
     private final CandidateDAO candidateDAO;
     private final CandidateMapper candidateMapper;
-@Autowired
+    @Autowired
     public CandidateService(CandidateDAO candidateDAO, CandidateMapper candidateMapper) {
         this.candidateDAO = candidateDAO;
         this.candidateMapper = candidateMapper;

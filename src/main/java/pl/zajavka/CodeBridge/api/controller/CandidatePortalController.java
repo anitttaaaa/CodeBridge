@@ -21,8 +21,8 @@ import java.util.Objects;
 
 @Controller
 public class CandidatePortalController {
-
     private static final String SHOW_CANDIDATE_PORTAL = "/candidate-portal";
+
     private static final String PROFILE_PHOTO_DISPLAY = "/candidate-portal/profilePhoto/{email}";
 
     private static final String ADD_CANDIDATE_EXPERIENCE = "/candidate-portal/add-candidate-experience";
@@ -47,8 +47,8 @@ public class CandidatePortalController {
     private static final String DELETE_CANDIDATE_EDUCATION = "/candidate-portal/delete-education";
     private static final String DELETE_CANDIDATE_COURSE = "/candidate-portal/delete-course";
 
-
     private final CandidateService candidateService;
+
     private final CandidateExperienceService candidateExperienceService;
     private final CandidateProjectService candidateProjectService;
     private final CandidateCourseService candidateCourseService;
@@ -58,6 +58,50 @@ public class CandidatePortalController {
     private final CandidateCourseMapper candidateCourseMapper;
     private final CandidateEducationMapper candidateEducationMapper;
     private final CandidateMapper candidateMapper;
+
+    @PostMapping(ADD_CANDIDATE_EXPERIENCE)
+    public String addExperience(Authentication authentication,
+                                @ModelAttribute("candidateExperienceDTO") CandidateExperienceDTO candidateExperienceDTO) {
+
+        CandidateExperience candidateExperience = candidateExperienceMapper.mapToDomain(candidateExperienceDTO);
+        candidateExperienceService.createExperienceData(candidateExperience, authentication);
+
+        return "redirect:/candidate-portal";
+    }
+
+    @PostMapping(UPDATE_CANDIDATE_EXPERIENCE)
+    public String updateCandidateExperience(
+            @ModelAttribute CandidateExperienceDTO candidateExperienceDTO,
+            Authentication authentication) throws AccessDeniedException {
+
+        System.out.println("DEBUG: Przychodzące DTO -> " + candidateExperienceDTO);
+
+        if (candidateExperienceDTO == null) {
+            throw new IllegalArgumentException("❌ CandidateExperienceDTO jest NULL!");
+        }
+
+        CandidateExperience candidateExperience = candidateExperienceMapper.mapToDomain(candidateExperienceDTO);
+
+        if (candidateExperience == null) {
+            throw new IllegalStateException("❌ Mapping do domeny zwrócił NULL!");
+        }
+
+        candidateExperienceService.updateCandidateExperience(candidateExperience, authentication);
+
+        return "redirect:/candidate-portal";
+
+    }
+
+
+    @PostMapping(DELETE_CANDIDATE_EXPERIENCE)
+    public String deleteCandidateExperience(
+            @RequestParam("candidateExperienceId") Integer candidateExperienceId
+    ) {
+
+        candidateExperienceService.deleteCandidateExperienceById(candidateExperienceId);
+
+        return "redirect:/candidate-portal";
+    }
 
     public CandidatePortalController(CandidateService candidateService,
                                      CandidateExperienceService candidateExperienceService,
@@ -130,6 +174,9 @@ public class CandidatePortalController {
         }
 
         candidate = new Candidate.Builder()
+                .name(candidate.getName())
+                .surname(candidate.getSurname())
+                .email(candidate.getEmail())
                 .phone(candidate.getPhone())
                 .status(candidate.getStatus())
                 .linkedIn(candidate.getLinkedIn())
@@ -165,6 +212,9 @@ public class CandidatePortalController {
         }
 
         candidate = new Candidate.Builder()
+                .name(candidate.getName())
+                .surname(candidate.getSurname())
+                .email(candidate.getEmail())
                 .phone(candidate.getPhone())
                 .status(status)  // Nowy status
                 .linkedIn(candidate.getLinkedIn())
@@ -213,6 +263,9 @@ public class CandidatePortalController {
             byte[] profilePhotoData = profilePhoto.getBytes();
 
             candidate = new Candidate.Builder()
+                    .name(candidate.getName())
+                    .surname(candidate.getSurname())
+                    .email(candidate.getEmail())
                     .phone(candidate.getPhone())
                     .status(candidate.getStatus())
                     .linkedIn(candidate.getLinkedIn())
@@ -249,6 +302,9 @@ public class CandidatePortalController {
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
 
         candidate = new Candidate.Builder()
+                .name(candidate.getName())
+                .surname(candidate.getSurname())
+                .email(candidate.getEmail())
                 .phone(phone)
                 .status(candidate.getStatus())
                 .linkedIn(linkedIn)
@@ -272,38 +328,6 @@ public class CandidatePortalController {
     }
 
 
-
-    @PostMapping(ADD_CANDIDATE_EXPERIENCE)
-    public String addExperience(Authentication authentication,
-                                @ModelAttribute("candidateExperienceDTO") CandidateExperienceDTO candidateExperienceDTO) {
-
-        CandidateExperience candidateExperience = candidateExperienceMapper.mapToDomain(candidateExperienceDTO);
-        candidateExperienceService.createExperienceData(candidateExperience, authentication);
-
-        return "redirect:/candidate-portal";
-    }
-
-    @PostMapping(UPDATE_CANDIDATE_EXPERIENCE)
-    public String updateCandidateExperience(
-            @ModelAttribute CandidateExperienceDTO candidateExperienceDTO,
-            Authentication authentication) throws AccessDeniedException {
-
-        CandidateExperience candidateExperience = candidateExperienceMapper.mapToDomain(candidateExperienceDTO);
-        candidateExperienceService.updateCandidateExperience(candidateExperience, authentication);
-
-        return "redirect:/candidate-portal";
-    }
-
-
-    @PostMapping(DELETE_CANDIDATE_EXPERIENCE)
-    public String deleteCandidateExperience(
-            @RequestParam("candidateExperienceId") Integer candidateExperienceId
-    ) {
-
-        candidateExperienceService.deleteCandidateExperienceById(candidateExperienceId);
-
-        return "redirect:/candidate-portal";
-    }
 
     @PostMapping(ADD_CANDIDATE_PROJECT)
     public String addCandidateProject(
@@ -413,6 +437,9 @@ public class CandidatePortalController {
         }
 
         candidate = new Candidate.Builder()
+                .name(candidate.getName())
+                .surname(candidate.getSurname())
+                .email(candidate.getEmail())
                 .phone(candidate.getPhone())
                 .status(candidate.getStatus())
                 .linkedIn(candidate.getLinkedIn())
@@ -448,6 +475,9 @@ public class CandidatePortalController {
         }
 
         candidate = new Candidate.Builder()
+                .name(candidate.getName())
+                .surname(candidate.getSurname())
+                .email(candidate.getEmail())
                 .phone(candidate.getPhone())
                 .status(candidate.getStatus())
                 .linkedIn(candidate.getLinkedIn())
@@ -483,6 +513,9 @@ public class CandidatePortalController {
         }
 
         candidate = new Candidate.Builder()
+                .name(candidate.getName())
+                .surname(candidate.getSurname())
+                .email(candidate.getEmail())
                 .phone(candidate.getPhone())
                 .status(candidate.getStatus())
                 .linkedIn(candidate.getLinkedIn())
@@ -514,6 +547,9 @@ public class CandidatePortalController {
         if (!Objects.isNull(candidate.getProfilePhoto())) {
 
             candidate = new Candidate.Builder()
+                    .name(candidate.getName())
+                    .surname(candidate.getSurname())
+                    .email(candidate.getEmail())
                     .phone(candidate.getPhone())
                     .status(candidate.getStatus())
                     .linkedIn(candidate.getLinkedIn())

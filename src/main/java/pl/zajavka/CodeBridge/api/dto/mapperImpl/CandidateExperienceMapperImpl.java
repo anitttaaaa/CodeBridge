@@ -14,22 +14,24 @@ public class CandidateExperienceMapperImpl implements CandidateExperienceMapper 
             return null;
         }
 
-        return new CandidateExperienceDTO.Builder()
-                .candidateExperienceId(candidateExperience.getCandidateExperienceId())
-                .companyName(candidateExperience.getCompanyName())
-                .candidatePosition(candidateExperience.getCandidatePosition())
-                .description(candidateExperience.getDescription())
-                .fromDate(candidateExperience.getFromDate())
-                .toDate(candidateExperience.getToDate())
-                .candidateId(candidateExperience.getCandidateId())
-                .build();
+        return new CandidateExperienceDTO(
+                candidateExperience.getCandidateExperienceId(),
+                candidateExperience.getCompanyName(),
+                candidateExperience.getCandidatePosition(),
+                candidateExperience.getDescription(),
+                candidateExperience.getFromDate(),
+                candidateExperience.getToDate(),
+                candidateExperience.getCandidateId()
+        );
     }
 
     @Override
-    public CandidateExperience mapToDomain(CandidateExperienceDTO candidateExperienceDTO) {
-        if (candidateExperienceDTO == null) {
-            return null;
-        }
+    public CandidateExperience mapToDomain(CandidateExperienceDTO candidateExperienceDTO) { if (candidateExperienceDTO == null) {
+        System.out.println("DEBUG: candidateExperienceDTO jest NULL!");
+        return null;
+    }
+
+        System.out.println("DEBUG: candidateExperienceDTO -> " + candidateExperienceDTO);
 
         return new CandidateExperience.Builder()
                 .candidateExperienceId(candidateExperienceDTO.getCandidateExperienceId())

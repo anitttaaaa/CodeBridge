@@ -35,6 +35,15 @@ public class CandidateExperienceService {
 
 
     private CandidateExperience buildCandidateExperience(CandidateExperience candidateExperienceFromRequest, Integer candidateId) {
+        if (candidateExperienceFromRequest == null) {
+            throw new IllegalArgumentException("candidateExperienceFromRequest is NULL!");
+        }
+        if (candidateId == null) {
+            throw new IllegalArgumentException("❌ candidateId is NULL!");
+        }
+
+        System.out.println("✅ Tworzę CandidateExperience.Builder()");
+
         return new CandidateExperience.Builder()
                 .candidateExperienceId(candidateExperienceFromRequest.getCandidateExperienceId())  // Jeśli chcesz zachować istniejący ID
                 .companyName(candidateExperienceFromRequest.getCompanyName())

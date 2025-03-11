@@ -10,16 +10,16 @@ public class CandidateProjectMapperImpl implements CandidateProjectMapper {
 
     @Override
     public CandidateProjectDTO mapToDto(CandidateProject candidateProject) {
-        return new CandidateProjectDTO.Builder()
-                .candidateProjectId(candidateProject.getCandidateProjectId())
-                .projectTitle(candidateProject.getProjectTitle())
-                .technologies(candidateProject.getTechnologies())
-                .description(candidateProject.getDescription())
-                .fromDate(candidateProject.getFromDate())
-                .toDate(candidateProject.getToDate())
-                .projectLink(candidateProject.getProjectLink())
-                .candidateId(candidateProject.getCandidateId())
-                .build();
+        return new CandidateProjectDTO(
+                candidateProject.getCandidateProjectId(),
+                candidateProject.getProjectTitle(),
+                candidateProject.getTechnologies(),
+                candidateProject.getDescription(),
+                candidateProject.getFromDate(),
+                candidateProject.getToDate(),
+                candidateProject.getProjectLink(),
+                candidateProject.getCandidateId()
+                );
     }
 
     @Override

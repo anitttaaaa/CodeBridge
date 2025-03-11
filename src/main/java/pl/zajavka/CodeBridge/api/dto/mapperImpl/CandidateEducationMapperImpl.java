@@ -14,15 +14,15 @@ public class CandidateEducationMapperImpl implements CandidateEducationMapper {
             return null;
         }
 
-        return new CandidateEducationDTO.Builder()
-                .candidateEducationId(candidateEducation.getCandidateEducationId())
-                .institution(candidateEducation.getInstitution())
-                .degree(candidateEducation.getDegree())
-                .fieldOfStudy(candidateEducation.getFieldOfStudy())
-                .fromDate(candidateEducation.getFromDate())
-                .toDate(candidateEducation.getToDate())
-                .candidateId(candidateEducation.getCandidateId())
-                .build();
+        return new CandidateEducationDTO(
+                candidateEducation.getCandidateEducationId(),
+                candidateEducation.getInstitution(),
+                candidateEducation.getDegree(),
+                candidateEducation.getFieldOfStudy(),
+                candidateEducation.getFromDate(),
+                candidateEducation.getToDate(),
+                candidateEducation.getCandidateId()
+        );
     }
 
     @Override
