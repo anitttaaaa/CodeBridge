@@ -1,5 +1,9 @@
 package pl.zajavka.CodeBridge.api.dto;
 
+import pl.zajavka.CodeBridge.api.enums.SalaryEnum;
+import pl.zajavka.CodeBridge.api.enums.SkillsEnum;
+import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
+
 import java.util.List;
 
 public class CandidateDTO {
@@ -12,12 +16,12 @@ public class CandidateDTO {
     private final String status;
     private final String linkedIn;
     private final String gitHub;
-    private final String techSpecialization;
+    private final TechSpecializationsEnum techSpecialization;
     private final String aboutMe;
     private final String hobby;
     private final Integer userId;
     private final byte[] profilePhoto;
-    private final List<String> candidateSkills;
+    private final List<SkillsEnum> candidateSkills;
     private final List<CandidateExperienceDTO> candidateExperiences;
     private final List<CandidateProjectDTO> candidateProjects;
     private final List<CandidateEducationDTO> candidateEducationStages;
@@ -53,12 +57,12 @@ public class CandidateDTO {
         private String status;
         private String linkedIn;
         private String gitHub;
-        private String techSpecialization;
+        private TechSpecializationsEnum techSpecialization;
         private String aboutMe;
         private String hobby;
         private Integer userId;
         private byte[] profilePhoto;
-        private List<String> candidateSkills;
+        private List<SkillsEnum> candidateSkills;
         private List<CandidateExperienceDTO> candidateExperiences;
         private List<CandidateProjectDTO> candidateProjects;
         private List<CandidateEducationDTO> candidateEducationStages;
@@ -104,7 +108,7 @@ public class CandidateDTO {
             return this;
         }
 
-        public Builder techSpecialization(String techSpecialization) {
+        public Builder techSpecialization(TechSpecializationsEnum techSpecialization) {
             this.techSpecialization = techSpecialization;
             return this;
         }
@@ -129,7 +133,7 @@ public class CandidateDTO {
             return this;
         }
 
-        public Builder candidateSkills(List<String> candidateSkills) {
+        public Builder candidateSkills(List<SkillsEnum> candidateSkills) {
             this.candidateSkills = candidateSkills;
             return this;
         }
@@ -163,6 +167,7 @@ public class CandidateDTO {
         return new Builder();
     }
 
+    // Gettery
     public Integer getCandidateId() { return candidateId; }
     public String getName() { return name; }
     public String getSurname() { return surname; }
@@ -171,12 +176,12 @@ public class CandidateDTO {
     public String getStatus() { return status; }
     public String getLinkedIn() { return linkedIn; }
     public String getGitHub() { return gitHub; }
-    public String getTechSpecialization() { return techSpecialization; }
+    public TechSpecializationsEnum getTechSpecialization() { return techSpecialization; }
     public String getAboutMe() { return aboutMe; }
     public String getHobby() { return hobby; }
     public Integer getUserId() { return userId; }
     public byte[] getProfilePhoto() { return profilePhoto; }
-    public List<String> getCandidateSkills() { return candidateSkills; }
+    public List<SkillsEnum> getCandidateSkills() { return candidateSkills; }
     public List<CandidateExperienceDTO> getCandidateExperiences() { return candidateExperiences; }
     public List<CandidateProjectDTO> getCandidateProjects() { return candidateProjects; }
     public List<CandidateEducationDTO> getCandidateEducationStages() { return candidateEducationStages; }

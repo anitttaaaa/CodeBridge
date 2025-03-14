@@ -374,21 +374,21 @@
                             <select name="selectedSkill" class="form-control mb-3">
                                 <option value="">Choose Skills</option>
                                 <option th:each="skill : ${T(pl.zajavka.CodeBridge.api.enums.SkillsEnum).values()}"
-                                        th:value="${skill.getSkill()}"
-                                        th:text="${skill.getSkill()}"></option>
+                                        th:value="${skill}"
+                                        th:text="${skill}"></option>
                             </select>
                             <div class="input-group mb-3"
                                  th:each="skill : ${T(pl.zajavka.CodeBridge.api.enums.SkillsEnum).values()}">
                                 <div class="input-group-text">
                                     <input class="form-check-input mt-0" type="checkbox"
                                            th:field="*{candidate.candidateSkills}"
-                                           th:value="${skill.getSkill()}"
-                                           id="candidate_skill_${skill.name()}"
-                                           th:checked="${#lists.contains(candidate.candidateSkills, skill.getSkill())}"/>
+                                           th:value="${skill}"
+                                           id="candidate_skill_${skill}"
+                                           th:checked="${#lists.contains(candidate.candidateSkills, skill)}"/>
                                 </div>
                                 <label class="form-control" aria-label="Text input with checkbox"
-                                       th:for="'candidate_skill_' + ${skill.name()}"
-                                       th:text="${skill.getSkill()}"></label>
+                                       th:for="'candidate_skill_' + ${skill}"
+                                       th:text="${skill}"></label>
                             </div>
                         </div>
                         <button type="submit" class="add-job-offer-button btn btn-primary">Save Changes</button>
@@ -451,8 +451,7 @@
                         <!-- Opis -->
                         <div class="mt-3">
                             <div class="experience-info">Description:</div>  <!-- Etykieta Description -->
-                            <div class="experience-info-value description"
-                                 th:value="${experience.description}"></div> <!-- Wartość description -->
+                            <div class="experience-info-value description" th:text="${experience.description}"></div> <!-- Wartość description -->
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 package pl.zajavka.CodeBridge.api.enums;
 
-public enum ApplicationStatus {
+public enum ApplicationStatusEnum {
     PENDING,
     ACCEPTED,
     REJECTED

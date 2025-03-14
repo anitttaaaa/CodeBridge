@@ -40,7 +40,7 @@ public class JobOfferEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "salary")
-    private SalaryRangeEnum salary;
+    private SalaryEnum salary;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employer_id")
@@ -51,11 +51,13 @@ public class JobOfferEntity {
 
     @ElementCollection
     @CollectionTable(name = "job_offer_must_have_skills", joinColumns = @JoinColumn(name = "job_offer_id"))
+    @Enumerated(EnumType.STRING)
     @Column(name = "must_have_skills")
     private List<String> mustHaveSkills;
 
     @ElementCollection
     @CollectionTable(name = "job_offer_nice_to_have_skills", joinColumns = @JoinColumn(name = "job_offer_id"))
+    @Enumerated(EnumType.STRING)
     @Column(name = "nice_to_have_skills")
     private List<String> niceToHaveSkills;
 
@@ -120,7 +122,7 @@ public class JobOfferEntity {
         private WorkTypesEnum workType;
         private CitiesEnum city;
         private ExperiencesEnum experience;
-        private SalaryRangeEnum salary;
+        private SalaryEnum salary;
         private EmployerEntity employer;
         private Set<JobApplicationEntity> jobApplications;
         private List<String> mustHaveSkills;
@@ -161,7 +163,7 @@ public class JobOfferEntity {
             return this;
         }
 
-        public Builder salary(SalaryRangeEnum salary) {
+        public Builder salary(SalaryEnum salary) {
             this.salary = salary;
             return this;
         }
@@ -219,7 +221,7 @@ public class JobOfferEntity {
         return experience;
     }
 
-    public SalaryRangeEnum getSalary() {
+    public SalaryEnum getSalary() {
         return salary;
     }
 

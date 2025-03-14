@@ -55,12 +55,23 @@ public class EmployerRepository implements EmployerDAO {
                             .jobOfferId(jobOfferEntity.getJobOfferId())
                             .jobOfferTitle(jobOfferEntity.getJobOfferTitle())
                             .description(jobOfferEntity.getDescription())
+                            .techSpecialization(jobOfferEntity.getTechSpecialization())
+                            .workType(jobOfferEntity.getWorkType())
+                            .city(jobOfferEntity.getCity())
+                            .experience(jobOfferEntity.getExperience())
+                            .salary(jobOfferEntity.getSalary())
+                            .mustHaveSkills(jobOfferEntity.getMustHaveSkills())
+                            .niceToHaveSkills(jobOfferEntity.getNiceToHaveSkills())
                             .employer(employerSaved) // przypisanie pracodawcy do oferty
                             .build();
 
                     // Zapisz ofertę pracy w repozytorium
+
                     jobOfferJpaRepository.saveAndFlush(jobOfferEntityWithEmployer);
+
+                    System.out.println(jobOfferEntityWithEmployer + " %%%%%%%%%%%%%%%%%%%%%%%%%%");
                 });
+
     }
 
 

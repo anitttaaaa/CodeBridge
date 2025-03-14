@@ -60,25 +60,22 @@
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                <label for="salarySelect" class="form-label">Salary</label>
-                                <select class="form-select" id="salarySelect" name="salary">
+                                <label for="mustHaveSkillsSelect" class="form-label">Must Have Skills</label>
+                                <select class="form-select" id="mustHaveSkillsSelect" name="mustHaveSkills">
                                     <option value="" selected>Choose...</option>
-                                    <option th:each="salary : ${T(pl.zajavka.CodeBridge.api.enums.SalaryRangeEnum).values()}"
-                                            th:value="${salary.name}" th:text="${salary.getRange()}">
-                                    </option>
+                                    <option th:each="skill : ${T(pl.zajavka.CodeBridge.api.enums.SkillsEnum).values()}"
+                                            th:value="${skill}" th:text="${skill}"></option>
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                <label for="mustHaveSkills" class="form-label">Must Have Skills (future feature)</label>
-                                <input type="text" class="form-control" id="mustHaveSkills" name="mustHaveSkills"
-                                       placeholder="Must Have Skills"/>
+                                <label for="niceToHaveSkillsSelect" class="form-label">Nice to Have Skills</label>
+                                <select class="form-select" id="niceToHaveSkillsSelect" name="niceToHaveSkills">
+                                    <option value="" selected>Choose...</option>
+                                    <option th:each="skill : ${T(pl.zajavka.CodeBridge.api.enums.SkillsEnum).values()}"
+                                            th:value="${skill}" th:text="${skill}"></option>
+                                </select>
                             </div>
-                            <div class="col-md-3">
-                                <label for="niceToHaveSkills" class="form-label">Nice to Have Skills (future
-                                    feature)</label>
-                                <input type="text" class="form-control" id="niceToHaveSkills" name="niceToHaveSkills"
-                                       placeholder="Nice to Have Skills"/>
-                            </div>
+
                         </div>
                         <button type="submit" class="add-job-offer-button btn btn-primary">Search</button>
                     </form>

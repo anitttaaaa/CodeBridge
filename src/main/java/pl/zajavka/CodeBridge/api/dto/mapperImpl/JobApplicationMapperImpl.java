@@ -20,13 +20,14 @@ public class JobApplicationMapperImpl implements JobApplicationMapper {
         EmployerDTO employerDTO = mapEmployerToDto(jobApplication.getEmployer());
         CandidateDTO candidateDTO = mapCandidateToDto(jobApplication.getCandidate());
 
-        return new JobApplicationDTO.JobApplicationDTOBuilder()
-                .applicationId(jobApplication.getApplicationId())
-                .jobOffer(jobOfferDTO)
-                .employer(employerDTO)
-                .candidate(candidateDTO)
-                .applicationStatus(jobApplication.getApplicationStatus())
-                .build();
+        return new JobApplicationDTO(
+                jobApplication.getApplicationId(),
+                jobOfferDTO,
+                employerDTO,
+                candidateDTO,
+                jobApplication.getApplicationStatusEnum()
+        );
+
     }
 
     @Override
@@ -40,24 +41,25 @@ public class JobApplicationMapperImpl implements JobApplicationMapper {
                 .jobOffer(jobOffer)
                 .employer(employer)
                 .candidate(candidate)
-                .jobApplicationStatus(jobApplicationDTO.getApplicationStatus())
+                .jobApplicationStatus(jobApplicationDTO.getApplicationStatusEnum())
                 .build();
     }
 
     @Override
     public JobOfferDTO mapJobOfferToDto(JobOffer jobOffer) {
-        return new JobOfferDTO.JobOfferDTOBuilder()
-                .jobOfferId(jobOffer.getJobOfferId())
-                .jobOfferTitle(jobOffer.getJobOfferTitle())
-                .description(jobOffer.getDescription())
-                .techSpecialization(jobOffer.getTechSpecialization())
-                .workType(jobOffer.getWorkType())
-                .city(jobOffer.getCity())
-                .experience(jobOffer.getExperience())
-                .salary(jobOffer.getSalary())
-                .mustHaveSkills(jobOffer.getMustHaveSkills())
-                .niceToHaveSkills(jobOffer.getNiceToHaveSkills())
-                .build();
+        return new JobOfferDTO(
+                jobOffer.getJobOfferId(),
+                jobOffer.getJobOfferTitle(),
+                jobOffer.getDescription(),
+                jobOffer.getTechSpecialization(),
+                jobOffer.getWorkType(),
+                jobOffer.getCity(),
+                jobOffer.getExperience(),
+                jobOffer.getSalary(),
+                jobOffer.getMustHaveSkills(),
+                jobOffer.getNiceToHaveSkills(),
+                jobOffer.getEmployer()
+                );
     }
 
     @Override

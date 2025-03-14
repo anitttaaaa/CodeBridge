@@ -21,7 +21,7 @@ public class ApplicationHistoryMapperImpl implements ApplicationsHistoryMapper {
                 .jobOffer(mapJobOffer(applicationsHistory.getJobOffer()))
                 .employer(mapEmployer(applicationsHistory.getEmployer()))
                 .candidate(mapCandidate(applicationsHistory.getCandidate()))
-                .applicationStatus(applicationsHistory.getApplicationStatus())
+                .applicationStatus(applicationsHistory.getApplicationStatusEnum())
                 .build();
     }
 
@@ -32,25 +32,27 @@ public class ApplicationHistoryMapperImpl implements ApplicationsHistoryMapper {
                 .jobOffer(mapJobOfferToDomain(applicationsHistoryDTO.getJobOffer()))
                 .employer(mapEmployerToDomain(applicationsHistoryDTO.getEmployer()))
                 .candidate(mapCandidateToDomain(applicationsHistoryDTO.getCandidate()))
-                .applicationStatus(applicationsHistoryDTO.getApplicationStatus())
+                .applicationStatus(applicationsHistoryDTO.getApplicationStatusEnum())
                 .build();
     }
 
     @Override
     public JobOfferDTO mapJobOffer(JobOffer jobOffer) {
-        return new JobOfferDTO.JobOfferDTOBuilder()
-                .jobOfferId(jobOffer.getJobOfferId())
-                .jobOfferTitle(jobOffer.getJobOfferTitle())
-                .description(jobOffer.getDescription())
-                .techSpecialization(jobOffer.getTechSpecialization())
-                .workType(jobOffer.getWorkType())
-                .city(jobOffer.getCity())
-                .experience(jobOffer.getExperience())
-                .salary(jobOffer.getSalary())
-                .mustHaveSkills(jobOffer.getMustHaveSkills())
-                .niceToHaveSkills(jobOffer.getNiceToHaveSkills())
-                .build();
+        return new JobOfferDTO(
+                jobOffer.getJobOfferId(),
+                jobOffer.getJobOfferTitle(),
+                jobOffer.getDescription(),
+                jobOffer.getTechSpecialization(),
+                jobOffer.getWorkType(),
+                jobOffer.getCity(),
+                jobOffer.getExperience(),
+                jobOffer.getSalary(),
+                jobOffer.getMustHaveSkills(),
+                jobOffer.getNiceToHaveSkills(),
+                jobOffer.getEmployer()
+        );
     }
+
 
     @Override
     public JobOffer mapJobOfferToDomain(JobOfferDTO jobOfferDTO) {

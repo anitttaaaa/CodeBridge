@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.zajavka.CodeBridge.api.dto.*;
 import pl.zajavka.CodeBridge.api.dto.mapper.EmployerMapper;
 import pl.zajavka.CodeBridge.api.dto.mapper.JobOfferMapper;
+import pl.zajavka.CodeBridge.api.enums.*;
 import pl.zajavka.CodeBridge.business.CandidateService;
 import pl.zajavka.CodeBridge.business.EmployerService;
 import pl.zajavka.CodeBridge.business.JobOfferService;
@@ -172,12 +173,26 @@ public class EmployerPortalController {
 
     @GetMapping(value = GET_EMPLOYER_NEW_JOB_OFFER_FORM)
     public String showJobOfferForm(Model model) {
-        JobOfferDTO jobOfferDTO = new JobOfferDTO.JobOfferDTOBuilder()
-                .build();
+        // Tworzymy pusty obiekt JobOfferDTO przy użyciu konstruktora
+        JobOfferDTO jobOfferDTO = new JobOfferDTO(
+                null,               // jobOfferId (np. null, jeśli nie chcesz ustawiać wartości)
+                "",                 // jobOfferTitle
+                "",                 // description
+                TechSpecializationsEnum.BACKEND,                 // techSpecialization
+                WorkTypesEnum.REMOTE,                 // workType
+                CitiesEnum.WARSZAWA,                 // city
+                ExperiencesEnum.BEGINNER,                 // experience
+                SalaryEnum.PLN_0_3000, // salary (tu zakładam, że domyślną wartością jest najniższy próg)
+                List.of(),          // mustHaveSkills (pusta lista)
+                List.of(),          // niceToHaveSkills (pusta lista)
+                null                // employer (tutaj zakładam, że employer może być null)
+        );
 
+        // Przekazujemy obiekt do widoku
         model.addAttribute("jobOfferDTO", jobOfferDTO);
         return "employer_portal_new_job_offer";
     }
+
 
 
     @PostMapping(ADD_EMPLOYER_NEW_JOB_OFFER)
@@ -185,11 +200,13 @@ public class EmployerPortalController {
             @ModelAttribute("jobOfferDTO") JobOfferDTO jobOfferDTO,
             Authentication authentication) {
 
+        System.out.println(jobOfferDTO + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
         JobOffer request = jobOfferMapper.mapToDomain(jobOfferDTO);
         jobOfferService.createJobOfferData(request, authentication);
 
 
-        return "redirect:/employer-portal";
+        return "redirect:/employer-portal/my-job-offers";
     }
 
 

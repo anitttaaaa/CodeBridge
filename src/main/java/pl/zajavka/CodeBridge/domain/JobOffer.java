@@ -1,5 +1,7 @@
 package pl.zajavka.CodeBridge.domain;
 
+import pl.zajavka.CodeBridge.api.enums.*;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -8,14 +10,32 @@ public class JobOffer {
     private final Integer jobOfferId;
     private final String jobOfferTitle;
     private final String description;
-    private final String techSpecialization;
+    private final TechSpecializationsEnum techSpecialization;
     private final Employer employer;
-    private final String workType;
-    private final String city;
-    private final String experience;
-    private final String salary;
+    private final WorkTypesEnum workType;
+    private final CitiesEnum city;
+    private final ExperiencesEnum experience;
+    private final SalaryEnum salary;
     private final List<String> mustHaveSkills;
     private final List<String> niceToHaveSkills;
+
+
+    @Override
+    public String toString() {
+        return "JobOffer{" +
+                "jobOfferId=" + jobOfferId +
+                ", jobOfferTitle='" + jobOfferTitle + '\'' +
+                ", description='" + description + '\'' +
+                ", techSpecialization=" + techSpecialization +
+                ", employer=" + employer +
+                ", workType=" + workType +
+                ", city=" + city +
+                ", experience=" + experience +
+                ", salary=" + salary +
+                ", mustHaveSkills=" + mustHaveSkills +
+                ", niceToHaveSkills=" + niceToHaveSkills +
+                '}';
+    }
 
     private JobOffer(JobOfferBuilder builder) {
         this.jobOfferId = builder.jobOfferId;
@@ -43,7 +63,7 @@ public class JobOffer {
         return description;
     }
 
-    public String getTechSpecialization() {
+    public TechSpecializationsEnum getTechSpecialization() {
         return techSpecialization;
     }
 
@@ -51,19 +71,19 @@ public class JobOffer {
         return employer;
     }
 
-    public String getWorkType() {
+    public WorkTypesEnum getWorkType() {
         return workType;
     }
 
-    public String getCity() {
+    public CitiesEnum getCity() {
         return city;
     }
 
-    public String getExperience() {
+    public ExperiencesEnum getExperience() {
         return experience;
     }
 
-    public String getSalary() {
+    public SalaryEnum getSalary() {
         return salary;
     }
 
@@ -80,12 +100,12 @@ public class JobOffer {
         private Integer jobOfferId;
         private String jobOfferTitle;
         private String description;
-        private String techSpecialization;
+        private TechSpecializationsEnum techSpecialization;
         private Employer employer;
-        private String workType;
-        private String city;
-        private String experience;
-        private String salary;
+        private WorkTypesEnum workType;
+        private CitiesEnum city;
+        private ExperiencesEnum experience;
+        private SalaryEnum salary;
         private List<String> mustHaveSkills;
         private List<String> niceToHaveSkills;
 
@@ -104,7 +124,7 @@ public class JobOffer {
             return this;
         }
 
-        public JobOfferBuilder techSpecialization(String techSpecialization) {
+        public JobOfferBuilder techSpecialization(TechSpecializationsEnum techSpecialization) {
             this.techSpecialization = techSpecialization;
             return this;
         }
@@ -114,22 +134,22 @@ public class JobOffer {
             return this;
         }
 
-        public JobOfferBuilder workType(String workType) {
+        public JobOfferBuilder workType(WorkTypesEnum workType) {
             this.workType = workType;
             return this;
         }
 
-        public JobOfferBuilder city(String city) {
+        public JobOfferBuilder city(CitiesEnum city) {
             this.city = city;
             return this;
         }
 
-        public JobOfferBuilder experience(String experience) {
+        public JobOfferBuilder experience(ExperiencesEnum experience) {
             this.experience = experience;
             return this;
         }
 
-        public JobOfferBuilder salary(String salary) {
+        public JobOfferBuilder salary(SalaryEnum salary) {
             this.salary = salary;
             return this;
         }
@@ -147,35 +167,5 @@ public class JobOffer {
         public JobOffer build() {
             return new JobOffer(this);
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        JobOffer jobOffer = (JobOffer) o;
-        return Objects.equals(jobOfferId, jobOffer.jobOfferId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(jobOfferId);
-    }
-
-    @Override
-    public String toString() {
-        return "JobOffer{" +
-                "jobOfferId=" + jobOfferId +
-                ", jobOfferTitle='" + jobOfferTitle + '\'' +
-                ", description='" + description + '\'' +
-                ", techSpecialization='" + techSpecialization + '\'' +
-                ", employer=" + employer +
-                ", workType='" + workType + '\'' +
-                ", city='" + city + '\'' +
-                ", experience='" + experience + '\'' +
-                ", salary='" + salary + '\'' +
-                ", mustHaveSkills=" + mustHaveSkills +
-                ", niceToHaveSkills=" + niceToHaveSkills +
-                '}';
     }
 }

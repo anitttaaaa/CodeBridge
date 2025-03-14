@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import pl.zajavka.CodeBridge.api.dto.JobOfferDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.JobOfferMapper;
 import pl.zajavka.CodeBridge.domain.JobOffer;
+import pl.zajavka.CodeBridge.api.enums.SalaryEnum;
 
 @Component
 public class JobOfferMapperImpl implements JobOfferMapper {
@@ -18,7 +19,8 @@ public class JobOfferMapperImpl implements JobOfferMapper {
                 .workType(jobOfferDTO.getWorkType())
                 .city(jobOfferDTO.getCity())
                 .experience(jobOfferDTO.getExperience())
-                .salary(jobOfferDTO.getSalary())
+                // Użycie SalaryEnum podczas mapowania
+                .salary(jobOfferDTO.getSalary())// Zakładając, że w DTO jest String, który reprezentuje wartość enumu
                 .mustHaveSkills(jobOfferDTO.getMustHaveSkills())
                 .niceToHaveSkills(jobOfferDTO.getNiceToHaveSkills())
                 .employer(jobOfferDTO.getEmployer())
@@ -27,18 +29,19 @@ public class JobOfferMapperImpl implements JobOfferMapper {
 
     @Override
     public JobOfferDTO mapToDTO(JobOffer jobOffer) {
-        return new JobOfferDTO.JobOfferDTOBuilder()
-                .jobOfferId(jobOffer.getJobOfferId())
-                .jobOfferTitle(jobOffer.getJobOfferTitle())
-                .description(jobOffer.getDescription())
-                .techSpecialization(jobOffer.getTechSpecialization())
-                .workType(jobOffer.getWorkType())
-                .city(jobOffer.getCity())
-                .experience(jobOffer.getExperience())
-                .salary(jobOffer.getSalary())
-                .mustHaveSkills(jobOffer.getMustHaveSkills())
-                .niceToHaveSkills(jobOffer.getNiceToHaveSkills())
-                .employer(jobOffer.getEmployer())
-                .build();
+        return new JobOfferDTO(
+                jobOffer.getJobOfferId(),
+                jobOffer.getJobOfferTitle(),
+                jobOffer.getDescription(),
+                jobOffer.getTechSpecialization(),
+                jobOffer.getWorkType(),
+                jobOffer.getCity(),
+                jobOffer.getExperience(),
+                // Przekładanie SalaryEnum na String w DTO
+                SalaryEnum.valueOf(jobOffer.getSalary().name()), // Zamieniamy SalaryEnum na String przy mapowaniu do DTO
+                jobOffer.getMustHaveSkills(),
+                jobOffer.getNiceToHaveSkills(),
+                jobOffer.getEmployer()
+                );
     }
 }

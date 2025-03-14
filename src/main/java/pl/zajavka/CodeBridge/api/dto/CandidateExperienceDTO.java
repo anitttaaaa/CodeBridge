@@ -11,6 +11,19 @@ public class CandidateExperienceDTO {
     private final LocalDate toDate;
     private final Integer candidateId;
 
+    @Override
+    public String toString() {
+        return "CandidateExperienceDTO{" +
+                "candidateExperienceId=" + candidateExperienceId +
+                ", companyName='" + companyName + '\'' +
+                ", candidatePosition='" + candidatePosition + '\'' +
+                ", description='" + description + '\'' +
+                ", fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                ", candidateId=" + candidateId +
+                '}';
+    }
+
     // Konstruktor z wszystkimi polami
     public CandidateExperienceDTO(
             Integer candidateExperienceId,

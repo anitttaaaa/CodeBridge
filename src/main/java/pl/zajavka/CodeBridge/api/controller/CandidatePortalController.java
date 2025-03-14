@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.zajavka.CodeBridge.api.dto.*;
 import pl.zajavka.CodeBridge.api.dto.mapper.*;
+import pl.zajavka.CodeBridge.api.enums.SkillsEnum;
+import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 import pl.zajavka.CodeBridge.business.*;
 import pl.zajavka.CodeBridge.domain.*;
 
@@ -74,18 +76,7 @@ public class CandidatePortalController {
             @ModelAttribute CandidateExperienceDTO candidateExperienceDTO,
             Authentication authentication) throws AccessDeniedException {
 
-        System.out.println("DEBUG: Przychodzące DTO -> " + candidateExperienceDTO);
-
-        if (candidateExperienceDTO == null) {
-            throw new IllegalArgumentException("❌ CandidateExperienceDTO jest NULL!");
-        }
-
         CandidateExperience candidateExperience = candidateExperienceMapper.mapToDomain(candidateExperienceDTO);
-
-        if (candidateExperience == null) {
-            throw new IllegalStateException("❌ Mapping do domeny zwrócił NULL!");
-        }
-
         candidateExperienceService.updateCandidateExperience(candidateExperience, authentication);
 
         return "redirect:/candidate-portal";
@@ -102,7 +93,6 @@ public class CandidatePortalController {
 
         return "redirect:/candidate-portal";
     }
-
     public CandidatePortalController(CandidateService candidateService,
                                      CandidateExperienceService candidateExperienceService,
                                      CandidateProjectService candidateProjectService,
@@ -157,21 +147,16 @@ public class CandidatePortalController {
         model.addAttribute("candidateCourses", sortedCourses);
         model.addAttribute("candidate", candidateDetails);
 
-        System.out.println(sortedExperiences);
         return "candidate_portal";
     }
 
 
     @PostMapping(UPDATE_CANDIDATE_TECH_SPECIALIZATION)
     public String updateCandidateTechSpecialization(
-            @RequestParam(value = "techSpecialization", required = false) String techSpecialization,
+            @RequestParam(value = "techSpecialization", required = false) TechSpecializationsEnum techSpecialization,
             Authentication authentication
     ) {
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
-
-        if (techSpecialization == null || techSpecialization.trim().isEmpty()) {
-            techSpecialization = null;
-        }
 
         candidate = new Candidate.Builder()
                 .name(candidate.getName())
@@ -327,8 +312,6 @@ public class CandidatePortalController {
         return "redirect:/candidate-portal";
     }
 
-
-
     @PostMapping(ADD_CANDIDATE_PROJECT)
     public String addCandidateProject(
             @ModelAttribute("candidateProjectDTO") CandidateProjectDTO candidateProjectDTO) {
@@ -465,7 +448,7 @@ public class CandidatePortalController {
 
     @PostMapping(UPDATE_CANDIDATE_SKILLS)
     public String updateCandidateSkills(
-            @RequestParam(value = "candidateSkills", required = false) List<String> candidateSkills,
+            @RequestParam(value = "candidateSkills", required = false) List<SkillsEnum> candidateSkills,
             Authentication authentication
     ) {
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());

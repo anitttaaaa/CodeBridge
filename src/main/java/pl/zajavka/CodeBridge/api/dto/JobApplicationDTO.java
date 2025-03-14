@@ -1,22 +1,24 @@
 package pl.zajavka.CodeBridge.api.dto;
 
-import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
+import pl.zajavka.CodeBridge.api.enums.ApplicationStatusEnum;
 
 public class JobApplicationDTO {
-
     private final Integer applicationId;
     private final JobOfferDTO jobOffer;
     private final EmployerDTO employer;
     private final CandidateDTO candidate;
-    private final ApplicationStatus applicationStatus;
+    private final ApplicationStatusEnum applicationStatusEnum;
 
-    private JobApplicationDTO(JobApplicationDTOBuilder builder) {
-        this.applicationId = builder.applicationId;
-        this.jobOffer = builder.jobOffer;
-        this.employer = builder.employer;
-        this.candidate = builder.candidate;
-        this.applicationStatus = builder.applicationStatus;
+
+    public JobApplicationDTO(Integer applicationId, JobOfferDTO jobOffer, EmployerDTO employer,
+                             CandidateDTO candidate, ApplicationStatusEnum applicationStatusEnum) {
+        this.applicationId = applicationId;
+        this.jobOffer = jobOffer;
+        this.employer = employer;
+        this.candidate = candidate;
+        this.applicationStatusEnum = applicationStatusEnum;
     }
+
 
     public Integer getApplicationId() {
         return applicationId;
@@ -34,8 +36,8 @@ public class JobApplicationDTO {
         return candidate;
     }
 
-    public ApplicationStatus getApplicationStatus() {
-        return applicationStatus;
+    public ApplicationStatusEnum getApplicationStatusEnum() {
+        return applicationStatusEnum;
     }
 
     @Override
@@ -45,45 +47,7 @@ public class JobApplicationDTO {
                 ", jobOffer=" + jobOffer +
                 ", employer=" + employer +
                 ", candidate=" + candidate +
-                ", applicationStatus=" + applicationStatus +
+                ", applicationStatusEnum=" + applicationStatusEnum +
                 '}';
-    }
-
-    public static class JobApplicationDTOBuilder {
-
-        private Integer applicationId;
-        private JobOfferDTO jobOffer;
-        private EmployerDTO employer;
-        private CandidateDTO candidate;
-        private ApplicationStatus applicationStatus;
-
-        public JobApplicationDTOBuilder applicationId(Integer applicationId) {
-            this.applicationId = applicationId;
-            return this;
-        }
-
-        public JobApplicationDTOBuilder jobOffer(JobOfferDTO jobOffer) {
-            this.jobOffer = jobOffer;
-            return this;
-        }
-
-        public JobApplicationDTOBuilder employer(EmployerDTO employer) {
-            this.employer = employer;
-            return this;
-        }
-
-        public JobApplicationDTOBuilder candidate(CandidateDTO candidate) {
-            this.candidate = candidate;
-            return this;
-        }
-
-        public JobApplicationDTOBuilder applicationStatus(ApplicationStatus applicationStatus) {
-            this.applicationStatus = applicationStatus;
-            return this;
-        }
-
-        public JobApplicationDTO build() {
-            return new JobApplicationDTO(this);
-        }
     }
 }

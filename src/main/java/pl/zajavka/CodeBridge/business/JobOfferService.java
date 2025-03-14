@@ -46,8 +46,17 @@ public class JobOfferService {
         JobOffer jobOffer = new JobOffer.JobOfferBuilder()
                 .jobOfferTitle(request.getJobOfferTitle())
                 .description(request.getDescription())
+                .techSpecialization(request.getTechSpecialization())
+                .workType(request.getWorkType())
+                .city(request.getCity())
+                .experience(request.getExperience())
                 .salary(request.getSalary())
+                .mustHaveSkills(request.getMustHaveSkills())
+                .niceToHaveSkills(request.getNiceToHaveSkills())
+                .employer(employer)
                 .build();
+
+        System.out.println(jobOffer + " @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2");
 
         Set<JobOffer> jobOffers = new HashSet<>(employer.getJobOffers());
         jobOffers.add(jobOffer);

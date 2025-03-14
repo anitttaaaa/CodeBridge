@@ -1,6 +1,9 @@
 package pl.zajavka.CodeBridge.infrastructure.database.entity;
 
 import jakarta.persistence.*;
+import pl.zajavka.CodeBridge.api.enums.SalaryEnum;
+import pl.zajavka.CodeBridge.api.enums.SkillsEnum;
+import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 
 import java.util.List;
 import java.util.Set;
@@ -39,7 +42,8 @@ public class CandidateEntity {
     private String gitHub;
 
     @Column(name = "tech_specialization")
-    private String techSpecialization;
+    @Enumerated(EnumType.STRING)
+    private TechSpecializationsEnum techSpecialization;
 
     @Column(name = "about_me")
     private String aboutMe;
@@ -50,7 +54,8 @@ public class CandidateEntity {
     @ElementCollection
     @CollectionTable(name = "candidate_skills", joinColumns = @JoinColumn(name = "candidate_id"))
     @Column(name = "candidate_skills")
-    private List<String> candidateSkills;
+    @Enumerated(EnumType.STRING)
+    private List<SkillsEnum> candidateSkills;
 
     @Column(name = "profile_photo", columnDefinition="bytea")
     private byte[] profilePhoto;
@@ -105,10 +110,10 @@ public class CandidateEntity {
         private Integer userId;
         private String linkedIn;
         private String gitHub;
-        private String techSpecialization;
+        private TechSpecializationsEnum techSpecialization;
         private String aboutMe;
         private String hobby;
-        private List<String> candidateSkills;
+        private List<SkillsEnum> candidateSkills;
         private byte[] profilePhoto;
         private List<CandidateExperienceEntity> candidateExperiences;
         private List<CandidateProjectEntity> candidateProjects;
@@ -161,7 +166,7 @@ public class CandidateEntity {
             return this;
         }
 
-        public Builder techSpecialization(String techSpecialization) {
+        public Builder techSpecialization(TechSpecializationsEnum techSpecialization) {
             this.techSpecialization = techSpecialization;
             return this;
         }
@@ -176,7 +181,7 @@ public class CandidateEntity {
             return this;
         }
 
-        public Builder candidateSkills(List<String> candidateSkills) {
+        public Builder candidateSkills(List<SkillsEnum> candidateSkills) {
             this.candidateSkills = candidateSkills;
             return this;
         }
@@ -252,7 +257,7 @@ public class CandidateEntity {
         return gitHub;
     }
 
-    public String getTechSpecialization() {
+    public TechSpecializationsEnum getTechSpecialization() {
         return techSpecialization;
     }
 
@@ -264,7 +269,7 @@ public class CandidateEntity {
         return hobby;
     }
 
-    public List<String> getCandidateSkills() {
+    public List<SkillsEnum> getCandidateSkills() {
         return candidateSkills;
     }
 

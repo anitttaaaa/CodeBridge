@@ -1,6 +1,6 @@
 package pl.zajavka.CodeBridge.domain;
 
-import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
+import pl.zajavka.CodeBridge.api.enums.ApplicationStatusEnum;
 
 import java.util.Objects;
 
@@ -10,14 +10,14 @@ public class JobApplication {
     private final JobOffer jobOffer;
     private final Employer employer;
     private final Candidate candidate;
-    private final ApplicationStatus applicationStatus;
+    private final ApplicationStatusEnum applicationStatusEnum;
 
     private JobApplication(JobApplicationBuilder builder) {
         this.applicationId = builder.applicationId;
         this.jobOffer = builder.jobOffer;
         this.employer = builder.employer;
         this.candidate = builder.candidate;
-        this.applicationStatus = builder.applicationStatus;
+        this.applicationStatusEnum = builder.applicationStatusEnum;
     }
 
 
@@ -37,8 +37,8 @@ public class JobApplication {
         return candidate;
     }
 
-    public ApplicationStatus getApplicationStatus() {
-        return applicationStatus;
+    public ApplicationStatusEnum getApplicationStatusEnum() {
+        return applicationStatusEnum;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class JobApplication {
                 ", jobOffer=" + jobOffer +
                 ", employer=" + employer +
                 ", candidate=" + candidate +
-                ", applicationStatus=" + applicationStatus +
+                ", applicationStatus=" + applicationStatusEnum +
                 '}';
     }
 
@@ -71,7 +71,7 @@ public class JobApplication {
         private JobOffer jobOffer;
         private Employer employer;
         private Candidate candidate;
-        private ApplicationStatus applicationStatus;
+        private ApplicationStatusEnum applicationStatusEnum;
 
         public JobApplicationBuilder applicationId(Integer applicationId) {
             this.applicationId = applicationId;
@@ -93,8 +93,8 @@ public class JobApplication {
             return this;
         }
 
-        public JobApplicationBuilder jobApplicationStatus(ApplicationStatus applicationStatus) {
-            this.applicationStatus = applicationStatus;
+        public JobApplicationBuilder jobApplicationStatus(ApplicationStatusEnum applicationStatusEnum) {
+            this.applicationStatusEnum = applicationStatusEnum;
             return this;
         }
 

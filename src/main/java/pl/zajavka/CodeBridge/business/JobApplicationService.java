@@ -9,7 +9,7 @@ import pl.zajavka.CodeBridge.api.dto.ApplicationsHistoryDTO;
 import pl.zajavka.CodeBridge.api.dto.JobApplicationDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.ApplicationsHistoryMapper;
 import pl.zajavka.CodeBridge.api.dto.mapper.JobApplicationMapper;
-import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
+import pl.zajavka.CodeBridge.api.enums.ApplicationStatusEnum;
 import pl.zajavka.CodeBridge.api.enums.StatusEnum;
 import pl.zajavka.CodeBridge.business.dao.ApplicationsHistoryDAO;
 import pl.zajavka.CodeBridge.business.dao.CandidateDAO;
@@ -61,7 +61,7 @@ public class JobApplicationService {
                 .jobOffer(jobApplication.getJobOffer())
                 .employer(jobApplication.getEmployer())
                 .candidate(jobApplication.getCandidate())
-                .jobApplicationStatus(ApplicationStatus.REJECTED)
+                .jobApplicationStatus(ApplicationStatusEnum.REJECTED)
                 .build();
 
         jobApplicationDAO.save(updatedJobApplication);
@@ -69,14 +69,14 @@ public class JobApplicationService {
         Candidate candidate = updatedJobApplication.getCandidate();
         Employer employer = updatedJobApplication.getEmployer();
         JobOffer jobOffer = updatedJobApplication.getJobOffer();
-        ApplicationStatus applicationStatus = updatedJobApplication.getApplicationStatus();
+        ApplicationStatusEnum applicationStatusEnum = updatedJobApplication.getApplicationStatusEnum();
 
         ApplicationsHistory jobApplicationRejected = new ApplicationsHistory.Builder()
                 .applicationHistoryId(applicationId)
                 .jobOffer(jobOffer)
                 .employer(employer)
                 .candidate(candidate)
-                .applicationStatus(applicationStatus)
+                .applicationStatus(applicationStatusEnum)
                 .build();
 
 
@@ -123,7 +123,7 @@ public class JobApplicationService {
                 .jobOffer(jobApplication.getJobOffer())
                 .employer(jobApplication.getEmployer())
                 .candidate(jobApplication.getCandidate())
-                .jobApplicationStatus(ApplicationStatus.ACCEPTED)
+                .jobApplicationStatus(ApplicationStatusEnum.ACCEPTED)
                 .build();
 
 
@@ -131,14 +131,14 @@ public class JobApplicationService {
 
         Employer employer = jobApplication.getEmployer();
         JobOffer jobOffer = jobApplication.getJobOffer();
-        ApplicationStatus applicationStatus = jobApplication.getApplicationStatus();
+        ApplicationStatusEnum applicationStatusEnum = jobApplication.getApplicationStatusEnum();
 
         ApplicationsHistory jobApplicationAccepted = new ApplicationsHistory.Builder()
                 .applicationHistoryId(applicationId)
                 .jobOffer(jobOffer)
                 .employer(employer)
                 .candidate(candidateUpdated)
-                .applicationStatus(applicationStatus)
+                .applicationStatus(applicationStatusEnum)
                 .build();
 
 
@@ -155,7 +155,7 @@ public class JobApplicationService {
         Integer candidateId = candidateService.findCandidateByEmail(candidateEmail).getCandidateId();
         Integer employerId = getEmployerId(jobOfferId);
 
-        ApplicationStatus applicationStatus = ApplicationStatus.PENDING;
+        ApplicationStatusEnum applicationStatusEnum = ApplicationStatusEnum.PENDING;
 
         JobOffer jobOffer = new JobOffer.JobOfferBuilder()
                 .jobOfferId(jobOfferId)
@@ -172,8 +172,11 @@ public class JobApplicationService {
                 .jobOffer(jobOffer)
                 .employer(employer)
                 .candidate(candidate)
-                .jobApplicationStatus(applicationStatus)
+                .jobApplicationStatus(applicationStatusEnum)
                 .build();
+
+
+        System.out.println("Job Application - sprawdz czy pendieng !!!!!!!!!!!!!!!!!!! " + jobApplication);
 
         jobApplicationDAO.createJobApplication(jobApplication);
     }

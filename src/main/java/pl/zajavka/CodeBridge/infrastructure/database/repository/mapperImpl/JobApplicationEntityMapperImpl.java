@@ -1,6 +1,7 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository.mapperImpl;
 
 import org.springframework.stereotype.Component;
+import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.JobApplication;
@@ -33,8 +34,9 @@ public class JobApplicationEntityMapperImpl implements JobApplicationEntityMappe
                 .jobOffer(jobOfferEntity)
                 .employer(employerEntity)
                 .candidate(candidateEntity)
-                .applicationStatus(jobApplication.getApplicationStatus())
+                .applicationStatus(jobApplication.getApplicationStatusEnum())
                 .build();
+
     }
 
     @Override
@@ -43,12 +45,12 @@ public class JobApplicationEntityMapperImpl implements JobApplicationEntityMappe
                 .jobOfferId(jobApplicationEntity.getJobOffer().getJobOfferId())
                 .jobOfferTitle(jobApplicationEntity.getJobOffer().getJobOfferTitle())
                 .description(jobApplicationEntity.getJobOffer().getDescription())
-                .techSpecialization(jobApplicationEntity.getJobOffer().getTechSpecialization().name())
+                .techSpecialization(TechSpecializationsEnum.valueOf(jobApplicationEntity.getJobOffer().getTechSpecialization().name()))
                 .employer(mapEmployer(jobApplicationEntity.getJobOffer().getEmployer())) // Employer mapowany z JobOffer
-                .workType(jobApplicationEntity.getJobOffer().getWorkType().name())
-                .city(jobApplicationEntity.getJobOffer().getCity().name())
-                .experience(jobApplicationEntity.getJobOffer().getExperience().name())
-                .salary(jobApplicationEntity.getJobOffer().getSalary().name())
+                .workType(jobApplicationEntity.getJobOffer().getWorkType())
+                .city(jobApplicationEntity.getJobOffer().getCity())
+                .experience(jobApplicationEntity.getJobOffer().getExperience())
+                .salary(jobApplicationEntity.getJobOffer().getSalary())
                 .mustHaveSkills(jobApplicationEntity.getJobOffer().getMustHaveSkills())
                 .niceToHaveSkills(jobApplicationEntity.getJobOffer().getNiceToHaveSkills())
                 .build();

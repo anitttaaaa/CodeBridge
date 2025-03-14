@@ -19,11 +19,12 @@ public class JobOfferEntityMapperImpl implements JobOfferEntityMapper {
                 .jobOfferId(jobOfferEntity.getJobOfferId())
                 .jobOfferTitle(jobOfferEntity.getJobOfferTitle())
                 .description(jobOfferEntity.getDescription())
-                .techSpecialization(jobOfferEntity.getTechSpecialization().name())
-                .workType(jobOfferEntity.getWorkType().name())
-                .city(jobOfferEntity.getCity().name())
-                .experience(jobOfferEntity.getExperience().name())
-                .salary(jobOfferEntity.getSalary().name())
+                .techSpecialization(jobOfferEntity.getTechSpecialization())
+                .workType(jobOfferEntity.getWorkType())
+                .city(jobOfferEntity.getCity())
+                .experience(jobOfferEntity.getExperience())
+                // Użycie SalaryEnum, upewniając się, że jest to odpowiednia wartość z enumu
+                .salary(jobOfferEntity.getSalary())// Zakładając, że w encji jest przechowywana wartość w postaci String
                 .employer(mapEmployerToDomain(jobOfferEntity.getEmployer()))
                 .mustHaveSkills(jobOfferEntity.getMustHaveSkills())
                 .niceToHaveSkills(jobOfferEntity.getNiceToHaveSkills())
@@ -42,42 +43,26 @@ public class JobOfferEntityMapperImpl implements JobOfferEntityMapper {
 
     @Override
     public JobOfferEntity mapToEntity(JobOffer jobOffer) {
-        return JobOfferEntity.builder()
+        return new JobOfferEntity.Builder()
                 .jobOfferId(jobOffer.getJobOfferId())
                 .jobOfferTitle(jobOffer.getJobOfferTitle())
                 .description(jobOffer.getDescription())
-                .techSpecialization(TechSpecializationsEnum.valueOf(jobOffer.getTechSpecialization()))
-                .workType(WorkTypesEnum.valueOf(jobOffer.getWorkType()))
-                .city(CitiesEnum.valueOf(jobOffer.getCity()))
-                .experience(ExperiencesEnum.valueOf(jobOffer.getExperience()))
-                .salary(SalaryRangeEnum.valueOf(jobOffer.getSalary()))
+                .techSpecialization(jobOffer.getTechSpecialization())
+                .workType(jobOffer.getWorkType())
+                .city(jobOffer.getCity())
+                .experience(jobOffer.getExperience())
+                // Użycie SalaryEnum, upewniając się, że jest to odpowiednia wartość z enumu
+                .salary(jobOffer.getSalary())// Zakładając, że w encji jest przechowywana wartość w postaci String
                 .employer(mapEmployerToEntity(jobOffer.getEmployer()))
-                .jobApplications(new HashSet<>()) // Możesz ustawić pusty set zamiast `null`
                 .mustHaveSkills(jobOffer.getMustHaveSkills())
                 .niceToHaveSkills(jobOffer.getNiceToHaveSkills())
                 .build();
     }
 
-    private EmployerEntity mapEmployerToEntity(Employer employer) {
-        return EmployerEntity.builder()
-                .employerId(employer.getEmployerId())
-                .companyName(employer.getCompanyName())
-                .email(employer.getEmail())
-                .nip(employer.getNip())
-                .userId(employer.getUserId())
-                .jobOffers(new HashSet<>()) // Pusty set zamiast `null`
-                .jobApplications(new HashSet<>()) // Pusty set zamiast `null`
-                .build();
-    }
-
     @Override
-    public Employer mapEmployer(String companyName, Integer employerId) {
-        if (companyName == null || employerId == null) {
-            return null;
-        }
-        return new Employer.EmployerBuilder()
-                .employerId(employerId)
-                .companyName(companyName)
+    public EmployerEntity mapEmployerToEntity(Employer employer) {
+        return new EmployerEntity.Builder()
+                .employerId(employer.getEmployerId())
                 .build();
     }
 }

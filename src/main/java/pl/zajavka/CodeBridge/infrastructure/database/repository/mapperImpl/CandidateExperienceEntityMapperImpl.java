@@ -26,7 +26,6 @@ public class CandidateExperienceEntityMapperImpl implements CandidateExperienceE
     @Override
     public CandidateExperienceEntity mapToEntity(CandidateExperience candidateExperience) {
 
-
         return new CandidateExperienceEntity.Builder()
                 .candidateExperienceId(candidateExperience.getCandidateExperienceId())
                 .companyName(candidateExperience.getCompanyName())

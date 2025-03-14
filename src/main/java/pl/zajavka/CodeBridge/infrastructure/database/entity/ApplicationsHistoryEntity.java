@@ -1,7 +1,7 @@
 package pl.zajavka.CodeBridge.infrastructure.database.entity;
 
 import jakarta.persistence.*;
-import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
+import pl.zajavka.CodeBridge.api.enums.ApplicationStatusEnum;
 
 import java.util.Objects;
 
@@ -28,7 +28,7 @@ public class ApplicationsHistoryEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "application_status", nullable = false)
-    private ApplicationStatus applicationStatus;
+    private ApplicationStatusEnum applicationStatusEnum;
 
     public ApplicationsHistoryEntity() {
     }
@@ -49,8 +49,8 @@ public class ApplicationsHistoryEntity {
         return candidate;
     }
 
-    public ApplicationStatus getApplicationStatus() {
-        return applicationStatus;
+    public ApplicationStatusEnum getApplicationStatus() {
+        return applicationStatusEnum;
     }
 
     @Override
@@ -73,7 +73,7 @@ public class ApplicationsHistoryEntity {
                 ", jobOffer=" + jobOffer +
                 ", employer=" + employer +
                 ", candidate=" + candidate +
-                ", applicationStatus=" + applicationStatus +
+                ", applicationStatus=" + applicationStatusEnum +
                 '}';
     }
 
@@ -82,7 +82,7 @@ public class ApplicationsHistoryEntity {
         this.jobOffer = builder.jobOffer;
         this.employer = builder.employer;
         this.candidate = builder.candidate;
-        this.applicationStatus = builder.applicationStatus;
+        this.applicationStatusEnum = builder.applicationStatusEnum;
     }
 
     public static class Builder {
@@ -90,7 +90,7 @@ public class ApplicationsHistoryEntity {
         private JobOfferEntity jobOffer;
         private EmployerEntity employer;
         private CandidateEntity candidate;
-        private ApplicationStatus applicationStatus;
+        private ApplicationStatusEnum applicationStatusEnum;
 
         public Builder applicationHistoryId(Integer applicationHistoryId) {
             this.applicationHistoryId = applicationHistoryId;
@@ -112,8 +112,8 @@ public class ApplicationsHistoryEntity {
             return this;
         }
 
-        public Builder applicationStatus(ApplicationStatus applicationStatus) {
-            this.applicationStatus = applicationStatus;
+        public Builder applicationStatus(ApplicationStatusEnum applicationStatusEnum) {
+            this.applicationStatusEnum = applicationStatusEnum;
             return this;
         }
 

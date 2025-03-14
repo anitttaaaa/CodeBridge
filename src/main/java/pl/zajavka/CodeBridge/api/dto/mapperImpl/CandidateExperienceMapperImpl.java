@@ -10,9 +10,7 @@ public class CandidateExperienceMapperImpl implements CandidateExperienceMapper 
 
     @Override
     public CandidateExperienceDTO mapToDto(CandidateExperience candidateExperience) {
-        if (candidateExperience == null) {
-            return null;
-        }
+
 
         return new CandidateExperienceDTO(
                 candidateExperience.getCandidateExperienceId(),
@@ -26,12 +24,7 @@ public class CandidateExperienceMapperImpl implements CandidateExperienceMapper 
     }
 
     @Override
-    public CandidateExperience mapToDomain(CandidateExperienceDTO candidateExperienceDTO) { if (candidateExperienceDTO == null) {
-        System.out.println("DEBUG: candidateExperienceDTO jest NULL!");
-        return null;
-    }
-
-        System.out.println("DEBUG: candidateExperienceDTO -> " + candidateExperienceDTO);
+    public CandidateExperience mapToDomain(CandidateExperienceDTO candidateExperienceDTO) {
 
         return new CandidateExperience.Builder()
                 .candidateExperienceId(candidateExperienceDTO.getCandidateExperienceId())

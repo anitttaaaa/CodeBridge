@@ -1,6 +1,6 @@
 package pl.zajavka.CodeBridge.api.dto;
 
-import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
+import pl.zajavka.CodeBridge.api.enums.ApplicationStatusEnum;
 
 public class ApplicationsHistoryDTO {
 
@@ -8,14 +8,14 @@ public class ApplicationsHistoryDTO {
     private final JobOfferDTO jobOffer;
     private final EmployerDTO employer;
     private final CandidateDTO candidate;
-    private final ApplicationStatus applicationStatus;
+    private final ApplicationStatusEnum applicationStatusEnum;
 
     private ApplicationsHistoryDTO(Builder builder) {
         this.applicationHistoryId = builder.applicationHistoryId;
         this.jobOffer = builder.jobOffer;
         this.employer = builder.employer;
         this.candidate = builder.candidate;
-        this.applicationStatus = builder.applicationStatus;
+        this.applicationStatusEnum = builder.applicationStatusEnum;
     }
 
     public Integer getApplicationHistoryId() {
@@ -34,8 +34,8 @@ public class ApplicationsHistoryDTO {
         return candidate;
     }
 
-    public ApplicationStatus getApplicationStatus() {
-        return applicationStatus;
+    public ApplicationStatusEnum getApplicationStatusEnum() {
+        return applicationStatusEnum;
     }
 
     public static class Builder {
@@ -43,7 +43,7 @@ public class ApplicationsHistoryDTO {
         private JobOfferDTO jobOffer;
         private EmployerDTO employer;
         private CandidateDTO candidate;
-        private ApplicationStatus applicationStatus;
+        private ApplicationStatusEnum applicationStatusEnum;
 
         public Builder applicationHistoryId(Integer applicationHistoryId) {
             this.applicationHistoryId = applicationHistoryId;
@@ -65,8 +65,8 @@ public class ApplicationsHistoryDTO {
             return this;
         }
 
-        public Builder applicationStatus(ApplicationStatus applicationStatus) {
-            this.applicationStatus = applicationStatus;
+        public Builder applicationStatus(ApplicationStatusEnum applicationStatusEnum) {
+            this.applicationStatusEnum = applicationStatusEnum;
             return this;
         }
         public ApplicationsHistoryDTO build() {

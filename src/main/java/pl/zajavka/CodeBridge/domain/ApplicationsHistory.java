@@ -1,6 +1,6 @@
 package pl.zajavka.CodeBridge.domain;
 
-import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
+import pl.zajavka.CodeBridge.api.enums.ApplicationStatusEnum;
 
 import java.util.Objects;
 
@@ -9,14 +9,14 @@ public class ApplicationsHistory {
     private final JobOffer jobOffer;
     private final Employer employer;
     private final Candidate candidate;
-    private final ApplicationStatus applicationStatus;
+    private final ApplicationStatusEnum applicationStatusEnum;
 
     private ApplicationsHistory(Builder builder) {
         this.applicationHistoryId = builder.applicationHistoryId;
         this.jobOffer = builder.jobOffer;
         this.employer = builder.employer;
         this.candidate = builder.candidate;
-        this.applicationStatus = builder.applicationStatus;
+        this.applicationStatusEnum = builder.applicationStatusEnum;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ApplicationsHistory {
                 ", jobOffer=" + jobOffer +
                 ", employer=" + employer +
                 ", candidate=" + candidate +
-                ", applicationStatus=" + applicationStatus +
+                ", applicationStatus=" + applicationStatusEnum +
                 '}';
     }
 
@@ -59,8 +59,8 @@ public class ApplicationsHistory {
         return candidate;
     }
 
-    public ApplicationStatus getApplicationStatus() {
-        return applicationStatus;
+    public ApplicationStatusEnum getApplicationStatusEnum() {
+        return applicationStatusEnum;
     }
 
     public static class Builder {
@@ -68,7 +68,7 @@ public class ApplicationsHistory {
         private JobOffer jobOffer;
         private Employer employer;
         private Candidate candidate;
-        private ApplicationStatus applicationStatus;
+        private ApplicationStatusEnum applicationStatusEnum;
 
         public Builder applicationHistoryId(Integer applicationHistoryId) {
             this.applicationHistoryId = applicationHistoryId;
@@ -90,8 +90,8 @@ public class ApplicationsHistory {
             return this;
         }
 
-        public Builder applicationStatus(ApplicationStatus applicationStatus) {
-            this.applicationStatus = applicationStatus;
+        public Builder applicationStatus(ApplicationStatusEnum applicationStatusEnum) {
+            this.applicationStatusEnum = applicationStatusEnum;
             return this;
         }
 

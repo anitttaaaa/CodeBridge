@@ -79,8 +79,8 @@
 
                 <select class="form-select" id="salarySelect" th:field="*{salary}">
                     <option value="" disabled selected>Choose...</option>
-                    <option th:each="salary : ${T(pl.zajavka.CodeBridge.api.enums.SalaryRangeEnum).values()}"
-                            th:value="${salary.name}" th:text="${salary.getRange()}">
+                    <option th:each="salary : ${T(pl.zajavka.CodeBridge.api.enums.SalaryEnum).values()}"
+                            th:value="${salary}" th:text="${salary}">
                     </option>
                 </select>
             </div>
@@ -89,24 +89,24 @@
                 <div class="input-group-text">
                     <input class="form-check-input mt-0" type="checkbox"
                            th:field="*{mustHaveSkills}"
-                           th:value="${skill.getSkill()}"
-                           id="must_have_skill_${skill.name()}"/>
+                           th:value="${skill}"
+                           id="must_have_skill_${skill}"/>
                 </div>
                 <label class="form-control" aria-label="Text input with checkbox"
-                       th:for="'skill_' + ${skill.name()}"
-                       th:text="${skill.getSkill}"></label>
+                       th:for="'skill_' + ${skill}"
+                       th:text="${skill}"></label>
             </div>
             <h6>Nice to have skills</h6>
             <div class="input-group mb-3" th:each="skill : ${T(pl.zajavka.CodeBridge.api.enums.SkillsEnum).values()}">
                 <div class="input-group-text">
                     <input class="form-check-input mt-0" type="checkbox"
                            th:field="*{niceToHaveSkills}"
-                           th:value="${skill.getSkill()}"
-                           id="nice_to_have_skill_${skill.name()}"/>
+                           th:value="${skill}"
+                           id="nice_to_have_skill_${skill}"/>
                 </div>
                 <label class="form-control" aria-label="Text input with checkbox"
-                       th:for="'skill_' + ${skill.name()}"
-                       th:text="${skill.getSkill}"></label>
+                       th:for="'skill_' + ${skill}"
+                       th:text="${skill}"></label>
             </div>
             <div>
                 <input class="add-job-offer-button btn btn-primary" type="submit" value="Add Job Offer">

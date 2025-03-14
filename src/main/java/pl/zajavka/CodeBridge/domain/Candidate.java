@@ -1,5 +1,9 @@
 package pl.zajavka.CodeBridge.domain;
 
+import pl.zajavka.CodeBridge.api.enums.SalaryEnum;
+import pl.zajavka.CodeBridge.api.enums.SkillsEnum;
+import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,10 +19,10 @@ public class Candidate {
     private final Integer userId;
     private final String linkedIn;
     private final String gitHub;
-    private final String techSpecialization;
+    private final TechSpecializationsEnum techSpecialization;
     private final String aboutMe;
     private final String hobby;
-    private final List<String> candidateSkills;
+    private final List<SkillsEnum> candidateSkills;
     private final List<CandidateExperience> candidateExperiences;
     private final List<CandidateProject> candidateProjects;
     private final List<CandidateEducation> candidateEducationStages;
@@ -56,10 +60,10 @@ public class Candidate {
         private Integer userId;
         private String linkedIn;
         private String gitHub;
-        private String techSpecialization;
+        private TechSpecializationsEnum techSpecialization;
         private String aboutMe;
         private String hobby;
-        private List<String> candidateSkills = new ArrayList<>();
+        private List<SkillsEnum> candidateSkills = new ArrayList<>();
         private List<CandidateExperience> candidateExperiences = new ArrayList<>();
         private List<CandidateProject> candidateProjects = new ArrayList<>();
         private List<CandidateEducation> candidateEducationStages = new ArrayList<>();
@@ -111,7 +115,7 @@ public class Candidate {
             return this;
         }
 
-        public Builder techSpecialization(String techSpecialization) {
+        public Builder techSpecialization(TechSpecializationsEnum techSpecialization) {
             this.techSpecialization = techSpecialization;
             return this;
         }
@@ -126,7 +130,7 @@ public class Candidate {
             return this;
         }
 
-        public Builder candidateSkills(List<String> candidateSkills) {
+        public Builder candidateSkills(List<SkillsEnum> candidateSkills) {
             this.candidateSkills = candidateSkills;
             return this;
         }
@@ -198,7 +202,7 @@ public class Candidate {
         return gitHub;
     }
 
-    public String getTechSpecialization() {
+    public TechSpecializationsEnum getTechSpecialization() {
         return techSpecialization;
     }
 
@@ -210,7 +214,7 @@ public class Candidate {
         return hobby;
     }
 
-    public List<String> getCandidateSkills() {
+    public List<SkillsEnum> getCandidateSkills() {
         return candidateSkills;
     }
 

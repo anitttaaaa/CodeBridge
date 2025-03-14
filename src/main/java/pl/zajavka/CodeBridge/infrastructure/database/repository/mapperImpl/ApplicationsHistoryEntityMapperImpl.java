@@ -1,6 +1,7 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository.mapperImpl;
 
 import org.springframework.stereotype.Component;
+import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 import pl.zajavka.CodeBridge.domain.ApplicationsHistory;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.Employer;
@@ -39,14 +40,13 @@ public class ApplicationsHistoryEntityMapperImpl implements ApplicationsHistoryE
                 .jobOfferId(jobOfferEntity.getJobOfferId())
                 .jobOfferTitle(jobOfferEntity.getJobOfferTitle())
                 .description(jobOfferEntity.getDescription())
-                .techSpecialization(jobOfferEntity.getTechSpecialization().name())
+                .techSpecialization(TechSpecializationsEnum.valueOf(jobOfferEntity.getTechSpecialization().name()))
                 .employer(employer)
-                .workType(jobOfferEntity.getWorkType().name())
-                .city(jobOfferEntity.getCity().name())
-                .experience(jobOfferEntity.getExperience().name())
-                .salary(jobOfferEntity.getSalary().name())
+                .workType(jobOfferEntity.getWorkType())
+                .city(jobOfferEntity.getCity())
+                .experience(jobOfferEntity.getExperience())
+                .salary(jobOfferEntity.getSalary())
                 .mustHaveSkills(jobOfferEntity.getMustHaveSkills())
-                .niceToHaveSkills(jobOfferEntity.getNiceToHaveSkills())
                 .build();
     }
 
@@ -83,7 +83,7 @@ public class ApplicationsHistoryEntityMapperImpl implements ApplicationsHistoryE
                 .jobOffer(mapJobOfferEntity(applicationsHistory.getJobOffer()))
                 .employer(mapEmployerEntity(applicationsHistory.getEmployer()))
                 .candidate(mapCandidateEntity(applicationsHistory.getCandidate()))
-                .applicationStatus(applicationsHistory.getApplicationStatus())
+                .applicationStatus(applicationsHistory.getApplicationStatusEnum())
                 .build();
     }
 

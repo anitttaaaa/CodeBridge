@@ -1,10 +1,12 @@
 package pl.zajavka.CodeBridge.api.dto.mapperImpl;
 
 import org.springframework.stereotype.Component;
+import pl.zajavka.CodeBridge.api.dto.CandidateDTO;
 import pl.zajavka.CodeBridge.api.dto.EmployerDTO;
 import pl.zajavka.CodeBridge.api.dto.JobApplicationDTO;
 import pl.zajavka.CodeBridge.api.dto.JobOfferDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.EmployerMapper;
+import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.JobApplication;
 import pl.zajavka.CodeBridge.domain.JobOffer;
@@ -75,18 +77,19 @@ public class EmployerMapperImpl implements EmployerMapper {
 
     @Override
     public JobOfferDTO mapJobOfferToDTO(JobOffer jobOffer) {
-        return new JobOfferDTO.JobOfferDTOBuilder()
-                .jobOfferId(jobOffer.getJobOfferId())
-                .jobOfferTitle(jobOffer.getJobOfferTitle())
-                .description(jobOffer.getDescription())
-                .techSpecialization(jobOffer.getTechSpecialization())
-                .workType(jobOffer.getWorkType())
-                .city(jobOffer.getCity())
-                .experience(jobOffer.getExperience())
-                .salary(jobOffer.getSalary())
-                .mustHaveSkills(jobOffer.getMustHaveSkills())
-                .niceToHaveSkills(jobOffer.getNiceToHaveSkills())
-                .build();
+        return new JobOfferDTO(
+                jobOffer.getJobOfferId(),
+                jobOffer.getJobOfferTitle(),
+                jobOffer.getDescription(),
+                jobOffer.getTechSpecialization(),
+                jobOffer.getWorkType(),
+                jobOffer.getCity(),
+                jobOffer.getExperience(),
+                jobOffer.getSalary(),
+                jobOffer.getMustHaveSkills(),
+                jobOffer.getNiceToHaveSkills(),
+                jobOffer.getEmployer()
+                );
     }
 
     @Override
@@ -107,17 +110,51 @@ public class EmployerMapperImpl implements EmployerMapper {
 
     @Override
     public JobApplicationDTO mapJobApplicationToDTO(JobApplication jobApplication) {
-        return new JobApplicationDTO.JobApplicationDTOBuilder()
-                .applicationId(jobApplication.getApplicationId())
-                .applicationStatus(jobApplication.getApplicationStatus())
+        return new JobApplicationDTO(
+                jobApplication.getApplicationId(),
+                mapJobOfferToDTO(jobApplication.getJobOffer()),
+                mapEmployerToDTO(jobApplication.getEmployer()),
+                mapCandidateToDTO(jobApplication.getCandidate()),
+                jobApplication.getApplicationStatusEnum()
+        );
+    }
+
+    private CandidateDTO mapCandidateToDTO(Candidate candidate) {
+        return new CandidateDTO.Builder()
+                .candidateId(candidate.getCandidateId())
                 .build();
     }
+
+    public EmployerDTO mapEmployerToDTO(Employer employer) {
+        return new EmployerDTO.Builder()
+                .employerId(employer.getEmployerId())
+                .build();
+    }
+
 
     @Override
     public JobApplication mapToJobApplication(JobApplicationDTO jobApplicationDTO) {
         return new JobApplication.JobApplicationBuilder()
                 .applicationId(jobApplicationDTO.getApplicationId())
-                .jobApplicationStatus(jobApplicationDTO.getApplicationStatus())
+                .jobOffer(mapToJobOffer(jobApplicationDTO.getJobOffer()))
+                .employer(mapToEmployer(jobApplicationDTO.getEmployer()))
+                .candidate(mapToCandidate(jobApplicationDTO.getCandidate()))
+                .jobApplicationStatus(jobApplicationDTO.getApplicationStatusEnum())
                 .build();
     }
+
+
+    private Candidate mapToCandidate(CandidateDTO candidate) {
+        return new Candidate.Builder()
+                .candidateId(candidate.getCandidateId())
+                .build();
+    }
+
+    private Employer mapToEmployer(EmployerDTO employer) {
+        return new Employer.EmployerBuilder()
+                .employerId(employer.getEmployerId())
+                .build();
+
+    }
+
 }

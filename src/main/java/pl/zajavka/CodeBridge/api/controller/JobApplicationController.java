@@ -36,6 +36,17 @@ public class JobApplicationController {
         this.jobApplicationService = jobApplicationService;
     }
 
+    @PostMapping(CANDIDATE_APPLY_FOR_A_JOB)
+    public String applyForJob(
+            @PathVariable Integer jobOfferId,
+            Authentication authentication) {
+        System.out.println("Tutaj przychodzi Job Offer ID !!!!!!!!!!!!!   " + jobOfferId);
+
+        jobApplicationService.applyForJob(jobOfferId, authentication);
+
+        return "redirect:/candidate-portal/candidate-applications";
+    }
+
     @PostMapping(POST_EMPLOYER_JOB_APPLICATION_ACCEPT)
     public String acceptJobApplication(
             @RequestParam("applicationId") Integer applicationId) {
@@ -52,15 +63,6 @@ public class JobApplicationController {
         jobApplicationService.rejectJobApplication(applicationId);
 
         return "redirect:/employer-portal/applications-history";
-    }
-
-    @PostMapping(CANDIDATE_APPLY_FOR_A_JOB)
-    public String applyForJob(
-            @PathVariable Integer jobOfferId,
-            Authentication authentication) {
-        jobApplicationService.applyForJob(jobOfferId, authentication);
-
-        return "redirect:/candidate-portal/candidate-applications";
     }
 
     @GetMapping(CANDIDATE_GET_MY_APPLICATIONS)
@@ -80,7 +82,9 @@ public class JobApplicationController {
             Authentication authentication,
             Model model) {
 
-        List<JobApplicationDTO> employerJobApplications = jobApplicationService.getAllJobApplicationsByEmployerId(authentication);
+        List<JobApplicationDTO> employerJobApplications = jobApplicationService.getAllJobApplicationsByEmployerId(authentication).stream()
+                .sorted(Comparator.comparingInt(JobApplicationDTO::getApplicationId).reversed())
+                .collect(Collectors.toList());
 
         model.addAttribute("employerJobApplications", employerJobApplications);
 
@@ -92,7 +96,9 @@ public class JobApplicationController {
             Authentication authentication,
             Model model) {
 
-        List<ApplicationsHistoryDTO> employerHistoryApplications = jobApplicationService.getAllEmployerHistoryJobApplications(authentication);
+        List<ApplicationsHistoryDTO> employerHistoryApplications = jobApplicationService.getAllEmployerHistoryJobApplications(authentication).stream()
+                .sorted(Comparator.comparingInt(ApplicationsHistoryDTO::getApplicationHistoryId).reversed())
+                .collect(Collectors.toList());
         model.addAttribute("employerHistoryApplications", employerHistoryApplications);
 
         return "employer_portal_job_applications_history";
