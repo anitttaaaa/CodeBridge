@@ -50,4 +50,17 @@ public class CandidateEducationDTO {
     public Integer getCandidateId() {
         return candidateId;
     }
+
+    @Override
+    public String toString() {
+        return "CandidateEducationDTO{" +
+                "candidateEducationId=" + candidateEducationId +
+                ", institution='" + institution + '\'' +
+                ", degree='" + degree + '\'' +
+                ", fieldOfStudy='" + fieldOfStudy + '\'' +
+                ", fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                ", candidateId=" + candidateId +
+                '}';
+    }
 }

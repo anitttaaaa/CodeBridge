@@ -37,7 +37,6 @@ public class CandidateMapperEntityImpl implements CandidateEntityMapper {
                 .build();
     }
 
-    @Override
     public List<CandidateExperienceEntity> mapCandidateExperiencesToEntities(List<CandidateExperience> experiences) {
         List<CandidateExperienceEntity> entities = new ArrayList<>();
         for (CandidateExperience experience : experiences) {
@@ -55,7 +54,6 @@ public class CandidateMapperEntityImpl implements CandidateEntityMapper {
         return entities;
     }
 
-    @Override
     public List<CandidateProjectEntity> mapCandidateProjectsToEntities(List<CandidateProject> projects) {
         List<CandidateProjectEntity> entities = new ArrayList<>();
         for (CandidateProject project : projects) {
@@ -73,7 +71,6 @@ public class CandidateMapperEntityImpl implements CandidateEntityMapper {
         return entities;
     }
 
-    @Override
     public List<CandidateEducationEntity> mapCandidateEducationToEntities(List<CandidateEducation> education) {
         if (education == null) {
             return null;
@@ -93,7 +90,6 @@ public class CandidateMapperEntityImpl implements CandidateEntityMapper {
         return entities;
     }
 
-    @Override
     public List<CandidateCourseEntity> mapCandidateCoursesToEntities(List<CandidateCourse> courses) {
 
         List<CandidateCourseEntity> entities = new ArrayList<>();
@@ -137,7 +133,6 @@ public class CandidateMapperEntityImpl implements CandidateEntityMapper {
                 .build();
     }
 
-    @Override
     public List<CandidateExperience> mapCandidateExperienceEntitiesToDomain(List<CandidateExperienceEntity> experiences) {
 
         List<CandidateExperience> domainExperiences = new ArrayList<>();
@@ -155,7 +150,6 @@ public class CandidateMapperEntityImpl implements CandidateEntityMapper {
         return domainExperiences;
     }
 
-    @Override
     public List<CandidateProject> mapCandidateProjectEntitiesToDomain(List<CandidateProjectEntity> projects) {
 
         List<CandidateProject> domainProjects = new ArrayList<>();
@@ -174,7 +168,6 @@ public class CandidateMapperEntityImpl implements CandidateEntityMapper {
         return domainProjects;
     }
 
-    @Override
     public List<CandidateEducation> mapCandidateEducationEntitiesToDomain(List<CandidateEducationEntity> education) {
 
         List<CandidateEducation> domainEducation = new ArrayList<>();
@@ -192,7 +185,6 @@ public class CandidateMapperEntityImpl implements CandidateEntityMapper {
         return domainEducation;
     }
 
-    @Override
     public List<CandidateCourse> mapCandidateCourseEntitiesToDomain(List<CandidateCourseEntity> courses) {
 
         List<CandidateCourse> domainCourses = new ArrayList<>();

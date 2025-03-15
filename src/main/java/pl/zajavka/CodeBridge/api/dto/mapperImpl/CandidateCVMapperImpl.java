@@ -25,10 +25,10 @@ public class CandidateCVMapperImpl implements CandidateCVMapper {
                 .gitHub(candidate.getGitHub())
                 .techSpecialization(candidate.getTechSpecialization())
                 .candidateSkills(candidate.getCandidateSkills())
-                .candidateExperiences(mapCandidateExperiences(candidate.getCandidateExperiences())) // Mapowanie listy doświadczeń
-                .candidateProjects(mapCandidateProjects(candidate.getCandidateProjects())) // Mapowanie listy projektów
-                .candidateEducationStages(mapCandidateEducationStages(candidate.getCandidateEducationStages())) // Mapowanie listy edukacji
-                .candidateCourses(mapCandidateCourses(candidate.getCandidateCourses())) // Mapowanie listy kursów
+                .candidateExperiences(mapCandidateExperiences(candidate.getCandidateExperiences()))
+                .candidateProjects(mapCandidateProjects(candidate.getCandidateProjects()))
+                .candidateEducationStages(mapCandidateEducationStages(candidate.getCandidateEducationStages()))
+                .candidateCourses(mapCandidateCourses(candidate.getCandidateCourses()))
                 .hobby(candidate.getHobby())
                 .userId(candidate.getUserId())
                 .build();
@@ -126,7 +126,6 @@ public class CandidateCVMapperImpl implements CandidateCVMapper {
                 projectDTOList.add(projectDTO);
             }
         }
-
         return projectDTOList;
     }
 

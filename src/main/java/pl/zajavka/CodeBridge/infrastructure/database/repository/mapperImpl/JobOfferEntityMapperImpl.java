@@ -54,7 +54,6 @@ public class JobOfferEntityMapperImpl implements JobOfferEntityMapper {
                 .build();
     }
 
-    @Override
     public EmployerEntity mapEmployerToEntity(Employer employer) {
         return new EmployerEntity.Builder()
                 .employerId(employer.getEmployerId())

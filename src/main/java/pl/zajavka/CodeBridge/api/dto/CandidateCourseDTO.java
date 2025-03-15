@@ -14,6 +14,20 @@ public class CandidateCourseDTO {
     private final LocalDate toDate;
     private final Integer candidateId;
 
+    @Override
+    public String toString() {
+        return "CandidateCourseDTO{" +
+                "candidateCourseId=" + candidateCourseId +
+                ", institution='" + institution + '\'' +
+                ", courseTitle='" + courseTitle + '\'' +
+                ", description='" + description + '\'' +
+                ", technologies='" + technologies + '\'' +
+                ", fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                ", candidateId=" + candidateId +
+                '}';
+    }
+
     public CandidateCourseDTO(Integer candidateCourseId, String institution, String courseTitle, String description,
                               String technologies, LocalDate fromDate, LocalDate toDate, Integer candidateId) {
         this.candidateCourseId = candidateCourseId;

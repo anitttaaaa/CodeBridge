@@ -151,7 +151,7 @@ public class CandidateMapperImpl implements CandidateMapper {
                                 .fromDate(projectDTO.getFromDate())
                                 .toDate(projectDTO.getToDate())
                                 .projectLink(projectDTO.getProjectLink())
-                                .candidateId(projectDTO.getCandidateId())  // assuming CandidateProject has this field
+                                .candidateId(projectDTO.getCandidateId())
                                 .build()
                         )
                         .collect(Collectors.toList());

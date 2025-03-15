@@ -50,7 +50,6 @@ public class JobOfferDTO {
                 '}';
     }
 
-    // Gettery
     public Integer getJobOfferId() {
         return jobOfferId;
     }
@@ -95,7 +94,6 @@ public class JobOfferDTO {
         return employer;
     }
 
-    // Wewnętrzna klasa Builder
     public static class Builder {
 
         private Integer jobOfferId;

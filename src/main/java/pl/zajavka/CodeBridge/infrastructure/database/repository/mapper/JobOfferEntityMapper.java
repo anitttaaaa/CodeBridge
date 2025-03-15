@@ -7,8 +7,6 @@ import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
 
 public interface JobOfferEntityMapper {
 
-    EmployerEntity mapEmployerToEntity(Employer employerId);
-
     JobOffer mapToDomain(JobOfferEntity jobOfferEntity);
 
     JobOfferEntity mapToEntity(JobOffer jobOffer);

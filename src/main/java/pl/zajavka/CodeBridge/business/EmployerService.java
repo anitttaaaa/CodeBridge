@@ -20,7 +20,8 @@ public class EmployerService {
 
     private final EmployerDAO employerDAO;
     private final CandidateDAO candidateDAO;
-@Autowired
+
+    @Autowired
     public EmployerService(EmployerDAO employerDAO, CandidateDAO candidateDAO) {
         this.employerDAO = employerDAO;
         this.candidateDAO = candidateDAO;

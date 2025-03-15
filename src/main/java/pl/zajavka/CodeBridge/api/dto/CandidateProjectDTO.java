@@ -13,7 +13,6 @@ public class CandidateProjectDTO {
     private final String projectLink;
     private final Integer candidateId;
 
-    // Konstruktor zamiast buildera
     public CandidateProjectDTO(Integer candidateProjectId, String projectTitle, String technologies,
                                String description, LocalDate fromDate, LocalDate toDate, String projectLink, Integer candidateId) {
         this.candidateProjectId = candidateProjectId;
@@ -26,7 +25,6 @@ public class CandidateProjectDTO {
         this.candidateId = candidateId;
     }
 
-    // Gettery
     public Integer getCandidateProjectId() {
         return candidateProjectId;
     }
@@ -57,5 +55,19 @@ public class CandidateProjectDTO {
 
     public Integer getCandidateId() {
         return candidateId;
+    }
+
+    @Override
+    public String toString() {
+        return "CandidateProjectDTO{" +
+                "candidateProjectId=" + candidateProjectId +
+                ", projectTitle='" + projectTitle + '\'' +
+                ", technologies='" + technologies + '\'' +
+                ", description='" + description + '\'' +
+                ", fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                ", projectLink='" + projectLink + '\'' +
+                ", candidateId=" + candidateId +
+                '}';
     }
 }

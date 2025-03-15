@@ -13,17 +13,8 @@ public interface ApplicationsHistoryEntityMapper {
 
     ApplicationsHistory mapToDomain(ApplicationsHistoryEntity entity);
 
-    JobOffer mapJobOffer(JobOfferEntity jobOfferEntity);
-
-    Employer mapEmployer(EmployerEntity employerEntity);
-
-    Candidate mapCandidate(CandidateEntity candidateEntity);
 
     ApplicationsHistoryEntity mapToEntity(ApplicationsHistory applicationsHistory);
 
-    JobOfferEntity mapJobOfferEntity(JobOffer jobOffer);
 
-    EmployerEntity mapEmployerEntity(Employer employer);
-
-    CandidateEntity mapCandidateEntity(Candidate candidate);
 }

@@ -15,7 +15,8 @@ public class CandidateProjectService {
 
     private final CandidateService candidateService;
     private final CandidateProjectDAO candidateProjectDAO;
-@Autowired
+
+    @Autowired
     public CandidateProjectService(CandidateService candidateService,
                                    CandidateProjectDAO candidateProjectDAO) {
         this.candidateService = candidateService;
@@ -47,7 +48,7 @@ public class CandidateProjectService {
         Candidate candidate = candidateService.findLoggedInCandidate();
         Integer loggedInCandidateId = candidate.getCandidateId();
 
-        if(!candidateProject.getCandidateId().equals(loggedInCandidateId)){
+        if (!candidateProject.getCandidateId().equals(loggedInCandidateId)) {
             throw new AccessDeniedException("Unauthorized access.");
         }
         candidateProjectDAO.updateCandidateProject(candidateProject);

@@ -4,6 +4,7 @@ import pl.zajavka.CodeBridge.api.enums.SalaryEnum;
 import pl.zajavka.CodeBridge.api.enums.StatusEnum;
 import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CandidateDTO {
@@ -167,7 +168,6 @@ public class CandidateDTO {
         return new Builder();
     }
 
-    // Gettery
     public Integer getCandidateId() {
         return candidateId;
     }
@@ -238,5 +238,29 @@ public class CandidateDTO {
 
     public List<CandidateCourseDTO> getCandidateCourses() {
         return candidateCourses;
+    }
+
+    @Override
+    public String toString() {
+        return "CandidateDTO{" +
+                "candidateId=" + candidateId +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", status=" + status +
+                ", linkedIn='" + linkedIn + '\'' +
+                ", gitHub='" + gitHub + '\'' +
+                ", techSpecialization=" + techSpecialization +
+                ", aboutMe='" + aboutMe + '\'' +
+                ", hobby='" + hobby + '\'' +
+                ", userId=" + userId +
+                ", profilePhoto=" + Arrays.toString(profilePhoto) +
+                ", candidateSkills=" + candidateSkills +
+                ", candidateExperiences=" + candidateExperiences +
+                ", candidateProjects=" + candidateProjects +
+                ", candidateEducationStages=" + candidateEducationStages +
+                ", candidateCourses=" + candidateCourses +
+                '}';
     }
 }

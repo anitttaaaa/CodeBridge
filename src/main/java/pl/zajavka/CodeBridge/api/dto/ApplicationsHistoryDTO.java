@@ -10,6 +10,17 @@ public class ApplicationsHistoryDTO {
     private final CandidateDTO candidate;
     private final ApplicationStatusEnum applicationStatusEnum;
 
+    @Override
+    public String toString() {
+        return "ApplicationsHistoryDTO{" +
+                "applicationHistoryId=" + applicationHistoryId +
+                ", jobOffer=" + jobOffer +
+                ", employer=" + employer +
+                ", candidate=" + candidate +
+                ", applicationStatusEnum=" + applicationStatusEnum +
+                '}';
+    }
+
     private ApplicationsHistoryDTO(Builder builder) {
         this.applicationHistoryId = builder.applicationHistoryId;
         this.jobOffer = builder.jobOffer;

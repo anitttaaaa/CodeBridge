@@ -24,7 +24,6 @@ public class CandidateExperienceDTO {
                 '}';
     }
 
-    // Konstruktor z wszystkimi polami
     public CandidateExperienceDTO(
             Integer candidateExperienceId,
             String companyName,
@@ -42,7 +41,6 @@ public class CandidateExperienceDTO {
         this.candidateId = candidateId;
     }
 
-    // Gettery
     public Integer getCandidateExperienceId() {
         return candidateExperienceId;
     }

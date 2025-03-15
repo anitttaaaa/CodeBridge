@@ -26,7 +26,6 @@ public class ApplicationsHistoryEntityMapperImpl implements ApplicationsHistoryE
                 .build();
     }
 
-    @Override
     public JobOffer mapJobOffer(JobOfferEntity jobOfferEntity) {
 
         return new JobOffer.JobOfferBuilder()
@@ -43,8 +42,6 @@ public class ApplicationsHistoryEntityMapperImpl implements ApplicationsHistoryE
                 .build();
     }
 
-
-    @Override
     public Employer mapEmployer(EmployerEntity employerEntity) {
         return new Employer.EmployerBuilder()
                 .employerId(employerEntity.getEmployerId())
@@ -52,7 +49,6 @@ public class ApplicationsHistoryEntityMapperImpl implements ApplicationsHistoryE
                 .build();
     }
 
-    @Override
     public Candidate mapCandidate(CandidateEntity candidateEntity) {
         return new Candidate.Builder()
                 .candidateId(candidateEntity.getCandidateId())
@@ -65,7 +61,6 @@ public class ApplicationsHistoryEntityMapperImpl implements ApplicationsHistoryE
                 .build();
     }
 
-    @Override
     public ApplicationsHistoryEntity mapToEntity(ApplicationsHistory applicationsHistory) {
         return new ApplicationsHistoryEntity.Builder()
                 .applicationHistoryId(applicationsHistory.getApplicationHistoryId())
@@ -77,7 +72,6 @@ public class ApplicationsHistoryEntityMapperImpl implements ApplicationsHistoryE
     }
 
 
-    @Override
     public JobOfferEntity mapJobOfferEntity(JobOffer jobOffer) {
         return new JobOfferEntity.Builder()
                 .jobOfferId(jobOffer.getJobOfferId())
@@ -85,7 +79,6 @@ public class ApplicationsHistoryEntityMapperImpl implements ApplicationsHistoryE
     }
 
 
-    @Override
     public EmployerEntity mapEmployerEntity(Employer employer) {
         return new EmployerEntity.Builder()
                 .employerId(employer.getEmployerId())
@@ -93,7 +86,6 @@ public class ApplicationsHistoryEntityMapperImpl implements ApplicationsHistoryE
 
     }
 
-    @Override
     public CandidateEntity mapCandidateEntity(Candidate candidate) {
         return new CandidateEntity.Builder()
                 .candidateId(candidate.getCandidateId())

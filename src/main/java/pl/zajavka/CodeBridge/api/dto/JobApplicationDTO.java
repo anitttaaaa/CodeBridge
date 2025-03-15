@@ -9,7 +9,6 @@ public class JobApplicationDTO {
     private final CandidateDTO candidate;
     private final ApplicationStatusEnum applicationStatusEnum;
 
-    // Konstruktor prywatny - dostępny tylko przez Builder
     private JobApplicationDTO(Builder builder) {
         this.applicationId = builder.applicationId;
         this.jobOffer = builder.jobOffer;
@@ -49,7 +48,6 @@ public class JobApplicationDTO {
                 '}';
     }
 
-    // Wewnętrzna klasa Builder
     public static class Builder {
         private Integer applicationId;
         private JobOfferDTO jobOffer;
@@ -82,7 +80,6 @@ public class JobApplicationDTO {
             return this;
         }
 
-        // Metoda do budowy obiektu JobApplicationDTO
         public JobApplicationDTO build() {
             return new JobApplicationDTO(this);
         }

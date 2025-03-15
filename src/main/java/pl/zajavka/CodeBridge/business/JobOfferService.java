@@ -26,7 +26,8 @@ public class JobOfferService {
     private final EmployerService employerService;
     private final JobOfferDAO jobOfferDAO;
     private final JobOfferMapper jobOfferMapper;
-@Autowired
+
+    @Autowired
     public JobOfferService(CodeBridgeUserDetailsService codeBridgeUserDetailsService,
                            EmployerService employerService,
                            JobOfferDAO jobOfferDAO,
