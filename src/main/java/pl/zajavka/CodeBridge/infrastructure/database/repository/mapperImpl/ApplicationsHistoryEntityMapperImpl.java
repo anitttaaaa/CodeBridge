@@ -79,19 +79,10 @@ public class ApplicationsHistoryEntityMapperImpl implements ApplicationsHistoryE
 
     @Override
     public JobOfferEntity mapJobOfferEntity(JobOffer jobOffer) {
-        EmployerEntity employerEntity = new EmployerEntity(
-                jobOffer.getEmployer().getEmployerId(),
-                jobOffer.getEmployer().getCompanyName(),
-                jobOffer.getEmployer().getEmail(),
-                jobOffer.getEmployer().getNip(),
-                jobOffer.getEmployer().getUserId()
-        );
-
         return new JobOfferEntity.Builder()
                 .jobOfferId(jobOffer.getJobOfferId())
                 .jobOfferTitle(jobOffer.getJobOfferTitle())
                 .description(jobOffer.getDescription())
-                .employer(employerEntity)
                 .build();
     }
 

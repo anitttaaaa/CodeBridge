@@ -16,6 +16,19 @@ public class Employer {
     private final Set<JobOffer> jobOffers;
     private final Set<JobApplication> jobApplications;
 
+    @Override
+    public String toString() {
+        return "Employer{" +
+                "employerId=" + employerId +
+                ", companyName='" + companyName + '\'' +
+                ", email='" + email + '\'' +
+                ", nip='" + nip + '\'' +
+                ", userId=" + userId +
+                ", jobOffers=" + jobOffers +
+                ", jobApplications=" + jobApplications +
+                '}';
+    }
+
     private Employer(EmployerBuilder builder) {
         this.employerId = builder.employerId;
         this.companyName = builder.companyName;

@@ -53,6 +53,7 @@ public class JobApplicationController {
 
         jobApplicationService.acceptJobApplication(applicationId);
 
+
         return "redirect:/employer-portal/applications-history";
     }
 

@@ -19,7 +19,6 @@ public class JobOfferDTO {
     private final List<String> niceToHaveSkills;
     private final Employer employer;
 
-    // Konstruktor prywatny - dostępny tylko przez Builder
     private JobOfferDTO(Builder builder) {
         this.jobOfferId = builder.jobOfferId;
         this.jobOfferTitle = builder.jobOfferTitle;

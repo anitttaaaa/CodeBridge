@@ -98,7 +98,6 @@ public class JobOfferService {
         return jobOfferDAO.findAllJobOffers();
     }
 
-
     public List<JobOffer> getFilteredJobOffers(
             String techSpecialization,
             String workType,

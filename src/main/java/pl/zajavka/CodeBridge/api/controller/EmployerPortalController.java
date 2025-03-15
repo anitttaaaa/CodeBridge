@@ -173,7 +173,6 @@ public class EmployerPortalController {
 
     @GetMapping(value = GET_EMPLOYER_NEW_JOB_OFFER_FORM)
     public String showJobOfferForm(Model model) {
-        // Tworzymy pusty obiekt JobOfferDTO przy użyciu Buildera
         JobOfferDTO jobOfferDTO = new JobOfferDTO.Builder()
                 .jobOfferId(null)                             // jobOfferId (np. null, jeśli nie chcesz ustawiać wartości)
                 .jobOfferTitle("")                            // jobOfferTitle
@@ -188,20 +187,35 @@ public class EmployerPortalController {
                 .employer(null)                               // employer (tutaj zakładamy, że employer może być null)
                 .build();                                     // budujemy obiekt JobOfferDTO
 
-        // Przekazujemy obiekt do widoku
         model.addAttribute("jobOfferDTO", jobOfferDTO);
         return "employer_portal_new_job_offer";
     }
 
 
-
-
     @PostMapping(ADD_EMPLOYER_NEW_JOB_OFFER)
     public String addJobOffer(
-            @ModelAttribute("jobOfferDTO") JobOfferDTO jobOfferDTO,
+            @RequestParam("jobOfferTitle") String jobOfferTitle,
+            @RequestParam("description") String description,
+            @RequestParam("techSpecialization") String techSpecialization,
+            @RequestParam("workType") String workType,
+            @RequestParam("city") String city,
+            @RequestParam("experience") String experience,
+            @RequestParam("salary") String salary,
+            @RequestParam List<String> mustHaveSkills,
+            @RequestParam List<String> niceToHaveSkills,
             Authentication authentication) {
 
-        System.out.println(jobOfferDTO + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        JobOfferDTO jobOfferDTO = new JobOfferDTO.Builder()
+                .jobOfferTitle(jobOfferTitle)
+                .description(description)
+                .techSpecialization(TechSpecializationsEnum.valueOf(techSpecialization))
+                .workType(WorkTypesEnum.valueOf(workType))
+                .city(CitiesEnum.valueOf(city))
+                .experience(ExperiencesEnum.valueOf(experience))
+                .salary(SalaryEnum.valueOf(salary))
+                .mustHaveSkills(mustHaveSkills)
+                .niceToHaveSkills(niceToHaveSkills)
+                .build();
 
         JobOffer request = jobOfferMapper.mapToDomain(jobOfferDTO);
         jobOfferService.createJobOfferData(request, authentication);

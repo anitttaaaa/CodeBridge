@@ -48,9 +48,8 @@ public class EmployerRepository implements EmployerDAO {
         // Mapowanie ofert pracy i przypisanie pracodawcy
         employer.getJobOffers().stream()
                 .filter(jobOffer -> Objects.isNull(jobOffer.getJobOfferId()))
-                .map(jobOffer -> jobOfferEntityMapper.mapToEntity(jobOffer))
+                .map(jobOfferEntityMapper::mapToEntity)
                 .forEach(jobOfferEntity -> {
-                    // Tworzenie nowej encji JobOffer z przypisanym pracodawcą
                     JobOfferEntity jobOfferEntityWithEmployer = new JobOfferEntity.Builder()
                             .jobOfferId(jobOfferEntity.getJobOfferId())
                             .jobOfferTitle(jobOfferEntity.getJobOfferTitle())
@@ -62,16 +61,11 @@ public class EmployerRepository implements EmployerDAO {
                             .salary(jobOfferEntity.getSalary())
                             .mustHaveSkills(jobOfferEntity.getMustHaveSkills())
                             .niceToHaveSkills(jobOfferEntity.getNiceToHaveSkills())
-                            .employer(employerSaved) // przypisanie pracodawcy do oferty
+                            .employer(employerSaved)
                             .build();
 
-                    // Zapisz ofertę pracy w repozytorium
-
                     jobOfferJpaRepository.saveAndFlush(jobOfferEntityWithEmployer);
-
-                    System.out.println(jobOfferEntityWithEmployer + " %%%%%%%%%%%%%%%%%%%%%%%%%%");
                 });
-
     }
 
 

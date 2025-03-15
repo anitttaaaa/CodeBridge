@@ -15,19 +15,4 @@ public interface EmployerMapper {
 
     Employer mapToDomain(EmployerDTO employerDTO);
 
-    Set<JobOfferDTO> mapJobOffersToDTO(Set<JobOffer> jobOffers);
-
-    Set<JobApplicationDTO> mapJobApplicationsToDTO(Set<JobApplication> jobApplications);
-
-    Set<JobApplication> mapToJobApplications(Set<JobApplicationDTO> jobApplicationsDTO);
-
-    Set<JobOffer> mapToJobOffers(Set<JobOfferDTO> jobOffersDTO);
-
-    JobOfferDTO mapJobOfferToDTO(JobOffer jobOffer);
-
-    JobOffer mapToJobOffer(JobOfferDTO jobOfferDTO);
-
-    JobApplicationDTO mapJobApplicationToDTO(JobApplication jobApplication);
-
-    JobApplication mapToJobApplication(JobApplicationDTO jobApplicationDTO);
 }

@@ -140,8 +140,6 @@ public class JobApplicationService {
                 .candidate(candidateUpdated)
                 .applicationStatus(applicationStatusEnum)
                 .build();
-
-
         applicationsHistoryDAO.saveInHistory(jobApplicationAccepted);
 
         jobApplicationDAO.deleteById(applicationId);
