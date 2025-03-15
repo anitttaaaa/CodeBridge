@@ -21,6 +21,19 @@ public class JobOffer {
 
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JobOffer jobOffer = (JobOffer) o;
+        return Objects.equals(jobOfferId, jobOffer.jobOfferId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(jobOfferId);
+    }
+
+    @Override
     public String toString() {
         return "JobOffer{" +
                 "jobOfferId=" + jobOfferId +

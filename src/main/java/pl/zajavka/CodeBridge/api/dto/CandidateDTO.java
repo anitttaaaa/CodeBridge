@@ -6,6 +6,7 @@ import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class CandidateDTO {
 
@@ -262,5 +263,18 @@ public class CandidateDTO {
                 ", candidateEducationStages=" + candidateEducationStages +
                 ", candidateCourses=" + candidateCourses +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CandidateDTO that = (CandidateDTO) o;
+        return Objects.equals(candidateId, that.candidateId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(candidateId);
     }
 }

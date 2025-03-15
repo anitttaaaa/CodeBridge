@@ -4,6 +4,7 @@ import pl.zajavka.CodeBridge.api.enums.*;
 import pl.zajavka.CodeBridge.domain.Employer;
 
 import java.util.List;
+import java.util.Objects;
 
 public class JobOfferDTO {
 
@@ -31,6 +32,19 @@ public class JobOfferDTO {
         this.mustHaveSkills = builder.mustHaveSkills;
         this.niceToHaveSkills = builder.niceToHaveSkills;
         this.employer = builder.employer;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JobOfferDTO that = (JobOfferDTO) o;
+        return Objects.equals(jobOfferId, that.jobOfferId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(jobOfferId);
     }
 
     @Override

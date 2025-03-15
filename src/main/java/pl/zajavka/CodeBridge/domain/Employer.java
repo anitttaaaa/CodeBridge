@@ -4,6 +4,7 @@ import pl.zajavka.CodeBridge.infrastructure.database.entity.EmployerEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Employer {
@@ -15,6 +16,19 @@ public class Employer {
     private final Integer userId;
     private final Set<JobOffer> jobOffers;
     private final Set<JobApplication> jobApplications;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employer employer = (Employer) o;
+        return Objects.equals(employerId, employer.employerId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(employerId);
+    }
 
     @Override
     public String toString() {

@@ -26,10 +26,10 @@ public class EmployerEntity {
     @Column(name = "user_id")
     private Integer userId;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employer")
+    @OneToMany(mappedBy = "employer")
     private Set<JobOfferEntity> jobOffers;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employer")
+    @OneToMany(mappedBy = "employer")
     private Set<JobApplicationEntity> jobApplications;
 
     public EmployerEntity() {

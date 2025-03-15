@@ -46,7 +46,7 @@ public class JobOfferEntity {
     @JoinColumn(name = "employer_id")
     private EmployerEntity employer;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "jobOffer")
+    @OneToMany(mappedBy = "jobOffer")
     private Set<JobApplicationEntity> jobApplications;
 
     @ElementCollection

@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import pl.zajavka.CodeBridge.api.enums.StatusEnum;
 import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -59,20 +61,58 @@ public class CandidateEntity {
     @Column(name = "profile_photo", columnDefinition="bytea")
     private byte[] profilePhoto;
 
-    @OneToMany(mappedBy = "candidateId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "candidateId")
     private List<CandidateExperienceEntity> candidateExperiences;
 
-    @OneToMany(mappedBy = "candidateId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "candidateId")
     private List<CandidateProjectEntity> candidateProjects;
 
-    @OneToMany(mappedBy = "candidateId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "candidateId")
     private List<CandidateEducationEntity> candidateEducationStages;
 
-    @OneToMany(mappedBy = "candidateId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "candidateId")
     private List<CandidateCourseEntity> candidateCourses;
 
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "candidate")
     private Set<JobApplicationEntity> jobApplications;
+
+    @Override
+    public String toString() {
+        return "CandidateEntity{" +
+                "candidateId=" + candidateId +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", status=" + status +
+                ", userId=" + userId +
+                ", linkedIn='" + linkedIn + '\'' +
+                ", gitHub='" + gitHub + '\'' +
+                ", techSpecialization=" + techSpecialization +
+                ", aboutMe='" + aboutMe + '\'' +
+                ", hobby='" + hobby + '\'' +
+                ", candidateSkills=" + candidateSkills +
+                ", profilePhoto=" + Arrays.toString(profilePhoto) +
+                ", candidateExperiences=" + candidateExperiences +
+                ", candidateProjects=" + candidateProjects +
+                ", candidateEducationStages=" + candidateEducationStages +
+                ", candidateCourses=" + candidateCourses +
+                ", jobApplications=" + jobApplications +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CandidateEntity that = (CandidateEntity) o;
+        return Objects.equals(candidateId, that.candidateId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(candidateId);
+    }
 
     public CandidateEntity() {
     }
