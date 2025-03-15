@@ -40,7 +40,6 @@ public class JobApplicationController {
     public String applyForJob(
             @PathVariable Integer jobOfferId,
             Authentication authentication) {
-        System.out.println("Tutaj przychodzi Job Offer ID !!!!!!!!!!!!!   " + jobOfferId);
 
         jobApplicationService.applyForJob(jobOfferId, authentication);
 

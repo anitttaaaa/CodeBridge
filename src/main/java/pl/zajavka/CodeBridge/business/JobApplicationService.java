@@ -31,7 +31,8 @@ public class JobApplicationService {
     private final JobApplicationMapper jobApplicationMapper;
     private final ApplicationsHistoryMapper applicationsHistoryMapper;
     private final EmployerService employerService;
-@Autowired
+
+    @Autowired
     public JobApplicationService(CandidateService candidateService,
                                  JobApplicationDAO jobApplicationDAO,
                                  ApplicationsHistoryDAO applicationsHistoryDAO,
@@ -80,7 +81,6 @@ public class JobApplicationService {
                 .build();
 
 
-
         applicationsHistoryDAO.saveInHistory(jobApplicationRejected);
 
         jobApplicationDAO.deleteById(applicationId);
@@ -101,7 +101,7 @@ public class JobApplicationService {
                 .surname(candidateToUpdate.getSurname())
                 .email(candidateToUpdate.getEmail())
                 .phone(candidateToUpdate.getPhone())
-                .status(StatusEnum.HIRED.getDescription())
+                .status(StatusEnum.CURRENTLY_HIRED)
                 .linkedIn(candidateToUpdate.getLinkedIn())
                 .gitHub(candidateToUpdate.getGitHub())
                 .techSpecialization(candidateToUpdate.getTechSpecialization())
@@ -173,9 +173,6 @@ public class JobApplicationService {
                 .jobApplicationStatus(applicationStatusEnum)
                 .build();
 
-
-        System.out.println("Job Application - sprawdz czy pendieng !!!!!!!!!!!!!!!!!!! " + jobApplication);
-
         jobApplicationDAO.createJobApplication(jobApplication);
     }
 
@@ -183,7 +180,6 @@ public class JobApplicationService {
         JobOffer jobOffer = jobOfferService.findJobOffer(jobOfferId);
         return jobOffer.getEmployer().getEmployerId();
     }
-
 
     public List<JobApplicationDTO> getCandidateApplications(Authentication authentication) {
 
@@ -230,7 +226,6 @@ public class JobApplicationService {
 
         String candidateEmail = authentication.getName();
         Integer candidateId = candidateService.findCandidateByEmail(candidateEmail).getCandidateId();
-
 
 
         List<ApplicationsHistory> candidateHistoryApplications = jobApplicationDAO.findCandidateHistoryApplicationsByCandidateId(candidateId);

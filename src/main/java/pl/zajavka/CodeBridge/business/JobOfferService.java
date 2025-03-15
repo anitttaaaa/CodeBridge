@@ -56,7 +56,6 @@ public class JobOfferService {
                 .employer(employer)
                 .build();
 
-        System.out.println(jobOffer + " @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2");
 
         Set<JobOffer> jobOffers = new HashSet<>(employer.getJobOffers());
         jobOffers.add(jobOffer);

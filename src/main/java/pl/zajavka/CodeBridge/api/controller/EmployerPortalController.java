@@ -174,18 +174,18 @@ public class EmployerPortalController {
     @GetMapping(value = GET_EMPLOYER_NEW_JOB_OFFER_FORM)
     public String showJobOfferForm(Model model) {
         JobOfferDTO jobOfferDTO = new JobOfferDTO.Builder()
-                .jobOfferId(null)                             // jobOfferId (np. null, jeśli nie chcesz ustawiać wartości)
-                .jobOfferTitle("")                            // jobOfferTitle
-                .description("")                              // description
-                .techSpecialization(TechSpecializationsEnum.BACKEND)  // techSpecialization
-                .workType(WorkTypesEnum.REMOTE)               // workType
-                .city(CitiesEnum.WARSZAWA)                    // city
-                .experience(ExperiencesEnum.BEGINNER)         // experience
-                .salary(SalaryEnum.PLN_0_3000)                // salary
-                .mustHaveSkills(List.of())                    // mustHaveSkills (pusta lista)
-                .niceToHaveSkills(List.of())                  // niceToHaveSkills (pusta lista)
-                .employer(null)                               // employer (tutaj zakładamy, że employer może być null)
-                .build();                                     // budujemy obiekt JobOfferDTO
+                .jobOfferId(null)
+                .jobOfferTitle("")
+                .description("")
+                .techSpecialization(TechSpecializationsEnum.BACKEND)
+                .workType(WorkTypesEnum.REMOTE)
+                .city(CitiesEnum.WARSZAWA)
+                .experience(ExperiencesEnum.BEGINNER)
+                .salary(SalaryEnum.PLN_0_3000)
+                .mustHaveSkills(List.of())
+                .niceToHaveSkills(List.of())
+                .employer(null)
+                .build();
 
         model.addAttribute("jobOfferDTO", jobOfferDTO);
         return "employer_portal_new_job_offer";

@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.domain;
 
-import pl.zajavka.CodeBridge.api.enums.SalaryEnum;
-import pl.zajavka.CodeBridge.api.enums.SkillsEnum;
+import pl.zajavka.CodeBridge.api.enums.StatusEnum;
 import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ public class Candidate {
     private final String surname;
     private final String email;
     private final String phone;
-    private final String status;
+    private final StatusEnum status;
     private final Integer userId;
     private final String linkedIn;
     private final String gitHub;
@@ -56,7 +55,7 @@ public class Candidate {
         private String surname;
         private String email;
         private String phone;
-        private String status;
+        private StatusEnum status;
         private Integer userId;
         private String linkedIn;
         private String gitHub;
@@ -95,7 +94,7 @@ public class Candidate {
             return this;
         }
 
-        public Builder status(String status) {
+        public Builder status(StatusEnum status) {
             this.status = status;
             return this;
         }
@@ -186,7 +185,7 @@ public class Candidate {
         return phone;
     }
 
-    public String getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 

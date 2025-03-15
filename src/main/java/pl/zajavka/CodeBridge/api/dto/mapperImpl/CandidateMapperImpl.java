@@ -39,64 +39,67 @@ public class CandidateMapperImpl implements CandidateMapper {
     public List<CandidateExperienceDTO> mapCandidateExperiencesToDTO(List<CandidateExperience> experiences) {
         return experiences == null ? List.of() :
                 experiences.stream()
-                        .map(experience -> new CandidateExperienceDTO(
-                                experience.getCandidateExperienceId(),
-                                experience.getCompanyName(),
-                                experience.getCandidatePosition(),
-                                experience.getDescription(),
-                                experience.getFromDate(),
-                                experience.getToDate(),
-                                experience.getCandidateId()
-                        ))
+                        .map(experience -> new CandidateExperienceDTO.Builder()
+                                .candidateExperienceId(experience.getCandidateExperienceId())
+                                .companyName(experience.getCompanyName())
+                                .candidatePosition(experience.getCandidatePosition())
+                                .description(experience.getDescription())
+                                .fromDate(experience.getFromDate())
+                                .toDate(experience.getToDate())
+                                .candidateId(experience.getCandidateId())
+                                .build())
                         .collect(Collectors.toList());
     }
+
 
     public List<CandidateProjectDTO> mapCandidateProjectsToDTO(List<CandidateProject> projects) {
         return projects == null ? List.of() :
                 projects.stream()
-                        .map(project -> new CandidateProjectDTO(
-                                project.getCandidateProjectId(),
-                                project.getProjectTitle(),
-                                project.getTechnologies(),
-                                project.getDescription(),
-                                project.getFromDate(),
-                                project.getToDate(),
-                                project.getProjectLink(),
-                                project.getCandidateId()
-                        ))
+                        .map(project -> new CandidateProjectDTO.Builder()
+                                .candidateProjectId(project.getCandidateProjectId())
+                                .projectTitle(project.getProjectTitle())
+                                .technologies(project.getTechnologies())
+                                .description(project.getDescription())
+                                .fromDate(project.getFromDate())
+                                .toDate(project.getToDate())
+                                .projectLink(project.getProjectLink())
+                                .candidateId(project.getCandidateId())
+                                .build())
                         .collect(Collectors.toList());
     }
+
 
     public List<CandidateEducationDTO> mapCandidateEducationStagesToDTO(List<CandidateEducation> educationStages) {
         return educationStages == null ? List.of() :
                 educationStages.stream()
-                        .map(education -> new CandidateEducationDTO(
-                                education.getCandidateEducationId(),
-                                education.getInstitution(),
-                                education.getDegree(),
-                                education.getFieldOfStudy(),
-                                education.getFromDate(),
-                                education.getToDate(),
-                                education.getCandidateId()
-                        ))
+                        .map(education -> new CandidateEducationDTO.Builder()
+                                .candidateEducationId(education.getCandidateEducationId())
+                                .institution(education.getInstitution())
+                                .degree(education.getDegree())
+                                .fieldOfStudy(education.getFieldOfStudy())
+                                .fromDate(education.getFromDate())
+                                .toDate(education.getToDate())
+                                .candidateId(education.getCandidateId())
+                                .build())
                         .collect(Collectors.toList());
     }
 
     public List<CandidateCourseDTO> mapCandidateCoursesToDTO(List<CandidateCourse> courses) {
         return courses == null ? List.of() :
                 courses.stream()
-                        .map(course -> new CandidateCourseDTO(
-                                course.getCandidateCourseId(),
-                                course.getInstitution(),
-                                course.getCourseTitle(),
-                                course.getDescription(),
-                                course.getTechnologies(),
-                                course.getFromDate(),
-                                course.getToDate(),
-                                course.getCandidateId()
-                        ))
+                        .map(course -> new CandidateCourseDTO.Builder()
+                                .candidateCourseId(course.getCandidateCourseId())
+                                .institution(course.getInstitution())
+                                .courseTitle(course.getCourseTitle())
+                                .description(course.getDescription())
+                                .technologies(course.getTechnologies())
+                                .fromDate(course.getFromDate())
+                                .toDate(course.getToDate())
+                                .candidateId(course.getCandidateId())
+                                .build())
                         .collect(Collectors.toList());
     }
+
 
 
 
@@ -142,7 +145,7 @@ public class CandidateMapperImpl implements CandidateMapper {
     public List<CandidateProject> mapToCandidateProjects(List<CandidateProjectDTO> projectsDTO) {
         return projectsDTO == null ? List.of() :
                 projectsDTO.stream()
-                        .map(projectDTO -> new CandidateProject.Builder()
+                        .map(projectDTO -> projectDTO == null ? null : new CandidateProject.Builder()
                                 .candidateProjectId(projectDTO.getCandidateProjectId())
                                 .projectTitle(projectDTO.getProjectTitle())
                                 .technologies(projectDTO.getTechnologies())
@@ -150,9 +153,12 @@ public class CandidateMapperImpl implements CandidateMapper {
                                 .fromDate(projectDTO.getFromDate())
                                 .toDate(projectDTO.getToDate())
                                 .projectLink(projectDTO.getProjectLink())
+                                .candidateId(projectDTO.getCandidateId())  // assuming CandidateProject has this field
                                 .build()
-                        ).collect(Collectors.toList());
+                        )
+                        .collect(Collectors.toList());
     }
+
 
     public List<CandidateEducation> mapToCandidateEducationStages(List<CandidateEducationDTO> educationStagesDTO) {
         return educationStagesDTO == null ? List.of() :

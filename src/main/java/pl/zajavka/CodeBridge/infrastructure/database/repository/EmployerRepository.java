@@ -41,11 +41,9 @@ public class EmployerRepository implements EmployerDAO {
 
     @Override
     public void createJobOffer(Employer employer) {
-        // Mapowanie do encji Employer
         EmployerEntity employerToSave = employerEntityMapper.mapToEntity(employer);
         EmployerEntity employerSaved = employerJpaRepository.saveAndFlush(employerToSave);
 
-        // Mapowanie ofert pracy i przypisanie pracodawcy
         employer.getJobOffers().stream()
                 .filter(jobOffer -> Objects.isNull(jobOffer.getJobOfferId()))
                 .map(jobOfferEntityMapper::mapToEntity)

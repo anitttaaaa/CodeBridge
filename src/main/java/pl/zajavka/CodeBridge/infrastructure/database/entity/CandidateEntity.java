@@ -1,8 +1,7 @@
 package pl.zajavka.CodeBridge.infrastructure.database.entity;
 
 import jakarta.persistence.*;
-import pl.zajavka.CodeBridge.api.enums.SalaryEnum;
-import pl.zajavka.CodeBridge.api.enums.SkillsEnum;
+import pl.zajavka.CodeBridge.api.enums.StatusEnum;
 import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 
 import java.util.List;
@@ -30,7 +29,8 @@ public class CandidateEntity {
     private String phone;
 
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status;
 
     @Column(name = "user_id")
     private Integer userId;
@@ -105,7 +105,7 @@ public class CandidateEntity {
         private String surname;
         private String email;
         private String phone;
-        private String status;
+        private StatusEnum status;
         private Integer userId;
         private String linkedIn;
         private String gitHub;
@@ -145,7 +145,7 @@ public class CandidateEntity {
             return this;
         }
 
-        public Builder status(String status) {
+        public Builder status(StatusEnum status) {
             this.status = status;
             return this;
         }
@@ -240,7 +240,7 @@ public class CandidateEntity {
         return phone;
     }
 
-    public String getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 

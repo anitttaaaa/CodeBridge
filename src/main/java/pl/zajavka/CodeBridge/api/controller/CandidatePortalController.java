@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.zajavka.CodeBridge.api.dto.*;
 import pl.zajavka.CodeBridge.api.dto.mapper.*;
 import pl.zajavka.CodeBridge.api.enums.SkillsEnum;
+import pl.zajavka.CodeBridge.api.enums.StatusEnum;
 import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 import pl.zajavka.CodeBridge.business.*;
 import pl.zajavka.CodeBridge.domain.*;
@@ -201,7 +202,7 @@ public class CandidatePortalController {
                 .surname(candidate.getSurname())
                 .email(candidate.getEmail())
                 .phone(candidate.getPhone())
-                .status(status)  // Nowy status
+                .status(StatusEnum.valueOf(status))
                 .linkedIn(candidate.getLinkedIn())
                 .gitHub(candidate.getGitHub())
                 .techSpecialization(candidate.getTechSpecialization())
@@ -259,7 +260,7 @@ public class CandidatePortalController {
                     .aboutMe(candidate.getAboutMe())
                     .hobby(candidate.getHobby())
                     .userId(candidate.getUserId())
-                    .profilePhoto(profilePhotoData)  // Nowe zdjęcie profilowe
+                    .profilePhoto(profilePhotoData)
                     .candidateSkills(candidate.getCandidateSkills())
                     .candidateExperiences(candidate.getCandidateExperiences())
                     .candidateProjects(candidate.getCandidateProjects())

@@ -1,5 +1,7 @@
 package pl.zajavka.CodeBridge.api.dto;
 
+import pl.zajavka.CodeBridge.api.enums.SalaryEnum;
+import pl.zajavka.CodeBridge.api.enums.StatusEnum;
 import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 
 import java.util.List;
@@ -11,7 +13,7 @@ public class CandidateDTO {
     private final String surname;
     private final String email;
     private final String phone;
-    private final String status;
+    private final StatusEnum status;
     private final String linkedIn;
     private final String gitHub;
     private final TechSpecializationsEnum techSpecialization;
@@ -52,7 +54,7 @@ public class CandidateDTO {
         private String surname;
         private String email;
         private String phone;
-        private String status;
+        private StatusEnum status;
         private String linkedIn;
         private String gitHub;
         private TechSpecializationsEnum techSpecialization;
@@ -91,7 +93,7 @@ public class CandidateDTO {
             return this;
         }
 
-        public Builder status(String status) {
+        public Builder status(StatusEnum status) {
             this.status = status;
             return this;
         }
@@ -186,7 +188,7 @@ public class CandidateDTO {
         return phone;
     }
 
-    public String getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 

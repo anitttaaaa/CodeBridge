@@ -34,7 +34,7 @@
                                 <select class="form-select" id="statusSelect" name="status">
                                     <option value="" selected>Choose...</option>
                                     <option th:each="status : ${T(pl.zajavka.CodeBridge.api.enums.StatusEnum).values()}"
-                                            th:value="${status.description}" th:text="${status.description}">
+                                            th:value="${status}" th:text="${status}">
                                     </option>
                                 </select>
                             </div>

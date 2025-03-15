@@ -128,7 +128,7 @@
                                th:if="${candidate.gitHub != null}"></a>
                         </p>
                         <i class="bi me-2"
-                           th:classappend="${candidate.status == 'Actively looking for a job' ? 'bi-person-fill text-success' : (candidate.status == 'Currently employed' ? 'bi-person-fill text-danger' : 'bi-question-circle')}"></i>
+                           th:classappend="${candidate.status == ' LOOKING_FOR_A_JOB' ? 'bi-person-fill text-success' : (candidate.status == 'CURRENTLY_HIRED' ? 'bi-person-fill text-danger' : 'bi-question-circle')}"></i>
 
                         <!-- Sprawdzenie, czy status kandydata jest pusty -->
                         <span th:if="${candidate.status == null}">Status: No information</span>
@@ -161,8 +161,8 @@
                                     <select class="form-control" id="status" name="status">
                                         <option value="" disabled selected>Choose...</option>
                                         <option th:each="status : ${T(pl.zajavka.CodeBridge.api.enums.StatusEnum).values()}"
-                                                th:value="${status.getDescription()}"
-                                                th:text="${status.getDescription()}">
+                                                th:value="${status}"
+                                                th:text="${status}">
                                         </option>
                                     </select>
                                 </div>

@@ -33,97 +33,66 @@ public class CandidateCVMapperImpl implements CandidateCVMapper {
                 .build();
     }
 
-    @Override
-    public List<CandidateExperienceDTO> mapCandidateExperiences(List<CandidateExperience> experiences) {
-        if (experiences == null) return null;
-        return experiences.stream()
-                .map(this::mapCandidateExperienceToDTO)
-                .collect(Collectors.toList());
-    }
 
-    @Override
-    public List<CandidateProjectDTO> mapCandidateProjects(List<CandidateProject> projects) {
-        if (projects == null) return null;
-        return projects.stream()
-                .map(this::mapCandidateProjectToDTO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<CandidateEducationDTO> mapCandidateEducationStages(List<CandidateEducation> educationStages) {
-        if (educationStages == null) return null;
-        return educationStages.stream()
-                .map(this::mapCandidateEducationToDTO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public List<CandidateCourseDTO> mapCandidateCourses(List<CandidateCourse> courses) {
         if (courses == null) return null;
         return courses.stream()
-                .map(this::mapCandidateCourseToDTO)
+                .map(course -> course == null ? null : CandidateCourseDTO.builder()
+                        .candidateCourseId(course.getCandidateCourseId())
+                        .institution(course.getInstitution())
+                        .courseTitle(course.getCourseTitle())
+                        .description(course.getDescription())
+                        .technologies(course.getTechnologies())
+                        .fromDate(course.getFromDate())
+                        .toDate(course.getToDate())
+                        .candidateId(course.getCandidateId())
+                        .build())
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public CandidateCourseDTO mapCandidateCourseToDTO(CandidateCourse course) {
-        if (course == null) return null;
-        return new CandidateCourseDTO(
-                course.getCandidateCourseId(),
-                course.getInstitution(),
-                course.getCourseTitle(),
-                course.getDescription(),
-                course.getTechnologies(),
-                course.getFromDate(),
-                course.getToDate(),
-                course.getCandidateId()
-                );
+    public List<CandidateEducationDTO> mapCandidateEducationStages(List<CandidateEducation> educationStages) {
+        if (educationStages == null) return null;
+        return educationStages.stream()
+                .map(education -> education == null ? null : CandidateEducationDTO.builder()
+                        .candidateEducationId(education.getCandidateEducationId())
+                        .institution(education.getInstitution())
+                        .degree(education.getDegree())
+                        .fieldOfStudy(education.getFieldOfStudy())
+                        .fromDate(education.getFromDate())
+                        .toDate(education.getToDate())
+                        .candidateId(education.getCandidateId())
+                        .build())
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public CandidateEducationDTO mapCandidateEducationToDTO(CandidateEducation education) {
-        if (education == null) return null;
-        return new CandidateEducationDTO(
-                education.getCandidateEducationId(),
-                education.getInstitution(),
-                education.getDegree(),
-                education.getFieldOfStudy(),
-                education.getFromDate(),
-                education.getToDate(),
-                education.getCandidateId()
-        );
-
+    public List<CandidateExperienceDTO> mapCandidateExperiences(List<CandidateExperience> experiences) {
+        if (experiences == null) return null;
+        return experiences.stream()
+                .map(experience -> experience == null ? null : CandidateExperienceDTO.builder()
+                        .candidateExperienceId(experience.getCandidateExperienceId())
+                        .companyName(experience.getCompanyName())
+                        .candidatePosition(experience.getCandidatePosition())
+                        .description(experience.getDescription())
+                        .fromDate(experience.getFromDate())
+                        .toDate(experience.getToDate())
+                        .candidateId(experience.getCandidateId())
+                        .build())
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public CandidateExperienceDTO mapCandidateExperienceToDTO(CandidateExperience experience) {
-        if (experience == null) {
-            return null;
-        }
-
-        return new CandidateExperienceDTO(
-                experience.getCandidateExperienceId(),
-                experience.getCompanyName(),
-                experience.getCandidatePosition(),
-                experience.getDescription(),
-                experience.getFromDate(),
-                experience.getToDate(),
-                experience.getCandidateId()
-        );
-    }
-
-    @Override
-    public CandidateProjectDTO mapCandidateProjectToDTO(CandidateProject project) {
-        if (project == null) return null;
-        return new CandidateProjectDTO(
-                project.getCandidateProjectId(),
-                project.getProjectTitle(),
-                project.getTechnologies(),
-                project.getDescription(),
-                project.getFromDate(),
-                project.getToDate(),
-                project.getProjectLink(),
-                project.getCandidateId()
-        );
+    public List<CandidateProjectDTO> mapCandidateProjects(List<CandidateProject> projects) {
+        if (projects == null) return null;
+        return projects.stream()
+                .map(project -> project == null ? null : CandidateProjectDTO.builder()
+                        .candidateProjectId(project.getCandidateProjectId())
+                        .projectTitle(project.getProjectTitle())
+                        .technologies(project.getTechnologies())
+                        .description(project.getDescription())
+                        .fromDate(project.getFromDate())
+                        .toDate(project.getToDate())
+                        .projectLink(project.getProjectLink())
+                        .candidateId(project.getCandidateId())
+                        .build())
+                .collect(Collectors.toList());
     }
 }
