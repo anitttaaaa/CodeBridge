@@ -15,17 +15,6 @@ import pl.zajavka.CodeBridge.domain.JobOffer;
 public class ApplicationHistoryMapperImpl implements ApplicationsHistoryMapper {
 
     @Override
-    public ApplicationsHistoryDTO mapToDto(ApplicationsHistory applicationsHistory) {
-        return new ApplicationsHistoryDTO.Builder()
-                .applicationHistoryId(applicationsHistory.getApplicationHistoryId())
-                .jobOffer(mapJobOffer(applicationsHistory.getJobOffer()))
-                .employer(mapEmployer(applicationsHistory.getEmployer()))
-                .candidate(mapCandidate(applicationsHistory.getCandidate()))
-                .applicationStatus(applicationsHistory.getApplicationStatusEnum())
-                .build();
-    }
-
-    @Override
     public ApplicationsHistory mapToDomain(ApplicationsHistoryDTO applicationsHistoryDTO) {
         return new ApplicationsHistory.Builder()
                 .applicationHistoryId(applicationsHistoryDTO.getApplicationHistoryId())
@@ -36,25 +25,6 @@ public class ApplicationHistoryMapperImpl implements ApplicationsHistoryMapper {
                 .build();
     }
 
-    @Override
-    public JobOfferDTO mapJobOffer(JobOffer jobOffer) {
-        return new JobOfferDTO(
-                jobOffer.getJobOfferId(),
-                jobOffer.getJobOfferTitle(),
-                jobOffer.getDescription(),
-                jobOffer.getTechSpecialization(),
-                jobOffer.getWorkType(),
-                jobOffer.getCity(),
-                jobOffer.getExperience(),
-                jobOffer.getSalary(),
-                jobOffer.getMustHaveSkills(),
-                jobOffer.getNiceToHaveSkills(),
-                jobOffer.getEmployer()
-        );
-    }
-
-
-    @Override
     public JobOffer mapJobOfferToDomain(JobOfferDTO jobOfferDTO) {
         return new JobOffer.JobOfferBuilder()
                 .jobOfferId(jobOfferDTO.getJobOfferId())
@@ -70,42 +40,13 @@ public class ApplicationHistoryMapperImpl implements ApplicationsHistoryMapper {
                 .build();
     }
 
-    @Override
-    public EmployerDTO mapEmployer(Employer employer) {
-        return new EmployerDTO.Builder()
-                .employerId(employer.getEmployerId())
-                .companyName(employer.getCompanyName())
-                .email(employer.getEmail())
-                .nip(employer.getNip())
-                .userId(employer.getUserId())
-                .build();
-    }
-
-    @Override
     public Employer mapEmployerToDomain(EmployerDTO employerDTO) {
         return new Employer.EmployerBuilder()
                 .employerId(employerDTO.getEmployerId())
                 .companyName(employerDTO.getCompanyName())
-                .email(employerDTO.getEmail())
-                .nip(employerDTO.getNip())
-                .userId(employerDTO.getUserId())
                 .build();
     }
 
-    @Override
-    public CandidateDTO mapCandidate(Candidate candidate) {
-        return new CandidateDTO.Builder()
-                .candidateId(candidate.getCandidateId())
-                .name(candidate.getName())
-                .surname(candidate.getSurname())
-                .email(candidate.getEmail())
-                .phone(candidate.getPhone())
-                .techSpecialization(candidate.getTechSpecialization())
-                .candidateSkills(candidate.getCandidateSkills())
-                .build();
-    }
-
-    @Override
     public Candidate mapCandidateToDomain(CandidateDTO candidateDTO) {
         return new Candidate.Builder()
                 .candidateId(candidateDTO.getCandidateId())
@@ -117,5 +58,65 @@ public class ApplicationHistoryMapperImpl implements ApplicationsHistoryMapper {
                 .candidateSkills(candidateDTO.getCandidateSkills())
                 .build();
     }
+
+    @Override
+    public ApplicationsHistoryDTO mapToDto(ApplicationsHistory applicationsHistory) {
+        return new ApplicationsHistoryDTO.Builder()
+                .applicationHistoryId(applicationsHistory.getApplicationHistoryId())
+                .jobOffer(mapJobOfferToDTO(applicationsHistory.getJobOffer()))
+                .employer(mapEmployerToDTO(applicationsHistory.getEmployer()))
+                .candidate(mapCandidateToDTO(applicationsHistory.getCandidate()))
+                .applicationStatus(applicationsHistory.getApplicationStatusEnum())
+                .build();
+    }
+
+
+
+
+    public JobOfferDTO mapJobOfferToDTO(JobOffer jobOffer) {
+        return new JobOfferDTO.Builder()
+                .jobOfferId(jobOffer.getJobOfferId())
+                .jobOfferTitle(jobOffer.getJobOfferTitle())
+                .description(jobOffer.getDescription())
+                .techSpecialization(jobOffer.getTechSpecialization())
+                .workType(jobOffer.getWorkType())
+                .city(jobOffer.getCity())
+                .experience(jobOffer.getExperience())
+                .salary(jobOffer.getSalary())
+                .mustHaveSkills(jobOffer.getMustHaveSkills())
+                .niceToHaveSkills(jobOffer.getNiceToHaveSkills())
+                .build();
+    }
+
+
+
+
+
+
+    public EmployerDTO mapEmployerToDTO(Employer employer) {
+        return new EmployerDTO.Builder()
+                .employerId(employer.getEmployerId())
+                .companyName(employer.getCompanyName())
+                .email(employer.getEmail())
+                .nip(employer.getNip())
+                .userId(employer.getUserId())
+                .build();
+    }
+
+
+
+    public CandidateDTO mapCandidateToDTO(Candidate candidate) {
+        return new CandidateDTO.Builder()
+                .candidateId(candidate.getCandidateId())
+                .name(candidate.getName())
+                .surname(candidate.getSurname())
+                .email(candidate.getEmail())
+                .phone(candidate.getPhone())
+                .techSpecialization(candidate.getTechSpecialization())
+                .candidateSkills(candidate.getCandidateSkills())
+                .build();
+    }
+
+
 }
 

@@ -28,25 +28,18 @@ public class ApplicationsHistoryEntityMapperImpl implements ApplicationsHistoryE
 
     @Override
     public JobOffer mapJobOffer(JobOfferEntity jobOfferEntity) {
-        Employer employer = new Employer.EmployerBuilder()
-                .employerId(jobOfferEntity.getEmployer().getEmployerId())
-                .companyName(jobOfferEntity.getEmployer().getCompanyName())
-                .email(jobOfferEntity.getEmployer().getEmail())
-                .nip(jobOfferEntity.getEmployer().getNip())
-                .userId(jobOfferEntity.getEmployer().getUserId())
-                .build();
 
         return new JobOffer.JobOfferBuilder()
                 .jobOfferId(jobOfferEntity.getJobOfferId())
                 .jobOfferTitle(jobOfferEntity.getJobOfferTitle())
                 .description(jobOfferEntity.getDescription())
                 .techSpecialization(TechSpecializationsEnum.valueOf(jobOfferEntity.getTechSpecialization().name()))
-                .employer(employer)
                 .workType(jobOfferEntity.getWorkType())
                 .city(jobOfferEntity.getCity())
                 .experience(jobOfferEntity.getExperience())
                 .salary(jobOfferEntity.getSalary())
                 .mustHaveSkills(jobOfferEntity.getMustHaveSkills())
+                .niceToHaveSkills(jobOfferEntity.getNiceToHaveSkills())
                 .build();
     }
 
@@ -56,9 +49,6 @@ public class ApplicationsHistoryEntityMapperImpl implements ApplicationsHistoryE
         return new Employer.EmployerBuilder()
                 .employerId(employerEntity.getEmployerId())
                 .companyName(employerEntity.getCompanyName())
-                .email(employerEntity.getEmail())
-                .nip(employerEntity.getNip())
-                .userId(employerEntity.getUserId())
                 .build();
     }
 
@@ -70,7 +60,6 @@ public class ApplicationsHistoryEntityMapperImpl implements ApplicationsHistoryE
                 .surname(candidateEntity.getSurname())
                 .email(candidateEntity.getEmail())
                 .phone(candidateEntity.getPhone())
-                .userId(candidateEntity.getUserId())
                 .techSpecialization(candidateEntity.getTechSpecialization())
                 .candidateSkills(candidateEntity.getCandidateSkills())
                 .build();

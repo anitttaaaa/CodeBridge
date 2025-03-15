@@ -23,8 +23,7 @@ public class JobOfferEntityMapperImpl implements JobOfferEntityMapper {
                 .workType(jobOfferEntity.getWorkType())
                 .city(jobOfferEntity.getCity())
                 .experience(jobOfferEntity.getExperience())
-                // Użycie SalaryEnum, upewniając się, że jest to odpowiednia wartość z enumu
-                .salary(jobOfferEntity.getSalary())// Zakładając, że w encji jest przechowywana wartość w postaci String
+                .salary(jobOfferEntity.getSalary())
                 .employer(mapEmployerToDomain(jobOfferEntity.getEmployer()))
                 .mustHaveSkills(jobOfferEntity.getMustHaveSkills())
                 .niceToHaveSkills(jobOfferEntity.getNiceToHaveSkills())
@@ -35,9 +34,6 @@ public class JobOfferEntityMapperImpl implements JobOfferEntityMapper {
         return new Employer.EmployerBuilder()
                 .employerId(employerEntity.getEmployerId())
                 .companyName(employerEntity.getCompanyName())
-                .email(employerEntity.getEmail())
-                .nip(employerEntity.getNip())
-                .userId(employerEntity.getUserId())
                 .build();
     }
 
@@ -51,8 +47,7 @@ public class JobOfferEntityMapperImpl implements JobOfferEntityMapper {
                 .workType(jobOffer.getWorkType())
                 .city(jobOffer.getCity())
                 .experience(jobOffer.getExperience())
-                // Użycie SalaryEnum, upewniając się, że jest to odpowiednia wartość z enumu
-                .salary(jobOffer.getSalary())// Zakładając, że w encji jest przechowywana wartość w postaci String
+                .salary(jobOffer.getSalary())
                 .employer(mapEmployerToEntity(jobOffer.getEmployer()))
                 .mustHaveSkills(jobOffer.getMustHaveSkills())
                 .niceToHaveSkills(jobOffer.getNiceToHaveSkills())

@@ -9,16 +9,14 @@ public class JobApplicationDTO {
     private final CandidateDTO candidate;
     private final ApplicationStatusEnum applicationStatusEnum;
 
-
-    public JobApplicationDTO(Integer applicationId, JobOfferDTO jobOffer, EmployerDTO employer,
-                             CandidateDTO candidate, ApplicationStatusEnum applicationStatusEnum) {
-        this.applicationId = applicationId;
-        this.jobOffer = jobOffer;
-        this.employer = employer;
-        this.candidate = candidate;
-        this.applicationStatusEnum = applicationStatusEnum;
+    // Konstruktor prywatny - dostępny tylko przez Builder
+    private JobApplicationDTO(Builder builder) {
+        this.applicationId = builder.applicationId;
+        this.jobOffer = builder.jobOffer;
+        this.employer = builder.employer;
+        this.candidate = builder.candidate;
+        this.applicationStatusEnum = builder.applicationStatusEnum;
     }
-
 
     public Integer getApplicationId() {
         return applicationId;
@@ -49,5 +47,44 @@ public class JobApplicationDTO {
                 ", candidate=" + candidate +
                 ", applicationStatusEnum=" + applicationStatusEnum +
                 '}';
+    }
+
+    // Wewnętrzna klasa Builder
+    public static class Builder {
+        private Integer applicationId;
+        private JobOfferDTO jobOffer;
+        private EmployerDTO employer;
+        private CandidateDTO candidate;
+        private ApplicationStatusEnum applicationStatusEnum;
+
+        public Builder applicationId(Integer applicationId) {
+            this.applicationId = applicationId;
+            return this;
+        }
+
+        public Builder jobOffer(JobOfferDTO jobOffer) {
+            this.jobOffer = jobOffer;
+            return this;
+        }
+
+        public Builder employer(EmployerDTO employer) {
+            this.employer = employer;
+            return this;
+        }
+
+        public Builder candidate(CandidateDTO candidate) {
+            this.candidate = candidate;
+            return this;
+        }
+
+        public Builder applicationStatusEnum(ApplicationStatusEnum applicationStatusEnum) {
+            this.applicationStatusEnum = applicationStatusEnum;
+            return this;
+        }
+
+        // Metoda do budowy obiektu JobApplicationDTO
+        public JobApplicationDTO build() {
+            return new JobApplicationDTO(this);
+        }
     }
 }

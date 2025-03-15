@@ -9,7 +9,7 @@ import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.Candidate
 public class CandidateCourseEntityMapperImpl implements CandidateCourseEntityMapper {
 
     @Override
-    public CandidateCourse mapFromEntity(CandidateCourseEntity entity) {
+    public CandidateCourse mapToDomain(CandidateCourseEntity entity) {
         if (entity == null) {
             return null;
         }

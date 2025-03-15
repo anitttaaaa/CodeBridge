@@ -15,15 +15,4 @@ public interface JobApplicationMapper {
 
     JobApplication mapToDomain(JobApplicationDTO jobApplicationDTO);
 
-    JobOfferDTO mapJobOfferToDto(JobOffer jobOffer);
-
-    EmployerDTO mapEmployerToDto(Employer employer);
-
-    CandidateDTO mapCandidateToDto(Candidate candidate);
-
-    JobOffer mapJobOfferFromDto(JobOfferDTO jobOfferDTO);
-
-    Employer mapEmployerFromDto(EmployerDTO employerDTO);
-
-    Candidate mapCandidateFromDto(CandidateDTO candidateDTO);
 }

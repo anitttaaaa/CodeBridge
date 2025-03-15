@@ -15,12 +15,5 @@ public interface ApplicationsHistoryMapper {
 
     ApplicationsHistory mapToDomain(ApplicationsHistoryDTO applicationsHistoryDTO);
 
-    JobOfferDTO mapJobOffer(JobOffer jobOffer);
-    JobOffer mapJobOfferToDomain(JobOfferDTO jobOfferDTO);
 
-    EmployerDTO mapEmployer(Employer employer);
-    Employer mapEmployerToDomain(EmployerDTO employerDTO);
-
-    CandidateDTO mapCandidate(Candidate candidate);
-    Candidate mapCandidateToDomain(CandidateDTO candidateDTO);
 }

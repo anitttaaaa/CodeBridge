@@ -173,25 +173,26 @@ public class EmployerPortalController {
 
     @GetMapping(value = GET_EMPLOYER_NEW_JOB_OFFER_FORM)
     public String showJobOfferForm(Model model) {
-        // Tworzymy pusty obiekt JobOfferDTO przy użyciu konstruktora
-        JobOfferDTO jobOfferDTO = new JobOfferDTO(
-                null,               // jobOfferId (np. null, jeśli nie chcesz ustawiać wartości)
-                "",                 // jobOfferTitle
-                "",                 // description
-                TechSpecializationsEnum.BACKEND,                 // techSpecialization
-                WorkTypesEnum.REMOTE,                 // workType
-                CitiesEnum.WARSZAWA,                 // city
-                ExperiencesEnum.BEGINNER,                 // experience
-                SalaryEnum.PLN_0_3000, // salary (tu zakładam, że domyślną wartością jest najniższy próg)
-                List.of(),          // mustHaveSkills (pusta lista)
-                List.of(),          // niceToHaveSkills (pusta lista)
-                null                // employer (tutaj zakładam, że employer może być null)
-        );
+        // Tworzymy pusty obiekt JobOfferDTO przy użyciu Buildera
+        JobOfferDTO jobOfferDTO = new JobOfferDTO.Builder()
+                .jobOfferId(null)                             // jobOfferId (np. null, jeśli nie chcesz ustawiać wartości)
+                .jobOfferTitle("")                            // jobOfferTitle
+                .description("")                              // description
+                .techSpecialization(TechSpecializationsEnum.BACKEND)  // techSpecialization
+                .workType(WorkTypesEnum.REMOTE)               // workType
+                .city(CitiesEnum.WARSZAWA)                    // city
+                .experience(ExperiencesEnum.BEGINNER)         // experience
+                .salary(SalaryEnum.PLN_0_3000)                // salary
+                .mustHaveSkills(List.of())                    // mustHaveSkills (pusta lista)
+                .niceToHaveSkills(List.of())                  // niceToHaveSkills (pusta lista)
+                .employer(null)                               // employer (tutaj zakładamy, że employer może być null)
+                .build();                                     // budujemy obiekt JobOfferDTO
 
         // Przekazujemy obiekt do widoku
         model.addAttribute("jobOfferDTO", jobOfferDTO);
         return "employer_portal_new_job_offer";
     }
+
 
 
 

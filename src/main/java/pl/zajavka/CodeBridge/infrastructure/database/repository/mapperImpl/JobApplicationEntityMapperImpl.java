@@ -17,91 +17,49 @@ public class JobApplicationEntityMapperImpl implements JobApplicationEntityMappe
 
     @Override
     public JobApplicationEntity mapToEntity(JobApplication jobApplication) {
-        JobOfferEntity jobOfferEntity = new JobOfferEntity.Builder()
-                .jobOfferId(jobApplication.getJobOffer().getJobOfferId())
-                .jobOfferTitle(jobApplication.getJobOffer().getJobOfferTitle())
-                .description(jobApplication.getJobOffer().getDescription())
-                .mustHaveSkills(jobApplication.getJobOffer().getMustHaveSkills())
-                .niceToHaveSkills(jobApplication.getJobOffer().getNiceToHaveSkills())
-                .build();
-
-        EmployerEntity employerEntity = mapEmployerToEntity(jobApplication.getEmployer());
-
-        CandidateEntity candidateEntity = mapCandidateToEntity(jobApplication.getCandidate());
 
         return new JobApplicationEntity.Builder()
                 .applicationId(jobApplication.getApplicationId())
-                .jobOffer(jobOfferEntity)
-                .employer(employerEntity)
-                .candidate(candidateEntity)
                 .applicationStatus(jobApplication.getApplicationStatusEnum())
-                .build();
-
-    }
-
-    @Override
-    public JobApplication mapToDomain(JobApplicationEntity jobApplicationEntity) {
-        JobOffer jobOffer = new JobOffer.JobOfferBuilder()
-                .jobOfferId(jobApplicationEntity.getJobOffer().getJobOfferId())
-                .jobOfferTitle(jobApplicationEntity.getJobOffer().getJobOfferTitle())
-                .description(jobApplicationEntity.getJobOffer().getDescription())
-                .techSpecialization(TechSpecializationsEnum.valueOf(jobApplicationEntity.getJobOffer().getTechSpecialization().name()))
-                .employer(mapEmployer(jobApplicationEntity.getJobOffer().getEmployer())) // Employer mapowany z JobOffer
-                .workType(jobApplicationEntity.getJobOffer().getWorkType())
-                .city(jobApplicationEntity.getJobOffer().getCity())
-                .experience(jobApplicationEntity.getJobOffer().getExperience())
-                .salary(jobApplicationEntity.getJobOffer().getSalary())
-                .mustHaveSkills(jobApplicationEntity.getJobOffer().getMustHaveSkills())
-                .niceToHaveSkills(jobApplicationEntity.getJobOffer().getNiceToHaveSkills())
-                .build();
-
-        Employer employer = mapEmployer(jobApplicationEntity.getEmployer());
-
-        Candidate candidate = mapCandidate(jobApplicationEntity.getCandidate());
-
-        return new JobApplication.JobApplicationBuilder()
-                .applicationId(jobApplicationEntity.getApplicationId())
-                .jobOffer(jobOffer)
-                .employer(employer)
-                .candidate(candidate)
-                .jobApplicationStatus(jobApplicationEntity.getApplicationStatus())
-                .build();
-    }
-
-    private Employer mapEmployer(EmployerEntity employerEntity) {
-        return new Employer.EmployerBuilder()
-                .employerId(employerEntity.getEmployerId())
-                .companyName(employerEntity.getCompanyName())
-                .email(employerEntity.getEmail())
-                .nip(employerEntity.getNip())
-                .userId(employerEntity.getUserId())
+                .jobOffer(mapJobOfferToEntity(jobApplication.getJobOffer()))
+                .candidate(mapCandidateToEntity(jobApplication.getCandidate()))
+                .employer(mapEmployerToEntity(jobApplication.getEmployer()))
                 .build();
     }
 
     private EmployerEntity mapEmployerToEntity(Employer employer) {
-        return new EmployerEntity(
-                employer.getEmployerId(),
-                employer.getCompanyName(),
-                employer.getEmail(),
-                employer.getNip(),
-                employer.getUserId()
-        );
-    }
-
-    private Candidate mapCandidate(CandidateEntity candidateEntity) {
-        return new Candidate.Builder()
-                .candidateId(candidateEntity.getCandidateId())
-                .name(candidateEntity.getName())
-                .surname(candidateEntity.getSurname())
-                .email(candidateEntity.getEmail())
-                .phone(candidateEntity.getPhone())
-                .techSpecialization(candidateEntity.getTechSpecialization())
-                .candidateSkills(candidateEntity.getCandidateSkills())
+        return new EmployerEntity.Builder()
+                .employerId(employer.getEmployerId())
                 .build();
     }
 
     private CandidateEntity mapCandidateToEntity(Candidate candidate) {
         return new CandidateEntity.Builder()
+                .candidateId(candidate.getCandidateId())
+                .build();
+    }
+
+    private JobOfferEntity mapJobOfferToEntity(JobOffer jobOffer) {
+        return new JobOfferEntity.Builder()
+                .jobOfferId(jobOffer.getJobOfferId())
+                .build();
+    }
+
+
+    @Override
+    public JobApplication mapToDomain(JobApplicationEntity jobApplicationEntity) {
+
+        return new JobApplication.JobApplicationBuilder()
+                .applicationId(jobApplicationEntity.getApplicationId())
+                .jobOffer(mapJobOfferToDomain(jobApplicationEntity.getJobOffer()))
+                .employer(mapEmployerToDomain(jobApplicationEntity.getEmployer()))
+                .candidate(mapCandidateToDomain(jobApplicationEntity.getCandidate()))
+                .jobApplicationStatus(jobApplicationEntity.getApplicationStatus())
+                .build();
+    }
+
+    private Candidate mapCandidateToDomain(CandidateEntity candidate) {
+        return new Candidate.Builder()
                 .candidateId(candidate.getCandidateId())
                 .name(candidate.getName())
                 .surname(candidate.getSurname())
@@ -110,6 +68,29 @@ public class JobApplicationEntityMapperImpl implements JobApplicationEntityMappe
                 .techSpecialization(candidate.getTechSpecialization())
                 .candidateSkills(candidate.getCandidateSkills())
                 .build();
-
     }
+
+    private Employer mapEmployerToDomain(EmployerEntity employer) {
+        return new Employer.EmployerBuilder()
+                .employerId(employer.getEmployerId())
+                .companyName(employer.getCompanyName())
+                .build();
+    }
+
+    private JobOffer mapJobOfferToDomain(JobOfferEntity jobOffer) {
+        return new JobOffer.JobOfferBuilder()
+                .jobOfferId(jobOffer.getJobOfferId())
+                .jobOfferTitle(jobOffer.getJobOfferTitle())
+                .description(jobOffer.getDescription())
+                .techSpecialization(jobOffer.getTechSpecialization())
+                .experience(jobOffer.getExperience())
+                .workType(jobOffer.getWorkType())
+                .city(jobOffer.getCity())
+                .salary(jobOffer.getSalary())
+                .mustHaveSkills(jobOffer.getMustHaveSkills())
+                .niceToHaveSkills(jobOffer.getNiceToHaveSkills())
+                .build();
+    }
+
+
 }

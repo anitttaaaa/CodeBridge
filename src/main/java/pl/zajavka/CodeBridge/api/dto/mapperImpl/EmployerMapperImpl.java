@@ -77,20 +77,21 @@ public class EmployerMapperImpl implements EmployerMapper {
 
     @Override
     public JobOfferDTO mapJobOfferToDTO(JobOffer jobOffer) {
-        return new JobOfferDTO(
-                jobOffer.getJobOfferId(),
-                jobOffer.getJobOfferTitle(),
-                jobOffer.getDescription(),
-                jobOffer.getTechSpecialization(),
-                jobOffer.getWorkType(),
-                jobOffer.getCity(),
-                jobOffer.getExperience(),
-                jobOffer.getSalary(),
-                jobOffer.getMustHaveSkills(),
-                jobOffer.getNiceToHaveSkills(),
-                jobOffer.getEmployer()
-                );
+        return new JobOfferDTO.Builder()
+                .jobOfferId(jobOffer.getJobOfferId())
+                .jobOfferTitle(jobOffer.getJobOfferTitle())
+                .description(jobOffer.getDescription())
+                .techSpecialization(jobOffer.getTechSpecialization())
+                .workType(jobOffer.getWorkType())
+                .city(jobOffer.getCity())
+                .experience(jobOffer.getExperience())
+                .salary(jobOffer.getSalary())
+                .mustHaveSkills(jobOffer.getMustHaveSkills())
+                .niceToHaveSkills(jobOffer.getNiceToHaveSkills())
+                .employer(jobOffer.getEmployer())
+                .build();
     }
+
 
     @Override
     public JobOffer mapToJobOffer(JobOfferDTO jobOfferDTO) {
@@ -110,13 +111,14 @@ public class EmployerMapperImpl implements EmployerMapper {
 
     @Override
     public JobApplicationDTO mapJobApplicationToDTO(JobApplication jobApplication) {
-        return new JobApplicationDTO(
-                jobApplication.getApplicationId(),
-                mapJobOfferToDTO(jobApplication.getJobOffer()),
-                mapEmployerToDTO(jobApplication.getEmployer()),
-                mapCandidateToDTO(jobApplication.getCandidate()),
-                jobApplication.getApplicationStatusEnum()
-        );
+        return new JobApplicationDTO.Builder()
+                .applicationId(jobApplication.getApplicationId())
+                .jobOffer(mapJobOfferToDTO(jobApplication.getJobOffer()))
+                .employer(mapEmployerToDTO(jobApplication.getEmployer()))
+                .candidate(mapCandidateToDTO(jobApplication.getCandidate()))
+                .applicationStatusEnum(jobApplication.getApplicationStatusEnum())
+                .build();
+
     }
 
     private CandidateDTO mapCandidateToDTO(Candidate candidate) {

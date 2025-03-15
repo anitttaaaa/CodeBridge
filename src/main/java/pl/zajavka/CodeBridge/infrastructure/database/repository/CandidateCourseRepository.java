@@ -25,7 +25,7 @@ public class CandidateCourseRepository implements CandidateCourseDAO {
         CandidateCourseEntity candidateCourseToSave = candidateCourseEntityMapper.mapToEntity(candidateCourse);
         CandidateCourseEntity candidateCourseSaved = candidateCourseJpaRepository.saveAndFlush(candidateCourseToSave);
 
-        return candidateCourseEntityMapper.mapFromEntity(candidateCourseSaved);
+        return candidateCourseEntityMapper.mapToDomain(candidateCourseSaved);
     }
 
     @Override

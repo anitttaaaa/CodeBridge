@@ -19,9 +19,7 @@ public class JobOfferMapperImpl implements JobOfferMapper {
                 .workType(jobOfferDTO.getWorkType())
                 .city(jobOfferDTO.getCity())
                 .experience(jobOfferDTO.getExperience())
-                // Użycie SalaryEnum podczas mapowania
-                .salary(jobOfferDTO.getSalary())// Zakładając, że w DTO jest String, który reprezentuje wartość enumu
-                .mustHaveSkills(jobOfferDTO.getMustHaveSkills())
+                .salary(jobOfferDTO.getSalary())               .mustHaveSkills(jobOfferDTO.getMustHaveSkills())
                 .niceToHaveSkills(jobOfferDTO.getNiceToHaveSkills())
                 .employer(jobOfferDTO.getEmployer())
                 .build();
@@ -29,19 +27,20 @@ public class JobOfferMapperImpl implements JobOfferMapper {
 
     @Override
     public JobOfferDTO mapToDTO(JobOffer jobOffer) {
-        return new JobOfferDTO(
-                jobOffer.getJobOfferId(),
-                jobOffer.getJobOfferTitle(),
-                jobOffer.getDescription(),
-                jobOffer.getTechSpecialization(),
-                jobOffer.getWorkType(),
-                jobOffer.getCity(),
-                jobOffer.getExperience(),
-                // Przekładanie SalaryEnum na String w DTO
-                SalaryEnum.valueOf(jobOffer.getSalary().name()), // Zamieniamy SalaryEnum na String przy mapowaniu do DTO
-                jobOffer.getMustHaveSkills(),
-                jobOffer.getNiceToHaveSkills(),
-                jobOffer.getEmployer()
-                );
+        return new JobOfferDTO.Builder()
+                .jobOfferId(jobOffer.getJobOfferId())
+                .jobOfferTitle(jobOffer.getJobOfferTitle())
+                .description(jobOffer.getDescription())
+                .techSpecialization(jobOffer.getTechSpecialization())
+                .workType(jobOffer.getWorkType())
+                .city(jobOffer.getCity())
+                .experience(jobOffer.getExperience())
+                .salary(SalaryEnum.valueOf(jobOffer.getSalary().name()))
+                .mustHaveSkills(jobOffer.getMustHaveSkills())
+                .niceToHaveSkills(jobOffer.getNiceToHaveSkills())
+                .employer(jobOffer.getEmployer())
+                .build();
     }
+
+
 }

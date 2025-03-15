@@ -14,10 +14,25 @@ public class JobOfferDTO {
     private final WorkTypesEnum workType;
     private final CitiesEnum city;
     private final ExperiencesEnum experience;
-    private final SalaryEnum salary; // Zmieniono z String na SalaryEnum
+    private final SalaryEnum salary;
     private final List<String> mustHaveSkills;
     private final List<String> niceToHaveSkills;
     private final Employer employer;
+
+    // Konstruktor prywatny - dostępny tylko przez Builder
+    private JobOfferDTO(Builder builder) {
+        this.jobOfferId = builder.jobOfferId;
+        this.jobOfferTitle = builder.jobOfferTitle;
+        this.description = builder.description;
+        this.techSpecialization = builder.techSpecialization;
+        this.workType = builder.workType;
+        this.city = builder.city;
+        this.experience = builder.experience;
+        this.salary = builder.salary;
+        this.mustHaveSkills = builder.mustHaveSkills;
+        this.niceToHaveSkills = builder.niceToHaveSkills;
+        this.employer = builder.employer;
+    }
 
     @Override
     public String toString() {
@@ -34,22 +49,6 @@ public class JobOfferDTO {
                 ", niceToHaveSkills=" + niceToHaveSkills +
                 ", employer=" + employer +
                 '}';
-    }
-
-    public JobOfferDTO(Integer jobOfferId, String jobOfferTitle, String description, TechSpecializationsEnum techSpecialization,
-                       WorkTypesEnum workType, CitiesEnum city, ExperiencesEnum experience, SalaryEnum salary,
-                       List<String> mustHaveSkills, List<String> niceToHaveSkills, Employer employer) {
-        this.jobOfferId = jobOfferId;
-        this.jobOfferTitle = jobOfferTitle;
-        this.description = description;
-        this.techSpecialization = techSpecialization;
-        this.workType = workType;
-        this.city = city;
-        this.experience = experience;
-        this.salary = salary; // Przypisanie wartości SalaryEnum
-        this.mustHaveSkills = mustHaveSkills;
-        this.niceToHaveSkills = niceToHaveSkills;
-        this.employer = employer;
     }
 
     // Gettery
@@ -95,5 +94,80 @@ public class JobOfferDTO {
 
     public Employer getEmployer() {
         return employer;
+    }
+
+    // Wewnętrzna klasa Builder
+    public static class Builder {
+
+        private Integer jobOfferId;
+        private String jobOfferTitle;
+        private String description;
+        private TechSpecializationsEnum techSpecialization;
+        private WorkTypesEnum workType;
+        private CitiesEnum city;
+        private ExperiencesEnum experience;
+        private SalaryEnum salary;
+        private List<String> mustHaveSkills;
+        private List<String> niceToHaveSkills;
+        private Employer employer;
+
+        public Builder jobOfferId(Integer jobOfferId) {
+            this.jobOfferId = jobOfferId;
+            return this;
+        }
+
+        public Builder jobOfferTitle(String jobOfferTitle) {
+            this.jobOfferTitle = jobOfferTitle;
+            return this;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder techSpecialization(TechSpecializationsEnum techSpecialization) {
+            this.techSpecialization = techSpecialization;
+            return this;
+        }
+
+        public Builder workType(WorkTypesEnum workType) {
+            this.workType = workType;
+            return this;
+        }
+
+        public Builder city(CitiesEnum city) {
+            this.city = city;
+            return this;
+        }
+
+        public Builder experience(ExperiencesEnum experience) {
+            this.experience = experience;
+            return this;
+        }
+
+        public Builder salary(SalaryEnum salary) {
+            this.salary = salary;
+            return this;
+        }
+
+        public Builder mustHaveSkills(List<String> mustHaveSkills) {
+            this.mustHaveSkills = mustHaveSkills;
+            return this;
+        }
+
+        public Builder niceToHaveSkills(List<String> niceToHaveSkills) {
+            this.niceToHaveSkills = niceToHaveSkills;
+            return this;
+        }
+
+        public Builder employer(Employer employer) {
+            this.employer = employer;
+            return this;
+        }
+
+        public JobOfferDTO build() {
+            return new JobOfferDTO(this);
+        }
     }
 }

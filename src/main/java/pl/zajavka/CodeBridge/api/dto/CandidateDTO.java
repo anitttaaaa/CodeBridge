@@ -1,7 +1,5 @@
 package pl.zajavka.CodeBridge.api.dto;
 
-import pl.zajavka.CodeBridge.api.enums.SalaryEnum;
-import pl.zajavka.CodeBridge.api.enums.SkillsEnum;
 import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 
 import java.util.List;
@@ -168,22 +166,75 @@ public class CandidateDTO {
     }
 
     // Gettery
-    public Integer getCandidateId() { return candidateId; }
-    public String getName() { return name; }
-    public String getSurname() { return surname; }
-    public String getEmail() { return email; }
-    public String getPhone() { return phone; }
-    public String getStatus() { return status; }
-    public String getLinkedIn() { return linkedIn; }
-    public String getGitHub() { return gitHub; }
-    public TechSpecializationsEnum getTechSpecialization() { return techSpecialization; }
-    public String getAboutMe() { return aboutMe; }
-    public String getHobby() { return hobby; }
-    public Integer getUserId() { return userId; }
-    public byte[] getProfilePhoto() { return profilePhoto; }
-    public List<String> getCandidateSkills() { return candidateSkills; }
-    public List<CandidateExperienceDTO> getCandidateExperiences() { return candidateExperiences; }
-    public List<CandidateProjectDTO> getCandidateProjects() { return candidateProjects; }
-    public List<CandidateEducationDTO> getCandidateEducationStages() { return candidateEducationStages; }
-    public List<CandidateCourseDTO> getCandidateCourses() { return candidateCourses; }
+    public Integer getCandidateId() {
+        return candidateId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getLinkedIn() {
+        return linkedIn;
+    }
+
+    public String getGitHub() {
+        return gitHub;
+    }
+
+    public TechSpecializationsEnum getTechSpecialization() {
+        return techSpecialization;
+    }
+
+    public String getAboutMe() {
+        return aboutMe;
+    }
+
+    public String getHobby() {
+        return hobby;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public byte[] getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public List<String> getCandidateSkills() {
+        return candidateSkills;
+    }
+
+    public List<CandidateExperienceDTO> getCandidateExperiences() {
+        return candidateExperiences;
+    }
+
+    public List<CandidateProjectDTO> getCandidateProjects() {
+        return candidateProjects;
+    }
+
+    public List<CandidateEducationDTO> getCandidateEducationStages() {
+        return candidateEducationStages;
+    }
+
+    public List<CandidateCourseDTO> getCandidateCourses() {
+        return candidateCourses;
+    }
 }

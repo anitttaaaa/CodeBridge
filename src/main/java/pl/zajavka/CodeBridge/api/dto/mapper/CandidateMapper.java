@@ -11,19 +11,6 @@ public interface CandidateMapper {
 
     Candidate mapToDomain(CandidateDTO candidateDTO);
 
-    List<CandidateExperienceDTO> mapCandidateExperiences(List<CandidateExperience> experiences);
 
-    List<CandidateProjectDTO> mapCandidateProjects(List<CandidateProject> projects);
 
-    List<CandidateEducationDTO> mapCandidateEducationStages(List<CandidateEducation> educationStages);
-
-    List<CandidateCourseDTO> mapCandidateCourses(List<CandidateCourse> courses);
-
-    List<CandidateExperience> mapToCandidateExperiences(List<CandidateExperienceDTO> experiencesDTO);
-
-    List<CandidateProject> mapToCandidateProjects(List<CandidateProjectDTO> projectsDTO);
-
-    List<CandidateEducation> mapToCandidateEducationStages(List<CandidateEducationDTO> educationStagesDTO);
-
-    List<CandidateCourse> mapToCandidateCourses(List<CandidateCourseDTO> coursesDTO);
 }
