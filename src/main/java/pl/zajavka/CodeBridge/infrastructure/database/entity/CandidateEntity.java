@@ -54,8 +54,7 @@ public class CandidateEntity {
     @ElementCollection
     @CollectionTable(name = "candidate_skills", joinColumns = @JoinColumn(name = "candidate_id"))
     @Column(name = "candidate_skills")
-    @Enumerated(EnumType.STRING)
-    private List<SkillsEnum> candidateSkills;
+    private List<String> candidateSkills;
 
     @Column(name = "profile_photo", columnDefinition="bytea")
     private byte[] profilePhoto;
@@ -113,7 +112,7 @@ public class CandidateEntity {
         private TechSpecializationsEnum techSpecialization;
         private String aboutMe;
         private String hobby;
-        private List<SkillsEnum> candidateSkills;
+        private List<String> candidateSkills;
         private byte[] profilePhoto;
         private List<CandidateExperienceEntity> candidateExperiences;
         private List<CandidateProjectEntity> candidateProjects;
@@ -181,7 +180,7 @@ public class CandidateEntity {
             return this;
         }
 
-        public Builder candidateSkills(List<SkillsEnum> candidateSkills) {
+        public Builder candidateSkills(List<String> candidateSkills) {
             this.candidateSkills = candidateSkills;
             return this;
         }
@@ -269,7 +268,7 @@ public class CandidateEntity {
         return hobby;
     }
 
-    public List<SkillsEnum> getCandidateSkills() {
+    public List<String> getCandidateSkills() {
         return candidateSkills;
     }
 

@@ -21,7 +21,7 @@ public class CandidateDTO {
     private final String hobby;
     private final Integer userId;
     private final byte[] profilePhoto;
-    private final List<SkillsEnum> candidateSkills;
+    private final List<String> candidateSkills;
     private final List<CandidateExperienceDTO> candidateExperiences;
     private final List<CandidateProjectDTO> candidateProjects;
     private final List<CandidateEducationDTO> candidateEducationStages;
@@ -62,7 +62,7 @@ public class CandidateDTO {
         private String hobby;
         private Integer userId;
         private byte[] profilePhoto;
-        private List<SkillsEnum> candidateSkills;
+        private List<String> candidateSkills;
         private List<CandidateExperienceDTO> candidateExperiences;
         private List<CandidateProjectDTO> candidateProjects;
         private List<CandidateEducationDTO> candidateEducationStages;
@@ -133,7 +133,7 @@ public class CandidateDTO {
             return this;
         }
 
-        public Builder candidateSkills(List<SkillsEnum> candidateSkills) {
+        public Builder candidateSkills(List<String> candidateSkills) {
             this.candidateSkills = candidateSkills;
             return this;
         }
@@ -181,7 +181,7 @@ public class CandidateDTO {
     public String getHobby() { return hobby; }
     public Integer getUserId() { return userId; }
     public byte[] getProfilePhoto() { return profilePhoto; }
-    public List<SkillsEnum> getCandidateSkills() { return candidateSkills; }
+    public List<String> getCandidateSkills() { return candidateSkills; }
     public List<CandidateExperienceDTO> getCandidateExperiences() { return candidateExperiences; }
     public List<CandidateProjectDTO> getCandidateProjects() { return candidateProjects; }
     public List<CandidateEducationDTO> getCandidateEducationStages() { return candidateEducationStages; }

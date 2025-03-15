@@ -448,7 +448,7 @@ public class CandidatePortalController {
 
     @PostMapping(UPDATE_CANDIDATE_SKILLS)
     public String updateCandidateSkills(
-            @RequestParam(value = "candidateSkills", required = false) List<SkillsEnum> candidateSkills,
+            @RequestParam(value = "candidateSkills", required = false) List<String> candidateSkills,
             Authentication authentication
     ) {
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
