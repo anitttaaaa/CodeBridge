@@ -10,17 +10,18 @@ public class CandidateCourseMapperImpl implements CandidateCourseMapper {
 
     @Override
     public CandidateCourseDTO mapToDto(CandidateCourse candidateCourse) {
-        return CandidateCourseDTO.builder()
-                .candidateCourseId(candidateCourse.getCandidateCourseId())
-                .institution(candidateCourse.getInstitution())
-                .courseTitle(candidateCourse.getCourseTitle())
-                .description(candidateCourse.getDescription())
-                .technologies(candidateCourse.getTechnologies())
-                .fromDate(candidateCourse.getFromDate())
-                .toDate(candidateCourse.getToDate())
-                .candidateId(candidateCourse.getCandidateId())
-                .build();
+        return new CandidateCourseDTO(
+                candidateCourse.getCandidateCourseId(),
+                candidateCourse.getInstitution(),
+                candidateCourse.getCourseTitle(),
+                candidateCourse.getDescription(),
+                candidateCourse.getTechnologies(),
+                candidateCourse.getFromDate(),
+                candidateCourse.getToDate(),
+                candidateCourse.getCandidateId()
+        );
     }
+
 
 
     @Override

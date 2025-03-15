@@ -5,6 +5,7 @@ import pl.zajavka.CodeBridge.api.dto.*;
 import pl.zajavka.CodeBridge.api.dto.mapper.CandidateCVMapper;
 import pl.zajavka.CodeBridge.domain.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,63 +37,97 @@ public class CandidateCVMapperImpl implements CandidateCVMapper {
 
     public List<CandidateCourseDTO> mapCandidateCourses(List<CandidateCourse> courses) {
         if (courses == null) return null;
-        return courses.stream()
-                .map(course -> course == null ? null : CandidateCourseDTO.builder()
-                        .candidateCourseId(course.getCandidateCourseId())
-                        .institution(course.getInstitution())
-                        .courseTitle(course.getCourseTitle())
-                        .description(course.getDescription())
-                        .technologies(course.getTechnologies())
-                        .fromDate(course.getFromDate())
-                        .toDate(course.getToDate())
-                        .candidateId(course.getCandidateId())
-                        .build())
-                .collect(Collectors.toList());
+
+        List<CandidateCourseDTO> courseDTOList = new ArrayList<>();
+
+        for (CandidateCourse course : courses) {
+            if (course != null) {
+                CandidateCourseDTO courseDTO = new CandidateCourseDTO(
+                        course.getCandidateCourseId(),
+                        course.getInstitution(),
+                        course.getCourseTitle(),
+                        course.getDescription(),
+                        course.getTechnologies(),
+                        course.getFromDate(),
+                        course.getToDate(),
+                        course.getCandidateId()
+                );
+                courseDTOList.add(courseDTO);
+            }
+        }
+        return courseDTOList;
     }
 
     public List<CandidateEducationDTO> mapCandidateEducationStages(List<CandidateEducation> educationStages) {
         if (educationStages == null) return null;
-        return educationStages.stream()
-                .map(education -> education == null ? null : CandidateEducationDTO.builder()
-                        .candidateEducationId(education.getCandidateEducationId())
-                        .institution(education.getInstitution())
-                        .degree(education.getDegree())
-                        .fieldOfStudy(education.getFieldOfStudy())
-                        .fromDate(education.getFromDate())
-                        .toDate(education.getToDate())
-                        .candidateId(education.getCandidateId())
-                        .build())
-                .collect(Collectors.toList());
+
+        List<CandidateEducationDTO> educationDTOList = new ArrayList<>();
+
+        for (CandidateEducation education : educationStages) {
+            if (education != null) {
+                CandidateEducationDTO educationDTO = new CandidateEducationDTO(
+                        education.getCandidateEducationId(),
+                        education.getInstitution(),
+                        education.getDegree(),
+                        education.getFieldOfStudy(),
+                        education.getFromDate(),
+                        education.getToDate(),
+                        education.getCandidateId()
+                );
+                educationDTOList.add(educationDTO);
+            }
+        }
+
+        return educationDTOList;
     }
+
 
     public List<CandidateExperienceDTO> mapCandidateExperiences(List<CandidateExperience> experiences) {
         if (experiences == null) return null;
-        return experiences.stream()
-                .map(experience -> experience == null ? null : CandidateExperienceDTO.builder()
-                        .candidateExperienceId(experience.getCandidateExperienceId())
-                        .companyName(experience.getCompanyName())
-                        .candidatePosition(experience.getCandidatePosition())
-                        .description(experience.getDescription())
-                        .fromDate(experience.getFromDate())
-                        .toDate(experience.getToDate())
-                        .candidateId(experience.getCandidateId())
-                        .build())
-                .collect(Collectors.toList());
+
+        List<CandidateExperienceDTO> experienceDTOList = new ArrayList<>();
+
+        for (CandidateExperience experience : experiences) {
+            if (experience != null) {
+                CandidateExperienceDTO experienceDTO = new CandidateExperienceDTO(
+                        experience.getCandidateExperienceId(),
+                        experience.getCompanyName(),
+                        experience.getCandidatePosition(),
+                        experience.getDescription(),
+                        experience.getFromDate(),
+                        experience.getToDate(),
+                        experience.getCandidateId()
+                );
+                experienceDTOList.add(experienceDTO);
+            }
+        }
+
+        return experienceDTOList;
     }
+
 
     public List<CandidateProjectDTO> mapCandidateProjects(List<CandidateProject> projects) {
         if (projects == null) return null;
-        return projects.stream()
-                .map(project -> project == null ? null : CandidateProjectDTO.builder()
-                        .candidateProjectId(project.getCandidateProjectId())
-                        .projectTitle(project.getProjectTitle())
-                        .technologies(project.getTechnologies())
-                        .description(project.getDescription())
-                        .fromDate(project.getFromDate())
-                        .toDate(project.getToDate())
-                        .projectLink(project.getProjectLink())
-                        .candidateId(project.getCandidateId())
-                        .build())
-                .collect(Collectors.toList());
+
+        List<CandidateProjectDTO> projectDTOList = new ArrayList<>();
+
+        for (CandidateProject project : projects) {
+            if (project != null) {
+                CandidateProjectDTO projectDTO = new CandidateProjectDTO(
+                        project.getCandidateProjectId(),
+                        project.getProjectTitle(),
+                        project.getTechnologies(),
+                        project.getDescription(),
+                        project.getFromDate(),
+                        project.getToDate(),
+                        project.getProjectLink(),
+                        project.getCandidateId()
+                );
+                projectDTOList.add(projectDTO);
+            }
+        }
+
+        return projectDTOList;
     }
+
 }

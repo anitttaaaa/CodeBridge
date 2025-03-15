@@ -12,16 +12,15 @@ public class CandidateExperienceMapperImpl implements CandidateExperienceMapper 
     public CandidateExperienceDTO mapToDto(CandidateExperience candidateExperience) {
 
 
-        return CandidateExperienceDTO.builder()
-                .candidateExperienceId(candidateExperience.getCandidateExperienceId())
-                .companyName(candidateExperience.getCompanyName())
-                .candidatePosition(candidateExperience.getCandidatePosition())
-                .description(candidateExperience.getDescription())
-                .fromDate(candidateExperience.getFromDate())
-                .toDate(candidateExperience.getToDate())
-                .candidateId(candidateExperience.getCandidateId())
-                .build();
-
+        return new CandidateExperienceDTO(
+                candidateExperience.getCandidateExperienceId(),
+                candidateExperience.getCompanyName(),
+                candidateExperience.getCandidatePosition(),
+                candidateExperience.getDescription(),
+                candidateExperience.getFromDate(),
+                candidateExperience.getToDate(),
+                candidateExperience.getCandidateId()
+        );
     }
 
     @Override
