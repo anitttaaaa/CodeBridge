@@ -16,8 +16,8 @@ public class JobOffer {
     private final CitiesEnum city;
     private final ExperiencesEnum experience;
     private final SalaryEnum salary;
-    private final List<String> mustHaveSkills;
-    private final List<String> niceToHaveSkills;
+    private final List<SkillsEnum> mustHaveSkills;
+    private final List<SkillsEnum> niceToHaveSkills;
 
 
     @Override
@@ -100,11 +100,11 @@ public class JobOffer {
         return salary;
     }
 
-    public List<String> getMustHaveSkills() {
+    public List<SkillsEnum> getMustHaveSkills() {
         return mustHaveSkills;
     }
 
-    public List<String> getNiceToHaveSkills() {
+    public List<SkillsEnum> getNiceToHaveSkills() {
         return niceToHaveSkills;
     }
 
@@ -119,8 +119,8 @@ public class JobOffer {
         private CitiesEnum city;
         private ExperiencesEnum experience;
         private SalaryEnum salary;
-        private List<String> mustHaveSkills;
-        private List<String> niceToHaveSkills;
+        private List<SkillsEnum> mustHaveSkills;
+        private List<SkillsEnum> niceToHaveSkills;
 
         public JobOfferBuilder jobOfferId(Integer jobOfferId) {
             this.jobOfferId = jobOfferId;
@@ -167,12 +167,12 @@ public class JobOffer {
             return this;
         }
 
-        public JobOfferBuilder mustHaveSkills(List<String> mustHaveSkills) {
+        public JobOfferBuilder mustHaveSkills(List<SkillsEnum> mustHaveSkills) {
             this.mustHaveSkills = mustHaveSkills;
             return this;
         }
 
-        public JobOfferBuilder niceToHaveSkills(List<String> niceToHaveSkills) {
+        public JobOfferBuilder niceToHaveSkills(List<SkillsEnum> niceToHaveSkills) {
             this.niceToHaveSkills = niceToHaveSkills;
             return this;
         }

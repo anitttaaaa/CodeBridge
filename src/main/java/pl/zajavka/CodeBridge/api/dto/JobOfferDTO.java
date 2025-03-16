@@ -16,8 +16,8 @@ public class JobOfferDTO {
     private final CitiesEnum city;
     private final ExperiencesEnum experience;
     private final SalaryEnum salary;
-    private final List<String> mustHaveSkills;
-    private final List<String> niceToHaveSkills;
+    private final List<SkillsEnum> mustHaveSkills;
+    private final List<SkillsEnum> niceToHaveSkills;
     private final Employer employer;
 
     private JobOfferDTO(Builder builder) {
@@ -96,11 +96,11 @@ public class JobOfferDTO {
         return salary;
     }
 
-    public List<String> getMustHaveSkills() {
+    public List<SkillsEnum> getMustHaveSkills() {
         return mustHaveSkills;
     }
 
-    public List<String> getNiceToHaveSkills() {
+    public List<SkillsEnum> getNiceToHaveSkills() {
         return niceToHaveSkills;
     }
 
@@ -118,8 +118,8 @@ public class JobOfferDTO {
         private CitiesEnum city;
         private ExperiencesEnum experience;
         private SalaryEnum salary;
-        private List<String> mustHaveSkills;
-        private List<String> niceToHaveSkills;
+        private List<SkillsEnum> mustHaveSkills;
+        private List<SkillsEnum> niceToHaveSkills;
         private Employer employer;
 
         public Builder jobOfferId(Integer jobOfferId) {
@@ -162,12 +162,12 @@ public class JobOfferDTO {
             return this;
         }
 
-        public Builder mustHaveSkills(List<String> mustHaveSkills) {
+        public Builder mustHaveSkills(List<SkillsEnum> mustHaveSkills) {
             this.mustHaveSkills = mustHaveSkills;
             return this;
         }
 
-        public Builder niceToHaveSkills(List<String> niceToHaveSkills) {
+        public Builder niceToHaveSkills(List<SkillsEnum> niceToHaveSkills) {
             this.niceToHaveSkills = niceToHaveSkills;
             return this;
         }

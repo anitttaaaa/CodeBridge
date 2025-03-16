@@ -49,17 +49,17 @@ public class JobOfferEntity {
     @OneToMany(mappedBy = "jobOffer")
     private Set<JobApplicationEntity> jobApplications;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "job_offer_must_have_skills", joinColumns = @JoinColumn(name = "job_offer_id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "must_have_skills")
-    private List<String> mustHaveSkills;
+    private List<SkillsEnum> mustHaveSkills;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "job_offer_nice_to_have_skills", joinColumns = @JoinColumn(name = "job_offer_id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "nice_to_have_skills")
-    private List<String> niceToHaveSkills;
+    private List<SkillsEnum> niceToHaveSkills;
 
 
     public JobOfferEntity() {
@@ -125,8 +125,8 @@ public class JobOfferEntity {
         private SalaryEnum salary;
         private EmployerEntity employer;
         private Set<JobApplicationEntity> jobApplications;
-        private List<String> mustHaveSkills;
-        private List<String> niceToHaveSkills;
+        private List<SkillsEnum> mustHaveSkills;
+        private List<SkillsEnum> niceToHaveSkills;
 
         public Builder jobOfferId(Integer jobOfferId) {
             this.jobOfferId = jobOfferId;
@@ -178,12 +178,12 @@ public class JobOfferEntity {
             return this;
         }
 
-        public Builder mustHaveSkills(List<String> mustHaveSkills) {
+        public Builder mustHaveSkills(List<SkillsEnum> mustHaveSkills) {
             this.mustHaveSkills = mustHaveSkills;
             return this;
         }
 
-        public Builder niceToHaveSkills(List<String> niceToHaveSkills) {
+        public Builder niceToHaveSkills(List<SkillsEnum> niceToHaveSkills) {
             this.niceToHaveSkills = niceToHaveSkills;
             return this;
         }
@@ -233,11 +233,11 @@ public class JobOfferEntity {
         return jobApplications;
     }
 
-    public List<String> getMustHaveSkills() {
+    public List<SkillsEnum> getMustHaveSkills() {
         return mustHaveSkills;
     }
 
-    public List<String> getNiceToHaveSkills() {
+    public List<SkillsEnum> getNiceToHaveSkills() {
         return niceToHaveSkills;
     }
 }

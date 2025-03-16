@@ -1,8 +1,6 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository.mapperImpl;
 
 import org.springframework.stereotype.Component;
-import pl.zajavka.CodeBridge.api.enums.StatusEnum;
-import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 import pl.zajavka.CodeBridge.domain.*;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.*;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.CandidateEntityMapper;
@@ -11,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CandidateMapperEntityImpl implements CandidateEntityMapper {
+public class CandidateEntityMapperImpl implements CandidateEntityMapper {
 
     @Override
     public CandidateEntity mapCandidateToEntity(Candidate candidate) {

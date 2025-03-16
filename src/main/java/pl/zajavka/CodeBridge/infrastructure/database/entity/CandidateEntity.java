@@ -1,6 +1,7 @@
 package pl.zajavka.CodeBridge.infrastructure.database.entity;
 
 import jakarta.persistence.*;
+import pl.zajavka.CodeBridge.api.enums.SkillsEnum;
 import pl.zajavka.CodeBridge.api.enums.StatusEnum;
 import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 
@@ -53,10 +54,11 @@ public class CandidateEntity {
     @Column(name = "hobby")
     private String hobby;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "candidate_skills", joinColumns = @JoinColumn(name = "candidate_id"))
-    @Column(name = "candidate_skills")
-    private List<String> candidateSkills;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "skill_name")
+    private List<SkillsEnum> candidateSkills;
 
     @Column(name = "profile_photo", columnDefinition="bytea")
     private byte[] profilePhoto;
@@ -152,7 +154,7 @@ public class CandidateEntity {
         private TechSpecializationsEnum techSpecialization;
         private String aboutMe;
         private String hobby;
-        private List<String> candidateSkills;
+        private List<SkillsEnum> candidateSkills;
         private byte[] profilePhoto;
         private List<CandidateExperienceEntity> candidateExperiences;
         private List<CandidateProjectEntity> candidateProjects;
@@ -220,7 +222,7 @@ public class CandidateEntity {
             return this;
         }
 
-        public Builder candidateSkills(List<String> candidateSkills) {
+        public Builder candidateSkills(List<SkillsEnum> candidateSkills) {
             this.candidateSkills = candidateSkills;
             return this;
         }
@@ -308,7 +310,7 @@ public class CandidateEntity {
         return hobby;
     }
 
-    public List<String> getCandidateSkills() {
+    public List<SkillsEnum> getCandidateSkills() {
         return candidateSkills;
     }
 

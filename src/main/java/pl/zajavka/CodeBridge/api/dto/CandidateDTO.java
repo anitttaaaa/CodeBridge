@@ -1,6 +1,7 @@
 package pl.zajavka.CodeBridge.api.dto;
 
 import pl.zajavka.CodeBridge.api.enums.SalaryEnum;
+import pl.zajavka.CodeBridge.api.enums.SkillsEnum;
 import pl.zajavka.CodeBridge.api.enums.StatusEnum;
 import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 
@@ -23,7 +24,7 @@ public class CandidateDTO {
     private final String hobby;
     private final Integer userId;
     private final byte[] profilePhoto;
-    private final List<String> candidateSkills;
+    private final List<SkillsEnum> candidateSkills;
     private final List<CandidateExperienceDTO> candidateExperiences;
     private final List<CandidateProjectDTO> candidateProjects;
     private final List<CandidateEducationDTO> candidateEducationStages;
@@ -64,7 +65,7 @@ public class CandidateDTO {
         private String hobby;
         private Integer userId;
         private byte[] profilePhoto;
-        private List<String> candidateSkills;
+        private List<SkillsEnum> candidateSkills;
         private List<CandidateExperienceDTO> candidateExperiences;
         private List<CandidateProjectDTO> candidateProjects;
         private List<CandidateEducationDTO> candidateEducationStages;
@@ -135,7 +136,7 @@ public class CandidateDTO {
             return this;
         }
 
-        public Builder candidateSkills(List<String> candidateSkills) {
+        public Builder candidateSkills(List<SkillsEnum> candidateSkills) {
             this.candidateSkills = candidateSkills;
             return this;
         }
@@ -221,7 +222,7 @@ public class CandidateDTO {
         return profilePhoto;
     }
 
-    public List<String> getCandidateSkills() {
+    public List<SkillsEnum> getCandidateSkills() {
         return candidateSkills;
     }
 

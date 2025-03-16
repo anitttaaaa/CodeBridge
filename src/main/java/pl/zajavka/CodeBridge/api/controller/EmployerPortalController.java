@@ -201,8 +201,8 @@ public class EmployerPortalController {
             @RequestParam("city") String city,
             @RequestParam("experience") String experience,
             @RequestParam("salary") String salary,
-            @RequestParam List<String> mustHaveSkills,
-            @RequestParam List<String> niceToHaveSkills,
+            @RequestParam List<SkillsEnum> mustHaveSkills,
+            @RequestParam List<SkillsEnum> niceToHaveSkills,
             Authentication authentication) {
 
         JobOfferDTO jobOfferDTO = new JobOfferDTO.Builder()

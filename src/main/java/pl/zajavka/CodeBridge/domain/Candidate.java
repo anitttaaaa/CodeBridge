@@ -1,5 +1,6 @@
 package pl.zajavka.CodeBridge.domain;
 
+import pl.zajavka.CodeBridge.api.enums.SkillsEnum;
 import pl.zajavka.CodeBridge.api.enums.StatusEnum;
 import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 
@@ -21,7 +22,7 @@ public class Candidate {
     private final TechSpecializationsEnum techSpecialization;
     private final String aboutMe;
     private final String hobby;
-    private final List<String> candidateSkills;
+    private final List<SkillsEnum> candidateSkills;
     private final List<CandidateExperience> candidateExperiences;
     private final List<CandidateProject> candidateProjects;
     private final List<CandidateEducation> candidateEducationStages;
@@ -62,7 +63,7 @@ public class Candidate {
         private TechSpecializationsEnum techSpecialization;
         private String aboutMe;
         private String hobby;
-        private List<String> candidateSkills = new ArrayList<String>();
+        private List<SkillsEnum> candidateSkills = new ArrayList<pl.zajavka.CodeBridge.api.enums.SkillsEnum>();
         private List<CandidateExperience> candidateExperiences = new ArrayList<>();
         private List<CandidateProject> candidateProjects = new ArrayList<>();
         private List<CandidateEducation> candidateEducationStages = new ArrayList<>();
@@ -129,7 +130,7 @@ public class Candidate {
             return this;
         }
 
-        public Builder candidateSkills(List<String> candidateSkills) {
+        public Builder candidateSkills(List<SkillsEnum> candidateSkills) {
             this.candidateSkills = candidateSkills;
             return this;
         }
@@ -213,7 +214,7 @@ public class Candidate {
         return hobby;
     }
 
-    public List<String> getCandidateSkills() {
+    public List<SkillsEnum> getCandidateSkills() {
         return candidateSkills;
     }
 

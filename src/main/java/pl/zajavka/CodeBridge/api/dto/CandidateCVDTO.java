@@ -19,7 +19,7 @@ public class CandidateCVDTO {
     private final String linkedIn;
     private final String gitHub;
     private final TechSpecializationsEnum techSpecialization;
-    private final List<String> candidateSkills;
+    private final List<SkillsEnum> candidateSkills;
     private final List<CandidateExperienceDTO> candidateExperiences;
     private final List<CandidateProjectDTO> candidateProjects;
     private final List<CandidateEducationDTO> candidateEducationStages;
@@ -56,7 +56,7 @@ public class CandidateCVDTO {
         private String linkedIn;
         private String gitHub;
         private TechSpecializationsEnum techSpecialization;
-        private List<String> candidateSkills = new ArrayList<String>();
+        private List<SkillsEnum> candidateSkills = new ArrayList<SkillsEnum>();
         private List<CandidateExperienceDTO> candidateExperiences = new ArrayList<>();
         private List<CandidateProjectDTO> candidateProjects = new ArrayList<>();
         private List<CandidateEducationDTO> candidateEducationStages = new ArrayList<>();
@@ -109,7 +109,7 @@ public class CandidateCVDTO {
             return this;
         }
 
-        public Builder candidateSkills(List<String> candidateSkills) {
+        public Builder candidateSkills(List<SkillsEnum> candidateSkills) {
             this.candidateSkills = candidateSkills;
             return this;
         }
@@ -185,7 +185,7 @@ public class CandidateCVDTO {
         return techSpecialization;
     }
 
-    public List<String> getCandidateSkills() {
+    public List<SkillsEnum> getCandidateSkills() {
         return candidateSkills;
     }
 
