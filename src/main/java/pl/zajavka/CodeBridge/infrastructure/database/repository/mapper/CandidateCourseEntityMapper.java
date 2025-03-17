@@ -5,7 +5,7 @@ import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateCourseEntit
 
 public interface CandidateCourseEntityMapper {
 
-    CandidateCourse mapToDomain(CandidateCourseEntity entity);
+    CandidateCourse mapToDomain(CandidateCourseEntity entity, Integer candidateId);
 
-    CandidateCourseEntity mapToEntity(CandidateCourse domain);
+    CandidateCourseEntity mapToEntity(CandidateCourse domain, Integer candidateId);
 }

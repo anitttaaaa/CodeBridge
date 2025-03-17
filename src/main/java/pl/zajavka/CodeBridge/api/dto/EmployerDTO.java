@@ -9,7 +9,6 @@ public class EmployerDTO {
     private final String companyName;
     private final String email;
     private final String nip;
-    private final Integer userId;
     private final Set<JobOfferDTO> jobOffers;
     private final Set<JobApplicationDTO> jobApplications;
 
@@ -18,7 +17,6 @@ public class EmployerDTO {
         this.companyName = builder.companyName;
         this.email = builder.email;
         this.nip = builder.nip;
-        this.userId = builder.userId;
         this.jobOffers = builder.jobOffers;
         this.jobApplications = builder.jobApplications;
     }
@@ -28,7 +26,6 @@ public class EmployerDTO {
         private String companyName;
         private String email;
         private String nip;
-        private Integer userId;
         private Set<JobOfferDTO> jobOffers;
         private Set<JobApplicationDTO> jobApplications;
 
@@ -52,10 +49,6 @@ public class EmployerDTO {
             return this;
         }
 
-        public Builder userId(Integer userId) {
-            this.userId = userId;
-            return this;
-        }
 
         public Builder jobOffers(Set<JobOfferDTO> jobOffers) {
             this.jobOffers = jobOffers;
@@ -92,9 +85,6 @@ public class EmployerDTO {
         return nip;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
 
     public Set<JobOfferDTO> getJobOffers() {
         return jobOffers;
@@ -111,7 +101,6 @@ public class EmployerDTO {
                 ", companyName='" + companyName + '\'' +
                 ", email='" + email + '\'' +
                 ", nip='" + nip + '\'' +
-                ", userId=" + userId +
                 ", jobOffers=" + jobOffers +
                 ", jobApplications=" + jobApplications +
                 '}';

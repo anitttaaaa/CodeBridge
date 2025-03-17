@@ -24,7 +24,7 @@ public class CandidateExperienceEntityMapperImpl implements CandidateExperienceE
     }
 
     @Override
-    public CandidateExperienceEntity mapToEntity(CandidateExperience candidateExperience) {
+    public CandidateExperienceEntity mapToEntity(CandidateExperience candidateExperience, Integer candidateId) {
 
         return new CandidateExperienceEntity.Builder()
                 .candidateExperienceId(candidateExperience.getCandidateExperienceId())
@@ -33,7 +33,7 @@ public class CandidateExperienceEntityMapperImpl implements CandidateExperienceE
                 .description(candidateExperience.getDescription())
                 .fromDate(candidateExperience.getFromDate())
                 .toDate(candidateExperience.getToDate())
-                .candidateId(candidateExperience.getCandidateId())
+                .candidateId(candidateId)
                 .build();
     }
 }

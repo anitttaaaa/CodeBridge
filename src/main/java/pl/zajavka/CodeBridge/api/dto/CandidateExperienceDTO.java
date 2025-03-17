@@ -9,7 +9,6 @@ public class CandidateExperienceDTO {
     private final String description;
     private final LocalDate fromDate;
     private final LocalDate toDate;
-    private final Integer candidateId;
 
     @Override
     public String toString() {
@@ -19,10 +18,9 @@ public class CandidateExperienceDTO {
                 ", candidatePosition='" + candidatePosition + '\'' +
                 ", description='" + description + '\'' +
                 ", fromDate=" + fromDate +
-                ", toDate=" + toDate +
-                ", candidateId=" + candidateId +
-                '}';
-    }
+                ", toDate=" + toDate;
+                };
+
 
     public CandidateExperienceDTO(
             Integer candidateExperienceId,
@@ -30,15 +28,13 @@ public class CandidateExperienceDTO {
             String candidatePosition,
             String description,
             LocalDate fromDate,
-            LocalDate toDate,
-            Integer candidateId) {
+            LocalDate toDate) {
         this.candidateExperienceId = candidateExperienceId;
         this.companyName = companyName;
         this.candidatePosition = candidatePosition;
         this.description = description;
         this.fromDate = fromDate;
         this.toDate = toDate;
-        this.candidateId = candidateId;
     }
 
     public Integer getCandidateExperienceId() {
@@ -65,7 +61,4 @@ public class CandidateExperienceDTO {
         return toDate;
     }
 
-    public Integer getCandidateId() {
-        return candidateId;
-    }
 }

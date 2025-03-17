@@ -49,8 +49,7 @@ public class CandidateCVMapperImpl implements CandidateCVMapper {
                         course.getDescription(),
                         course.getTechnologies(),
                         course.getFromDate(),
-                        course.getToDate(),
-                        course.getCandidateId()
+                        course.getToDate()
                 );
                 courseDTOList.add(courseDTO);
             }
@@ -71,9 +70,7 @@ public class CandidateCVMapperImpl implements CandidateCVMapper {
                         education.getDegree(),
                         education.getFieldOfStudy(),
                         education.getFromDate(),
-                        education.getToDate(),
-                        education.getCandidateId()
-                );
+                        education.getToDate());
                 educationDTOList.add(educationDTO);
             }
         }
@@ -95,8 +92,7 @@ public class CandidateCVMapperImpl implements CandidateCVMapper {
                         experience.getCandidatePosition(),
                         experience.getDescription(),
                         experience.getFromDate(),
-                        experience.getToDate(),
-                        experience.getCandidateId()
+                        experience.getToDate()
                 );
                 experienceDTOList.add(experienceDTO);
             }
@@ -120,8 +116,7 @@ public class CandidateCVMapperImpl implements CandidateCVMapper {
                         project.getDescription(),
                         project.getFromDate(),
                         project.getToDate(),
-                        project.getProjectLink(),
-                        project.getCandidateId()
+                        project.getProjectLink()
                 );
                 projectDTOList.add(projectDTO);
             }

@@ -441,7 +441,6 @@
                                       class="d-inline">
                                     <input type="hidden" name="candidateExperienceId"
                                            th:value="${experience.candidateExperienceId}"/>
-                                    <input type="hidden" name="candidateId" th:value="${experience.candidateId}"/>
                                     <button type="submit" class="btn btn-danger change-photo-button" title="Delete">
                                         <i class="fas fa-trash icon-size"></i>
                                     </button>
@@ -475,8 +474,6 @@
                     <form th:action="@{/candidate-portal/update-candidate-experience}" method="post">
                         <input type="hidden" name="candidateExperienceId"
                                th:value="${experience.candidateExperienceId}"/>
-                        <input type="hidden" name="candidateId"
-                               th:value="${experience.candidateId}"/>
                         <div class="form-group">
                             <label for="editCandidatePosition">Position</label>
                             <input type="text" class="form-control" id="editCandidatePosition" name="candidatePosition"
@@ -551,6 +548,7 @@
                             <input type="date" class="form-control" id="toDate" name="toDate"
                                    th:value="${candidateExperienceDTO != null ? candidateExperienceDTO.toDate : ''}">
                         </div>
+
                         <!-- Submit Button -->
                         <button type="submit" class="add-job-offer-button btn btn-primary">Save changes</button>
                     </form>
@@ -595,7 +593,6 @@
                                 <form th:action="@{/candidate-portal/delete-project}" method="post" class="d-inline">
                                     <input type="hidden" name="candidateProjectId"
                                            th:value="${project.candidateProjectId}"/>
-                                    <input type="hidden" name="candidateId" th:value="${project.candidateId}"/>
                                     <button type="submit" class="btn btn-danger change-photo-button" title="Delete">
                                         <i class="fas fa-trash icon-size"></i>
                                     </button>
@@ -683,7 +680,6 @@
                 <div class="modal-body">
                     <form th:action="@{/candidate-portal/update-candidate-project}" method="post">
                         <input type="hidden" name="candidateProjectId" th:value="${project.candidateProjectId}"/>
-                        <input type="hidden" name="candidateId" th:value="${project.candidateId}"/>
                         <div class="form-group">
                             <label for="editProjectTitle">Project Title</label>
                             <input type="text" class="form-control" id="editProjectTitle" name="projectTitle"
@@ -760,7 +756,6 @@
                                 <form th:action="@{/candidate-portal/delete-education}" method="post" class="d-inline">
                                     <input type="hidden" name="candidateEducationId"
                                            th:value="${education.candidateEducationId}"/>
-                                    <input type="hidden" name="candidateId" th:value="${education.candidateId}"/>
                                     <button type="submit" class="btn btn-danger change-photo-button" title="Delete">
                                         <i class="fas fa-trash icon-size"></i>
                                     </button>
@@ -832,7 +827,6 @@
                     <!-- Formularz edycji -->
                     <form th:action="@{/candidate-portal/update-candidate-education}" method="post">
                         <input type="hidden" name="candidateEducationId" th:value="${education.candidateEducationId}"/>
-                        <input type="hidden" name="candidateId" th:value="${education.candidateId}"/>
                         <div class="form-group">
                             <label for="editInstitution">Institution</label>
                             <input type="text" class="form-control" id="editEducationInstitution" name="institution"
@@ -903,7 +897,6 @@
                                 <form th:action="@{/candidate-portal/delete-course}" method="post" class="d-inline">
                                     <input type="hidden" name="candidateCourseId"
                                            th:value="${course.candidateCourseId}"/>
-                                    <input type="hidden" name="candidateId" th:value="${course.candidateId}"/>
                                     <button type="submit" class="btn btn-danger change-photo-button" title="Delete">
                                         <i class="fas fa-trash icon-size"></i>
                                     </button>
@@ -984,7 +977,6 @@
                     <!-- Formularz edycji -->
                     <form th:action="@{/candidate-portal/update-candidate-course}" method="post">
                         <input type="hidden" name="candidateCourseId" th:value="${course.candidateCourseId}"/>
-                        <input type="hidden" name="candidateId" th:value="${course.candidateId}"/>
                         <div class="form-group">
                             <label for="editInstitution">Institution</label>
                             <input type="text" class="form-control" id="editInstitution" name="institution"

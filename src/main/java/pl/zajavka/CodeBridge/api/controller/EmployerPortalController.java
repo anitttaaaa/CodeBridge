@@ -150,16 +150,10 @@ public class EmployerPortalController {
 
     @GetMapping(GET_FILTERED_CANDIDATES)
     public String getFilteredCandidates(
-            @RequestParam(required = false) String techSpecialization,
-            @RequestParam(required = false) String status,
+            @RequestParam(required = false) TechSpecializationsEnum techSpecialization,
+            @RequestParam(required = false) StatusEnum status,
             Model model) {
 
-        if (techSpecialization != null && techSpecialization.isEmpty()) {
-            techSpecialization = null;
-        }
-        if (status != null && status.isEmpty()) {
-            status = null;
-        }
 
         List<Candidate> filteredCandidates = employerService.getFilteredCandidates(techSpecialization, status)
                 .stream().sorted(Comparator.comparingInt(Candidate::getCandidateId).reversed())

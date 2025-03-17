@@ -20,9 +20,9 @@ public class CandidateExperienceRepository implements CandidateExperienceDAO {
     }
 
     @Override
-    public CandidateExperience createExperience(CandidateExperience candidateExperience) {
+    public CandidateExperience createExperience(CandidateExperience candidateExperience, Integer candidateId) {
 
-        CandidateExperienceEntity candidateExperienceToSave = candidateExperienceEntityMapper.mapToEntity(candidateExperience);
+        CandidateExperienceEntity candidateExperienceToSave = candidateExperienceEntityMapper.mapToEntity(candidateExperience, candidateId);
         CandidateExperienceEntity candidateExperienceSaved = candidateExperienceJpaRepository.saveAndFlush(candidateExperienceToSave);
 
         return candidateExperienceEntityMapper.mapFromEntity(candidateExperienceSaved);
@@ -30,8 +30,8 @@ public class CandidateExperienceRepository implements CandidateExperienceDAO {
     }
 
     @Override
-    public void updateCandidateExperience(CandidateExperience candidateExperienceToUpdate) {
-        CandidateExperienceEntity experienceToSave = candidateExperienceEntityMapper.mapToEntity(candidateExperienceToUpdate);
+    public void updateCandidateExperience(CandidateExperience candidateExperienceToUpdate, Integer candidateId) {
+        CandidateExperienceEntity experienceToSave = candidateExperienceEntityMapper.mapToEntity(candidateExperienceToUpdate, candidateId);
         candidateExperienceJpaRepository.saveAndFlush(experienceToSave);
     }
 

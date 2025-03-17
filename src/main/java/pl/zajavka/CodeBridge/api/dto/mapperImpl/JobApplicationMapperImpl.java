@@ -28,7 +28,6 @@ public class JobApplicationMapperImpl implements JobApplicationMapper {
 
     public JobOfferDTO mapJobOfferToDto(JobOffer jobOffer) {
         return new JobOfferDTO.Builder()
-                .jobOfferId(jobOffer.getJobOfferId())
                 .jobOfferTitle(jobOffer.getJobOfferTitle())
                 .description(jobOffer.getDescription())
                 .techSpecialization(jobOffer.getTechSpecialization())
@@ -45,7 +44,6 @@ public class JobApplicationMapperImpl implements JobApplicationMapper {
 
     public EmployerDTO mapEmployerToDto(Employer employer) {
         return new EmployerDTO.Builder()
-                .employerId(employer.getEmployerId())
                 .companyName(employer.getCompanyName())
                 .build();
     }
@@ -53,7 +51,6 @@ public class JobApplicationMapperImpl implements JobApplicationMapper {
 
     public CandidateDTO mapCandidateToDto(Candidate candidate) {
         return new CandidateDTO.Builder()
-                .candidateId(candidate.getCandidateId())
                 .name(candidate.getName())
                 .surname(candidate.getSurname())
                 .email(candidate.getEmail())

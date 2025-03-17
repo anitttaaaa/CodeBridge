@@ -10,17 +10,17 @@ public class CandidateEducationDTO {
     private final String fieldOfStudy;
     private final LocalDate fromDate;
     private final LocalDate toDate;
-    private final Integer candidateId;
+
 
     public CandidateEducationDTO(Integer candidateEducationId, String institution, String degree, String fieldOfStudy,
-                                 LocalDate fromDate, LocalDate toDate, Integer candidateId) {
+                                 LocalDate fromDate, LocalDate toDate) {
         this.candidateEducationId = candidateEducationId;
         this.institution = institution;
         this.degree = degree;
         this.fieldOfStudy = fieldOfStudy;
         this.fromDate = fromDate;
         this.toDate = toDate;
-        this.candidateId = candidateId;
+
     }
 
     public Integer getCandidateEducationId() {
@@ -47,9 +47,6 @@ public class CandidateEducationDTO {
         return toDate;
     }
 
-    public Integer getCandidateId() {
-        return candidateId;
-    }
 
     @Override
     public String toString() {
@@ -59,8 +56,6 @@ public class CandidateEducationDTO {
                 ", degree='" + degree + '\'' +
                 ", fieldOfStudy='" + fieldOfStudy + '\'' +
                 ", fromDate=" + fromDate +
-                ", toDate=" + toDate +
-                ", candidateId=" + candidateId +
-                '}';
-    }
+                ", toDate=" + toDate;}
+
 }

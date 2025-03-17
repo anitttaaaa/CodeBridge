@@ -45,8 +45,7 @@ public class CandidateMapperImpl implements CandidateMapper {
                                 experience.getCandidatePosition(),
                                 experience.getDescription(),
                                 experience.getFromDate(),
-                                experience.getToDate(),
-                                experience.getCandidateId()
+                                experience.getToDate()
                         ))
                         .collect(Collectors.toList());
     }
@@ -61,8 +60,7 @@ public class CandidateMapperImpl implements CandidateMapper {
                                 project.getDescription(),
                                 project.getFromDate(),
                                 project.getToDate(),
-                                project.getProjectLink(),
-                                project.getCandidateId()
+                                project.getProjectLink()
                         ))
                         .collect(Collectors.toList());
     }
@@ -77,8 +75,7 @@ public class CandidateMapperImpl implements CandidateMapper {
                                 education.getDegree(),
                                 education.getFieldOfStudy(),
                                 education.getFromDate(),
-                                education.getToDate(),
-                                education.getCandidateId()
+                                education.getToDate()
                         ))
                         .collect(Collectors.toList());
     }
@@ -93,8 +90,7 @@ public class CandidateMapperImpl implements CandidateMapper {
                                 course.getDescription(),
                                 course.getTechnologies(),
                                 course.getFromDate(),
-                                course.getToDate(),
-                                course.getCandidateId()
+                                course.getToDate()
                         ))
                         .collect(Collectors.toList());
     }
@@ -151,7 +147,6 @@ public class CandidateMapperImpl implements CandidateMapper {
                                 .fromDate(projectDTO.getFromDate())
                                 .toDate(projectDTO.getToDate())
                                 .projectLink(projectDTO.getProjectLink())
-                                .candidateId(projectDTO.getCandidateId())
                                 .build()
                         )
                         .collect(Collectors.toList());

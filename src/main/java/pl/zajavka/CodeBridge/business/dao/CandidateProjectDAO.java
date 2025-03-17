@@ -5,9 +5,9 @@ import pl.zajavka.CodeBridge.domain.CandidateProject;
 public interface CandidateProjectDAO {
 
 
-    CandidateProject createProject(CandidateProject candidateProject);
+    CandidateProject createProject(CandidateProject candidateProject, Integer candidateId);
 
-    void updateCandidateProject(CandidateProject candidateProject);
+    void updateCandidateProject(CandidateProject candidateProject, Integer candidateId);
 
     void deleteById(Integer candidateProjectId);
 }

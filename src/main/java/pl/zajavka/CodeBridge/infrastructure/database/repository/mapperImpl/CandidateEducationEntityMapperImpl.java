@@ -23,7 +23,7 @@ public class CandidateEducationEntityMapperImpl implements CandidateEducationEnt
                 .build();
     }
     @Override
-    public CandidateEducationEntity mapToEntity(CandidateEducation candidateEducation) {
+    public CandidateEducationEntity mapToEntity(CandidateEducation candidateEducation, Integer candidateId) {
 
 
         return new CandidateEducationEntity.Builder()
@@ -33,7 +33,7 @@ public class CandidateEducationEntityMapperImpl implements CandidateEducationEnt
                 .fieldOfStudy(candidateEducation.getFieldOfStudy())
                 .fromDate(candidateEducation.getFromDate())
                 .toDate(candidateEducation.getToDate())
-                .candidateId(candidateEducation.getCandidateId())
+                .candidateId(candidateId)
                 .build();
     }
 }

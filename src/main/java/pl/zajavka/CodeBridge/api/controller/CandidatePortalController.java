@@ -9,18 +9,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.zajavka.CodeBridge.api.dto.*;
-import pl.zajavka.CodeBridge.api.dto.mapper.*;
 import pl.zajavka.CodeBridge.api.enums.SkillsEnum;
 import pl.zajavka.CodeBridge.api.enums.StatusEnum;
 import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 import pl.zajavka.CodeBridge.business.*;
-import pl.zajavka.CodeBridge.domain.*;
+import pl.zajavka.CodeBridge.domain.Candidate;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 public class CandidatePortalController {
@@ -56,91 +53,39 @@ public class CandidatePortalController {
     private final CandidateProjectService candidateProjectService;
     private final CandidateCourseService candidateCourseService;
     private final CandidateEducationService candidateEducationService;
-    private final CandidateExperienceMapper candidateExperienceMapper;
-    private final CandidateProjectMapper candidateProjectMapper;
-    private final CandidateCourseMapper candidateCourseMapper;
-    private final CandidateEducationMapper candidateEducationMapper;
-    private final CandidateMapper candidateMapper;
 
-    @PostMapping(ADD_CANDIDATE_EXPERIENCE)
-    public String addExperience(Authentication authentication,
-                                @ModelAttribute("candidateExperienceDTO") CandidateExperienceDTO candidateExperienceDTO) {
-
-        CandidateExperience candidateExperience = candidateExperienceMapper.mapToDomain(candidateExperienceDTO);
-        candidateExperienceService.createExperienceData(candidateExperience, authentication);
-
-        return "redirect:/candidate-portal";
-    }
-
-    @PostMapping(UPDATE_CANDIDATE_EXPERIENCE)
-    public String updateCandidateExperience(
-            @ModelAttribute CandidateExperienceDTO candidateExperienceDTO,
-            Authentication authentication) throws AccessDeniedException {
-
-        CandidateExperience candidateExperience = candidateExperienceMapper.mapToDomain(candidateExperienceDTO);
-        candidateExperienceService.updateCandidateExperience(candidateExperience, authentication);
-
-        return "redirect:/candidate-portal";
-
-    }
-
-
-    @PostMapping(DELETE_CANDIDATE_EXPERIENCE)
-    public String deleteCandidateExperience(
-            @RequestParam("candidateExperienceId") Integer candidateExperienceId
-    ) {
-
-        candidateExperienceService.deleteCandidateExperienceById(candidateExperienceId);
-
-        return "redirect:/candidate-portal";
-    }
     public CandidatePortalController(CandidateService candidateService,
                                      CandidateExperienceService candidateExperienceService,
                                      CandidateProjectService candidateProjectService,
                                      CandidateCourseService candidateCourseService,
-                                     CandidateEducationService candidateEducationService,
-                                     CandidateExperienceMapper candidateExperienceMapper,
-                                     CandidateProjectMapper candidateProjectMapper,
-                                     CandidateCourseMapper candidateCourseMapper,
-                                     CandidateEducationMapper candidateEducationMapper,
-                                     CandidateMapper candidateMapper) {
+                                     CandidateEducationService candidateEducationService) {
         this.candidateService = candidateService;
         this.candidateExperienceService = candidateExperienceService;
         this.candidateProjectService = candidateProjectService;
         this.candidateCourseService = candidateCourseService;
         this.candidateEducationService = candidateEducationService;
-        this.candidateExperienceMapper = candidateExperienceMapper;
-        this.candidateProjectMapper = candidateProjectMapper;
-        this.candidateCourseMapper = candidateCourseMapper;
-        this.candidateEducationMapper = candidateEducationMapper;
-        this.candidateMapper = candidateMapper;
+
+    }
+
+    @PostMapping(UPDATE_CANDIDATE_SKILLS)
+    public String updateCandidateSkills(
+            @RequestParam(value = "candidateSkills", required = false) List<SkillsEnum> candidateSkills,
+            Authentication authentication
+    ) {
+        candidateService.updateCandidateSkills(authentication, candidateSkills);
+        return "redirect:/candidate-portal";
     }
 
     @GetMapping(SHOW_CANDIDATE_PORTAL)
     public String getCandidateDetails(Model model) {
 
         Candidate candidate = candidateService.findLoggedInCandidate();
-        CandidateDTO candidateDetails = candidateMapper.mapToDto(candidate);
+        CandidateDTO candidateDetails = candidateService.getSortedCandidateDetails(candidate);
 
-        List<CandidateExperienceDTO> sortedExperiences = candidateDetails.getCandidateExperiences()
-                .stream()
-                .sorted(Comparator.comparing(CandidateExperienceDTO::getFromDate))
-                .toList();
-
-        List<CandidateProjectDTO> sortedProjects = candidateDetails.getCandidateProjects()
-                .stream()
-                .sorted(Comparator.comparing(CandidateProjectDTO::getFromDate))
-                .toList();
-
-        List<CandidateEducationDTO> sortedCandidateEducationStages = candidateDetails.getCandidateEducationStages()
-                .stream()
-                .sorted(Comparator.comparing(CandidateEducationDTO::getFromDate))
-                .toList();
-
-        List<CandidateCourseDTO> sortedCourses = candidateDetails.getCandidateCourses()
-                .stream()
-                .sorted(Comparator.comparing(CandidateCourseDTO::getFromDate))
-                .toList();
+        List<CandidateExperienceDTO> sortedExperiences = candidateDetails.getCandidateExperiences();
+        List<CandidateProjectDTO> sortedProjects = candidateDetails.getCandidateProjects();
+        List<CandidateEducationDTO> sortedCandidateEducationStages = candidateDetails.getCandidateEducationStages();
+        List<CandidateCourseDTO> sortedCourses = candidateDetails.getCandidateCourses();
 
         model.addAttribute("candidateExperiences", sortedExperiences);
         model.addAttribute("candidateProjects", sortedProjects);
@@ -152,205 +97,12 @@ public class CandidatePortalController {
     }
 
 
-    @PostMapping(UPDATE_CANDIDATE_TECH_SPECIALIZATION)
-    public String updateCandidateTechSpecialization(
-            @RequestParam(value = "techSpecialization", required = false) TechSpecializationsEnum techSpecialization,
-            Authentication authentication
-    ) {
-        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
-
-        candidate = new Candidate.Builder()
-                .name(candidate.getName())
-                .surname(candidate.getSurname())
-                .email(candidate.getEmail())
-                .phone(candidate.getPhone())
-                .status(candidate.getStatus())
-                .linkedIn(candidate.getLinkedIn())
-                .gitHub(candidate.getGitHub())
-                .techSpecialization(techSpecialization)
-                .aboutMe(candidate.getAboutMe())
-                .hobby(candidate.getHobby())
-                .userId(candidate.getUserId())
-                .profilePhoto(candidate.getProfilePhoto())
-                .candidateSkills(candidate.getCandidateSkills())
-                .candidateExperiences(candidate.getCandidateExperiences())
-                .candidateProjects(candidate.getCandidateProjects())
-                .candidateEducationStages(candidate.getCandidateEducationStages())
-                .candidateCourses(candidate.getCandidateCourses())
-                .build();
-
-        candidateService.updateCandidate(candidate, authentication);
-
-        return "redirect:/candidate-portal";
-    }
-
-
-
-    @PostMapping(UPDATE_CANDIDATE_STATUS)
-    public String updateCandidateStatus(
-            @RequestParam(value = "status", required = false) String status,
-            Authentication authentication
-    ) {
-        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
-
-        if (status == null || status.trim().isEmpty()) {
-            status = null;
-        }
-
-        candidate = new Candidate.Builder()
-                .name(candidate.getName())
-                .surname(candidate.getSurname())
-                .email(candidate.getEmail())
-                .phone(candidate.getPhone())
-                .status(StatusEnum.valueOf(status))
-                .linkedIn(candidate.getLinkedIn())
-                .gitHub(candidate.getGitHub())
-                .techSpecialization(candidate.getTechSpecialization())
-                .aboutMe(candidate.getAboutMe())
-                .hobby(candidate.getHobby())
-                .userId(candidate.getUserId())
-                .profilePhoto(candidate.getProfilePhoto())
-                .candidateSkills(candidate.getCandidateSkills())
-                .candidateExperiences(candidate.getCandidateExperiences())
-                .candidateProjects(candidate.getCandidateProjects())
-                .candidateEducationStages(candidate.getCandidateEducationStages())
-                .candidateCourses(candidate.getCandidateCourses())
-                .build();
-
-        candidateService.updateCandidate(candidate, authentication);
-
-        return "redirect:/candidate-portal";
-    }
-
-
-
-    @GetMapping(PROFILE_PHOTO_DISPLAY)
-    public ResponseEntity<byte[]> getProfilePhoto(
-            Authentication authentication) {
-
-        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
-        CandidateDTO candidateDTO = candidateMapper.mapToDto(candidate);
-        byte[] profilePhoto = candidateDTO.getProfilePhoto();
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(profilePhoto);
-
-    }
-
-    @PostMapping(UPDATE_CANDIDATE_PHOTO)
-    public String updateCandidateProfilePhoto(
-            @RequestParam("profilePhoto") MultipartFile profilePhoto,
-            Authentication authentication
-    ) throws IOException {
-        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
-
-        if (!profilePhoto.isEmpty()) {
-            byte[] profilePhotoData = profilePhoto.getBytes();
-
-            candidate = new Candidate.Builder()
-                    .name(candidate.getName())
-                    .surname(candidate.getSurname())
-                    .email(candidate.getEmail())
-                    .phone(candidate.getPhone())
-                    .status(candidate.getStatus())
-                    .linkedIn(candidate.getLinkedIn())
-                    .gitHub(candidate.getGitHub())
-                    .techSpecialization(candidate.getTechSpecialization())
-                    .aboutMe(candidate.getAboutMe())
-                    .hobby(candidate.getHobby())
-                    .userId(candidate.getUserId())
-                    .profilePhoto(profilePhotoData)
-                    .candidateSkills(candidate.getCandidateSkills())
-                    .candidateExperiences(candidate.getCandidateExperiences())
-                    .candidateProjects(candidate.getCandidateProjects())
-                    .candidateEducationStages(candidate.getCandidateEducationStages())
-                    .candidateCourses(candidate.getCandidateCourses())
-                    .build();
-
-            candidateService.updateCandidate(candidate, authentication);
-        }
-
-        return "redirect:/candidate-portal";
-    }
-
-
-
-    @PostMapping(UPDATE_CANDIDATE_BASIC_INFO)
-    public String updateCandidateAllDetails(
-            @RequestParam("name") String name,
-            @RequestParam("surname") String surname,
-            @RequestParam("phone") String phone,
-            @RequestParam(value = "linkedIn", required = false) String linkedIn,
-            @RequestParam(value = "gitHub", required = false) String gitHub,
-            Authentication authentication
-    ) {
-        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
-
-        candidate = new Candidate.Builder()
-                .name(candidate.getName())
-                .surname(candidate.getSurname())
-                .email(candidate.getEmail())
-                .phone(phone)
-                .status(candidate.getStatus())
-                .linkedIn(linkedIn)
-                .gitHub(gitHub)
-                .techSpecialization(candidate.getTechSpecialization())
-                .aboutMe(candidate.getAboutMe())
-                .hobby(candidate.getHobby())
-                .userId(candidate.getUserId())
-                .profilePhoto(candidate.getProfilePhoto())
-                .candidateSkills(candidate.getCandidateSkills())
-                .candidateExperiences(candidate.getCandidateExperiences())
-                .candidateProjects(candidate.getCandidateProjects())
-                .candidateEducationStages(candidate.getCandidateEducationStages())
-                .candidateCourses(candidate.getCandidateCourses())
-                .build();
-
-
-        candidateService.updateCandidate(candidate, authentication);
-
-        return "redirect:/candidate-portal";
-    }
-
-    @PostMapping(ADD_CANDIDATE_PROJECT)
-    public String addCandidateProject(
-            @ModelAttribute("candidateProjectDTO") CandidateProjectDTO candidateProjectDTO) {
-
-        CandidateProject candidateProject = candidateProjectMapper.mapToDomain(candidateProjectDTO);
-        candidateProjectService.createProjectData(candidateProject);
-
-        return "redirect:/candidate-portal";
-    }
-
-    @PostMapping(UPDATE_CANDIDATE_PROJECT)
-    public String getUpdateCandidateProject(
-            @ModelAttribute CandidateProjectDTO candidateProjectDTO,
-            Authentication authentication) throws AccessDeniedException {
-
-        CandidateProject candidateProject = candidateProjectMapper.mapToDomain(candidateProjectDTO);
-        candidateProjectService.updateCandidateProject(candidateProject, authentication);
-
-        return "redirect:/candidate-portal";
-    }
-
-
-    @PostMapping(DELETE_CANDIDATE_PROJECT)
-    public String deleteCandidateProject(
-            @RequestParam("candidateProjectId") Integer candidateProjectId) {
-
-        candidateProjectService.deleteCandidateProjectById(candidateProjectId);
-
-        return "redirect:/candidate-portal";
-    }
-
-
     @PostMapping(ADD_CANDIDATE_EDUCATION)
     public String addCandidateEducation(
-            @ModelAttribute("candidateEducationDTO") CandidateEducationDTO candidateEducationDTO) {
+            @ModelAttribute("candidateEducationDTO") CandidateEducationDTO candidateEducationDTO,
+            Authentication authentication) {
 
-        CandidateEducation candidateEducation = candidateEducationMapper.mapToDomain(candidateEducationDTO);
-        candidateEducationService.createEducationData(candidateEducation);
+        candidateEducationService.createEducationData(candidateEducationDTO, authentication);
 
         return "redirect:/candidate-portal";
     }
@@ -360,8 +112,7 @@ public class CandidatePortalController {
             @ModelAttribute CandidateEducationDTO candidateEducationDTO,
             Authentication authentication) throws AccessDeniedException {
 
-        CandidateEducation candidateEducation = candidateEducationMapper.mapToDomain(candidateEducationDTO);
-        candidateEducationService.updateCandidateEducation(candidateEducation, authentication);
+        candidateEducationService.updateCandidateEducation(candidateEducationDTO, authentication);
 
         return "redirect:/candidate-portal";
     }
@@ -379,10 +130,10 @@ public class CandidatePortalController {
 
     @PostMapping(ADD_CANDIDATE_COURSE)
     public String addCandidateCourse(
-            @ModelAttribute("candidateCourseDTO") CandidateCourseDTO candidateCourseDTO) {
+            @ModelAttribute("candidateCourseDTO") CandidateCourseDTO candidateCourseDTO,
+            Authentication authentication) {
 
-        CandidateCourse candidateCourse = candidateCourseMapper.mapToDomain(candidateCourseDTO);
-        candidateCourseService.createCourseData(candidateCourse);
+        candidateCourseService.createCourseData(candidateCourseDTO, authentication);
 
         return "redirect:/candidate-portal";
     }
@@ -392,8 +143,7 @@ public class CandidatePortalController {
             @ModelAttribute CandidateCourseDTO candidateCourseDTO,
             Authentication authentication) throws AccessDeniedException {
 
-        CandidateCourse candidateCourse = candidateCourseMapper.mapToDomain(candidateCourseDTO);
-        candidateCourseService.updateCandidateCourse(candidateCourse, authentication);
+        candidateCourseService.updateCandidateCourse(candidateCourseDTO, authentication);
 
         return "redirect:/candidate-portal";
     }
@@ -409,151 +159,143 @@ public class CandidatePortalController {
 
     }
 
+    @PostMapping(ADD_CANDIDATE_PROJECT)
+    public String addCandidateProject(
+            @ModelAttribute("candidateProjectDTO") CandidateProjectDTO candidateProjectDTO,
+            Authentication authentication) {
+
+        candidateProjectService.createProjectData(candidateProjectDTO, authentication);
+
+        return "redirect:/candidate-portal";
+    }
+
+    @PostMapping(UPDATE_CANDIDATE_PROJECT)
+    public String getUpdateCandidateProject(
+            @ModelAttribute CandidateProjectDTO candidateProjectDTO,
+            Authentication authentication) throws AccessDeniedException {
+
+        candidateProjectService.updateCandidateProject(candidateProjectDTO, authentication);
+
+        return "redirect:/candidate-portal";
+    }
+
+
+    @PostMapping(DELETE_CANDIDATE_PROJECT)
+    public String deleteCandidateProject(
+            @RequestParam("candidateProjectId") Integer candidateProjectId) {
+
+        candidateProjectService.deleteCandidateProjectById(candidateProjectId);
+
+        return "redirect:/candidate-portal";
+    }
+
+    @PostMapping(ADD_CANDIDATE_EXPERIENCE)
+    public String addExperience(Authentication authentication,
+                                @ModelAttribute("candidateExperienceDTO") CandidateExperienceDTO candidateExperienceDTO) throws AccessDeniedException {
+
+        candidateExperienceService.createExperienceData(candidateExperienceDTO, authentication);
+
+        return "redirect:/candidate-portal";
+    }
+
+    @PostMapping(UPDATE_CANDIDATE_EXPERIENCE)
+    public String updateCandidateExperience(
+            @ModelAttribute CandidateExperienceDTO candidateExperienceDTO,
+            Authentication authentication) throws AccessDeniedException {
+
+        candidateExperienceService.updateCandidateExperience(candidateExperienceDTO, authentication);
+
+        return "redirect:/candidate-portal";
+    }
+
+    @PostMapping(DELETE_CANDIDATE_EXPERIENCE)
+    public String deleteCandidateExperience(
+            @RequestParam("candidateExperienceId") Integer candidateExperienceId
+    ) {
+
+        candidateExperienceService.deleteCandidateExperienceById(candidateExperienceId);
+
+        return "redirect:/candidate-portal";
+    }
+
+
+    @PostMapping(UPDATE_CANDIDATE_TECH_SPECIALIZATION)
+    public String updateCandidateTechSpecialization(
+            @RequestParam(value = "techSpecialization", required = false) TechSpecializationsEnum techSpecialization,
+            Authentication authentication
+    ) {
+        candidateService.updateCandidateTechSpecialization(authentication, techSpecialization);
+
+        return "redirect:/candidate-portal";
+    }
+
+    @PostMapping(UPDATE_CANDIDATE_STATUS)
+    public String updateCandidateStatus(
+            @RequestParam(value = "status", required = false) StatusEnum status,
+            Authentication authentication
+    ) {
+        candidateService.updateCandidateStatus(authentication, status);
+
+        return "redirect:/candidate-portal";
+    }
+
+
+    @GetMapping(PROFILE_PHOTO_DISPLAY)
+    public ResponseEntity<byte[]> getProfilePhoto(Authentication authentication) {
+        byte[] profilePhoto = candidateService.getProfilePhoto(authentication);
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(profilePhoto);
+    }
+
+
+    @PostMapping(UPDATE_CANDIDATE_PHOTO)
+    public String updateCandidateProfilePhoto(
+            @RequestParam("profilePhoto") MultipartFile profilePhoto,
+            Authentication authentication
+    ) throws IOException {
+        candidateService.updateCandidateProfilePhoto(authentication, profilePhoto);
+        return "redirect:/candidate-portal";
+    }
+
+    @PostMapping(UPDATE_CANDIDATE_BASIC_INFO)
+    public String updateCandidateDetails(
+            @RequestParam("name") String name,
+            @RequestParam("surname") String surname,
+            @RequestParam("phone") String phone,
+            @RequestParam(value = "linkedIn", required = false) String linkedIn,
+            @RequestParam(value = "gitHub", required = false) String gitHub,
+            Authentication authentication
+    ) {
+        candidateService.updateCandidateBasicInfo(authentication, name, surname, phone, linkedIn, gitHub);
+        return "redirect:/candidate-portal";
+    }
+
     @PostMapping(UPDATE_CANDIDATE_HOBBY)
     public String getUpdateCandidateHobby(
             @RequestParam(value = "hobby", required = false) String hobby,
             Authentication authentication
     ) {
-        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
-
-        if (hobby == null || hobby.trim().isEmpty()) {
-            hobby = null;
-        }
-
-        candidate = new Candidate.Builder()
-                .name(candidate.getName())
-                .surname(candidate.getSurname())
-                .email(candidate.getEmail())
-                .phone(candidate.getPhone())
-                .status(candidate.getStatus())
-                .linkedIn(candidate.getLinkedIn())
-                .gitHub(candidate.getGitHub())
-                .techSpecialization(candidate.getTechSpecialization())
-                .aboutMe(candidate.getAboutMe())
-                .hobby(hobby)  // Nowe hobby
-                .userId(candidate.getUserId())
-                .profilePhoto(candidate.getProfilePhoto())
-                .candidateSkills(candidate.getCandidateSkills())
-                .candidateExperiences(candidate.getCandidateExperiences())
-                .candidateProjects(candidate.getCandidateProjects())
-                .candidateEducationStages(candidate.getCandidateEducationStages())
-                .candidateCourses(candidate.getCandidateCourses())
-                .build();
-
-        candidateService.updateCandidate(candidate, authentication);
-
+        candidateService.updateCandidateHobby(authentication, hobby);
         return "redirect:/candidate-portal";
     }
-
-
-
-    @PostMapping(UPDATE_CANDIDATE_SKILLS)
-    public String updateCandidateSkills(
-            @RequestParam(value = "candidateSkills", required = false) List<SkillsEnum> candidateSkills,
-            Authentication authentication
-    ) {
-        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
-
-        if (candidateSkills == null || candidateSkills.isEmpty()) {
-            candidateSkills = null;
-        }
-
-        candidate = new Candidate.Builder()
-                .name(candidate.getName())
-                .surname(candidate.getSurname())
-                .email(candidate.getEmail())
-                .phone(candidate.getPhone())
-                .status(candidate.getStatus())
-                .linkedIn(candidate.getLinkedIn())
-                .gitHub(candidate.getGitHub())
-                .techSpecialization(candidate.getTechSpecialization())
-                .aboutMe(candidate.getAboutMe())
-                .hobby(candidate.getHobby())
-                .userId(candidate.getUserId())
-                .profilePhoto(candidate.getProfilePhoto())
-                .candidateSkills(candidateSkills)
-                .candidateExperiences(candidate.getCandidateExperiences())
-                .candidateProjects(candidate.getCandidateProjects())
-                .candidateEducationStages(candidate.getCandidateEducationStages())
-                .candidateCourses(candidate.getCandidateCourses())
-                .build();
-
-        candidateService.updateCandidate(candidate, authentication);
-
-        return "redirect:/candidate-portal";
-    }
-
-
 
     @PostMapping(UPDATE_CANDIDATE_ABOUT_ME)
     public String updateCandidateAboutMe(
             @RequestParam(value = "aboutMe", required = false) String aboutMe,
             Authentication authentication
     ) {
-        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
-
-        if (aboutMe == null || aboutMe.isEmpty()) {
-            aboutMe = null;
-        }
-
-        candidate = new Candidate.Builder()
-                .name(candidate.getName())
-                .surname(candidate.getSurname())
-                .email(candidate.getEmail())
-                .phone(candidate.getPhone())
-                .status(candidate.getStatus())
-                .linkedIn(candidate.getLinkedIn())
-                .gitHub(candidate.getGitHub())
-                .techSpecialization(candidate.getTechSpecialization())
-                .aboutMe(aboutMe)
-                .hobby(candidate.getHobby())
-                .userId(candidate.getUserId())
-                .profilePhoto(candidate.getProfilePhoto())
-                .candidateSkills(candidate.getCandidateSkills())
-                .candidateExperiences(candidate.getCandidateExperiences())
-                .candidateProjects(candidate.getCandidateProjects())
-                .candidateEducationStages(candidate.getCandidateEducationStages())
-                .candidateCourses(candidate.getCandidateCourses())
-                .build();
-
-        candidateService.updateCandidate(candidate, authentication);
-
+        candidateService.updateCandidateAboutMe(authentication, aboutMe);
         return "redirect:/candidate-portal";
     }
-
-
 
     @DeleteMapping(DELETE_CANDIDATE_PHOTO)
     public String deleteCandidatePhoto(Authentication authentication) {
 
-        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
-
-        if (!Objects.isNull(candidate.getProfilePhoto())) {
-
-            candidate = new Candidate.Builder()
-                    .name(candidate.getName())
-                    .surname(candidate.getSurname())
-                    .email(candidate.getEmail())
-                    .phone(candidate.getPhone())
-                    .status(candidate.getStatus())
-                    .linkedIn(candidate.getLinkedIn())
-                    .gitHub(candidate.getGitHub())
-                    .techSpecialization(candidate.getTechSpecialization())
-                    .aboutMe(candidate.getAboutMe())
-                    .hobby(candidate.getHobby())
-                    .userId(candidate.getUserId())
-                    .profilePhoto(null)
-                    .candidateSkills(candidate.getCandidateSkills())
-                    .candidateExperiences(candidate.getCandidateExperiences())
-                    .candidateProjects(candidate.getCandidateProjects())
-                    .candidateEducationStages(candidate.getCandidateEducationStages())
-                    .candidateCourses(candidate.getCandidateCourses())
-                    .build();
-
-            candidateService.updateCandidate(candidate, authentication);
-        }
-
+        candidateService.deleteCandidateProfilePhoto(authentication);
         return "redirect:/candidate-portal";
     }
 
 }
+
+

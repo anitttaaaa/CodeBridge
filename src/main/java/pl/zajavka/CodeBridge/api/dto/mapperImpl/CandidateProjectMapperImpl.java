@@ -17,8 +17,7 @@ public class CandidateProjectMapperImpl implements CandidateProjectMapper {
                 candidateProject.getDescription(),
                 candidateProject.getFromDate(),
                 candidateProject.getToDate(),
-                candidateProject.getProjectLink(),
-                candidateProject.getCandidateId()
+                candidateProject.getProjectLink()
                 );
     }
 
@@ -32,7 +31,6 @@ public class CandidateProjectMapperImpl implements CandidateProjectMapper {
                 .fromDate(candidateProjectDTO.getFromDate())
                 .toDate(candidateProjectDTO.getToDate())
                 .projectLink(candidateProjectDTO.getProjectLink())
-                .candidateId(candidateProjectDTO.getCandidateId())
                 .build();
     }
 }

@@ -24,7 +24,6 @@ public class EmployerMapperImpl implements EmployerMapper {
                 .companyName(employer.getCompanyName())
                 .email(employer.getEmail())
                 .nip(employer.getNip())
-                .userId(employer.getUserId())
                 .build();
     }
 
@@ -35,7 +34,6 @@ public class EmployerMapperImpl implements EmployerMapper {
                 .companyName(employerDTO.getCompanyName())
                 .email(employerDTO.getEmail())
                 .nip(employerDTO.getNip())
-                .userId(employerDTO.getUserId())
                 .build();
     }
 

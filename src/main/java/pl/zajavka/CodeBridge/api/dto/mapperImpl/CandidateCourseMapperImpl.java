@@ -17,8 +17,7 @@ public class CandidateCourseMapperImpl implements CandidateCourseMapper {
                 candidateCourse.getDescription(),
                 candidateCourse.getTechnologies(),
                 candidateCourse.getFromDate(),
-                candidateCourse.getToDate(),
-                candidateCourse.getCandidateId()
+                candidateCourse.getToDate()
         );
     }
 
@@ -34,7 +33,6 @@ public class CandidateCourseMapperImpl implements CandidateCourseMapper {
                 .technologies(candidateCourseDTO.getTechnologies())
                 .fromDate(candidateCourseDTO.getFromDate())
                 .toDate(candidateCourseDTO.getToDate())
-                .candidateId(candidateCourseDTO.getCandidateId())
                 .build();
     }
 }

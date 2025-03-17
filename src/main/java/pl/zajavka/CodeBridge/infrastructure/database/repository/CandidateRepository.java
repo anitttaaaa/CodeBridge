@@ -29,13 +29,13 @@ public class CandidateRepository implements CandidateDAO {
                 .map(candidateEntityMapper::mapCandidateEntityToDomain);
     }
 
+    public void updateCandidate(Candidate candidate) {
+        saveCandidateEntity(candidate);
+    }
+
     private void saveCandidateEntity(Candidate candidate) {
         CandidateEntity candidateEntity = candidateEntityMapper.mapCandidateToEntity(candidate);
         candidateJpaRepository.saveAndFlush(candidateEntity);
-    }
-
-    public void updateCandidate(Candidate candidate) {
-        saveCandidateEntity(candidate);
     }
 
     @Override

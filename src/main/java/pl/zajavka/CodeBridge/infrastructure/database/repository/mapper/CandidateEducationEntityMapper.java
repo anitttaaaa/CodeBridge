@@ -7,5 +7,5 @@ public interface CandidateEducationEntityMapper {
 
     CandidateEducation mapFromEntity(CandidateEducationEntity candidateEducationEntity);
 
-    CandidateEducationEntity mapToEntity(CandidateEducation candidateEducation);
+    CandidateEducationEntity mapToEntity(CandidateEducation candidateEducation, Integer candidateId);
 }

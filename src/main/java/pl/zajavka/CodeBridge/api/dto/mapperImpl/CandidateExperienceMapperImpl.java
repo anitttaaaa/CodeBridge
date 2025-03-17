@@ -18,8 +18,7 @@ public class CandidateExperienceMapperImpl implements CandidateExperienceMapper 
                 candidateExperience.getCandidatePosition(),
                 candidateExperience.getDescription(),
                 candidateExperience.getFromDate(),
-                candidateExperience.getToDate(),
-                candidateExperience.getCandidateId()
+                candidateExperience.getToDate()
         );
     }
 
@@ -33,7 +32,6 @@ public class CandidateExperienceMapperImpl implements CandidateExperienceMapper 
                 .description(candidateExperienceDTO.getDescription())
                 .fromDate(candidateExperienceDTO.getFromDate())
                 .toDate(candidateExperienceDTO.getToDate())
-                .candidateId(candidateExperienceDTO.getCandidateId())
                 .build();
     }
 }

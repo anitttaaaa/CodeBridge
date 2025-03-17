@@ -27,6 +27,8 @@ public class CandidateCVDTO {
     private final String hobby;
     private final Integer userId;
 
+    private final String encodedImage;
+
     private CandidateCVDTO(Builder builder) {
         this.profilePhoto = builder.profilePhoto;
         this.candidateId = builder.candidateId;
@@ -44,6 +46,7 @@ public class CandidateCVDTO {
         this.candidateCourses = builder.candidateCourses;
         this.hobby = builder.hobby;
         this.userId = builder.userId;
+        this.encodedImage = builder.encodedImage;
     }
 
     public static class Builder {
@@ -63,6 +66,13 @@ public class CandidateCVDTO {
         private List<CandidateCourseDTO> candidateCourses = new ArrayList<>();
         private String hobby;
         private Integer userId;
+
+        private String encodedImage;
+
+        public Builder encodedImage(String encodedImage) {
+            this.encodedImage = encodedImage;
+            return this;
+        }
 
         public Builder profilePhoto(byte[] profilePhoto) {
             this.profilePhoto = profilePhoto;
@@ -211,6 +221,10 @@ public class CandidateCVDTO {
 
     public Integer getUserId() {
         return userId;
+    }
+
+    public String getEncodedImage() {
+        return encodedImage;
     }
 
     @Override

@@ -20,17 +20,18 @@ public class CandidateEducationRepository implements CandidateEducationDAO {
     }
 
     @Override
-    public CandidateEducation createEducation(CandidateEducation candidateEducation) {
+    public CandidateEducation createEducation(CandidateEducation candidateEducation, Integer candidateId) {
 
-        CandidateEducationEntity candidateEducationToSave = candidateEducationEntityMapper.mapToEntity(candidateEducation);
+        CandidateEducationEntity candidateEducationToSave = candidateEducationEntityMapper.mapToEntity(candidateEducation, candidateId);
         CandidateEducationEntity candidateEducationSaved = candidateEducationJpaRepository.saveAndFlush(candidateEducationToSave);
 
         return candidateEducationEntityMapper.mapFromEntity(candidateEducationSaved);
     }
 
     @Override
-    public void updateCandidateEducation(CandidateEducation candidateEducationToUpdate) {
-        CandidateEducationEntity educationToSave = candidateEducationEntityMapper.mapToEntity(candidateEducationToUpdate);
+    public void updateCandidateEducation(CandidateEducation candidateEducationToUpdate, Integer candidateId) {
+
+        CandidateEducationEntity educationToSave = candidateEducationEntityMapper.mapToEntity(candidateEducationToUpdate, candidateId);
         candidateEducationJpaRepository.saveAndFlush(educationToSave);
     }
 

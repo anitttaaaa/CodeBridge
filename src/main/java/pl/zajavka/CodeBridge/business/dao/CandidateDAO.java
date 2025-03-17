@@ -14,5 +14,5 @@ public interface CandidateDAO {
 
     List<Candidate> findAllCandidates();
 
-   Optional<Candidate> findById(Integer candidateId);
+    Optional<Candidate> findById(Integer candidateId);
 }

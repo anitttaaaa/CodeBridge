@@ -9,7 +9,7 @@ import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.Candidate
 public class CandidateCourseEntityMapperImpl implements CandidateCourseEntityMapper {
 
     @Override
-    public CandidateCourse mapToDomain(CandidateCourseEntity entity) {
+    public CandidateCourse mapToDomain(CandidateCourseEntity entity, Integer candidateId) {
         if (entity == null) {
             return null;
         }
@@ -22,12 +22,12 @@ public class CandidateCourseEntityMapperImpl implements CandidateCourseEntityMap
                 .technologies(entity.getTechnologies())
                 .fromDate(entity.getFromDate())
                 .toDate(entity.getToDate())
-                .candidateId(entity.getCandidateId())
+                .candidateId(candidateId)
                 .build();
     }
 
     @Override
-    public CandidateCourseEntity mapToEntity(CandidateCourse domain) {
+    public CandidateCourseEntity mapToEntity(CandidateCourse domain, Integer candidateId) {
         return new CandidateCourseEntity.Builder()
                 .candidateCourseId(domain.getCandidateCourseId())
                 .institution(domain.getInstitution())
@@ -36,7 +36,7 @@ public class CandidateCourseEntityMapperImpl implements CandidateCourseEntityMap
                 .technologies(domain.getTechnologies())
                 .fromDate(domain.getFromDate())
                 .toDate(domain.getToDate())
-                .candidateId(domain.getCandidateId())
+                .candidateId(candidateId)
                 .build();
     }
 

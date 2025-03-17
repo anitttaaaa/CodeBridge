@@ -11,10 +11,9 @@ public class CandidateProjectDTO {
     private final LocalDate fromDate;
     private final LocalDate toDate;
     private final String projectLink;
-    private final Integer candidateId;
 
     public CandidateProjectDTO(Integer candidateProjectId, String projectTitle, String technologies,
-                               String description, LocalDate fromDate, LocalDate toDate, String projectLink, Integer candidateId) {
+                               String description, LocalDate fromDate, LocalDate toDate, String projectLink) {
         this.candidateProjectId = candidateProjectId;
         this.projectTitle = projectTitle;
         this.technologies = technologies;
@@ -22,7 +21,7 @@ public class CandidateProjectDTO {
         this.fromDate = fromDate;
         this.toDate = toDate;
         this.projectLink = projectLink;
-        this.candidateId = candidateId;
+
     }
 
     public Integer getCandidateProjectId() {
@@ -53,9 +52,6 @@ public class CandidateProjectDTO {
         return projectLink;
     }
 
-    public Integer getCandidateId() {
-        return candidateId;
-    }
 
     @Override
     public String toString() {
@@ -66,8 +62,6 @@ public class CandidateProjectDTO {
                 ", description='" + description + '\'' +
                 ", fromDate=" + fromDate +
                 ", toDate=" + toDate +
-                ", projectLink='" + projectLink + '\'' +
-                ", candidateId=" + candidateId +
-                '}';
+                ", projectLink='" + projectLink;
     }
 }

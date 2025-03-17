@@ -7,16 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.zajavka.CodeBridge.api.dto.JobOfferDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.JobOfferMapper;
+import pl.zajavka.CodeBridge.api.enums.*;
 import pl.zajavka.CodeBridge.business.dao.JobOfferDAO;
 import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.JobOffer;
 import pl.zajavka.CodeBridge.domain.exception.NotFoundException;
 import pl.zajavka.CodeBridge.infrastructure.security.CodeBridgeUserDetailsService;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -75,44 +73,39 @@ public class JobOfferService {
     }
 
 
-    private JobOffer buildJobOffer(JobOffer request) {
-        return new JobOffer.JobOfferBuilder()
-                .jobOfferId(null)
-                .jobOfferTitle(request.getJobOfferTitle())
-                .description(request.getDescription())
-                .techSpecialization(request.getTechSpecialization())
-                .employer(request.getEmployer())
-                .workType(request.getWorkType())
-                .city(request.getCity())
-                .experience(request.getExperience())
-                .salary(request.getSalary())
-                .mustHaveSkills(request.getMustHaveSkills())
-                .niceToHaveSkills(request.getNiceToHaveSkills())
-                .build();
+    @Transactional
+    public List<JobOfferDTO> getAllJobOffersSorted() {
+
+        List<JobOffer> jobOffers = jobOfferDAO.findAllJobOffers();
+        List<JobOfferDTO> jobOffersDTO = jobOffers.stream()
+                .map(jobOfferMapper::mapToDTO)
+                .collect(Collectors.toList());
+
+        return jobOffersDTO.stream()
+                .sorted(Comparator.comparingInt(JobOfferDTO::getJobOfferId).reversed())
+                .collect(Collectors.toList());
     }
 
 
     @Transactional
-    public List<JobOffer> getAllJobOffers() {
+    public List<JobOfferDTO> getFilteredAndSortedJobOffers(
+            TechSpecializationsEnum techSpecialization,
+            WorkTypesEnum workType,
+            CitiesEnum city,
+            ExperiencesEnum experience,
+            SalaryEnum salary) {
 
-        return jobOfferDAO.findAllJobOffers();
-    }
-
-    public List<JobOffer> getFilteredJobOffers(
-            String techSpecialization,
-            String workType,
-            String city,
-            String experience,
-            String salary) {
-
-        List<JobOffer> allJobOffers = jobOfferDAO.findAll();
-
-        return allJobOffers.stream()
+        List<JobOffer> filteredJobOffers = jobOfferDAO.findAll().stream()
                 .filter(job -> techSpecialization == null || techSpecialization.equals(job.getTechSpecialization()))
                 .filter(job -> workType == null || workType.equals(job.getWorkType()))
                 .filter(job -> city == null || city.equals(job.getCity()))
                 .filter(job -> experience == null || experience.equals(job.getExperience()))
                 .filter(job -> salary == null || job.getSalary().equals(salary))
+                .sorted(Comparator.comparingInt(JobOffer::getJobOfferId).reversed())
+                .collect(Collectors.toList());
+
+        return filteredJobOffers.stream()
+                .map(jobOfferMapper::mapToDTO)
                 .collect(Collectors.toList());
     }
 

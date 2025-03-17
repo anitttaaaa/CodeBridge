@@ -20,8 +20,7 @@ public class CandidateEducationMapperImpl implements CandidateEducationMapper {
                 candidateEducation.getDegree(),
                 candidateEducation.getFieldOfStudy(),
                 candidateEducation.getFromDate(),
-                candidateEducation.getToDate(),
-                candidateEducation.getCandidateId()
+                candidateEducation.getToDate()
         );
     }
 
@@ -38,7 +37,6 @@ public class CandidateEducationMapperImpl implements CandidateEducationMapper {
                 .fieldOfStudy(candidateEducationDTO.getFieldOfStudy())
                 .fromDate(candidateEducationDTO.getFromDate())
                 .toDate(candidateEducationDTO.getToDate())
-                .candidateId(candidateEducationDTO.getCandidateId())
                 .build();
     }
 }

@@ -5,6 +5,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.zajavka.CodeBridge.api.enums.SkillsEnum;
+import pl.zajavka.CodeBridge.api.enums.StatusEnum;
+import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 import pl.zajavka.CodeBridge.business.dao.CandidateDAO;
 import pl.zajavka.CodeBridge.business.dao.EmployerDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
@@ -52,8 +55,8 @@ public class EmployerService {
     }
 
     public List<Candidate> getFilteredCandidates(
-            String techSpecialization,
-            String status) {
+            TechSpecializationsEnum techSpecialization,
+            StatusEnum status) {
 
         List<Candidate> allCandidates = candidateDAO.findAll();
 

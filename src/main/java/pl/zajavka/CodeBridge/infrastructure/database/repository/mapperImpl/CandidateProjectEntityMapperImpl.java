@@ -1,5 +1,6 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository.mapperImpl;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.stereotype.Component;
 import pl.zajavka.CodeBridge.domain.CandidateProject;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateProjectEntity;
@@ -25,7 +26,7 @@ public class CandidateProjectEntityMapperImpl implements CandidateProjectEntityM
     }
 
     @Override
-    public CandidateProjectEntity mapToEntity(CandidateProject domain) {
+    public CandidateProjectEntity mapToEntity(CandidateProject domain, Integer candidateId) {
 
 
         return new CandidateProjectEntity.Builder()
@@ -36,7 +37,7 @@ public class CandidateProjectEntityMapperImpl implements CandidateProjectEntityM
                 .fromDate(domain.getFromDate())
                 .toDate(domain.getToDate())
                 .projectLink(domain.getProjectLink())
-                .candidateId(domain.getCandidateId())
+                .candidateId(candidateId)
                 .build();
     }
 }

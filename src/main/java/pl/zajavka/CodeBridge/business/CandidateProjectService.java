@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.zajavka.CodeBridge.api.dto.CandidateProjectDTO;
+import pl.zajavka.CodeBridge.api.dto.mapper.CandidateProjectMapper;
 import pl.zajavka.CodeBridge.business.dao.CandidateProjectDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.CandidateProject;
@@ -15,43 +17,37 @@ public class CandidateProjectService {
 
     private final CandidateService candidateService;
     private final CandidateProjectDAO candidateProjectDAO;
+    private final CandidateProjectMapper candidateProjectMapper;
 
     @Autowired
     public CandidateProjectService(CandidateService candidateService,
-                                   CandidateProjectDAO candidateProjectDAO) {
+                                   CandidateProjectDAO candidateProjectDAO,
+                                   CandidateProjectMapper candidateProjectMapper) {
         this.candidateService = candidateService;
         this.candidateProjectDAO = candidateProjectDAO;
+        this.candidateProjectMapper = candidateProjectMapper;
     }
 
     @Transactional
-    public void createProjectData(CandidateProject candidateProjectFromRequest) {
+    public void createProjectData(CandidateProjectDTO candidateProjectFromRequest, Authentication authentication) {
 
-        Candidate candidate = candidateService.findLoggedInCandidate();
-        CandidateProject candidateProject = buildCandidateProject(candidateProjectFromRequest, candidate);
-        candidateProjectDAO.createProject(candidateProject);
+        String candidateEmail = authentication.getName();
+        Integer candidateId = candidateService.findCandidateByEmail(candidateEmail).getCandidateId();
+
+        CandidateProject candidateProject = candidateProjectMapper.mapToDomain(candidateProjectFromRequest);
+
+        candidateProjectDAO.createProject(candidateProject, candidateId);
     }
 
-    private CandidateProject buildCandidateProject(CandidateProject candidateProjectFromRequest, Candidate candidate) {
-        return new CandidateProject.Builder()
-                .projectTitle(candidateProjectFromRequest.getProjectTitle())
-                .technologies(candidateProjectFromRequest.getTechnologies())
-                .description(candidateProjectFromRequest.getDescription())
-                .fromDate(candidateProjectFromRequest.getFromDate())
-                .toDate(candidateProjectFromRequest.getToDate())
-                .projectLink(candidateProjectFromRequest.getProjectLink())
-                .candidateId(candidate.getCandidateId())
-                .build();
-    }
 
-    public void updateCandidateProject(CandidateProject candidateProject, Authentication authentication) throws AccessDeniedException {
+    public void updateCandidateProject(CandidateProjectDTO candidateProjectDTO, Authentication authentication) throws AccessDeniedException {
 
-        Candidate candidate = candidateService.findLoggedInCandidate();
-        Integer loggedInCandidateId = candidate.getCandidateId();
+        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
+        Integer candidateId = candidate.getCandidateId();
 
-        if (!candidateProject.getCandidateId().equals(loggedInCandidateId)) {
-            throw new AccessDeniedException("Unauthorized access.");
-        }
-        candidateProjectDAO.updateCandidateProject(candidateProject);
+        CandidateProject candidateProject = candidateProjectMapper.mapToDomain(candidateProjectDTO);
+
+        candidateProjectDAO.updateCandidateProject(candidateProject, candidateId);
     }
 
 
