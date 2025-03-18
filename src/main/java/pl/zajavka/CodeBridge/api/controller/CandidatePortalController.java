@@ -80,18 +80,13 @@ public class CandidatePortalController {
     public String getCandidateDetails(Model model) {
 
         Candidate candidate = candidateService.findLoggedInCandidate();
-        CandidateDTO candidateDetails = candidateService.getSortedCandidateDetails(candidate);
+        CandidateDTO candidateDetailsDTO = candidateService.getSortedCandidateDetails(candidate);
 
-        List<CandidateExperienceDTO> sortedExperiences = candidateDetails.getCandidateExperiences();
-        List<CandidateProjectDTO> sortedProjects = candidateDetails.getCandidateProjects();
-        List<CandidateEducationDTO> sortedCandidateEducationStages = candidateDetails.getCandidateEducationStages();
-        List<CandidateCourseDTO> sortedCourses = candidateDetails.getCandidateCourses();
-
-        model.addAttribute("candidateExperiences", sortedExperiences);
-        model.addAttribute("candidateProjects", sortedProjects);
-        model.addAttribute("candidateEducationStages", sortedCandidateEducationStages);
-        model.addAttribute("candidateCourses", sortedCourses);
-        model.addAttribute("candidate", candidateDetails);
+        model.addAttribute("candidateExperiences", candidateDetailsDTO.getCandidateExperiences());
+        model.addAttribute("candidateProjects", candidateDetailsDTO.getCandidateProjects());
+        model.addAttribute("candidateEducationStages", candidateDetailsDTO.getCandidateEducationStages());
+        model.addAttribute("candidateCourses", candidateDetailsDTO.getCandidateCourses());
+        model.addAttribute("candidate", candidateDetailsDTO);
 
         return "candidate_portal";
     }
@@ -218,7 +213,6 @@ public class CandidatePortalController {
         return "redirect:/candidate-portal";
     }
 
-
     @PostMapping(UPDATE_CANDIDATE_TECH_SPECIALIZATION)
     public String updateCandidateTechSpecialization(
             @RequestParam(value = "techSpecialization", required = false) TechSpecializationsEnum techSpecialization,
@@ -238,7 +232,6 @@ public class CandidatePortalController {
 
         return "redirect:/candidate-portal";
     }
-
 
     @GetMapping(PROFILE_PHOTO_DISPLAY)
     public ResponseEntity<byte[]> getProfilePhoto(Authentication authentication) {

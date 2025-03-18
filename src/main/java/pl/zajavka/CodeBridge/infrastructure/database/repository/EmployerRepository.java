@@ -4,6 +4,7 @@ package pl.zajavka.CodeBridge.infrastructure.database.repository;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.CodeBridge.business.dao.EmployerDAO;
 import pl.zajavka.CodeBridge.domain.Employer;
+import pl.zajavka.CodeBridge.domain.JobOffer;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.EmployerEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.EmployerJpaRepository;
@@ -40,32 +41,13 @@ public class EmployerRepository implements EmployerDAO {
     }
 
     @Override
-    public void createJobOffer(Employer employer) {
-        EmployerEntity employerToSave = employerEntityMapper.mapToEntity(employer);
-        EmployerEntity employerSaved = employerJpaRepository.saveAndFlush(employerToSave);
+    public void createJobOffer(JobOffer jobOffer) {
+        JobOfferEntity jobOfferToSave = jobOfferEntityMapper.mapToEntity(jobOffer);
+        JobOfferEntity jobOfferSaved = jobOfferJpaRepository.saveAndFlush(jobOfferToSave);
 
-        employer.getJobOffers().stream()
-                .filter(jobOffer -> Objects.isNull(jobOffer.getJobOfferId()))
-                .map(jobOfferEntityMapper::mapToEntity)
-                .forEach(jobOfferEntity -> {
-                    JobOfferEntity jobOfferEntityWithEmployer = new JobOfferEntity.Builder()
-                            .jobOfferId(jobOfferEntity.getJobOfferId())
-                            .jobOfferTitle(jobOfferEntity.getJobOfferTitle())
-                            .description(jobOfferEntity.getDescription())
-                            .techSpecialization(jobOfferEntity.getTechSpecialization())
-                            .workType(jobOfferEntity.getWorkType())
-                            .city(jobOfferEntity.getCity())
-                            .experience(jobOfferEntity.getExperience())
-                            .salary(jobOfferEntity.getSalary())
-                            .mustHaveSkills(jobOfferEntity.getMustHaveSkills())
-                            .niceToHaveSkills(jobOfferEntity.getNiceToHaveSkills())
-                            .employer(employerSaved)
-                            .build();
+        jobOfferJpaRepository.saveAndFlush(jobOfferSaved);
 
-                    jobOfferJpaRepository.saveAndFlush(jobOfferEntityWithEmployer);
-                });
     }
-
 
     @Override
     public Optional<Employer> findEmployerByEmail(String employerEmail) {

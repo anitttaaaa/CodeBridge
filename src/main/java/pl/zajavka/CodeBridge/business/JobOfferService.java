@@ -37,39 +37,36 @@ public class JobOfferService {
     }
 
     @Transactional
-    public void createJobOfferData(JobOffer request, Authentication authentication) {
-        String username = authentication.getName();
-        Integer userId = codeBridgeUserDetailsService.getUserId(username);
-        Employer employer = employerService.findEmployer(userId);
+    public void createJobOfferData(
+            String jobOfferTitle,
+            String description,
+            String techSpecialization,
+            String workType,
+            String city,
+            String experience,
+            String salary,
+            List<SkillsEnum> mustHaveSkills,
+            List<SkillsEnum> niceToHaveSkills,
+            Authentication authentication) {
 
-        JobOffer jobOffer = new JobOffer.JobOfferBuilder()
-                .jobOfferTitle(request.getJobOfferTitle())
-                .description(request.getDescription())
-                .techSpecialization(request.getTechSpecialization())
-                .workType(request.getWorkType())
-                .city(request.getCity())
-                .experience(request.getExperience())
-                .salary(request.getSalary())
-                .mustHaveSkills(request.getMustHaveSkills())
-                .niceToHaveSkills(request.getNiceToHaveSkills())
+        Employer employer = employerService.findEmployerByEmail(authentication.getName());
+
+        JobOfferDTO jobOfferDTO = new JobOfferDTO.Builder()
+                .jobOfferTitle(jobOfferTitle)
+                .description(description)
+                .techSpecialization(TechSpecializationsEnum.valueOf(techSpecialization))
+                .workType(WorkTypesEnum.valueOf(workType))
+                .city(CitiesEnum.valueOf(city))
+                .experience(ExperiencesEnum.valueOf(experience))
+                .salary(SalaryEnum.valueOf(salary))
+                .mustHaveSkills(mustHaveSkills)
+                .niceToHaveSkills(niceToHaveSkills)
                 .employer(employer)
                 .build();
 
+        JobOffer jobOffer = jobOfferMapper.mapToDomain(jobOfferDTO);
 
-        Set<JobOffer> jobOffers = new HashSet<>(employer.getJobOffers());
-        jobOffers.add(jobOffer);
-
-        Employer employerAndJobOffer = new Employer.EmployerBuilder()
-                .employerId(employer.getEmployerId())
-                .companyName(employer.getCompanyName())
-                .email(employer.getEmail())
-                .nip(employer.getNip())
-                .userId(employer.getUserId())
-                .jobOffers(jobOffers)
-                .jobApplications(employer.getJobApplications())
-                .build();
-
-        employerService.createJobOffer(employerAndJobOffer);
+        employerService.createJobOffer(jobOffer);
     }
 
 
@@ -119,15 +116,33 @@ public class JobOfferService {
     }
 
 
-    public List<JobOfferDTO> getJobOffersByEmployerId(Authentication authentication) {
+    @Transactional
+    public List<JobOfferDTO> getSortedJobOffersByEmployerId(Authentication authentication) {
 
-        String employerEmail = authentication.getName();
-        Integer employerId = employerService.findEmployerByEmail(employerEmail).getEmployerId();
+        Employer employer = employerService.findEmployerByEmail(authentication.getName());
+        Integer employerId = employer.getEmployerId();
 
-        List<JobOffer> employerJobOffers = jobOfferDAO.findJobOffersByEmployerId(employerId);
+        List<JobOffer> jobOffers = jobOfferDAO.findJobOffersByEmployerId(employerId);
 
-        return employerJobOffers.stream()
+        return jobOffers.stream()
                 .map(jobOfferMapper::mapToDTO)
+                .sorted(Comparator.comparingInt(JobOfferDTO::getJobOfferId).reversed())
                 .collect(Collectors.toList());
+    }
+
+    public JobOfferDTO createNewJobOfferDTO() {
+        return new JobOfferDTO.Builder()
+                .jobOfferId(null)
+                .jobOfferTitle("")
+                .description("")
+                .techSpecialization(TechSpecializationsEnum.BACKEND)
+                .workType(WorkTypesEnum.REMOTE)
+                .city(CitiesEnum.WARSZAWA)
+                .experience(ExperiencesEnum.BEGINNER)
+                .salary(SalaryEnum.PLN_0_3000)
+                .mustHaveSkills(List.of())
+                .niceToHaveSkills(List.of())
+                .employer(null)
+                .build();
     }
 }

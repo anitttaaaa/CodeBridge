@@ -62,15 +62,15 @@
             <div class="card-body">
                 <div class="title-frame d-flex justify-content-between align-items-center">
                     <h5 class="mb-0" th:text="${candidate.name + ' ' + candidate.surname}">Candidate Name</h5>
-                    <a th:href="'/CodeBridge/employer-portal/job-applications/candidate-profile?candidateId=' + ${candidate.candidateId}"
-                       target="_blank">
+                    <form th:action="@{/employer-portal/job-applications/candidate-profile}" method="post">
+                        <input type="hidden" th:value="${candidate.email}" name="email"/>
                         <button type="button" class="add-job-offer-button btn btn-primary apply-button">
                             Offer a Job (future feature)
                         </button>
-                        <button type="button" class="add-job-offer-button btn btn-primary apply-button">
+                        <button type="submit" class="add-job-offer-button btn btn-primary apply-button">
                             Candidate Profile
                         </button>
-                    </a>
+                    </form>
                 </div>
 
                 <div class="frame-card info-frame">

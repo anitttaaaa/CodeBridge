@@ -23,10 +23,11 @@
             <div class="card-body d-flex align-items-center">
                 <div id="photo-container" class="me-4">
                     <img th:if="${candidateDetails.profilePhoto != null}"
-                         th:src="@{'/images/' + ${candidateDetails.candidateId} + '/profile-photo'}"
+                         th:src="@{'/images/profile-photo?email=' + ${candidateDetails.email}}"
                          alt="Profile Photo"
                          class="img-fluid rounded-circle"
                          style="width: 150px; height: 150px;"/>
+
 
                     <img th:unless="${candidateDetails.profilePhoto != null}"
                          th:src="@{/images/avatar.PNG}"
@@ -34,8 +35,6 @@
                          class="img-fluid rounded-circle"
                          style="width: 150px; height: 150px;"/>
                 </div>
-
-
                 <div class="candidate-details frame-card-basic-info">
                     <div class="mb-3">
                         <h5 class="card-title" style="font-size: 1.5em;"

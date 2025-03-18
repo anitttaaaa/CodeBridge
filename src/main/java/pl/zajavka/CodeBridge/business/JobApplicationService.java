@@ -17,6 +17,7 @@ import pl.zajavka.CodeBridge.business.dao.JobApplicationDAO;
 import pl.zajavka.CodeBridge.domain.*;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -184,59 +185,58 @@ public class JobApplicationService {
     public List<JobApplicationDTO> getCandidateApplications(Authentication authentication) {
 
         String candidateEmail = authentication.getName();
+
         Integer candidateId = candidateService.findCandidateByEmail(candidateEmail).getCandidateId();
 
         List<JobApplication> jobApplications = jobApplicationDAO.findApplicationsByCandidateId(candidateId);
 
         return jobApplications.stream()
                 .map(jobApplicationMapper::mapToDto)
+                .sorted(Comparator.comparingInt(JobApplicationDTO::getApplicationId).reversed())
                 .collect(Collectors.toList());
-
     }
 
+    @Transactional
     public List<JobApplicationDTO> getAllJobApplicationsByEmployerId(Authentication authentication) {
-
         String employerEmail = authentication.getName();
+
         Integer employerId = employerService.findEmployerByEmail(employerEmail).getEmployerId();
 
         List<JobApplication> employerJobApplications = jobApplicationDAO.findEmployerJobApplicationsByEmployerId(employerId);
 
-        List<JobApplicationDTO> collect = employerJobApplications.stream()
+        return employerJobApplications.stream()
                 .map(jobApplicationMapper::mapToDto)
+                .sorted(Comparator.comparingInt(JobApplicationDTO::getApplicationId).reversed())
                 .collect(Collectors.toList());
-
-        return collect;
     }
 
+    @Transactional
     public List<ApplicationsHistoryDTO> getAllEmployerHistoryJobApplications(Authentication authentication) {
 
         String employerEmail = authentication.getName();
+
         Integer employerId = employerService.findEmployerByEmail(employerEmail).getEmployerId();
 
         List<ApplicationsHistory> employerHistoryApplications = jobApplicationDAO.findEmployerHistoryApplicationsByEmployerId(employerId);
 
-        List<ApplicationsHistoryDTO> collect = employerHistoryApplications.stream()
+        return employerHistoryApplications.stream()
                 .map(applicationsHistoryMapper::mapToDto)
+                .sorted(Comparator.comparing(ApplicationsHistoryDTO::getApplicationHistoryId).reversed())
                 .collect(Collectors.toList());
-
-        return collect;
     }
 
+    @Transactional
     public List<ApplicationsHistoryDTO> getAllCandidateHistoryJobApplications(Authentication authentication) {
 
         String candidateEmail = authentication.getName();
+
         Integer candidateId = candidateService.findCandidateByEmail(candidateEmail).getCandidateId();
 
-
         List<ApplicationsHistory> candidateHistoryApplications = jobApplicationDAO.findCandidateHistoryApplicationsByCandidateId(candidateId);
-        if (candidateHistoryApplications == null) {
-            return Collections.emptyList();
-        }
 
-        List<ApplicationsHistoryDTO> collect = candidateHistoryApplications.stream()
+        return candidateHistoryApplications.stream()
                 .map(applicationsHistoryMapper::mapToDto)
+                .sorted(Comparator.comparing(ApplicationsHistoryDTO::getApplicationHistoryId).reversed())
                 .collect(Collectors.toList());
-
-        return collect;
     }
 }

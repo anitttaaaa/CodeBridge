@@ -13,7 +13,6 @@ import pl.zajavka.CodeBridge.api.enums.StatusEnum;
 import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 import pl.zajavka.CodeBridge.business.dao.CandidateDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
-import pl.zajavka.CodeBridge.domain.CandidateExperience;
 import pl.zajavka.CodeBridge.domain.exception.NotFoundException;
 
 import java.io.IOException;
@@ -34,49 +33,6 @@ public class CandidateService {
         this.candidateDAO = candidateDAO;
         this.candidateMapper = candidateMapper;
 
-    }
-
-    public CandidateDTO getSortedCandidateDetails(Candidate candidate) {
-
-        CandidateDTO candidateDTO = candidateMapper.mapToDto(candidate);
-
-        List<CandidateExperienceDTO> sortedCandidateExperiences = candidateDTO.getCandidateExperiences()
-                .stream()
-                .sorted(Comparator.comparing(CandidateExperienceDTO::getFromDate)).collect(Collectors.toList());
-
-        List<CandidateProjectDTO> sortedCandidateProjects = candidateDTO.getCandidateProjects()
-                .stream()
-                .sorted(Comparator.comparing(CandidateProjectDTO::getFromDate)).collect(Collectors.toList());
-
-        List<CandidateEducationDTO> sortedCandidateEducationStages = candidateDTO.getCandidateEducationStages()
-                .stream()
-                .sorted(Comparator.comparing(CandidateEducationDTO::getFromDate)).collect(Collectors.toList());
-
-        List<CandidateCourseDTO> sortedCourses = candidateDTO.getCandidateCourses()
-                .stream()
-                .sorted(Comparator.comparing(CandidateCourseDTO::getFromDate)).collect(Collectors.toList());
-
-
-        CandidateDTO candidateDetails = CandidateDTO.builder()
-                .candidateId(candidate.getCandidateId())
-                .name(candidate.getName())
-                .surname(candidate.getSurname())
-                .email(candidate.getEmail())
-                .phone(candidate.getPhone())
-                .status(candidate.getStatus())
-                .linkedIn(candidate.getLinkedIn())
-                .gitHub(candidate.getGitHub())
-                .techSpecialization(candidate.getTechSpecialization())
-                .aboutMe(candidate.getAboutMe())
-                .hobby(candidate.getHobby())
-                .profilePhoto(candidate.getProfilePhoto())
-                .candidateSkills(candidate.getCandidateSkills())
-                .candidateExperiences(sortedCandidateExperiences)
-                .candidateProjects(sortedCandidateProjects)
-                .candidateEducationStages(sortedCandidateEducationStages)
-                .candidateCourses(sortedCourses)
-                .build();
-        return candidateDetails;
     }
 
     @Transactional(readOnly = true)
@@ -378,6 +334,93 @@ public class CandidateService {
         }
     }
 
+    public CandidateDTO getCandidateDetailsByEmployer(String email) {
+
+        Candidate candidate = findCandidateByEmail(email);
+        CandidateDTO candidateDTO = candidateMapper.mapToDto(candidate);
+
+        List<CandidateExperienceDTO> sortedCandidateExperiences = candidateDTO.getCandidateExperiences()
+                .stream()
+                .sorted(Comparator.comparing(CandidateExperienceDTO::getFromDate)).collect(Collectors.toList());
+
+        List<CandidateProjectDTO> sortedCandidateProjects = candidateDTO.getCandidateProjects()
+                .stream()
+                .sorted(Comparator.comparing(CandidateProjectDTO::getFromDate)).collect(Collectors.toList());
+
+        List<CandidateEducationDTO> sortedCandidateEducationStages = candidateDTO.getCandidateEducationStages()
+                .stream()
+                .sorted(Comparator.comparing(CandidateEducationDTO::getFromDate)).collect(Collectors.toList());
+
+        List<CandidateCourseDTO> sortedCourses = candidateDTO.getCandidateCourses()
+                .stream()
+                .sorted(Comparator.comparing(CandidateCourseDTO::getFromDate)).collect(Collectors.toList());
+
+
+        CandidateDTO candidateDetails = CandidateDTO.builder()
+                .candidateId(candidate.getCandidateId())
+                .name(candidate.getName())
+                .surname(candidate.getSurname())
+                .email(candidate.getEmail())
+                .phone(candidate.getPhone())
+                .status(candidate.getStatus())
+                .linkedIn(candidate.getLinkedIn())
+                .gitHub(candidate.getGitHub())
+                .techSpecialization(candidate.getTechSpecialization())
+                .aboutMe(candidate.getAboutMe())
+                .hobby(candidate.getHobby())
+                .profilePhoto(candidate.getProfilePhoto())
+                .candidateSkills(candidate.getCandidateSkills())
+                .candidateExperiences(sortedCandidateExperiences)
+                .candidateProjects(sortedCandidateProjects)
+                .candidateEducationStages(sortedCandidateEducationStages)
+                .candidateCourses(sortedCourses)
+                .build();
+        return candidateDetails;
+    }
+
+    @Transactional
+    public CandidateDTO getSortedCandidateDetails(Candidate candidate) {
+
+        CandidateDTO candidateDTO = candidateMapper.mapToDto(candidate);
+
+        List<CandidateExperienceDTO> sortedCandidateExperiences = candidateDTO.getCandidateExperiences()
+                .stream()
+                .sorted(Comparator.comparing(CandidateExperienceDTO::getFromDate)).collect(Collectors.toList());
+
+        List<CandidateProjectDTO> sortedCandidateProjects = candidateDTO.getCandidateProjects()
+                .stream()
+                .sorted(Comparator.comparing(CandidateProjectDTO::getFromDate)).collect(Collectors.toList());
+
+        List<CandidateEducationDTO> sortedCandidateEducationStages = candidateDTO.getCandidateEducationStages()
+                .stream()
+                .sorted(Comparator.comparing(CandidateEducationDTO::getFromDate)).collect(Collectors.toList());
+
+        List<CandidateCourseDTO> sortedCourses = candidateDTO.getCandidateCourses()
+                .stream()
+                .sorted(Comparator.comparing(CandidateCourseDTO::getFromDate)).collect(Collectors.toList());
+
+
+        CandidateDTO candidateDetails = CandidateDTO.builder()
+                .candidateId(candidateDTO.getCandidateId())
+                .name(candidateDTO.getName())
+                .surname(candidateDTO.getSurname())
+                .email(candidateDTO.getEmail())
+                .phone(candidateDTO.getPhone())
+                .status(candidateDTO.getStatus())
+                .linkedIn(candidateDTO.getLinkedIn())
+                .gitHub(candidateDTO.getGitHub())
+                .techSpecialization(candidateDTO.getTechSpecialization())
+                .aboutMe(candidateDTO.getAboutMe())
+                .hobby(candidateDTO.getHobby())
+                .profilePhoto(candidateDTO.getProfilePhoto())
+                .candidateSkills(candidateDTO.getCandidateSkills())
+                .candidateExperiences(sortedCandidateExperiences)
+                .candidateProjects(sortedCandidateProjects)
+                .candidateEducationStages(sortedCandidateEducationStages)
+                .candidateCourses(sortedCourses)
+                .build();
+        return candidateDetails;
+    }
 }
 
 
