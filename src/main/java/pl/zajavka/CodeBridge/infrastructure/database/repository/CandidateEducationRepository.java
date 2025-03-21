@@ -1,6 +1,5 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository;
 
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.CodeBridge.business.dao.CandidateEducationDAO;
 import pl.zajavka.CodeBridge.domain.CandidateEducation;
@@ -9,24 +8,30 @@ import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.CandidateEdu
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.CandidateEducationEntityMapper;
 
 @Repository
-@AllArgsConstructor
 public class CandidateEducationRepository implements CandidateEducationDAO {
 
     CandidateEducationEntityMapper candidateEducationEntityMapper;
     CandidateEducationJpaRepository candidateEducationJpaRepository;
 
-    @Override
-    public CandidateEducation createEducation(CandidateEducation candidateEducation) {
+    public CandidateEducationRepository(CandidateEducationEntityMapper candidateEducationEntityMapper,
+                                        CandidateEducationJpaRepository candidateEducationJpaRepository) {
+        this.candidateEducationEntityMapper = candidateEducationEntityMapper;
+        this.candidateEducationJpaRepository = candidateEducationJpaRepository;
+    }
 
-        CandidateEducationEntity candidateEducationToSave = candidateEducationEntityMapper.mapToEntity(candidateEducation);
+    @Override
+    public CandidateEducation createEducation(CandidateEducation candidateEducation, Integer candidateId) {
+
+        CandidateEducationEntity candidateEducationToSave = candidateEducationEntityMapper.mapToEntity(candidateEducation, candidateId);
         CandidateEducationEntity candidateEducationSaved = candidateEducationJpaRepository.saveAndFlush(candidateEducationToSave);
 
         return candidateEducationEntityMapper.mapFromEntity(candidateEducationSaved);
     }
 
     @Override
-    public void updateCandidateEducation(CandidateEducation candidateEducationToUpdate) {
-        CandidateEducationEntity educationToSave = candidateEducationEntityMapper.mapToEntity(candidateEducationToUpdate);
+    public void updateCandidateEducation(CandidateEducation candidateEducationToUpdate, Integer candidateId) {
+
+        CandidateEducationEntity educationToSave = candidateEducationEntityMapper.mapToEntity(candidateEducationToUpdate, candidateId);
         candidateEducationJpaRepository.saveAndFlush(educationToSave);
     }
 

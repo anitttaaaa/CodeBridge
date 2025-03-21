@@ -1,6 +1,5 @@
 package pl.zajavka.CodeBridge.api.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 
 
 @Controller
-@RequiredArgsConstructor
 public class JobApplicationController {
 
     private static final String CANDIDATE_APPLY_FOR_A_JOB = "/apply/{jobOfferId}";
@@ -34,52 +32,51 @@ public class JobApplicationController {
 
     private final JobApplicationService jobApplicationService;
 
-
-    @PostMapping(POST_EMPLOYER_JOB_APPLICATION_ACCEPT)
-    public String acceptJobApplication(
-            @RequestParam("applicationId") Integer applicationId,
-            Authentication authentication) {
-
-        jobApplicationService.acceptJobApplication(applicationId, authentication);
-
-        return "redirect:/employer-portal/applications-history";
-    }
-
-    @PostMapping(POST_EMPLOYER_JOB_APPLICATION_REJECT)
-    public String rejectJobApplication(
-            @RequestParam("applicationId") Integer applicationId,
-            Authentication authentication) {
-
-        jobApplicationService.rejectJobApplication(applicationId, authentication);
-
-        return "redirect:/employer-portal/applications-history";
+    public JobApplicationController(JobApplicationService jobApplicationService) {
+        this.jobApplicationService = jobApplicationService;
     }
 
     @PostMapping(CANDIDATE_APPLY_FOR_A_JOB)
     public String applyForJob(
             @PathVariable Integer jobOfferId,
             Authentication authentication) {
+
         jobApplicationService.applyForJob(jobOfferId, authentication);
 
         return "redirect:/candidate-portal/candidate-applications";
     }
 
+    @PostMapping(POST_EMPLOYER_JOB_APPLICATION_ACCEPT)
+    public String acceptJobApplication(
+            @RequestParam("applicationId") Integer applicationId) {
+
+        jobApplicationService.acceptJobApplication(applicationId);
+
+
+        return "redirect:/employer-portal/applications-history";
+    }
+
+    @PostMapping(POST_EMPLOYER_JOB_APPLICATION_REJECT)
+    public String rejectJobApplication(
+            @RequestParam("applicationId") Integer applicationId) {
+
+        jobApplicationService.rejectJobApplication(applicationId);
+
+        return "redirect:/employer-portal/applications-history";
+    }
+
     @GetMapping(CANDIDATE_GET_MY_APPLICATIONS)
     public String showAllCandidateApplications(Authentication authentication, Model model) {
 
-        List<JobApplicationDTO> jobApplications = jobApplicationService.getCandidateApplications(authentication).stream()
-                .sorted(Comparator.comparingInt(JobApplicationDTO::getApplicationId).reversed())
-                .collect(Collectors.toList());
+        List<JobApplicationDTO> jobApplications = jobApplicationService.getCandidateApplications(authentication);
 
         model.addAttribute("jobApplications", jobApplications);
 
-        return "candidate_applications";  // Ścieżka do pliku HTML
+        return "candidate_applications";
     }
 
     @GetMapping(GET_EMPLOYER_ALL_JOB_APPLICATIONS)
-    public String getAllJobApplications(
-            Authentication authentication,
-            Model model) {
+    public String getAllJobApplications(Authentication authentication, Model model) {
 
         List<JobApplicationDTO> employerJobApplications = jobApplicationService.getAllJobApplicationsByEmployerId(authentication);
 
@@ -89,27 +86,19 @@ public class JobApplicationController {
     }
 
     @GetMapping(EMPLOYER_GET_APPLICATIONS_HISTORY)
-    public String getApplicationsHistory(
-            Authentication authentication,
-            Model model) {
+    public String getApplicationsHistory(Authentication authentication, Model model) {
 
         List<ApplicationsHistoryDTO> employerHistoryApplications = jobApplicationService.getAllEmployerHistoryJobApplications(authentication);
+
         model.addAttribute("employerHistoryApplications", employerHistoryApplications);
 
         return "employer_portal_job_applications_history";
     }
 
     @GetMapping(CANDIDATE_GET_MY_APPLICATIONS_HISTORY)
-    public String getMyApplicationsHistory(
-            Authentication authentication,
-            Model model) {
-
+    public String getMyApplicationsHistory(Authentication authentication, Model model) {
 
         List<ApplicationsHistoryDTO> candidateHistoryApplications = jobApplicationService.getAllCandidateHistoryJobApplications(authentication);
-
-        if (candidateHistoryApplications == null) {
-            candidateHistoryApplications = new ArrayList<>();
-        }
 
         model.addAttribute("candidateHistoryApplications", candidateHistoryApplications);
 

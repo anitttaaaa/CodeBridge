@@ -19,7 +19,7 @@
                 <div class="candidate-card">
                     <div class="card-body">
                         <div class="title-frame d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0" th:text="${employerJobApplication.jobOffer.jobOfferTitle}">Job Offer Title</h5>
+                            <h5 class="mb-0" th:text="${employerJobApplication.jobOfferTitle}">Job Offer Title</h5>
                             <div class="button-group">
                                 <form th:action="@{/employer-portal/job-applications/accept}" method="post">
                                     <input type="hidden" name="applicationId" th:value="${employerJobApplication.applicationId}">
@@ -40,7 +40,7 @@
                         <div class="frame-card info-frame">
                             <div class="short-information">
                             </div>
-                            <a th:href="'/CodeBridge/employer-portal/job-applications/candidate-profile?candidateId=' + ${employerJobApplication.candidate.candidateId}"
+                            <a th:href="'/CodeBridge/employer-portal/job-applications/candidate-profile?candidateEmail=' + ${employerJobApplication.candidateEmail}"
                                target="_blank">
                                 <button type="button" class="add-job-offer-button btn btn-primary apply-button">
                                     Candidate Profile
@@ -49,13 +49,13 @@
                             <!-- Szczegóły kandydata -->
                             <h5><strong>Candidate Overview:</strong></h5>
                             <hr>
-                            <p><strong>Name:</strong> <span th:text="${employerJobApplication.candidate.name}">Name</span></p>
-                            <p><strong>Surname:</strong> <span th:text="${employerJobApplication.candidate.surname}">Surname</span></p>
-                            <p><strong>Email:</strong> <span th:text="${employerJobApplication.candidate.email}">Email</span></p>
-                            <p><strong>Phone:</strong> <span th:text="${employerJobApplication.candidate.phone}">Phone</span></p>
-                            <p><strong>Tech Specialization:</strong> <span th:text="${employerJobApplication.candidate.techSpecialization}">Tech Specialization</span></p>
+                            <p><strong>Name:</strong> <span th:text="${employerJobApplication.candidateName}">Name</span></p>
+                            <p><strong>Surname:</strong> <span th:text="${employerJobApplication.candidateSurname}">Surname</span></p>
+                            <p><strong>Email:</strong> <span th:text="${employerJobApplication.candidateEmail}">Email</span></p>
+                            <p><strong>Phone:</strong> <span th:text="${employerJobApplication.candidatePhone}">Phone</span></p>
+                            <p><strong>Tech Specialization:</strong> <span th:text="${employerJobApplication.candidateTechSpecialization}">Tech Specialization</span></p>
                             <p class="w-100"><strong>Skills:</strong>
-                                <span th:text="${employerJobApplication.candidate.candidateSkills}">Skills</span>
+                                <span th:text="${employerJobApplication.candidateSkills}">Skills</span>
                             </p>
                         </div>
                     </div>

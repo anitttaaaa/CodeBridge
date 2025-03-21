@@ -1,6 +1,5 @@
 package pl.zajavka.CodeBridge.api.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.zajavka.CodeBridge.api.dto.*;
 import pl.zajavka.CodeBridge.api.dto.mapper.EmployerMapper;
 import pl.zajavka.CodeBridge.api.dto.mapper.JobOfferMapper;
+import pl.zajavka.CodeBridge.api.enums.*;
 import pl.zajavka.CodeBridge.business.CandidateService;
 import pl.zajavka.CodeBridge.business.EmployerService;
 import pl.zajavka.CodeBridge.business.JobOfferService;
@@ -23,11 +23,11 @@ import java.util.stream.Collectors;
 
 
 @Controller
-@RequiredArgsConstructor
 public class EmployerPortalController {
 
     private static final String GET_EMPLOYER = "/employer-portal";
     private static final String GET_EMPLOYER_VIEW_CANDIDATE_PROFILE = "/employer-portal/job-applications/candidate-profile";
+    private static final String GET_CANDIDATE_PROFILE_PHOTO = "/images/profile-photo";
     private static final String GET_EMPLOYER_NEW_JOB_OFFER_FORM = "/employer-portal/new-job-offer";
     private static final String GET_EMPLOYER_MY_JOB_OFFERS = "/employer-portal/my-job-offers";
     private static final String GET_ALL_CANDIDATES = "/employer-portal/find-a-candidate";
@@ -35,33 +35,31 @@ public class EmployerPortalController {
 
     private static final String ADD_EMPLOYER_NEW_JOB_OFFER = "/employer-portal/new-job-offer/add";
 
-    private final JobOfferMapper jobOfferMapper;
-    private final EmployerMapper employerMapper;
     private final JobOfferService jobOfferService;
     private final EmployerService employerService;
     private final CandidateService candidateService;
 
 
-    @GetMapping(value = GET_EMPLOYER)
-    public String employerPortal(Model model) {
-
-        Employer employer = employerService.findLoggedInEmployer();
-        EmployerDTO employerDetails = employerMapper.mapToDto(employer);
-
-        model.addAttribute("employer", employerDetails);
-
-
-        return "employer_portal";
+    public EmployerPortalController(JobOfferService jobOfferService,
+                                    EmployerService employerService,
+                                    CandidateService candidateService) {
+        this.jobOfferService = jobOfferService;
+        this.employerService = employerService;
+        this.candidateService = candidateService;
     }
 
 
-    @GetMapping("/images/{candidateId}/profile-photo")
-    public ResponseEntity<byte[]> getProfilePhoto(
-            @PathVariable("candidateId") Integer candidateId) {
+    @GetMapping(value = GET_EMPLOYER)
+    public String employerPortal(Model model) {
+        EmployerDTO employerDetails = employerService.getLoggedInEmployerDetails();
+        model.addAttribute("employer", employerDetails);
+        return "employer_portal";
+    }
 
-        CandidateDTO candidateDetails = candidateService.findCandidateByCandidateId(candidateId);
-
-        byte[] profilePhoto = candidateDetails.getProfilePhoto();
+    @GetMapping(GET_CANDIDATE_PROFILE_PHOTO)
+    public ResponseEntity<byte[]> getCandidateProfilePhoto(
+            @RequestParam("email") String email) {
+        byte[] profilePhoto = employerService.getCandidateProfilePhoto(email);
 
         if (profilePhoto == null) {
             return ResponseEntity.notFound().build();
@@ -71,54 +69,29 @@ public class EmployerPortalController {
                 .body(profilePhoto);
     }
 
-    @GetMapping(GET_EMPLOYER_VIEW_CANDIDATE_PROFILE)
+    @PostMapping(GET_EMPLOYER_VIEW_CANDIDATE_PROFILE)
     public String getEmployerCandidateDetails(
-            @RequestParam("candidateId") Integer candidateId,
+            @RequestParam String email,
             Model model) {
 
-        CandidateDTO candidateDetails = candidateService.findCandidateByCandidateId(candidateId);
+        CandidateDTO candidateProfileDTO = candidateService.getCandidateDetailsByEmployer(email);
 
-        List<CandidateExperienceDTO> sortedExperiences = candidateDetails.getCandidateExperiences()
-                .stream()
-                .sorted(Comparator.comparing(CandidateExperienceDTO::getFromDate))
-                .toList();
-
-        List<CandidateProjectDTO> sortedProjects = candidateDetails.getCandidateProjects()
-                .stream()
-                .sorted(Comparator.comparing(CandidateProjectDTO::getFromDate))
-                .toList();
-
-        List<CandidateEducationDTO> sortedEducationStages = candidateDetails.getCandidateEducationStages()
-                .stream()
-                .sorted(Comparator.comparing(CandidateEducationDTO::getFromDate))
-                .toList();
-
-        List<CandidateCourseDTO> sortedCourses = candidateDetails.getCandidateCourses()
-                .stream()
-                .sorted(Comparator.comparing(CandidateCourseDTO::getFromDate))
-                .toList();
-
-        model.addAttribute("candidateDetails", candidateDetails);
-        model.addAttribute("candidateExperiences", sortedExperiences);
-        model.addAttribute("candidateProjects", sortedProjects);
-        model.addAttribute("candidateEducationStages", sortedEducationStages);
-        model.addAttribute("candidateCourses", sortedCourses);
-
+        model.addAttribute("candidateDetails", candidateProfileDTO);
+        model.addAttribute("candidateExperiences", candidateProfileDTO.getCandidateExperiences());
+        model.addAttribute("candidateProjects", candidateProfileDTO.getCandidateProjects());
+        model.addAttribute("candidateEducationStages", candidateProfileDTO.getCandidateEducationStages());
+        model.addAttribute("candidateCourses", candidateProfileDTO.getCandidateCourses());
 
         return "employer_view_candidate_profile";
     }
 
 
     @GetMapping(GET_EMPLOYER_MY_JOB_OFFERS)
-    public String getAllMyJobOffers(Authentication authentication,
-                                    Model model) {
+    public String getAllMyJobOffers(Authentication authentication, Model model) {
 
-        List<JobOfferDTO> employerJobOffers = jobOfferService.getJobOffersByEmployerId(authentication).stream()
-                .sorted(Comparator.comparingInt(JobOfferDTO::getJobOfferId).reversed())
-                .collect(Collectors.toList());
+        List<JobOfferDTO> employerJobOffers = jobOfferService.getSortedJobOffersByEmployerId(authentication);
 
         model.addAttribute("employerJobOffers", employerJobOffers);
-
 
         return "employer_portal_my_job_offers";
     }
@@ -127,34 +100,22 @@ public class EmployerPortalController {
     @GetMapping(GET_ALL_CANDIDATES)
     public String getAllCandidates(Model model) {
 
-        List<Candidate> allCandidates = employerService.getAllCandidates().stream()
-                .sorted(Comparator.comparingInt(Candidate::getCandidateId).reversed())
-                .collect(Collectors.toList());
+        List<CandidateDTO> allCandidatesDTO = employerService.getAllCandidates();
 
-        model.addAttribute("allCandidates", allCandidates);
-
+        model.addAttribute("allCandidates", allCandidatesDTO);
 
         return "employer_portal_find_a_candidate";
     }
 
     @GetMapping(GET_FILTERED_CANDIDATES)
     public String getFilteredCandidates(
-            @RequestParam(required = false) String techSpecialization,
-            @RequestParam(required = false) String status,
+            @RequestParam(required = false) TechSpecializationsEnum techSpecialization,
+            @RequestParam(required = false) StatusEnum status,
             Model model) {
 
-        if (techSpecialization != null && techSpecialization.isEmpty()) {
-            techSpecialization = null;
-        }
-        if (status != null && status.isEmpty()) {
-            status = null;
-        }
+        List<CandidateDTO> filteredCandidatesDTO = employerService.getFilteredCandidates(techSpecialization, status);
 
-        List<Candidate> filteredCandidates = employerService.getFilteredCandidates(techSpecialization, status)
-                .stream().sorted(Comparator.comparingInt(Candidate::getCandidateId).reversed())
-                .collect(Collectors.toList());
-
-        model.addAttribute("allCandidates", filteredCandidates);
+        model.addAttribute("allCandidates", filteredCandidatesDTO);
 
         return "employer_portal_find_a_candidate";
     }
@@ -162,22 +123,33 @@ public class EmployerPortalController {
 
     @GetMapping(value = GET_EMPLOYER_NEW_JOB_OFFER_FORM)
     public String showJobOfferForm(Model model) {
-        model.addAttribute("jobOfferDTO", new JobOfferDTO());
+
+        JobOfferDTO jobOfferDTO = jobOfferService.createNewJobOfferDTO();
+
+        model.addAttribute("jobOfferDTO", jobOfferDTO);
+
         return "employer_portal_new_job_offer";
     }
 
     @PostMapping(ADD_EMPLOYER_NEW_JOB_OFFER)
     public String addJobOffer(
-            @ModelAttribute("jobOfferDTO") JobOfferDTO jobOfferDTO,
+            @RequestParam("jobOfferTitle") String jobOfferTitle,
+            @RequestParam("description") String description,
+            @RequestParam("techSpecialization") String techSpecialization,
+            @RequestParam("workType") String workType,
+            @RequestParam("city") String city,
+            @RequestParam("experience") String experience,
+            @RequestParam("salary") String salary,
+            @RequestParam List<SkillsEnum> mustHaveSkills,
+            @RequestParam List<SkillsEnum> niceToHaveSkills,
             Authentication authentication) {
 
-        JobOffer request = jobOfferMapper.mapToDomain(jobOfferDTO);
-        jobOfferService.createJobOfferData(request, authentication);
+        jobOfferService.createJobOfferData(
+                jobOfferTitle, description, techSpecialization, workType, city,
+                experience, salary, mustHaveSkills, niceToHaveSkills, authentication);
 
-
-        return "redirect:/employer-portal";
+        return "redirect:/employer-portal/my-job-offers";
     }
-
 
 }
 

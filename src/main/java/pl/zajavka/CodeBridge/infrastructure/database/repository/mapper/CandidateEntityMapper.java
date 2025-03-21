@@ -1,19 +1,15 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
-import pl.zajavka.CodeBridge.domain.Candidate;
-import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateEntity;
+import pl.zajavka.CodeBridge.domain.*;
+import pl.zajavka.CodeBridge.infrastructure.database.entity.*;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+import java.util.List;
+
 public interface CandidateEntityMapper {
 
-    @Mapping(source = "profilePhoto", target = "profilePhoto")
-    Candidate mapFromEntity(CandidateEntity candidateEntity);
+    CandidateEntity mapCandidateToEntity(Candidate candidate);
 
-    @Mapping(source = "profilePhoto", target = "profilePhoto")
-    CandidateEntity mapToEntity(Candidate candidate);
+    Candidate mapCandidateEntityToDomain(CandidateEntity candidateEntity);
 
 
 }

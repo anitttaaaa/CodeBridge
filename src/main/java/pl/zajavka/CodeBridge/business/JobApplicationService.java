@@ -1,7 +1,7 @@
 package pl.zajavka.CodeBridge.business;
 
 import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +9,7 @@ import pl.zajavka.CodeBridge.api.dto.ApplicationsHistoryDTO;
 import pl.zajavka.CodeBridge.api.dto.JobApplicationDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.ApplicationsHistoryMapper;
 import pl.zajavka.CodeBridge.api.dto.mapper.JobApplicationMapper;
-import pl.zajavka.CodeBridge.api.enums.ApplicationStatus;
+import pl.zajavka.CodeBridge.api.enums.ApplicationStatusEnum;
 import pl.zajavka.CodeBridge.api.enums.StatusEnum;
 import pl.zajavka.CodeBridge.business.dao.ApplicationsHistoryDAO;
 import pl.zajavka.CodeBridge.business.dao.CandidateDAO;
@@ -17,11 +17,11 @@ import pl.zajavka.CodeBridge.business.dao.JobApplicationDAO;
 import pl.zajavka.CodeBridge.domain.*;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 public class JobApplicationService {
     private final CandidateService candidateService;
 
@@ -33,28 +33,54 @@ public class JobApplicationService {
     private final ApplicationsHistoryMapper applicationsHistoryMapper;
     private final EmployerService employerService;
 
+    @Autowired
+    public JobApplicationService(CandidateService candidateService,
+                                 JobApplicationDAO jobApplicationDAO,
+                                 ApplicationsHistoryDAO applicationsHistoryDAO,
+                                 CandidateDAO candidateDAO,
+                                 JobOfferService jobOfferService,
+                                 JobApplicationMapper jobApplicationMapper,
+                                 ApplicationsHistoryMapper applicationsHistoryMapper,
+                                 EmployerService employerService) {
+        this.candidateService = candidateService;
+        this.jobApplicationDAO = jobApplicationDAO;
+        this.applicationsHistoryDAO = applicationsHistoryDAO;
+        this.candidateDAO = candidateDAO;
+        this.jobOfferService = jobOfferService;
+        this.jobApplicationMapper = jobApplicationMapper;
+        this.applicationsHistoryMapper = applicationsHistoryMapper;
+        this.employerService = employerService;
+    }
+
     @Transactional
-    public void rejectJobApplication(Integer applicationId, Authentication authentication) {
+    public void rejectJobApplication(Integer applicationId) {
 
         JobApplication jobApplication = jobApplicationDAO.findApplicationById(applicationId)
                 .orElseThrow(() -> new EntityNotFoundException("Job application not found for id: " + applicationId));
 
-        jobApplication = jobApplication.withApplicationStatus(ApplicationStatus.REJECTED);
-        jobApplicationDAO.save(jobApplication);
+        JobApplication updatedJobApplication = new JobApplication.JobApplicationBuilder()
+                .applicationId(jobApplication.getApplicationId())
+                .jobOffer(jobApplication.getJobOffer())
+                .employer(jobApplication.getEmployer())
+                .candidate(jobApplication.getCandidate())
+                .jobApplicationStatus(ApplicationStatusEnum.REJECTED)
+                .build();
 
-        Candidate candidate = jobApplication.getCandidate();
-        Employer employer = jobApplication.getEmployer();
-        JobOffer jobOffer = jobApplication.getJobOffer();
-        ApplicationStatus applicationStatus = jobApplication.getApplicationStatus();
+        jobApplicationDAO.save(updatedJobApplication);
 
+        Candidate candidate = updatedJobApplication.getCandidate();
+        Employer employer = updatedJobApplication.getEmployer();
+        JobOffer jobOffer = updatedJobApplication.getJobOffer();
+        ApplicationStatusEnum applicationStatusEnum = updatedJobApplication.getApplicationStatusEnum();
 
-        ApplicationsHistory jobApplicationRejected = ApplicationsHistory.builder()
+        ApplicationsHistory jobApplicationRejected = new ApplicationsHistory.Builder()
                 .applicationHistoryId(applicationId)
                 .jobOffer(jobOffer)
-                .candidate(candidate)
                 .employer(employer)
-                .applicationStatus(applicationStatus)
+                .candidate(candidate)
+                .applicationStatus(applicationStatusEnum)
                 .build();
+
 
         applicationsHistoryDAO.saveInHistory(jobApplicationRejected);
 
@@ -62,38 +88,62 @@ public class JobApplicationService {
     }
 
     @Transactional
-    public void acceptJobApplication(Integer applicationId, Authentication authentication) {
-
+    public void acceptJobApplication(Integer applicationId) {
 
         JobApplication jobApplication = jobApplicationDAO.findApplicationById(applicationId)
                 .orElseThrow(() -> new EntityNotFoundException("Job application not found for id: " + applicationId));
 
-
         String candidateEmail = jobApplication.getCandidate().getEmail();
         Candidate candidateToUpdate = candidateService.findCandidateByEmail(candidateEmail);
-        Candidate candidateUpdated = candidateToUpdate.withStatus(StatusEnum.HIRED.getDescription());
+
+        Candidate candidateUpdated = new Candidate.Builder()
+                .candidateId(candidateToUpdate.getCandidateId())
+                .name(candidateToUpdate.getName())
+                .surname(candidateToUpdate.getSurname())
+                .email(candidateToUpdate.getEmail())
+                .phone(candidateToUpdate.getPhone())
+                .status(StatusEnum.CURRENTLY_HIRED)
+                .linkedIn(candidateToUpdate.getLinkedIn())
+                .gitHub(candidateToUpdate.getGitHub())
+                .techSpecialization(candidateToUpdate.getTechSpecialization())
+                .aboutMe(candidateToUpdate.getAboutMe())
+                .hobby(candidateToUpdate.getHobby())
+                .userId(candidateToUpdate.getUserId())
+                .profilePhoto(candidateToUpdate.getProfilePhoto())
+                .candidateSkills(candidateToUpdate.getCandidateSkills())
+                .candidateExperiences(candidateToUpdate.getCandidateExperiences())
+                .candidateProjects(candidateToUpdate.getCandidateProjects())
+                .candidateEducationStages(candidateToUpdate.getCandidateEducationStages())
+                .candidateCourses(candidateToUpdate.getCandidateCourses())
+                .build();
+
         candidateDAO.updateCandidate(candidateUpdated);
 
-        jobApplication = jobApplication.withApplicationStatus(ApplicationStatus.ACCEPTED);
+        jobApplication = new JobApplication.JobApplicationBuilder()
+                .applicationId(jobApplication.getApplicationId())
+                .jobOffer(jobApplication.getJobOffer())
+                .employer(jobApplication.getEmployer())
+                .candidate(jobApplication.getCandidate())
+                .jobApplicationStatus(ApplicationStatusEnum.ACCEPTED)
+                .build();
+
+
         jobApplicationDAO.save(jobApplication);
 
         Employer employer = jobApplication.getEmployer();
         JobOffer jobOffer = jobApplication.getJobOffer();
-        ApplicationStatus applicationStatus = jobApplication.getApplicationStatus();
+        ApplicationStatusEnum applicationStatusEnum = jobApplication.getApplicationStatusEnum();
 
-
-        ApplicationsHistory jobApplicationAccepted = ApplicationsHistory.builder()
+        ApplicationsHistory jobApplicationAccepted = new ApplicationsHistory.Builder()
                 .applicationHistoryId(applicationId)
                 .jobOffer(jobOffer)
-                .candidate(candidateUpdated)
                 .employer(employer)
-                .applicationStatus(applicationStatus)
+                .candidate(candidateUpdated)
+                .applicationStatus(applicationStatusEnum)
                 .build();
-
         applicationsHistoryDAO.saveInHistory(jobApplicationAccepted);
 
         jobApplicationDAO.deleteById(applicationId);
-
     }
 
 
@@ -102,85 +152,90 @@ public class JobApplicationService {
 
         String candidateEmail = authentication.getName();
         Integer candidateId = candidateService.findCandidateByEmail(candidateEmail).getCandidateId();
-        Integer employerId = getEmployerId(jobOfferId);
+        JobOffer jobOfferr = jobOfferService.findJobOffer(jobOfferId);
+        Employer employer = jobOfferr.getEmployer();
 
-        ApplicationStatus applicationStatus = ApplicationStatus.PENDING;
+        ApplicationStatusEnum applicationStatusEnum = ApplicationStatusEnum.PENDING;
 
-        JobApplication jobApplication = JobApplication.builder()
-                .jobOffer(JobOffer.builder().jobOfferId(jobOfferId).build())
-                .employer(Employer.builder().employerId(employerId).build())
-                .candidate(Candidate.builder().candidateId(candidateId).build())
-                .applicationStatus(applicationStatus)
+        JobOffer jobOffer = new JobOffer.JobOfferBuilder()
+                .jobOfferId(jobOfferId)
+                .employer(employer)
+                .build();
+
+        Candidate candidate = new Candidate.Builder()
+                .candidateId(candidateId)
+                .build();
+
+        JobApplication jobApplication = new JobApplication.JobApplicationBuilder()
+                .jobOffer(jobOffer)
+                .employer(employer)
+                .candidate(candidate)
+                .jobApplicationStatus(applicationStatusEnum)
                 .build();
 
         jobApplicationDAO.createJobApplication(jobApplication);
-
     }
 
     private Integer getEmployerId(Integer jobOfferId) {
         JobOffer jobOffer = jobOfferService.findJobOffer(jobOfferId);
-
         return jobOffer.getEmployer().getEmployerId();
     }
 
     public List<JobApplicationDTO> getCandidateApplications(Authentication authentication) {
 
         String candidateEmail = authentication.getName();
+
         Integer candidateId = candidateService.findCandidateByEmail(candidateEmail).getCandidateId();
 
         List<JobApplication> jobApplications = jobApplicationDAO.findApplicationsByCandidateId(candidateId);
 
         return jobApplications.stream()
                 .map(jobApplicationMapper::mapToDto)
+                .sorted(Comparator.comparingInt(JobApplicationDTO::getApplicationId).reversed())
                 .collect(Collectors.toList());
-
     }
 
+    @Transactional
     public List<JobApplicationDTO> getAllJobApplicationsByEmployerId(Authentication authentication) {
-
         String employerEmail = authentication.getName();
+
         Integer employerId = employerService.findEmployerByEmail(employerEmail).getEmployerId();
 
         List<JobApplication> employerJobApplications = jobApplicationDAO.findEmployerJobApplicationsByEmployerId(employerId);
 
-        List<JobApplicationDTO> collect = employerJobApplications.stream()
+        return employerJobApplications.stream()
                 .map(jobApplicationMapper::mapToDto)
+                .sorted(Comparator.comparingInt(JobApplicationDTO::getApplicationId).reversed())
                 .collect(Collectors.toList());
-
-        return collect;
     }
 
+    @Transactional
     public List<ApplicationsHistoryDTO> getAllEmployerHistoryJobApplications(Authentication authentication) {
 
         String employerEmail = authentication.getName();
+
         Integer employerId = employerService.findEmployerByEmail(employerEmail).getEmployerId();
 
         List<ApplicationsHistory> employerHistoryApplications = jobApplicationDAO.findEmployerHistoryApplicationsByEmployerId(employerId);
 
-        List<ApplicationsHistoryDTO> collect = employerHistoryApplications.stream()
+        return employerHistoryApplications.stream()
                 .map(applicationsHistoryMapper::mapToDto)
+                .sorted(Comparator.comparing(ApplicationsHistoryDTO::getApplicationHistoryId).reversed())
                 .collect(Collectors.toList());
-
-        return collect;
     }
 
+    @Transactional
     public List<ApplicationsHistoryDTO> getAllCandidateHistoryJobApplications(Authentication authentication) {
 
         String candidateEmail = authentication.getName();
+
         Integer candidateId = candidateService.findCandidateByEmail(candidateEmail).getCandidateId();
 
-
-
         List<ApplicationsHistory> candidateHistoryApplications = jobApplicationDAO.findCandidateHistoryApplicationsByCandidateId(candidateId);
-        // Zapewnienie, że lista nie będzie null
-        if (candidateHistoryApplications == null) {
-            return Collections.emptyList();
-        }
 
-        List<ApplicationsHistoryDTO> collect = candidateHistoryApplications.stream()
+        return candidateHistoryApplications.stream()
                 .map(applicationsHistoryMapper::mapToDto)
+                .sorted(Comparator.comparing(ApplicationsHistoryDTO::getApplicationHistoryId).reversed())
                 .collect(Collectors.toList());
-
-        return collect;
     }
 }

@@ -1,30 +1,23 @@
 package pl.zajavka.CodeBridge.business;
 
 
-import com.lowagie.text.pdf.PRAcroForm;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.zajavka.CodeBridge.api.dto.JobOfferDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.JobOfferMapper;
-import pl.zajavka.CodeBridge.business.dao.EmployerDAO;
+import pl.zajavka.CodeBridge.api.enums.*;
 import pl.zajavka.CodeBridge.business.dao.JobOfferDAO;
 import pl.zajavka.CodeBridge.domain.Employer;
-import pl.zajavka.CodeBridge.domain.JobApplication;
 import pl.zajavka.CodeBridge.domain.JobOffer;
 import pl.zajavka.CodeBridge.domain.exception.NotFoundException;
 import pl.zajavka.CodeBridge.infrastructure.security.CodeBridgeUserDetailsService;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 public class JobOfferService {
 
     private final CodeBridgeUserDetailsService codeBridgeUserDetailsService;
@@ -32,62 +25,98 @@ public class JobOfferService {
     private final JobOfferDAO jobOfferDAO;
     private final JobOfferMapper jobOfferMapper;
 
-
-    @Transactional
-    public void createJobOfferData(JobOffer request, Authentication authentication) {
-
-        String username = authentication.getName();
-        Integer userId = codeBridgeUserDetailsService.getUserId(username);
-        Employer employer = employerService.findEmployer(userId);
-
-        JobOffer jobOffer = buildJobOffer(request);
-
-        Set<JobOffer> jobOffers = employer.getJobOffers();
-
-        jobOffers.add(jobOffer);
-
-        Employer employerAndJobOffer = employer.withJobOffers(jobOffers);
-
-        employerService.createJobOffer(employerAndJobOffer);
-    }
-
-
-    private JobOffer buildJobOffer(JobOffer request) {
-        return JobOffer.builder()
-                .jobOfferTitle(request.getJobOfferTitle())
-                .description(request.getDescription())
-                .techSpecialization(request.getTechSpecialization())
-                .workType(request.getWorkType())
-                .city(request.getCity())
-                .experience(request.getExperience())
-                .salary(request.getSalary())
-                .mustHaveSkills(request.getMustHaveSkills())
-                .niceToHaveSkills(request.getNiceToHaveSkills())
-                .build();
+    @Autowired
+    public JobOfferService(CodeBridgeUserDetailsService codeBridgeUserDetailsService,
+                           EmployerService employerService,
+                           JobOfferDAO jobOfferDAO,
+                           JobOfferMapper jobOfferMapper) {
+        this.codeBridgeUserDetailsService = codeBridgeUserDetailsService;
+        this.employerService = employerService;
+        this.jobOfferDAO = jobOfferDAO;
+        this.jobOfferMapper = jobOfferMapper;
     }
 
     @Transactional
-    public List<JobOffer> getAllJobOffers() {
-
-        return jobOfferDAO.findAllJobOffers();
-    }
-
-
-    public List<JobOffer> getFilteredJobOffers(
+    public void createJobOfferData(
+            String jobOfferTitle,
+            String description,
             String techSpecialization,
             String workType,
             String city,
             String experience,
-            String salary) {
+            String salary,
+            List<SkillsEnum> mustHaveSkills,
+            List<SkillsEnum> niceToHaveSkills,
+            Authentication authentication) {
 
-        List<JobOffer> allJobOffers = jobOfferDAO.findAll();
+        Employer employer = employerService.findEmployerByEmail(authentication.getName());
 
-        return allJobOffers.stream()
+        JobOfferDTO jobOfferDTO = new JobOfferDTO.Builder()
+                .jobOfferTitle(jobOfferTitle)
+                .description(description)
+                .techSpecialization(TechSpecializationsEnum.valueOf(techSpecialization))
+                .workType(WorkTypesEnum.valueOf(workType))
+                .city(CitiesEnum.valueOf(city))
+                .experience(ExperiencesEnum.valueOf(experience))
+                .salary(SalaryEnum.valueOf(salary))
+                .mustHaveSkills(mustHaveSkills)
+                .niceToHaveSkills(niceToHaveSkills)
+                .employerEmail(employer.getEmail())
+                .build();
+
+        JobOffer jobOffer = jobOfferMapper.mapToDomain(jobOfferDTO);
+
+        jobOffer = new JobOffer.JobOfferBuilder()
+                .jobOfferId(jobOffer.getJobOfferId())
+                .jobOfferTitle(jobOffer.getJobOfferTitle())
+                .description(jobOffer.getDescription())
+                .techSpecialization(jobOffer.getTechSpecialization())
+                .workType(jobOffer.getWorkType())
+                .city(jobOffer.getCity())
+                .experience(jobOffer.getExperience())
+                .salary(jobOffer.getSalary())
+                .mustHaveSkills(jobOffer.getMustHaveSkills())
+                .niceToHaveSkills(jobOffer.getNiceToHaveSkills())
+                .employer(employer)
+                .build();
+
+        employerService.createJobOffer(jobOffer);
+    }
+
+
+    @Transactional
+    public List<JobOfferDTO> getAllJobOffersSorted() {
+
+        List<JobOffer> jobOffers = jobOfferDAO.findAllJobOffers();
+        List<JobOfferDTO> jobOffersDTO = jobOffers.stream()
+                .map(jobOfferMapper::mapToDTO)
+                .collect(Collectors.toList());
+
+        return jobOffersDTO.stream()
+                .sorted(Comparator.comparingInt(JobOfferDTO::getJobOfferId).reversed())
+                .collect(Collectors.toList());
+    }
+
+
+    @Transactional
+    public List<JobOfferDTO> getFilteredAndSortedJobOffers(
+            TechSpecializationsEnum techSpecialization,
+            WorkTypesEnum workType,
+            CitiesEnum city,
+            ExperiencesEnum experience,
+            SalaryEnum salary) {
+
+        List<JobOffer> filteredJobOffers = jobOfferDAO.findAll().stream()
                 .filter(job -> techSpecialization == null || techSpecialization.equals(job.getTechSpecialization()))
                 .filter(job -> workType == null || workType.equals(job.getWorkType()))
                 .filter(job -> city == null || city.equals(job.getCity()))
                 .filter(job -> experience == null || experience.equals(job.getExperience()))
                 .filter(job -> salary == null || job.getSalary().equals(salary))
+                .sorted(Comparator.comparingInt(JobOffer::getJobOfferId).reversed())
+                .collect(Collectors.toList());
+
+        return filteredJobOffers.stream()
+                .map(jobOfferMapper::mapToDTO)
                 .collect(Collectors.toList());
     }
 
@@ -101,15 +130,34 @@ public class JobOfferService {
     }
 
 
-    public List<JobOfferDTO> getJobOffersByEmployerId(Authentication authentication) {
+    @Transactional
+    public List<JobOfferDTO> getSortedJobOffersByEmployerId(Authentication authentication) {
 
-        String employerEmail = authentication.getName();
-        Integer employerId = employerService.findEmployerByEmail(employerEmail).getEmployerId();
+        Employer employer = employerService.findEmployerByEmail(authentication.getName());
+        Integer employerId = employer.getEmployerId();
 
-        List<JobOffer> employerJobOffers = jobOfferDAO.findJobOffersByEmployerId(employerId);
+        List<JobOffer> jobOffers = jobOfferDAO.findJobOffersByEmployerId(employerId);
 
-        return employerJobOffers.stream()
+        return jobOffers.stream()
                 .map(jobOfferMapper::mapToDTO)
+                .sorted(Comparator.comparingInt(JobOfferDTO::getJobOfferId).reversed())
                 .collect(Collectors.toList());
+    }
+
+    public JobOfferDTO createNewJobOfferDTO() {
+
+        return new JobOfferDTO.Builder()
+                .jobOfferId(null)
+                .jobOfferTitle("")
+                .description("")
+                .techSpecialization(TechSpecializationsEnum.BACKEND)
+                .workType(WorkTypesEnum.REMOTE)
+                .city(CitiesEnum.WARSZAWA)
+                .experience(ExperiencesEnum.BEGINNER)
+                .salary(SalaryEnum.PLN_0_3000)
+                .mustHaveSkills(List.of())
+                .niceToHaveSkills(List.of())
+                .employerEmail(null)
+                .build();
     }
 }

@@ -1,18 +1,13 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import pl.zajavka.CodeBridge.domain.CandidateProject;
-import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateProjectEntity;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CandidateProjectEntityMapper {
 
-    CandidateProject mapToDomain(CandidateProjectEntity candidateProjectEntity);
+    CandidateProject mapToDomain(CandidateProjectEntity entity);
 
-    CandidateProjectEntity mapToEntity(CandidateProject candidateProject);
-
+    CandidateProjectEntity mapToEntity(CandidateProject domain, Integer candidateId);
 
 }

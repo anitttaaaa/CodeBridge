@@ -1,54 +1,54 @@
 package pl.zajavka.CodeBridge.business;
 
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import pl.zajavka.CodeBridge.api.dto.CandidateCourseDTO;
+import pl.zajavka.CodeBridge.api.dto.mapper.CandidateCourseMapper;
 import pl.zajavka.CodeBridge.business.dao.CandidateCourseDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.CandidateCourse;
-import pl.zajavka.CodeBridge.domain.CandidateEducation;
 
 import java.nio.file.AccessDeniedException;
 
 @Service
-@AllArgsConstructor
 public class CandidateCourseService {
 
     private final CandidateService candidateService;
     private final CandidateCourseDAO candidateCourseDAO;
+    private final CandidateCourseMapper candidateCourseMapper;
 
-    public void createCourseData(CandidateCourse candidateCourseFromRequest) {
-
-
-        Candidate candidate = candidateService.findLoggedInCandidate();
-        CandidateCourse candidateCourse = buildCandidateCourse(candidateCourseFromRequest, candidate);
-        candidateCourseDAO.createCourse(candidateCourse);
-
+@Autowired
+    public CandidateCourseService(CandidateService candidateService,
+                                  CandidateCourseDAO candidateCourseDAO,
+                                  CandidateCourseMapper candidateCourseMapper) {
+        this.candidateService = candidateService;
+        this.candidateCourseDAO = candidateCourseDAO;
+        this.candidateCourseMapper = candidateCourseMapper;
     }
 
-    private CandidateCourse buildCandidateCourse(CandidateCourse candidateCourseFromRequest, Candidate candidate) {
-        return CandidateCourse.builder()
-                .institution(candidateCourseFromRequest.getInstitution())
-                .courseTitle(candidateCourseFromRequest.getCourseTitle())
-                .description(candidateCourseFromRequest.getDescription())
-                .technologies(candidateCourseFromRequest.getTechnologies())
-                .fromDate(candidateCourseFromRequest.getFromDate())
-                .toDate(candidateCourseFromRequest.getToDate())
-                .candidateId(candidate.getCandidateId())
-                .build();
-    }
+    public void createCourseData(CandidateCourseDTO candidateCourseFromRequest, Authentication authentication) {
 
-
-    public void updateCandidateCourse(CandidateCourse candidateCourse, Authentication authentication) throws AccessDeniedException {
 
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
-        Integer loggedInCandidateId = candidate.getCandidateId();
+        Integer candidateId = candidate.getCandidateId();
 
-        if (!candidateCourse.getCandidateId().equals(loggedInCandidateId)){
-            throw new AccessDeniedException("Unauthorized access.");
-        }
 
-        candidateCourseDAO.updateCandidateCourse(candidateCourse);
+        CandidateCourse candidateCourse = candidateCourseMapper.mapToDomain(candidateCourseFromRequest);
+
+        candidateCourseDAO.createCourse(candidateCourse, candidateId);
+
+    }
+
+
+    public void updateCandidateCourse(CandidateCourseDTO candidateCourseDTO, Authentication authentication) throws AccessDeniedException {
+
+        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
+        Integer candidateId = candidate.getCandidateId();
+
+      CandidateCourse candidateCourse = candidateCourseMapper.mapToDomain(candidateCourseDTO);
+
+        candidateCourseDAO.updateCandidateCourse(candidateCourse, candidateId);
     }
 
 

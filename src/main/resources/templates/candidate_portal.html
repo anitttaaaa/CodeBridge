@@ -128,7 +128,7 @@
                                th:if="${candidate.gitHub != null}"></a>
                         </p>
                         <i class="bi me-2"
-                           th:classappend="${candidate.status == 'Actively looking for a job' ? 'bi-person-fill text-success' : (candidate.status == 'Currently employed' ? 'bi-person-fill text-danger' : 'bi-question-circle')}"></i>
+                           th:classappend="${candidate.status == ' LOOKING_FOR_A_JOB' ? 'bi-person-fill text-success' : (candidate.status == 'CURRENTLY_HIRED' ? 'bi-person-fill text-danger' : 'bi-question-circle')}"></i>
 
                         <!-- Sprawdzenie, czy status kandydata jest pusty -->
                         <span th:if="${candidate.status == null}">Status: No information</span>
@@ -161,8 +161,8 @@
                                     <select class="form-control" id="status" name="status">
                                         <option value="" disabled selected>Choose...</option>
                                         <option th:each="status : ${T(pl.zajavka.CodeBridge.api.enums.StatusEnum).values()}"
-                                                th:value="${status.getDescription()}"
-                                                th:text="${status.getDescription()}">
+                                                th:value="${status}"
+                                                th:text="${status}">
                                         </option>
                                     </select>
                                 </div>
@@ -374,21 +374,21 @@
                             <select name="selectedSkill" class="form-control mb-3">
                                 <option value="">Choose Skills</option>
                                 <option th:each="skill : ${T(pl.zajavka.CodeBridge.api.enums.SkillsEnum).values()}"
-                                        th:value="${skill.getSkill()}"
-                                        th:text="${skill.getSkill()}"></option>
+                                        th:value="${skill}"
+                                        th:text="${skill}"></option>
                             </select>
                             <div class="input-group mb-3"
                                  th:each="skill : ${T(pl.zajavka.CodeBridge.api.enums.SkillsEnum).values()}">
                                 <div class="input-group-text">
                                     <input class="form-check-input mt-0" type="checkbox"
                                            th:field="*{candidate.candidateSkills}"
-                                           th:value="${skill.getSkill()}"
-                                           id="candidate_skill_${skill.name()}"
-                                           th:checked="${#lists.contains(candidate.candidateSkills, skill.getSkill())}"/>
+                                           th:value="${skill}"
+                                           id="candidate_skill_${skill}"
+                                           th:checked="${#lists.contains(candidate.candidateSkills, skill)}"/>
                                 </div>
                                 <label class="form-control" aria-label="Text input with checkbox"
-                                       th:for="'candidate_skill_' + ${skill.name()}"
-                                       th:text="${skill.getSkill()}"></label>
+                                       th:for="'candidate_skill_' + ${skill}"
+                                       th:text="${skill}"></label>
                             </div>
                         </div>
                         <button type="submit" class="add-job-offer-button btn btn-primary">Save Changes</button>
@@ -441,7 +441,6 @@
                                       class="d-inline">
                                     <input type="hidden" name="candidateExperienceId"
                                            th:value="${experience.candidateExperienceId}"/>
-                                    <input type="hidden" name="candidateId" th:value="${experience.candidateId}"/>
                                     <button type="submit" class="btn btn-danger change-photo-button" title="Delete">
                                         <i class="fas fa-trash icon-size"></i>
                                     </button>
@@ -451,8 +450,7 @@
                         <!-- Opis -->
                         <div class="mt-3">
                             <div class="experience-info">Description:</div>  <!-- Etykieta Description -->
-                            <div class="experience-info-value description"
-                                 th:text="${experience.description}"></div> <!-- Wartość description -->
+                            <div class="experience-info-value description" th:text="${experience.description}"></div> <!-- Wartość description -->
                         </div>
                     </div>
                 </div>
@@ -476,7 +474,6 @@
                     <form th:action="@{/candidate-portal/update-candidate-experience}" method="post">
                         <input type="hidden" name="candidateExperienceId"
                                th:value="${experience.candidateExperienceId}"/>
-                        <input type="hidden" name="candidateId" th:value="${experience.candidateId}"/>
                         <div class="form-group">
                             <label for="editCandidatePosition">Position</label>
                             <input type="text" class="form-control" id="editCandidatePosition" name="candidatePosition"
@@ -551,6 +548,7 @@
                             <input type="date" class="form-control" id="toDate" name="toDate"
                                    th:value="${candidateExperienceDTO != null ? candidateExperienceDTO.toDate : ''}">
                         </div>
+
                         <!-- Submit Button -->
                         <button type="submit" class="add-job-offer-button btn btn-primary">Save changes</button>
                     </form>
@@ -595,7 +593,6 @@
                                 <form th:action="@{/candidate-portal/delete-project}" method="post" class="d-inline">
                                     <input type="hidden" name="candidateProjectId"
                                            th:value="${project.candidateProjectId}"/>
-                                    <input type="hidden" name="candidateId" th:value="${project.candidateId}"/>
                                     <button type="submit" class="btn btn-danger change-photo-button" title="Delete">
                                         <i class="fas fa-trash icon-size"></i>
                                     </button>
@@ -683,7 +680,6 @@
                 <div class="modal-body">
                     <form th:action="@{/candidate-portal/update-candidate-project}" method="post">
                         <input type="hidden" name="candidateProjectId" th:value="${project.candidateProjectId}"/>
-                        <input type="hidden" name="candidateId" th:value="${project.candidateId}"/>
                         <div class="form-group">
                             <label for="editProjectTitle">Project Title</label>
                             <input type="text" class="form-control" id="editProjectTitle" name="projectTitle"
@@ -760,7 +756,6 @@
                                 <form th:action="@{/candidate-portal/delete-education}" method="post" class="d-inline">
                                     <input type="hidden" name="candidateEducationId"
                                            th:value="${education.candidateEducationId}"/>
-                                    <input type="hidden" name="candidateId" th:value="${education.candidateId}"/>
                                     <button type="submit" class="btn btn-danger change-photo-button" title="Delete">
                                         <i class="fas fa-trash icon-size"></i>
                                     </button>
@@ -832,7 +827,6 @@
                     <!-- Formularz edycji -->
                     <form th:action="@{/candidate-portal/update-candidate-education}" method="post">
                         <input type="hidden" name="candidateEducationId" th:value="${education.candidateEducationId}"/>
-                        <input type="hidden" name="candidateId" th:value="${education.candidateId}"/>
                         <div class="form-group">
                             <label for="editInstitution">Institution</label>
                             <input type="text" class="form-control" id="editEducationInstitution" name="institution"
@@ -903,7 +897,6 @@
                                 <form th:action="@{/candidate-portal/delete-course}" method="post" class="d-inline">
                                     <input type="hidden" name="candidateCourseId"
                                            th:value="${course.candidateCourseId}"/>
-                                    <input type="hidden" name="candidateId" th:value="${course.candidateId}"/>
                                     <button type="submit" class="btn btn-danger change-photo-button" title="Delete">
                                         <i class="fas fa-trash icon-size"></i>
                                     </button>
@@ -984,7 +977,6 @@
                     <!-- Formularz edycji -->
                     <form th:action="@{/candidate-portal/update-candidate-course}" method="post">
                         <input type="hidden" name="candidateCourseId" th:value="${course.candidateCourseId}"/>
-                        <input type="hidden" name="candidateId" th:value="${course.candidateId}"/>
                         <div class="form-group">
                             <label for="editInstitution">Institution</label>
                             <input type="text" class="form-control" id="editInstitution" name="institution"

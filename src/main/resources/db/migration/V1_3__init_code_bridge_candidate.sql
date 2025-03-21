@@ -17,12 +17,11 @@
 );
 
 CREATE TABLE candidate_skills (
-    candidate_id                    INT             NOT NULL,
-    candidate_skills                VARCHAR(255)    NOT NULL,
 
-    FOREIGN KEY (candidate_id)
-        REFERENCES candidate(candidate_id)
-            ON DELETE CASCADE
+    candidate_skills_id SERIAL NOT NULL,
+    candidate_id INT NOT NULL,
+    skill_name VARCHAR(255) NOT NULL,
+    FOREIGN KEY (candidate_id) REFERENCES candidate (candidate_id)
 );
 
 

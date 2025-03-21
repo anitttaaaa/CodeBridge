@@ -1,15 +1,16 @@
 package pl.zajavka.CodeBridge.api.dto.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import pl.zajavka.CodeBridge.api.dto.CandidateDTO;
-import pl.zajavka.CodeBridge.domain.Candidate;
+import pl.zajavka.CodeBridge.api.dto.*;
+import pl.zajavka.CodeBridge.domain.*;
 
-@Mapper(componentModel = "spring")
+import java.util.List;
+
 public interface CandidateMapper {
 
     CandidateDTO mapToDto(Candidate candidate);
+
     Candidate mapToDomain(CandidateDTO candidateDTO);
+
 
 
 }

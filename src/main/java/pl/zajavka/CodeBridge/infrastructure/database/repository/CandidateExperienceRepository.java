@@ -1,6 +1,5 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository;
 
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.CodeBridge.business.dao.CandidateExperienceDAO;
 import pl.zajavka.CodeBridge.domain.CandidateExperience;
@@ -9,17 +8,21 @@ import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.CandidateExp
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.CandidateExperienceEntityMapper;
 
 @Repository
-@AllArgsConstructor
 public class CandidateExperienceRepository implements CandidateExperienceDAO {
 
     private final CandidateExperienceEntityMapper candidateExperienceEntityMapper;
     private final CandidateExperienceJpaRepository candidateExperienceJpaRepository;
 
+    public CandidateExperienceRepository(CandidateExperienceEntityMapper candidateExperienceEntityMapper,
+                                         CandidateExperienceJpaRepository candidateExperienceJpaRepository) {
+        this.candidateExperienceEntityMapper = candidateExperienceEntityMapper;
+        this.candidateExperienceJpaRepository = candidateExperienceJpaRepository;
+    }
 
     @Override
-    public CandidateExperience createExperience(CandidateExperience candidateExperience) {
+    public CandidateExperience createExperience(CandidateExperience candidateExperience, Integer candidateId) {
 
-        CandidateExperienceEntity candidateExperienceToSave = candidateExperienceEntityMapper.mapToEntity(candidateExperience);
+        CandidateExperienceEntity candidateExperienceToSave = candidateExperienceEntityMapper.mapToEntity(candidateExperience, candidateId);
         CandidateExperienceEntity candidateExperienceSaved = candidateExperienceJpaRepository.saveAndFlush(candidateExperienceToSave);
 
         return candidateExperienceEntityMapper.mapFromEntity(candidateExperienceSaved);
@@ -27,8 +30,8 @@ public class CandidateExperienceRepository implements CandidateExperienceDAO {
     }
 
     @Override
-    public void updateCandidateExperience(CandidateExperience candidateExperienceToUpdate) {
-        CandidateExperienceEntity experienceToSave = candidateExperienceEntityMapper.mapToEntity(candidateExperienceToUpdate);
+    public void updateCandidateExperience(CandidateExperience candidateExperienceToUpdate, Integer candidateId) {
+        CandidateExperienceEntity experienceToSave = candidateExperienceEntityMapper.mapToEntity(candidateExperienceToUpdate, candidateId);
         candidateExperienceJpaRepository.saveAndFlush(experienceToSave);
     }
 

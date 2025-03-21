@@ -1,11 +1,12 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository;
 
 
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.CodeBridge.business.dao.EmployerDAO;
 import pl.zajavka.CodeBridge.domain.Employer;
+import pl.zajavka.CodeBridge.domain.JobOffer;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.EmployerEntity;
+import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.EmployerJpaRepository;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.JobOfferJpaRepository;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.EmployerEntityMapper;
@@ -15,7 +16,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Repository
-@AllArgsConstructor
 public class EmployerRepository implements EmployerDAO {
 
     private final EmployerJpaRepository employerJpaRepository;
@@ -24,6 +24,15 @@ public class EmployerRepository implements EmployerDAO {
     private final EmployerEntityMapper employerEntityMapper;
     private final JobOfferEntityMapper jobOfferEntityMapper;
 
+    public EmployerRepository(EmployerJpaRepository employerJpaRepository,
+                              JobOfferJpaRepository jobOfferJpaRepository,
+                              EmployerEntityMapper employerEntityMapper,
+                              JobOfferEntityMapper jobOfferEntityMapper) {
+        this.employerJpaRepository = employerJpaRepository;
+        this.jobOfferJpaRepository = jobOfferJpaRepository;
+        this.employerEntityMapper = employerEntityMapper;
+        this.jobOfferEntityMapper = jobOfferEntityMapper;
+    }
 
     @Override
     public Optional<Employer> findByUserId(Integer userId) {
@@ -32,17 +41,11 @@ public class EmployerRepository implements EmployerDAO {
     }
 
     @Override
-    public void createJobOffer(Employer employer) {
-        EmployerEntity employerToSave = employerEntityMapper.mapToEntity(employer);
-        EmployerEntity employerSaved = employerJpaRepository.saveAndFlush(employerToSave);
+    public void createJobOffer(JobOffer jobOffer) {
+        JobOfferEntity jobOfferToSave = jobOfferEntityMapper.mapToEntity(jobOffer);
+        JobOfferEntity jobOfferSaved = jobOfferJpaRepository.saveAndFlush(jobOfferToSave);
 
-        employer.getJobOffers().stream()
-                .filter(jobOffer -> Objects.isNull(jobOffer.getJobOfferId()))
-                .map(jobOfferEntityMapper::mapToEntity)
-                .forEach(jobOfferEntity -> {
-                    jobOfferEntity.setEmployer(employerSaved);
-                    jobOfferJpaRepository.saveAndFlush(jobOfferEntity);
-                });
+        jobOfferJpaRepository.saveAndFlush(jobOfferSaved);
 
     }
 
