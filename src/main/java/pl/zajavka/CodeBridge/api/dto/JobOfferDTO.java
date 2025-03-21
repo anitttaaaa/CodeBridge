@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.api.dto;
 
 import pl.zajavka.CodeBridge.api.enums.*;
-import pl.zajavka.CodeBridge.domain.Employer;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +17,9 @@ public class JobOfferDTO {
     private final SalaryEnum salary;
     private final List<SkillsEnum> mustHaveSkills;
     private final List<SkillsEnum> niceToHaveSkills;
-    private final Employer employer;
+
+    private final String employerEmail;
+    private final String companyName;
 
     private JobOfferDTO(Builder builder) {
         this.jobOfferId = builder.jobOfferId;
@@ -31,7 +32,8 @@ public class JobOfferDTO {
         this.salary = builder.salary;
         this.mustHaveSkills = builder.mustHaveSkills;
         this.niceToHaveSkills = builder.niceToHaveSkills;
-        this.employer = builder.employer;
+        this.employerEmail = builder.employerEmail;
+        this.companyName = builder.companyName;
     }
 
     @Override
@@ -54,13 +56,14 @@ public class JobOfferDTO {
                 ", jobOfferTitle='" + jobOfferTitle + '\'' +
                 ", description='" + description + '\'' +
                 ", techSpecialization=" + techSpecialization +
-                ", workType='" + workType + '\'' +
-                ", city='" + city + '\'' +
-                ", experience='" + experience + '\'' +
+                ", workType=" + workType +
+                ", city=" + city +
+                ", experience=" + experience +
                 ", salary=" + salary +
                 ", mustHaveSkills=" + mustHaveSkills +
                 ", niceToHaveSkills=" + niceToHaveSkills +
-                ", employer=" + employer +
+                ", employerEmail='" + employerEmail + '\'' +
+                ", companyName='" + companyName + '\'' +
                 '}';
     }
 
@@ -104,12 +107,15 @@ public class JobOfferDTO {
         return niceToHaveSkills;
     }
 
-    public Employer getEmployer() {
-        return employer;
+    public String getEmployerEmail() {
+        return employerEmail;
+    }
+
+    public String getCompanyName() {
+        return companyName;
     }
 
     public static class Builder {
-
         private Integer jobOfferId;
         private String jobOfferTitle;
         private String description;
@@ -120,7 +126,8 @@ public class JobOfferDTO {
         private SalaryEnum salary;
         private List<SkillsEnum> mustHaveSkills;
         private List<SkillsEnum> niceToHaveSkills;
-        private Employer employer;
+        private String employerEmail;
+        private String companyName;
 
         public Builder jobOfferId(Integer jobOfferId) {
             this.jobOfferId = jobOfferId;
@@ -172,8 +179,13 @@ public class JobOfferDTO {
             return this;
         }
 
-        public Builder employer(Employer employer) {
-            this.employer = employer;
+        public Builder employerEmail(String employerEmail) {
+            this.employerEmail = employerEmail;
+            return this;
+        }
+
+        public Builder companyName(String companyName) {
+            this.companyName = companyName;
             return this;
         }
 

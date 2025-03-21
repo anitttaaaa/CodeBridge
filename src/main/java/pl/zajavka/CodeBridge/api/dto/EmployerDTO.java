@@ -9,16 +9,14 @@ public class EmployerDTO {
     private final String companyName;
     private final String email;
     private final String nip;
-    private final Set<JobOfferDTO> jobOffers;
-    private final Set<JobApplicationDTO> jobApplications;
+
 
     private EmployerDTO(Builder builder) {
         this.employerId = builder.employerId;
         this.companyName = builder.companyName;
         this.email = builder.email;
         this.nip = builder.nip;
-        this.jobOffers = builder.jobOffers;
-        this.jobApplications = builder.jobApplications;
+
     }
 
     public static class Builder {
@@ -26,8 +24,7 @@ public class EmployerDTO {
         private String companyName;
         private String email;
         private String nip;
-        private Set<JobOfferDTO> jobOffers;
-        private Set<JobApplicationDTO> jobApplications;
+
 
         public Builder employerId(Integer employerId) {
             this.employerId = employerId;
@@ -50,15 +47,6 @@ public class EmployerDTO {
         }
 
 
-        public Builder jobOffers(Set<JobOfferDTO> jobOffers) {
-            this.jobOffers = jobOffers;
-            return this;
-        }
-
-        public Builder jobApplications(Set<JobApplicationDTO> jobApplications) {
-            this.jobApplications = jobApplications;
-            return this;
-        }
 
         public EmployerDTO build() {
             return new EmployerDTO(this);
@@ -86,14 +74,6 @@ public class EmployerDTO {
     }
 
 
-    public Set<JobOfferDTO> getJobOffers() {
-        return jobOffers;
-    }
-
-    public Set<JobApplicationDTO> getJobApplications() {
-        return jobApplications;
-    }
-
     @Override
     public String toString() {
         return "EmployerDTO{" +
@@ -101,8 +81,6 @@ public class EmployerDTO {
                 ", companyName='" + companyName + '\'' +
                 ", email='" + email + '\'' +
                 ", nip='" + nip + '\'' +
-                ", jobOffers=" + jobOffers +
-                ", jobApplications=" + jobApplications +
                 '}';
     }
 

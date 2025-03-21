@@ -35,17 +35,14 @@ public class EmployerPortalController {
 
     private static final String ADD_EMPLOYER_NEW_JOB_OFFER = "/employer-portal/new-job-offer/add";
 
-    private final JobOfferMapper jobOfferMapper;
     private final JobOfferService jobOfferService;
     private final EmployerService employerService;
     private final CandidateService candidateService;
 
 
-    public EmployerPortalController(JobOfferMapper jobOfferMapper,
-                                    JobOfferService jobOfferService,
+    public EmployerPortalController(JobOfferService jobOfferService,
                                     EmployerService employerService,
                                     CandidateService candidateService) {
-        this.jobOfferMapper = jobOfferMapper;
         this.jobOfferService = jobOfferService;
         this.employerService = employerService;
         this.candidateService = candidateService;

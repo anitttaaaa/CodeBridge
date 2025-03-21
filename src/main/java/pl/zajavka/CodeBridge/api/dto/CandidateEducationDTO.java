@@ -20,7 +20,6 @@ public class CandidateEducationDTO {
         this.fieldOfStudy = fieldOfStudy;
         this.fromDate = fromDate;
         this.toDate = toDate;
-
     }
 
     public Integer getCandidateEducationId() {
@@ -46,7 +45,6 @@ public class CandidateEducationDTO {
     public LocalDate getToDate() {
         return toDate;
     }
-
 
     @Override
     public String toString() {

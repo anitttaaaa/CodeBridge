@@ -61,10 +61,24 @@ public class JobOfferService {
                 .salary(SalaryEnum.valueOf(salary))
                 .mustHaveSkills(mustHaveSkills)
                 .niceToHaveSkills(niceToHaveSkills)
-                .employer(employer)
+                .employerEmail(employer.getEmail())
                 .build();
 
         JobOffer jobOffer = jobOfferMapper.mapToDomain(jobOfferDTO);
+
+        jobOffer = new JobOffer.JobOfferBuilder()
+                .jobOfferId(jobOffer.getJobOfferId())
+                .jobOfferTitle(jobOffer.getJobOfferTitle())
+                .description(jobOffer.getDescription())
+                .techSpecialization(jobOffer.getTechSpecialization())
+                .workType(jobOffer.getWorkType())
+                .city(jobOffer.getCity())
+                .experience(jobOffer.getExperience())
+                .salary(jobOffer.getSalary())
+                .mustHaveSkills(jobOffer.getMustHaveSkills())
+                .niceToHaveSkills(jobOffer.getNiceToHaveSkills())
+                .employer(employer)
+                .build();
 
         employerService.createJobOffer(jobOffer);
     }
@@ -131,6 +145,7 @@ public class JobOfferService {
     }
 
     public JobOfferDTO createNewJobOfferDTO() {
+
         return new JobOfferDTO.Builder()
                 .jobOfferId(null)
                 .jobOfferTitle("")
@@ -142,7 +157,7 @@ public class JobOfferService {
                 .salary(SalaryEnum.PLN_0_3000)
                 .mustHaveSkills(List.of())
                 .niceToHaveSkills(List.of())
-                .employer(null)
+                .employerEmail(null)
                 .build();
     }
 }

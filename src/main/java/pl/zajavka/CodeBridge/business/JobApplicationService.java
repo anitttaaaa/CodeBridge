@@ -152,15 +152,14 @@ public class JobApplicationService {
 
         String candidateEmail = authentication.getName();
         Integer candidateId = candidateService.findCandidateByEmail(candidateEmail).getCandidateId();
-        Integer employerId = getEmployerId(jobOfferId);
+        JobOffer jobOfferr = jobOfferService.findJobOffer(jobOfferId);
+        Employer employer = jobOfferr.getEmployer();
 
         ApplicationStatusEnum applicationStatusEnum = ApplicationStatusEnum.PENDING;
 
         JobOffer jobOffer = new JobOffer.JobOfferBuilder()
                 .jobOfferId(jobOfferId)
-                .build();
-        Employer employer = new Employer.EmployerBuilder()
-                .employerId(employerId)
+                .employer(employer)
                 .build();
 
         Candidate candidate = new Candidate.Builder()

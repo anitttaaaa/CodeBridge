@@ -1,6 +1,5 @@
 package pl.zajavka.CodeBridge.api.dto;
 
-import pl.zajavka.CodeBridge.api.enums.SalaryEnum;
 import pl.zajavka.CodeBridge.api.enums.SkillsEnum;
 import pl.zajavka.CodeBridge.api.enums.StatusEnum;
 import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
@@ -22,7 +21,6 @@ public class CandidateDTO {
     private final TechSpecializationsEnum techSpecialization;
     private final String aboutMe;
     private final String hobby;
-    private final Integer userId;
     private final byte[] profilePhoto;
     private final List<SkillsEnum> candidateSkills;
     private final List<CandidateExperienceDTO> candidateExperiences;
@@ -42,7 +40,6 @@ public class CandidateDTO {
         this.techSpecialization = builder.techSpecialization;
         this.aboutMe = builder.aboutMe;
         this.hobby = builder.hobby;
-        this.userId = builder.userId;
         this.profilePhoto = builder.profilePhoto;
         this.candidateSkills = builder.candidateSkills;
         this.candidateExperiences = builder.candidateExperiences;
@@ -63,7 +60,6 @@ public class CandidateDTO {
         private TechSpecializationsEnum techSpecialization;
         private String aboutMe;
         private String hobby;
-        private Integer userId;
         private byte[] profilePhoto;
         private List<SkillsEnum> candidateSkills;
         private List<CandidateExperienceDTO> candidateExperiences;
@@ -126,10 +122,6 @@ public class CandidateDTO {
             return this;
         }
 
-        public Builder userId(Integer userId) {
-            this.userId = userId;
-            return this;
-        }
 
         public Builder profilePhoto(byte[] profilePhoto) {
             this.profilePhoto = profilePhoto;
@@ -214,10 +206,6 @@ public class CandidateDTO {
         return hobby;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
-
     public byte[] getProfilePhoto() {
         return profilePhoto;
     }
@@ -256,7 +244,6 @@ public class CandidateDTO {
                 ", techSpecialization=" + techSpecialization +
                 ", aboutMe='" + aboutMe + '\'' +
                 ", hobby='" + hobby + '\'' +
-                ", userId=" + userId +
                 ", profilePhoto=" + Arrays.toString(profilePhoto) +
                 ", candidateSkills=" + candidateSkills +
                 ", candidateExperiences=" + candidateExperiences +

@@ -19,77 +19,60 @@ public class JobApplicationMapperImpl implements JobApplicationMapper {
 
         return new JobApplicationDTO.Builder()
                 .applicationId(jobApplication.getApplicationId())
-                .jobOffer(mapJobOfferToDto(jobApplication.getJobOffer()))
-                .employer(mapEmployerToDto(jobApplication.getEmployer()))
-                .candidate(mapCandidateToDto(jobApplication.getCandidate()))
+
+                .jobOfferTitle(jobApplication.getJobOffer().getJobOfferTitle())
+                .jobOfferDescription(jobApplication.getJobOffer().getDescription())
+                .jobOfferTechSpecialization(jobApplication.getJobOffer().getTechSpecialization())
+                .jobOfferWorkType(jobApplication.getJobOffer().getWorkType())
+                .jobOfferCity(jobApplication.getJobOffer().getCity())
+                .jobOfferExperience(jobApplication.getJobOffer().getExperience())
+                .jobOfferSalary(jobApplication.getJobOffer().getSalary())
+                .jobOfferMustHaveSkills(jobApplication.getJobOffer().getMustHaveSkills())
+                .jobOfferNiceToHaveSkills(jobApplication.getJobOffer().getNiceToHaveSkills())
+
+                .companyName(jobApplication.getEmployer().getCompanyName())
+
+                .candidateEmail(jobApplication.getCandidate().getEmail())
+                .candidateName(jobApplication.getCandidate().getName())
+                .candidateSurname(jobApplication.getCandidate().getSurname())
+                .candidatePhone(jobApplication.getCandidate().getPhone())
+                .candidateTechSpecialization(jobApplication.getCandidate().getTechSpecialization())
+                .candidateSkills(jobApplication.getCandidate().getCandidateSkills())
+
                 .applicationStatusEnum(jobApplication.getApplicationStatusEnum())
                 .build();
     }
 
-    public JobOfferDTO mapJobOfferToDto(JobOffer jobOffer) {
-        return new JobOfferDTO.Builder()
-                .jobOfferTitle(jobOffer.getJobOfferTitle())
-                .description(jobOffer.getDescription())
-                .techSpecialization(jobOffer.getTechSpecialization())
-                .workType(jobOffer.getWorkType())
-                .city(jobOffer.getCity())
-                .experience(jobOffer.getExperience())
-                .salary(jobOffer.getSalary())
-                .mustHaveSkills(jobOffer.getMustHaveSkills())
-                .niceToHaveSkills(jobOffer.getNiceToHaveSkills())
-                .build();
-    }
-
-
-
-    public EmployerDTO mapEmployerToDto(Employer employer) {
-        return new EmployerDTO.Builder()
-                .companyName(employer.getCompanyName())
-                .build();
-    }
-
-
-    public CandidateDTO mapCandidateToDto(Candidate candidate) {
-        return new CandidateDTO.Builder()
-                .name(candidate.getName())
-                .surname(candidate.getSurname())
-                .email(candidate.getEmail())
-                .phone(candidate.getPhone())
-                .techSpecialization(candidate.getTechSpecialization())
-                .candidateSkills(candidate.getCandidateSkills())
-                .build();
-    }
 
     @Override
     public JobApplication mapToDomain(JobApplicationDTO jobApplicationDTO) {
 
+
+        Candidate candidate = new Candidate.Builder()
+                .name(jobApplicationDTO.getCandidateName())
+                .surname(jobApplicationDTO.getCandidateSurname())
+                .email(jobApplicationDTO.getCandidateEmail())
+                .phone(jobApplicationDTO.getCandidatePhone())
+                .techSpecialization(jobApplicationDTO.getCandidateTechSpecialization())
+                .candidateSkills(jobApplicationDTO.getCandidateSkills())
+                .build();
+
+        Employer employer = new Employer.EmployerBuilder()
+                .companyName(jobApplicationDTO.getCompanyName())
+                .build();
+
+        JobOffer jobOffer = new JobOffer.JobOfferBuilder()
+                .jobOfferId(jobApplicationDTO.getJobOfferId())
+                .build();
+
         return new JobApplication.JobApplicationBuilder()
                 .applicationId(jobApplicationDTO.getApplicationId())
-                .jobOffer(mapJobOfferToDomain(jobApplicationDTO.getJobOffer()))
-                .employer(mapEmployerToDomain(jobApplicationDTO.getEmployer()))
-                .candidate(mapCandidateToDomain(jobApplicationDTO.getCandidate()))
+                .jobOffer(jobOffer)
+                .employer(employer)
+                .candidate(candidate)
                 .jobApplicationStatus(jobApplicationDTO.getApplicationStatusEnum())
                 .build();
     }
 
 
-    public JobOffer mapJobOfferToDomain(JobOfferDTO jobOfferDTO) {
-        return new JobOffer.JobOfferBuilder()
-                .jobOfferId(jobOfferDTO.getJobOfferId())
-                .build();
-    }
-
-
-    public Employer mapEmployerToDomain(EmployerDTO employerDTO) {
-        return new Employer.EmployerBuilder()
-                .employerId(employerDTO.getEmployerId())
-                .build();
-    }
-
-
-    public Candidate mapCandidateToDomain(CandidateDTO candidateDTO) {
-        return new Candidate.Builder()
-                .candidateId(candidateDTO.getCandidateId())
-                .build();
-    }
 }
