@@ -114,7 +114,9 @@ public class ApplicationsHistoryDTO {
         return jobOfferExperience;
     }
 
-    public SalaryEnum getJobOfferSalary() { return jobOfferSalary; }
+    public SalaryEnum getJobOfferSalary() {
+        return jobOfferSalary;
+    }
 
     public List<SkillsEnum> getJobOfferMustHaveSkills() {
         return jobOfferMustHaveSkills;

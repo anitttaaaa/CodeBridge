@@ -4,18 +4,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 import pl.zajavka.CodeBridge.api.dto.CandidateCVDTO;
-import pl.zajavka.CodeBridge.api.dto.mapper.CandidateCVMapper;
 import pl.zajavka.CodeBridge.business.CandidateCVService;
-import pl.zajavka.CodeBridge.business.CandidateService;
-import pl.zajavka.CodeBridge.domain.Candidate;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Base64;
 
 @Controller
 public class CVController {

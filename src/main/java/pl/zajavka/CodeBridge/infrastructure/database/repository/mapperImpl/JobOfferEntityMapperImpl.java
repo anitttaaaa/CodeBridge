@@ -1,14 +1,11 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository.mapperImpl;
 
 import org.springframework.stereotype.Component;
-import pl.zajavka.CodeBridge.api.enums.*;
 import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.JobOffer;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.EmployerEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.mapper.JobOfferEntityMapper;
-
-import java.util.HashSet;
 
 @Component
 public class JobOfferEntityMapperImpl implements JobOfferEntityMapper {

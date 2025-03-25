@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.api.dto;
 
 import java.util.Objects;
-import java.util.Set;
 
 public class EmployerDTO {
 
@@ -45,7 +44,6 @@ public class EmployerDTO {
             this.nip = nip;
             return this;
         }
-
 
 
         public EmployerDTO build() {

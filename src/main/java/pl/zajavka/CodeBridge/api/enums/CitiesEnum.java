@@ -11,5 +11,4 @@ public enum CitiesEnum {
     KATOWICE
 
 
-
 }

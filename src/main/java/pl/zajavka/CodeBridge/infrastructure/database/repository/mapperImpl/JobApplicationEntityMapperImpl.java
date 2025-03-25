@@ -1,7 +1,6 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository.mapperImpl;
 
 import org.springframework.stereotype.Component;
-import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.Employer;
 import pl.zajavka.CodeBridge.domain.JobApplication;

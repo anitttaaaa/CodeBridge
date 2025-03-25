@@ -16,7 +16,6 @@ import pl.zajavka.CodeBridge.business.dao.CandidateDAO;
 import pl.zajavka.CodeBridge.business.dao.JobApplicationDAO;
 import pl.zajavka.CodeBridge.domain.*;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;

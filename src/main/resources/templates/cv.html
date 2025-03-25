@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Curriculum Vitae - <span th:text="${candidateCv.name} + ' ' + ${candidateCv.surname}"></span></title>
 
 </head>
@@ -39,8 +39,9 @@
     <h3>Experience</h3>
     <ul>
         <li th:each="experience : ${candidateCv.candidateExperiences}">
-            <strong th:text="${experience.candidatePosition}"></strong> - <span th:text="${experience.companyName}"></span>
-            <br />
+            <strong th:text="${experience.candidatePosition}"></strong> - <span
+                th:text="${experience.companyName}"></span>
+            <br/>
             <span th:text="${experience.fromDate}"></span> to <span th:text="${experience.toDate}"></span>
             <p th:text="${experience.description}"></p>
         </li>
@@ -64,7 +65,7 @@
     <ul>
         <li th:each="education : ${candidateCv.candidateEducationStages}">
             <strong th:text="${education.degree}"></strong> - <span th:text="${education.institution}"></span>
-            <br />
+            <br/>
             <span th:text="${education.fromDate}"></span>
         </li>
     </ul>
@@ -76,7 +77,7 @@
     <ul>
         <li th:each="course : ${candidateCv.candidateCourses}">
             <strong th:text="${course.courseTitle}"></strong> - <span th:text="${course.description}"></span>
-            <br />
+            <br/>
             <span th:text="${course.fromDate}"></span>
         </li>
     </ul>
@@ -92,7 +93,6 @@
 <form action="/CodeBridge/candidate-portal/generate-pdf" method="get">
     <button type="submit" class="btn">Generate CV as PDF</button>
 </form>
-
 
 
 </body>

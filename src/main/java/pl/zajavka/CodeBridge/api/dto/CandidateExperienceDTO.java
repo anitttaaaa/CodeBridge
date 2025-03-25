@@ -19,7 +19,9 @@ public class CandidateExperienceDTO {
                 ", description='" + description + '\'' +
                 ", fromDate=" + fromDate +
                 ", toDate=" + toDate;
-                };
+    }
+
+    ;
 
 
     public CandidateExperienceDTO(

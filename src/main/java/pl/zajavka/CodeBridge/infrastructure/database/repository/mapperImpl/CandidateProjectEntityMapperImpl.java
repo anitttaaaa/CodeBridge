@@ -1,6 +1,5 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository.mapperImpl;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.stereotype.Component;
 import pl.zajavka.CodeBridge.domain.CandidateProject;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateProjectEntity;

@@ -133,7 +133,9 @@
                         <!-- Sprawdzenie, czy status kandydata jest pusty -->
                         <span th:if="${candidate.status == null}">Status: No information</span>
                         <span th:if="${candidate.status != null}" th:text="${candidate.status}"></span>
-                        <button type="button" class="edit-status add-job-offer-button btn btn-primary mt-3 mt-md-0 ms-md-3" data-toggle="modal"
+                        <button type="button"
+                                class="edit-status add-job-offer-button btn btn-primary mt-3 mt-md-0 ms-md-3"
+                                data-toggle="modal"
                                 data-target="#editStatusModal">
                             <i class="fas fa-pencil-alt"></i> Edit Status
                         </button>
@@ -450,7 +452,8 @@
                         <!-- Opis -->
                         <div class="mt-3">
                             <div class="experience-info">Description:</div>  <!-- Etykieta Description -->
-                            <div class="experience-info-value description" th:text="${experience.description}"></div> <!-- Wartość description -->
+                            <div class="experience-info-value description" th:text="${experience.description}"></div>
+                            <!-- Wartość description -->
                         </div>
                     </div>
                 </div>

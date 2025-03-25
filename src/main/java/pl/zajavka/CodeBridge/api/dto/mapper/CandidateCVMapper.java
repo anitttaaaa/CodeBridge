@@ -1,10 +1,9 @@
 package pl.zajavka.CodeBridge.api.dto.mapper;
 
 import org.springframework.stereotype.Component;
-import pl.zajavka.CodeBridge.api.dto.*;
-import pl.zajavka.CodeBridge.domain.*;
+import pl.zajavka.CodeBridge.api.dto.CandidateCVDTO;
+import pl.zajavka.CodeBridge.domain.Candidate;
 
-import java.util.List;
 @Component
 public interface CandidateCVMapper {
 

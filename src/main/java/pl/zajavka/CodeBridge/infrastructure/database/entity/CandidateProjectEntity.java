@@ -35,7 +35,8 @@ public class CandidateProjectEntity {
     @Column(name = "candidate_id")
     private Integer candidateId;
 
-    public CandidateProjectEntity() {}
+    public CandidateProjectEntity() {
+    }
 
     public CandidateProjectEntity(Integer candidateProjectId, String projectTitle, String technologies, String description,
                                   LocalDate fromDate, LocalDate toDate, String projectLink, Integer candidateId) {

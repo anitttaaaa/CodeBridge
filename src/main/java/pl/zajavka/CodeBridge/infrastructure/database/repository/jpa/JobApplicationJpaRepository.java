@@ -13,15 +13,16 @@ import java.util.List;
 public interface JobApplicationJpaRepository extends JpaRepository<JobApplicationEntity, Integer> {
 
 
-
     @Query("SELECT ja FROM JobApplicationEntity ja WHERE ja.candidate.candidateId = :candidateId")
     List<JobApplicationEntity> findApplicationsByCandidateId(@Param("candidateId") Integer candidateId);
+
     @Query("SELECT ja FROM JobApplicationEntity ja WHERE ja.employer.employerId = :employerId")
     List<JobApplicationEntity> findJobApplicationsByEmployerId(Integer employerId);
 
 
     @Query("SELECT ja FROM ApplicationsHistoryEntity ja WHERE ja.employer.employerId = :employerId")
     List<ApplicationsHistoryEntity> findHistoryApplicationsByEmployerId(Integer employerId);
+
     @Query("SELECT ja FROM ApplicationsHistoryEntity ja WHERE ja.candidate.candidateId = :candidateId")
     List<ApplicationsHistoryEntity> findHistoryApplicationsByCandidateId(Integer candidateId);
 }

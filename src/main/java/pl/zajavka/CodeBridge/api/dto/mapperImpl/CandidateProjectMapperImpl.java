@@ -18,7 +18,7 @@ public class CandidateProjectMapperImpl implements CandidateProjectMapper {
                 candidateProject.getFromDate(),
                 candidateProject.getToDate(),
                 candidateProject.getProjectLink()
-                );
+        );
     }
 
     @Override

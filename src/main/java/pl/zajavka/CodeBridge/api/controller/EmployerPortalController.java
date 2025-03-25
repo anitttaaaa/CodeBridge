@@ -5,21 +5,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import pl.zajavka.CodeBridge.api.dto.*;
-import pl.zajavka.CodeBridge.api.dto.mapper.EmployerMapper;
-import pl.zajavka.CodeBridge.api.dto.mapper.JobOfferMapper;
-import pl.zajavka.CodeBridge.api.enums.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import pl.zajavka.CodeBridge.api.dto.CandidateDTO;
+import pl.zajavka.CodeBridge.api.dto.EmployerDTO;
+import pl.zajavka.CodeBridge.api.dto.JobOfferDTO;
+import pl.zajavka.CodeBridge.api.enums.SkillsEnum;
+import pl.zajavka.CodeBridge.api.enums.StatusEnum;
+import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 import pl.zajavka.CodeBridge.business.CandidateService;
 import pl.zajavka.CodeBridge.business.EmployerService;
 import pl.zajavka.CodeBridge.business.JobOfferService;
-import pl.zajavka.CodeBridge.domain.Candidate;
-import pl.zajavka.CodeBridge.domain.Employer;
-import pl.zajavka.CodeBridge.domain.JobOffer;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Controller

@@ -6,7 +6,6 @@ import org.hibernate.validator.constraints.Length;
 import java.util.Set;
 
 
-
 @Entity
 @Table(name = "code_bridge_user")
 public class UserEntity {

@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface CandidateDAO {
 
     Optional<Candidate> findCandidateByEmail(String email);
+
     void updateCandidate(Candidate candidate);
 
     List<Candidate> findAll();

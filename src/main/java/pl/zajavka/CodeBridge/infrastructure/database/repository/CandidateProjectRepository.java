@@ -1,9 +1,7 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.CodeBridge.business.dao.CandidateProjectDAO;
-import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.CandidateProject;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateProjectEntity;
 import pl.zajavka.CodeBridge.infrastructure.database.repository.jpa.CandidateProjectJpaRepository;

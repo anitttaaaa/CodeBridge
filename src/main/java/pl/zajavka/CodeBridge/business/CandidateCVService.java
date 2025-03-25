@@ -59,6 +59,7 @@ public class CandidateCVService {
         }
         return cvDetails;
     }
+
     public void generateCandidateCVPdf(HttpServletResponse response) throws IOException {
         Candidate candidate = candidateService.findLoggedInCandidate();
         CandidateCVDTO cvDetails = candidateCVMapper.mapToDto(candidate);

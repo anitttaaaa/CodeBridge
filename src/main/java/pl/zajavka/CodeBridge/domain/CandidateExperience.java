@@ -34,7 +34,6 @@ public class CandidateExperience {
         private Integer candidateId;
 
 
-
         public Builder candidateExperienceId(Integer candidateExperienceId) {
             this.candidateExperienceId = candidateExperienceId;
             return this;

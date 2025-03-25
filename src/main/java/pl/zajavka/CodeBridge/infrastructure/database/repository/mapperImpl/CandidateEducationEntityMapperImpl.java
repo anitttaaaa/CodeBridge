@@ -22,6 +22,7 @@ public class CandidateEducationEntityMapperImpl implements CandidateEducationEnt
                 .candidateId(candidateEducationEntity.getCandidateId())
                 .build();
     }
+
     @Override
     public CandidateEducationEntity mapToEntity(CandidateEducation candidateEducation, Integer candidateId) {
 

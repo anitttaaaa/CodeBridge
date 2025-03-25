@@ -1,8 +1,5 @@
 package pl.zajavka.CodeBridge.domain;
 
-import pl.zajavka.CodeBridge.infrastructure.database.entity.EmployerEntity;
-import pl.zajavka.CodeBridge.infrastructure.database.entity.JobOfferEntity;
-
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -80,8 +77,6 @@ public class Employer {
     public Set<JobApplication> getJobApplications() {
         return jobApplications;
     }
-
-
 
 
     public static class EmployerBuilder {

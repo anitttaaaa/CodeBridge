@@ -45,11 +45,12 @@ public class JobOfferRepository implements JobOfferDAO {
     @Override
     public Optional<JobOffer> findById(Integer jobOfferId) {
         return jobOfferJpaRepository.findById(jobOfferId)
-                .map(jobOfferEntityMapper::mapToDomain);    }
+                .map(jobOfferEntityMapper::mapToDomain);
+    }
 
     @Override
     public List<JobOffer> findJobOffersByEmployerId(Integer employerId) {
-        List<JobOfferEntity> jobOfferEntities= jobOfferJpaRepository.findJobOffersByEmployerId(employerId);
+        List<JobOfferEntity> jobOfferEntities = jobOfferJpaRepository.findJobOffersByEmployerId(employerId);
 
         return jobOfferEntities.stream()
                 .map(jobOfferEntityMapper::mapToDomain)

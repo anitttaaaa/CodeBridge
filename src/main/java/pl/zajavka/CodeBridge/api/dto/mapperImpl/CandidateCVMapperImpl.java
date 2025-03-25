@@ -7,7 +7,6 @@ import pl.zajavka.CodeBridge.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class CandidateCVMapperImpl implements CandidateCVMapper {

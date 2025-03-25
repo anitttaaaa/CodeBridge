@@ -23,7 +23,8 @@ public class CandidateCourseDTO {
                 ", description='" + description + '\'' +
                 ", technologies='" + technologies + '\'' +
                 ", fromDate=" + fromDate +
-                ", toDate=" + toDate; }
+                ", toDate=" + toDate;
+    }
 
 
     public CandidateCourseDTO(Integer candidateCourseId, String institution, String courseTitle, String description,

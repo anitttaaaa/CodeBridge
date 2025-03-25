@@ -54,6 +54,7 @@ public class CandidateEducationDTO {
                 ", degree='" + degree + '\'' +
                 ", fieldOfStudy='" + fieldOfStudy + '\'' +
                 ", fromDate=" + fromDate +
-                ", toDate=" + toDate;}
+                ", toDate=" + toDate;
+    }
 
 }

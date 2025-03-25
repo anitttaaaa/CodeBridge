@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateEntity;
 
 import java.util.Optional;
+
 @Repository
 public interface CandidateJpaRepository extends JpaRepository<CandidateEntity, Integer> {
 

@@ -1,6 +1,6 @@
 package pl.zajavka.CodeBridge.domain.exception;
 
-public class NotFoundException extends RuntimeException{
+public class NotFoundException extends RuntimeException {
 
 
     public NotFoundException(final String message) {

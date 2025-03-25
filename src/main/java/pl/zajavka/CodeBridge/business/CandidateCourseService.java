@@ -18,7 +18,7 @@ public class CandidateCourseService {
     private final CandidateCourseDAO candidateCourseDAO;
     private final CandidateCourseMapper candidateCourseMapper;
 
-@Autowired
+    @Autowired
     public CandidateCourseService(CandidateService candidateService,
                                   CandidateCourseDAO candidateCourseDAO,
                                   CandidateCourseMapper candidateCourseMapper) {
@@ -46,7 +46,7 @@ public class CandidateCourseService {
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
         Integer candidateId = candidate.getCandidateId();
 
-      CandidateCourse candidateCourse = candidateCourseMapper.mapToDomain(candidateCourseDTO);
+        CandidateCourse candidateCourse = candidateCourseMapper.mapToDomain(candidateCourseDTO);
 
         candidateCourseDAO.updateCandidateCourse(candidateCourse, candidateId);
     }

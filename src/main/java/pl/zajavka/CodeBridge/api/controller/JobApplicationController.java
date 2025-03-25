@@ -11,10 +11,7 @@ import pl.zajavka.CodeBridge.api.dto.ApplicationsHistoryDTO;
 import pl.zajavka.CodeBridge.api.dto.JobApplicationDTO;
 import pl.zajavka.CodeBridge.business.JobApplicationService;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Controller

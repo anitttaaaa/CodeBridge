@@ -1,5 +1,6 @@
 package pl.zajavka.CodeBridge.business;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -65,30 +66,30 @@ public class CandidateService {
     public void updateCandidateSkills(Authentication authentication, List<SkillsEnum> candidateSkills) {
 
         Candidate candidate = findCandidateByEmail(authentication.getName());
+        Integer userId = candidate.getUserId();
         Integer candidateId = candidate.getCandidateId();
-        CandidateDTO candidateDTO = findCandidateByCandidateId(candidateId);
 
-        CandidateDTO candidateDTO1 = CandidateDTO.builder()
+        Candidate candidateToUpdate = Candidate.builder()
                 .candidateId(candidateId)
-                .name(candidateDTO.getName())
-                .surname(candidateDTO.getSurname())
-                .email(candidateDTO.getEmail())
-                .phone(candidateDTO.getPhone())
-                .status(candidateDTO.getStatus())
-                .linkedIn(candidateDTO.getLinkedIn())
-                .gitHub(candidateDTO.getGitHub())
-                .techSpecialization(candidateDTO.getTechSpecialization())
-                .aboutMe(candidateDTO.getAboutMe())
-                .hobby(candidateDTO.getHobby())
-                .profilePhoto(candidateDTO.getProfilePhoto())
+                .name(candidate.getName())
+                .surname(candidate.getSurname())
+                .email(candidate.getEmail())
+                .phone(candidate.getPhone())
+                .userId(userId)
+                .status(candidate.getStatus())
+                .linkedIn(candidate.getLinkedIn())
+                .gitHub(candidate.getGitHub())
+                .techSpecialization(candidate.getTechSpecialization())
+                .aboutMe(candidate.getAboutMe())
+                .hobby(candidate.getHobby())
+                .profilePhoto(candidate.getProfilePhoto())
                 .candidateSkills(candidateSkills)
-                .candidateExperiences(candidateDTO.getCandidateExperiences())
-                .candidateProjects(candidateDTO.getCandidateProjects())
-                .candidateEducationStages(candidateDTO.getCandidateEducationStages())
-                .candidateCourses(candidateDTO.getCandidateCourses())
+                .candidateExperiences(candidate.getCandidateExperiences())
+                .candidateProjects(candidate.getCandidateProjects())
+                .candidateEducationStages(candidate.getCandidateEducationStages())
+                .candidateCourses(candidate.getCandidateCourses())
                 .build();
 
-        Candidate candidateToUpdate = candidateMapper.mapToDomain(candidateDTO1);
         candidateDAO.updateCandidate(candidateToUpdate);
 
     }
@@ -96,61 +97,61 @@ public class CandidateService {
     public void updateCandidateTechSpecialization(Authentication authentication, TechSpecializationsEnum techSpecialization) {
 
         Candidate candidate = findCandidateByEmail(authentication.getName());
+        Integer userId = candidate.getUserId();
         Integer candidateId = candidate.getCandidateId();
-        CandidateDTO candidateDTO = findCandidateByCandidateId(candidateId);
 
 
-        CandidateDTO candidateDTO1 = CandidateDTO.builder()
+        Candidate candidateToUpdate = Candidate.builder()
                 .candidateId(candidateId)
-                .name(candidateDTO.getName())
-                .surname(candidateDTO.getSurname())
-                .email(candidateDTO.getEmail())
-                .phone(candidateDTO.getPhone())
-                .status(candidateDTO.getStatus())
-                .linkedIn(candidateDTO.getLinkedIn())
-                .gitHub(candidateDTO.getGitHub())
+                .name(candidate.getName())
+                .surname(candidate.getSurname())
+                .email(candidate.getEmail())
+                .phone(candidate.getPhone())
+                .userId(userId)
+                .status(candidate.getStatus())
+                .linkedIn(candidate.getLinkedIn())
+                .gitHub(candidate.getGitHub())
                 .techSpecialization(techSpecialization)
-                .aboutMe(candidateDTO.getAboutMe())
-                .hobby(candidateDTO.getHobby())
-                .profilePhoto(candidateDTO.getProfilePhoto())
-                .candidateSkills(candidateDTO.getCandidateSkills())
-                .candidateExperiences(candidateDTO.getCandidateExperiences())
-                .candidateProjects(candidateDTO.getCandidateProjects())
-                .candidateEducationStages(candidateDTO.getCandidateEducationStages())
-                .candidateCourses(candidateDTO.getCandidateCourses())
+                .aboutMe(candidate.getAboutMe())
+                .hobby(candidate.getHobby())
+                .profilePhoto(candidate.getProfilePhoto())
+                .candidateSkills(candidate.getCandidateSkills())
+                .candidateExperiences(candidate.getCandidateExperiences())
+                .candidateProjects(candidate.getCandidateProjects())
+                .candidateEducationStages(candidate.getCandidateEducationStages())
+                .candidateCourses(candidate.getCandidateCourses())
                 .build();
 
-        Candidate candidateToUpdate = candidateMapper.mapToDomain(candidateDTO1);
         candidateDAO.updateCandidate(candidateToUpdate);
     }
 
     public void updateCandidateStatus(Authentication authentication, StatusEnum status) {
 
         Candidate candidate = findCandidateByEmail(authentication.getName());
+        Integer userId = candidate.getUserId();
         Integer candidateId = candidate.getCandidateId();
-        CandidateDTO candidateDTO = findCandidateByCandidateId(candidateId);
 
-        CandidateDTO candidateDTO1 = CandidateDTO.builder()
+        Candidate candidateToUpdate = Candidate.builder()
                 .candidateId(candidateId)
-                .name(candidateDTO.getName())
-                .surname(candidateDTO.getSurname())
-                .email(candidateDTO.getEmail())
-                .phone(candidateDTO.getPhone())
+                .name(candidate.getName())
+                .surname(candidate.getSurname())
+                .email(candidate.getEmail())
+                .phone(candidate.getPhone())
                 .status(status)
-                .linkedIn(candidateDTO.getLinkedIn())
-                .gitHub(candidateDTO.getGitHub())
-                .techSpecialization(candidateDTO.getTechSpecialization())
-                .aboutMe(candidateDTO.getAboutMe())
-                .hobby(candidateDTO.getHobby())
-                .profilePhoto(candidateDTO.getProfilePhoto())
-                .candidateSkills(candidateDTO.getCandidateSkills())
-                .candidateExperiences(candidateDTO.getCandidateExperiences())
-                .candidateProjects(candidateDTO.getCandidateProjects())
-                .candidateEducationStages(candidateDTO.getCandidateEducationStages())
-                .candidateCourses(candidateDTO.getCandidateCourses())
+                .userId(userId)
+                .linkedIn(candidate.getLinkedIn())
+                .gitHub(candidate.getGitHub())
+                .techSpecialization(candidate.getTechSpecialization())
+                .aboutMe(candidate.getAboutMe())
+                .hobby(candidate.getHobby())
+                .candidateSkills(candidate.getCandidateSkills())
+                .candidateCourses(candidate.getCandidateCourses())
+                .candidateEducationStages(candidate.getCandidateEducationStages())
+                .candidateExperiences(candidate.getCandidateExperiences())
+                .candidateProjects(candidate.getCandidateProjects())
+                .profilePhoto(candidate.getProfilePhoto())
                 .build();
 
-        Candidate candidateToUpdate = candidateMapper.mapToDomain(candidateDTO1);
         candidateDAO.updateCandidate(candidateToUpdate);
 
     }
@@ -164,33 +165,33 @@ public class CandidateService {
     public void updateCandidateProfilePhoto(Authentication authentication, MultipartFile profilePhoto) throws IOException {
 
         Candidate candidate = findCandidateByEmail(authentication.getName());
+        Integer userId = candidate.getUserId();
         Integer candidateId = candidate.getCandidateId();
-        CandidateDTO candidateDTO = findCandidateByCandidateId(candidateId);
 
         if (!profilePhoto.isEmpty()) {
             byte[] profilePhotoData = profilePhoto.getBytes();
 
-            CandidateDTO candidateDTO1 = CandidateDTO.builder()
-                    .candidateId(candidateDTO.getCandidateId())
-                    .name(candidateDTO.getName())
-                    .surname(candidateDTO.getSurname())
-                    .email(candidateDTO.getEmail())
-                    .phone(candidateDTO.getPhone())
-                    .status(candidateDTO.getStatus())
-                    .linkedIn(candidateDTO.getLinkedIn())
-                    .gitHub(candidateDTO.getGitHub())
-                    .techSpecialization(candidateDTO.getTechSpecialization())
-                    .aboutMe(candidateDTO.getAboutMe())
-                    .hobby(candidateDTO.getHobby())
+            Candidate candidateToUpdate = Candidate.builder()
+                    .candidateId(candidateId)
+                    .name(candidate.getName())
+                    .surname(candidate.getSurname())
+                    .email(candidate.getEmail())
+                    .phone(candidate.getPhone())
+                    .userId(userId)
+                    .status(candidate.getStatus())
+                    .linkedIn(candidate.getLinkedIn())
+                    .gitHub(candidate.getGitHub())
+                    .techSpecialization(candidate.getTechSpecialization())
+                    .aboutMe(candidate.getAboutMe())
+                    .hobby(candidate.getHobby())
                     .profilePhoto(profilePhotoData)
-                    .candidateSkills(candidateDTO.getCandidateSkills())
-                    .candidateExperiences(candidateDTO.getCandidateExperiences())
-                    .candidateProjects(candidateDTO.getCandidateProjects())
-                    .candidateEducationStages(candidateDTO.getCandidateEducationStages())
-                    .candidateCourses(candidateDTO.getCandidateCourses())
+                    .candidateSkills(candidate.getCandidateSkills())
+                    .candidateExperiences(candidate.getCandidateExperiences())
+                    .candidateProjects(candidate.getCandidateProjects())
+                    .candidateEducationStages(candidate.getCandidateEducationStages())
+                    .candidateCourses(candidate.getCandidateCourses())
                     .build();
 
-            Candidate candidateToUpdate = candidateMapper.mapToDomain(candidateDTO1);
             candidateDAO.updateCandidate(candidateToUpdate);
         }
     }
@@ -199,98 +200,98 @@ public class CandidateService {
                                          String surname, String phone, String linkedIn, String gitHub) {
 
         Candidate candidate = findCandidateByEmail(authentication.getName());
+        Integer userId = candidate.getUserId();
         Integer candidateId = candidate.getCandidateId();
-        CandidateDTO candidateDTO = findCandidateByCandidateId(candidateId);
 
-        CandidateDTO candidateDTO1 = CandidateDTO.builder()
-                .candidateId(candidateDTO.getCandidateId())
+        Candidate candidateToUpdate = Candidate.builder()
+                .candidateId(candidateId)
                 .name(name)
                 .surname(surname)
-                .email(candidateDTO.getEmail())
+                .email(candidate.getEmail())
                 .phone(phone)
-                .status(candidateDTO.getStatus())
+                .userId(userId)
+                .status(candidate.getStatus())
                 .linkedIn(linkedIn)
                 .gitHub(gitHub)
-                .techSpecialization(candidateDTO.getTechSpecialization())
-                .aboutMe(candidateDTO.getAboutMe())
-                .hobby(candidateDTO.getHobby())
-                .profilePhoto(candidateDTO.getProfilePhoto())
-                .candidateSkills(candidateDTO.getCandidateSkills())
-                .candidateExperiences(candidateDTO.getCandidateExperiences())
-                .candidateProjects(candidateDTO.getCandidateProjects())
-                .candidateEducationStages(candidateDTO.getCandidateEducationStages())
-                .candidateCourses(candidateDTO.getCandidateCourses())
+                .techSpecialization(candidate.getTechSpecialization())
+                .aboutMe(candidate.getAboutMe())
+                .hobby(candidate.getHobby())
+                .profilePhoto(candidate.getProfilePhoto())
+                .candidateSkills(candidate.getCandidateSkills())
+                .candidateExperiences(candidate.getCandidateExperiences())
+                .candidateProjects(candidate.getCandidateProjects())
+                .candidateEducationStages(candidate.getCandidateEducationStages())
+                .candidateCourses(candidate.getCandidateCourses())
                 .build();
 
-        Candidate candidateToUpdate = candidateMapper.mapToDomain(candidateDTO1);
         candidateDAO.updateCandidate(candidateToUpdate);
     }
 
     public void updateCandidateHobby(Authentication authentication, String hobby) {
 
         Candidate candidate = findCandidateByEmail(authentication.getName());
+        Integer userId = candidate.getUserId();
         Integer candidateId = candidate.getCandidateId();
-        CandidateDTO candidateDTO = findCandidateByCandidateId(candidateId);
 
         if (hobby == null || hobby.trim().isEmpty()) {
             hobby = null;
         }
 
-        CandidateDTO candidateDTO1 = CandidateDTO.builder()
-                .candidateId(candidateDTO.getCandidateId())
-                .name(candidateDTO.getName())
-                .surname(candidateDTO.getSurname())
-                .email(candidateDTO.getEmail())
-                .phone(candidateDTO.getPhone())
-                .status(candidateDTO.getStatus())
-                .linkedIn(candidateDTO.getLinkedIn())
-                .gitHub(candidateDTO.getGitHub())
-                .techSpecialization(candidateDTO.getTechSpecialization())
-                .aboutMe(candidateDTO.getAboutMe())
+        Candidate candidateToUpdate = Candidate.builder()
+                .candidateId(candidateId)
+                .name(candidate.getName())
+                .surname(candidate.getSurname())
+                .email(candidate.getEmail())
+                .phone(candidate.getPhone())
+                .userId(userId)
+                .status(candidate.getStatus())
+                .linkedIn(candidate.getLinkedIn())
+                .gitHub(candidate.getGitHub())
+                .techSpecialization(candidate.getTechSpecialization())
+                .aboutMe(candidate.getAboutMe())
                 .hobby(hobby)
-                .profilePhoto(candidateDTO.getProfilePhoto())
-                .candidateSkills(candidateDTO.getCandidateSkills())
-                .candidateExperiences(candidateDTO.getCandidateExperiences())
-                .candidateProjects(candidateDTO.getCandidateProjects())
-                .candidateEducationStages(candidateDTO.getCandidateEducationStages())
-                .candidateCourses(candidateDTO.getCandidateCourses())
+                .profilePhoto(candidate.getProfilePhoto())
+                .candidateSkills(candidate.getCandidateSkills())
+                .candidateExperiences(candidate.getCandidateExperiences())
+                .candidateProjects(candidate.getCandidateProjects())
+                .candidateEducationStages(candidate.getCandidateEducationStages())
+                .candidateCourses(candidate.getCandidateCourses())
                 .build();
 
-        Candidate candidateToUpdate = candidateMapper.mapToDomain(candidateDTO1);
         candidateDAO.updateCandidate(candidateToUpdate);
     }
 
     public void updateCandidateAboutMe(Authentication authentication, String aboutMe) {
 
         Candidate candidate = findCandidateByEmail(authentication.getName());
+        Integer userId = candidate.getUserId();
         Integer candidateId = candidate.getCandidateId();
-        CandidateDTO candidateDTO = findCandidateByCandidateId(candidateId);
 
         if (aboutMe == null || aboutMe.trim().isEmpty()) {
             aboutMe = null;
         }
 
-        CandidateDTO candidateDTO1 = CandidateDTO.builder()
-                .candidateId(candidateDTO.getCandidateId())
-                .name(candidateDTO.getName())
-                .surname(candidateDTO.getSurname())
-                .email(candidateDTO.getEmail())
-                .phone(candidateDTO.getPhone())
-                .status(candidateDTO.getStatus())
-                .linkedIn(candidateDTO.getLinkedIn())
-                .gitHub(candidateDTO.getGitHub())
-                .techSpecialization(candidateDTO.getTechSpecialization())
+        Candidate candidateToUpdate = Candidate.builder()
+                .candidateId(candidateId)
+                .name(candidate.getName())
+                .surname(candidate.getSurname())
+                .email(candidate.getEmail())
+                .phone(candidate.getPhone())
+                .userId(userId)
+                .status(candidate.getStatus())
+                .linkedIn(candidate.getLinkedIn())
+                .gitHub(candidate.getGitHub())
+                .techSpecialization(candidate.getTechSpecialization())
                 .aboutMe(aboutMe)
-                .hobby(candidateDTO.getHobby())
-                .profilePhoto(candidateDTO.getProfilePhoto())
-                .candidateSkills(candidateDTO.getCandidateSkills())
-                .candidateExperiences(candidateDTO.getCandidateExperiences())
-                .candidateProjects(candidateDTO.getCandidateProjects())
-                .candidateEducationStages(candidateDTO.getCandidateEducationStages())
-                .candidateCourses(candidateDTO.getCandidateCourses())
+                .hobby(candidate.getHobby())
+                .profilePhoto(candidate.getProfilePhoto())
+                .candidateSkills(candidate.getCandidateSkills())
+                .candidateExperiences(candidate.getCandidateExperiences())
+                .candidateProjects(candidate.getCandidateProjects())
+                .candidateEducationStages(candidate.getCandidateEducationStages())
+                .candidateCourses(candidate.getCandidateCourses())
                 .build();
 
-        Candidate candidateToUpdate = candidateMapper.mapToDomain(candidateDTO1);
         candidateDAO.updateCandidate(candidateToUpdate);
     }
 
@@ -298,30 +299,30 @@ public class CandidateService {
 
         Candidate candidate = findCandidateByEmail(authentication.getName());
         Integer candidateId = candidate.getCandidateId();
-        CandidateDTO candidateDTO = findCandidateByCandidateId(candidateId);
+        Integer userId = candidate.getUserId();
 
-        if (!Objects.isNull(candidateDTO.getProfilePhoto())) {
-            CandidateDTO candidateDTO1 = CandidateDTO.builder()
-                    .candidateId(candidateDTO.getCandidateId())
-                    .name(candidateDTO.getName())
-                    .surname(candidateDTO.getSurname())
-                    .email(candidateDTO.getEmail())
-                    .phone(candidateDTO.getPhone())
-                    .status(candidateDTO.getStatus())
-                    .linkedIn(candidateDTO.getLinkedIn())
-                    .gitHub(candidateDTO.getGitHub())
-                    .techSpecialization(candidateDTO.getTechSpecialization())
-                    .aboutMe(candidateDTO.getAboutMe())
-                    .hobby(candidateDTO.getHobby())
+        if (!Objects.isNull(candidate.getProfilePhoto())) {
+            Candidate candidateToUpdate = Candidate.builder()
+                    .candidateId(candidateId)
+                    .name(candidate.getName())
+                    .surname(candidate.getSurname())
+                    .email(candidate.getEmail())
+                    .phone(candidate.getPhone())
+                    .userId(userId)
+                    .status(candidate.getStatus())
+                    .linkedIn(candidate.getLinkedIn())
+                    .gitHub(candidate.getGitHub())
+                    .techSpecialization(candidate.getTechSpecialization())
+                    .aboutMe(candidate.getAboutMe())
+                    .hobby(candidate.getHobby())
                     .profilePhoto(null)
-                    .candidateSkills(candidateDTO.getCandidateSkills())
-                    .candidateExperiences(candidateDTO.getCandidateExperiences())
-                    .candidateProjects(candidateDTO.getCandidateProjects())
-                    .candidateEducationStages(candidateDTO.getCandidateEducationStages())
-                    .candidateCourses(candidateDTO.getCandidateCourses())
+                    .candidateSkills(candidate.getCandidateSkills())
+                    .candidateExperiences(candidate.getCandidateExperiences())
+                    .candidateProjects(candidate.getCandidateProjects())
+                    .candidateEducationStages(candidate.getCandidateEducationStages())
+                    .candidateCourses(candidate.getCandidateCourses())
                     .build();
 
-            Candidate candidateToUpdate = candidateMapper.mapToDomain(candidateDTO1);
             candidateDAO.updateCandidate(candidateToUpdate);
         }
     }

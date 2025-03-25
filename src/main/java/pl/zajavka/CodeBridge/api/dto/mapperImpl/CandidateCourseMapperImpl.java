@@ -22,7 +22,6 @@ public class CandidateCourseMapperImpl implements CandidateCourseMapper {
     }
 
 
-
     @Override
     public CandidateCourse mapToDomain(CandidateCourseDTO candidateCourseDTO) {
         return new CandidateCourse.Builder()

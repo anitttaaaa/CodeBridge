@@ -110,10 +110,12 @@ public class JobOfferEntity {
                 ", niceToHaveSkills=" + niceToHaveSkills +
                 '}';
     }
+
     public static JobOfferEntity.Builder builder() {
 
         return new JobOfferEntity.Builder();
     }
+
     public static class Builder {
         private Integer jobOfferId;
         private String jobOfferTitle;

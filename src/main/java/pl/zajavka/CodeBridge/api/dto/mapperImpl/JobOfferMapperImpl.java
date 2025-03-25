@@ -3,8 +3,8 @@ package pl.zajavka.CodeBridge.api.dto.mapperImpl;
 import org.springframework.stereotype.Component;
 import pl.zajavka.CodeBridge.api.dto.JobOfferDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.JobOfferMapper;
-import pl.zajavka.CodeBridge.domain.JobOffer;
 import pl.zajavka.CodeBridge.domain.Employer;
+import pl.zajavka.CodeBridge.domain.JobOffer;
 
 @Component
 public class JobOfferMapperImpl implements JobOfferMapper {

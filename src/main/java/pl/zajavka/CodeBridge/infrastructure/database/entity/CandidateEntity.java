@@ -60,7 +60,7 @@ public class CandidateEntity {
     @Column(name = "skill_name")
     private List<SkillsEnum> candidateSkills;
 
-    @Column(name = "profile_photo", columnDefinition="bytea")
+    @Column(name = "profile_photo", columnDefinition = "bytea")
     private byte[] profilePhoto;
 
     @OneToMany(mappedBy = "candidateId")

@@ -95,7 +95,6 @@ public class CandidateMapperImpl implements CandidateMapper {
     }
 
 
-
     @Override
     public Candidate mapToDomain(CandidateDTO candidateDTO) {
         return new Candidate.Builder()

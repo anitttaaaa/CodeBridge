@@ -1,6 +1,5 @@
 package pl.zajavka.CodeBridge.api.dto;
 
-import pl.zajavka.CodeBridge.api.enums.SalaryEnum;
 import pl.zajavka.CodeBridge.api.enums.SkillsEnum;
 import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 

@@ -1,6 +1,5 @@
 package pl.zajavka.CodeBridge.infrastructure.database.repository.mapper;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
 import pl.zajavka.CodeBridge.domain.CandidateExperience;
 import pl.zajavka.CodeBridge.infrastructure.database.entity.CandidateExperienceEntity;
 

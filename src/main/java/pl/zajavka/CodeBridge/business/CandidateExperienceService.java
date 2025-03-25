@@ -14,7 +14,7 @@ import java.nio.file.AccessDeniedException;
 
 @Service
 public class CandidateExperienceService {
-@Autowired
+    @Autowired
     public CandidateExperienceService(CandidateService candidateService,
                                       CandidateExperienceDAO candidateExperienceDAO,
                                       CandidateExperienceMapper candidateExperienceMapper) {
@@ -26,8 +26,6 @@ public class CandidateExperienceService {
     private final CandidateService candidateService;
     private final CandidateExperienceDAO candidateExperienceDAO;
     private final CandidateExperienceMapper candidateExperienceMapper;
-
-
 
 
     @Transactional
@@ -52,7 +50,7 @@ public class CandidateExperienceService {
 
 
         CandidateExperience candidateExperience = candidateExperienceMapper.mapToDomain(candidateExperienceDTO);
-        candidateExperienceDAO.updateCandidateExperience(candidateExperience,candidateId);
+        candidateExperienceDAO.updateCandidateExperience(candidateExperience, candidateId);
     }
 
 

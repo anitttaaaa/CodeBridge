@@ -163,6 +163,10 @@ public class Candidate {
         public Candidate build() {
             return new Candidate(this);
         }
+
+    }
+    public static Builder builder() {
+        return new Builder();
     }
 
 

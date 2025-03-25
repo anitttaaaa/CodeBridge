@@ -19,7 +19,7 @@ public class CandidateEducationService {
     private final CandidateEducationDAO candidateEducationDAO;
     private final CandidateEducationMapper candidateEducationMapper;
 
-@Autowired
+    @Autowired
     public CandidateEducationService(CandidateService candidateService,
                                      CandidateEducationDAO candidateEducationDAO,
                                      CandidateEducationMapper candidateEducationMapper) {

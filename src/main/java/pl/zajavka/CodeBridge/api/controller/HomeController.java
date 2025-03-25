@@ -7,11 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.zajavka.CodeBridge.api.dto.JobOfferDTO;
 import pl.zajavka.CodeBridge.api.enums.*;
 import pl.zajavka.CodeBridge.business.JobOfferService;
-import pl.zajavka.CodeBridge.domain.JobOffer;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
@@ -36,7 +33,6 @@ public class HomeController {
     }
 
 
-
     @GetMapping(GET_FILTERED_JOB_OFFERS)
     public String getFilteredJobOffers(
             @RequestParam(required = false) TechSpecializationsEnum techSpecialization,
@@ -53,7 +49,6 @@ public class HomeController {
 
         return "home";
     }
-
 
 
 }
