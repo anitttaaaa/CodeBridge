@@ -68,13 +68,13 @@ public class CandidateCVService {
         generatePdfFromHtml(htmlContent, response);
     }
 
-    private String generateHtmlContent(CandidateCVDTO cvDetails) {
+    public String generateHtmlContent(CandidateCVDTO cvDetails) {
         Context context = new Context();
         context.setVariable("candidateCv", cvDetails);
         return thymeleafViewResolver.getTemplateEngine().process("cv", context);
     }
 
-    private void generatePdfFromHtml(String htmlContent, HttpServletResponse response) throws IOException {
+    public void generatePdfFromHtml(String htmlContent, HttpServletResponse response) throws IOException {
         ITextRenderer renderer = new ITextRenderer();
         renderer.setDocumentFromString(htmlContent);
         renderer.layout();
