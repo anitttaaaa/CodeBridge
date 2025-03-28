@@ -14,6 +14,19 @@ public class CandidateExperience {
     private final LocalDate toDate;
     private final Integer candidateId;
 
+    public CandidateExperience(Integer candidateExperienceId,
+                               String companyName, String candidatePosition,
+                               String description, LocalDate fromDate,
+                               LocalDate toDate, Integer candidateId) {
+        this.candidateExperienceId = candidateExperienceId;
+        this.companyName = companyName;
+        this.candidatePosition = candidatePosition;
+        this.description = description;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.candidateId = candidateId;
+    }
+
     private CandidateExperience(Builder builder) {
         this.candidateExperienceId = builder.candidateExperienceId;
         this.companyName = builder.companyName;

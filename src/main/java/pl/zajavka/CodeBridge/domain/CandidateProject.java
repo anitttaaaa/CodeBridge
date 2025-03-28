@@ -15,6 +15,24 @@ public class CandidateProject {
     private final String projectLink;
     private final Integer candidateId;
 
+    public CandidateProject(Integer candidateProjectId,
+                            String projectTitle,
+                            String technologies,
+                            String description,
+                            LocalDate fromDate,
+                            LocalDate toDate,
+                            String projectLink,
+                            Integer candidateId) {
+        this.candidateProjectId = candidateProjectId;
+        this.projectTitle = projectTitle;
+        this.technologies = technologies;
+        this.description = description;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.projectLink = projectLink;
+        this.candidateId = candidateId;
+    }
+
     private CandidateProject(Builder builder) {
         this.candidateProjectId = builder.candidateProjectId;
         this.projectTitle = builder.projectTitle;

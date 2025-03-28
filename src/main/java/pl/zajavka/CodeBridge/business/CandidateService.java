@@ -54,15 +54,6 @@ public class CandidateService {
     }
 
     @Transactional
-    public CandidateDTO findCandidateByCandidateId(Integer candidateId) {
-
-        Optional<Candidate> candidate = candidateDAO.findById(candidateId);
-
-        return candidate.map(candidateMapper::mapToDto)
-                .orElseThrow(() -> new RuntimeException("Candidate not found for ID: " + candidateId));
-    }
-
-    @Transactional
     public void updateCandidateSkills(Authentication authentication, List<SkillsEnum> candidateSkills) {
 
         Candidate candidate = findCandidateByEmail(authentication.getName());

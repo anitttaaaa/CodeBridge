@@ -42,15 +42,6 @@ public class EmployerService {
     }
 
     @Transactional
-    public Employer findEmployer(Integer userId) {
-        Optional<Employer> employer = employerDAO.findByUserId(userId);
-        if (employer.isEmpty()) {
-            throw new NotFoundException("Could not find employer by user id: [%s]".formatted(userId));
-        }
-        return employer.get();
-    }
-
-    @Transactional
     public void createJobOffer(JobOffer employerAddJobOffer) {
         employerDAO.createJobOffer(employerAddJobOffer);
 

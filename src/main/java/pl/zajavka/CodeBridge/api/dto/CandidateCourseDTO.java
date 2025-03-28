@@ -36,7 +36,6 @@ public class CandidateCourseDTO {
         this.technologies = technologies;
         this.fromDate = fromDate;
         this.toDate = toDate;
-
     }
 
     public Integer getCandidateCourseId() {

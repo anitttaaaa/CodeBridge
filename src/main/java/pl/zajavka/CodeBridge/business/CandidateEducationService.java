@@ -36,6 +36,10 @@ public class CandidateEducationService {
 
         CandidateEducation candidateEducation = candidateEducationMapper.mapToDomain(candidateEducationFromRequest);
 
+        if (candidateEducation == null) {
+            throw new NullPointerException("Mapping CandidateEducationDTO to CandidateEducation failed");
+        }
+
         candidateEducationDAO.createEducation(candidateEducation, candidateId);
 
     }
@@ -46,6 +50,10 @@ public class CandidateEducationService {
         Integer candidateId = candidate.getCandidateId();
 
         CandidateEducation candidateEducation = candidateEducationMapper.mapToDomain(candidateEducationDTO);
+
+        if (candidateEducation == null) {
+            throw new NullPointerException("Mapping CandidateEducationDTO to CandidateEducation failed");
+        }
 
         candidateEducationDAO.updateCandidateEducation(candidateEducation, candidateId);
     }

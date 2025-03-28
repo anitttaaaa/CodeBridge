@@ -29,6 +29,35 @@ public class Candidate {
     private final List<CandidateCourse> candidateCourses;
     private final byte[] profilePhoto;
 
+    public Candidate(Integer candidateId, String name, String surname, String email, String phone,
+                     StatusEnum status, Integer userId, String linkedIn, String gitHub,
+                     TechSpecializationsEnum techSpecialization, String aboutMe,
+                     String hobby, List<SkillsEnum> candidateSkills,
+                     List<CandidateExperience> candidateExperiences,
+                     List<CandidateProject> candidateProjects,
+                     List<CandidateEducation> candidateEducationStages,
+                     List<CandidateCourse> candidateCourses,
+                     byte[] profilePhoto) {
+        this.candidateId = candidateId;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.phone = phone;
+        this.status = status;
+        this.userId = userId;
+        this.linkedIn = linkedIn;
+        this.gitHub = gitHub;
+        this.techSpecialization = techSpecialization;
+        this.aboutMe = aboutMe;
+        this.hobby = hobby;
+        this.candidateSkills = candidateSkills;
+        this.candidateExperiences = candidateExperiences;
+        this.candidateProjects = candidateProjects;
+        this.candidateEducationStages = candidateEducationStages;
+        this.candidateCourses = candidateCourses;
+        this.profilePhoto = profilePhoto;
+    }
+
     private Candidate(Builder builder) {
         this.candidateId = builder.candidateId;
         this.name = builder.name;

@@ -29,13 +29,16 @@ public class CandidateExperienceService {
 
 
     @Transactional
-    public void createExperienceData(CandidateExperienceDTO candidateExperienceFromRequest, Authentication authentication) throws AccessDeniedException {
+    public void createExperienceData(CandidateExperienceDTO candidateExperienceFromRequest, Authentication authentication){
 
         String candidateEmail = authentication.getName();
         Integer candidateId = candidateService.findCandidateByEmail(candidateEmail).getCandidateId();
 
         CandidateExperience candidateExperience = candidateExperienceMapper.mapToDomain(candidateExperienceFromRequest);
 
+        if (candidateExperience == null) {
+            throw new NullPointerException("Mapping CandidateExperienceDTO to CandidateExperience failed");
+        }
 
         candidateExperienceDAO.createExperience(candidateExperience, candidateId);
 
@@ -43,13 +46,22 @@ public class CandidateExperienceService {
 
 
     @Transactional
-    public void updateCandidateExperience(CandidateExperienceDTO candidateExperienceDTO, Authentication authentication) throws AccessDeniedException {
+    public void updateCandidateExperience(CandidateExperienceDTO candidateExperienceDTO, Authentication authentication) {
+
+        if (candidateExperienceDTO == null) {
+            throw new NullPointerException("CandidateExperienceDTO cannot be null");
+        }
 
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
         Integer candidateId = candidate.getCandidateId();
 
 
         CandidateExperience candidateExperience = candidateExperienceMapper.mapToDomain(candidateExperienceDTO);
+
+        if (candidateExperience == null) {
+            throw new NullPointerException("Mapping to CandidateExperience failed");
+        }
+
         candidateExperienceDAO.updateCandidateExperience(candidateExperience, candidateId);
     }
 

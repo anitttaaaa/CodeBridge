@@ -1,5 +1,6 @@
 package pl.zajavka.CodeBridge.api.dto.mapperImpl;
 
+import org.springframework.data.mapping.MappingException;
 import org.springframework.stereotype.Component;
 import pl.zajavka.CodeBridge.api.dto.CandidateCourseDTO;
 import pl.zajavka.CodeBridge.api.dto.mapper.CandidateCourseMapper;
@@ -24,6 +25,7 @@ public class CandidateCourseMapperImpl implements CandidateCourseMapper {
 
     @Override
     public CandidateCourse mapToDomain(CandidateCourseDTO candidateCourseDTO) {
+
         return new CandidateCourse.Builder()
                 .candidateCourseId(candidateCourseDTO.getCandidateCourseId())
                 .institution(candidateCourseDTO.getInstitution())

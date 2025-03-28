@@ -9,8 +9,6 @@ import pl.zajavka.CodeBridge.business.dao.CandidateCourseDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.CandidateCourse;
 
-import java.nio.file.AccessDeniedException;
-
 @Service
 public class CandidateCourseService {
 
@@ -27,26 +25,35 @@ public class CandidateCourseService {
         this.candidateCourseMapper = candidateCourseMapper;
     }
 
-    public void createCourseData(CandidateCourseDTO candidateCourseFromRequest, Authentication authentication) {
-
-
-        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
-        Integer candidateId = candidate.getCandidateId();
-
-
-        CandidateCourse candidateCourse = candidateCourseMapper.mapToDomain(candidateCourseFromRequest);
-
-        candidateCourseDAO.createCourse(candidateCourse, candidateId);
-
-    }
-
-
-    public void updateCandidateCourse(CandidateCourseDTO candidateCourseDTO, Authentication authentication) throws AccessDeniedException {
+    public void createCourseData(CandidateCourseDTO candidateCourseDTO, Authentication authentication) {
 
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
         Integer candidateId = candidate.getCandidateId();
 
         CandidateCourse candidateCourse = candidateCourseMapper.mapToDomain(candidateCourseDTO);
+
+        if (candidateCourse == null) {
+            throw new NullPointerException("Mapping CandidateCourseDTO to CandidateCourse failed");
+        }
+
+        candidateCourseDAO.createCourse(candidateCourse, candidateId);
+    }
+
+
+    public void updateCandidateCourse(CandidateCourseDTO candidateCourseDTO, Authentication authentication) {
+
+        if (candidateCourseDTO == null) {
+            throw new NullPointerException("CandidateCourseDTO cannot be null");
+        }
+
+        Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
+        Integer candidateId = candidate.getCandidateId();
+
+        CandidateCourse candidateCourse = candidateCourseMapper.mapToDomain(candidateCourseDTO);
+
+        if (candidateCourse == null) {
+            throw new NullPointerException("Mapping to CandidateCourse failed");
+        }
 
         candidateCourseDAO.updateCandidateCourse(candidateCourse, candidateId);
     }

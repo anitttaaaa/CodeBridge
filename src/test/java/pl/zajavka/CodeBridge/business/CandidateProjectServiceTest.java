@@ -7,12 +7,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.Authentication;
-import pl.zajavka.CodeBridge.api.dto.CandidateCourseDTO;
-import pl.zajavka.CodeBridge.api.dto.mapper.CandidateCourseMapper;
-import pl.zajavka.CodeBridge.business.dao.CandidateCourseDAO;
+import pl.zajavka.CodeBridge.api.dto.CandidateProjectDTO;
+import pl.zajavka.CodeBridge.api.dto.mapper.CandidateProjectMapper;
+import pl.zajavka.CodeBridge.business.dao.CandidateProjectDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
-import pl.zajavka.CodeBridge.domain.CandidateCourse;
+import pl.zajavka.CodeBridge.domain.CandidateProject;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -21,71 +22,70 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class CandidateCourseServiceTest {
+public class CandidateProjectServiceTest {
 
     @Mock
     private CandidateService candidateService;
 
     @Mock
-    private CandidateCourseDAO candidateCourseDAO;
+    private CandidateProjectDAO candidateProjectDAO;
 
     @Mock
-    private CandidateCourseMapper candidateCourseMapper;
+    private CandidateProjectMapper candidateProjectMapper;
 
     @Mock
     private Authentication authentication;
 
     @InjectMocks
-    private CandidateCourseService candidateCourseService;
+    private CandidateProjectService candidateProjectService;
 
-    private CandidateCourseDTO candidateCourseDTO;
+    private CandidateProjectDTO candidateProjectDTO;
     private Candidate candidate;
-    private CandidateCourse candidateCourse;
+    private CandidateProject candidateProject;
 
     @BeforeEach
     void setUp() {
-        candidateCourseDTO = new CandidateCourseDTO(
+        candidateProjectDTO = new CandidateProjectDTO(
                 1,
-                "CodeBridge Academy",
-                "Java Programming",
-                "A comprehensive Java course for beginners",
-                "Java, Spring, Hibernate",
+                "CodeBridge Project",
+                "Developed a web application for online learning",
+                "Java, Spring Boot, React",
                 LocalDate.of(2025, 3, 1),
-                LocalDate.of(2025, 9, 1)
+                LocalDate.of(2025, 9, 1),
+                "http://example.com/project"
         );
 
         candidate = new Candidate.Builder()
                 .candidateId(1)
                 .build();
 
-        candidateCourse = new CandidateCourse(
-                candidateCourseDTO.getCandidateCourseId(),
-                candidateCourseDTO.getInstitution(),
-                candidateCourseDTO.getCourseTitle(),
-                candidateCourseDTO.getDescription(),
-                candidateCourseDTO.getTechnologies(),
-                candidateCourseDTO.getFromDate(),
-                candidateCourseDTO.getToDate(),
+        candidateProject = new CandidateProject(
+                candidateProjectDTO.getCandidateProjectId(),
+                candidateProjectDTO.getProjectTitle(),
+                candidateProjectDTO.getDescription(),
+                candidateProjectDTO.getTechnologies(),
+                candidateProjectDTO.getFromDate(),
+                candidateProjectDTO.getToDate(),
+                candidateProjectDTO.getProjectLink(),
                 candidate.getCandidateId()
         );
     }
 
-
     @Test
-    void shouldCreateCourseDataSuccessfully() {
+    void shouldCreateProjectDataSuccessfully() {
         // Given
         when(authentication.getName()).thenReturn("test@example.com");
         when(candidateService.findCandidateByEmail("test@example.com")).thenReturn(candidate);
-        when(candidateCourseMapper.mapToDomain(candidateCourseDTO)).thenReturn(candidateCourse);
-        when(candidateCourseDAO.createCourse(any(CandidateCourse.class), eq(1))).thenReturn(candidateCourse);
+        when(candidateProjectMapper.mapToDomain(candidateProjectDTO)).thenReturn(candidateProject);
+        when(candidateProjectDAO.createProject(any(CandidateProject.class), eq(1))).thenReturn(candidateProject);
 
         // When
-        candidateCourseService.createCourseData(candidateCourseDTO, authentication);
+        candidateProjectService.createProjectData(candidateProjectDTO, authentication);
 
         // Then
         verify(candidateService, times(1)).findCandidateByEmail("test@example.com");
-        verify(candidateCourseMapper, times(1)).mapToDomain(candidateCourseDTO);
-        verify(candidateCourseDAO, times(1)).createCourse(any(CandidateCourse.class), eq(1));
+        verify(candidateProjectMapper, times(1)).mapToDomain(candidateProjectDTO);
+        verify(candidateProjectDAO, times(1)).createProject(any(CandidateProject.class), eq(1));
     }
 
     @Test
@@ -96,22 +96,21 @@ class CandidateCourseServiceTest {
 
         // When & Then
         assertThrows(NullPointerException.class, () -> {
-            candidateCourseService.createCourseData(candidateCourseDTO, authentication);
+            candidateProjectService.createProjectData(candidateProjectDTO, authentication);
         });
     }
 
     @Test
-    void shouldThrowExceptionWhenCreateCourseFails() {
+    void shouldThrowExceptionWhenCreateProjectFails() {
         // Given
-
         when(authentication.getName()).thenReturn("test@example.com");
         when(candidateService.findCandidateByEmail("test@example.com")).thenReturn(candidate);
-        when(candidateCourseMapper.mapToDomain(candidateCourseDTO)).thenReturn(candidateCourse);
-        when(candidateCourseDAO.createCourse(any(CandidateCourse.class), eq(1))).thenThrow(new RuntimeException("Database error")); // Symulujemy błąd w bazie danych
+        when(candidateProjectMapper.mapToDomain(candidateProjectDTO)).thenReturn(candidateProject);
+        when(candidateProjectDAO.createProject(any(CandidateProject.class), eq(1))).thenThrow(new RuntimeException("Database error"));
 
         // When & Then
         assertThrows(RuntimeException.class, () -> {
-            candidateCourseService.createCourseData(candidateCourseDTO, authentication);
+            candidateProjectService.createProjectData(candidateProjectDTO, authentication);
         });
     }
 
@@ -120,61 +119,59 @@ class CandidateCourseServiceTest {
         // Given
         when(authentication.getName()).thenReturn("test@example.com");
         when(candidateService.findCandidateByEmail("test@example.com")).thenReturn(candidate);
-        when(candidateCourseMapper.mapToDomain(candidateCourseDTO)).thenReturn(null);
+        when(candidateProjectMapper.mapToDomain(candidateProjectDTO)).thenReturn(null);
 
         // When & Then
         assertThrows(NullPointerException.class, () -> {
-            candidateCourseService.createCourseData(candidateCourseDTO, authentication);
+            candidateProjectService.createProjectData(candidateProjectDTO, authentication);
         });
     }
 
     @Test
-    void shouldThrowExceptionWhenCandidateCourseDTOIsNull() {
+    void shouldThrowExceptionWhenCandidateProjectDTOIsNull() {
         // Given
         when(authentication.getName()).thenReturn("test@example.com");
         when(candidateService.findCandidateByEmail("test@example.com")).thenReturn(new Candidate.Builder().candidateId(1).build());
 
         // When & Then
         assertThrows(NullPointerException.class, () -> {
-            candidateCourseService.createCourseData(null, authentication);
+            candidateProjectService.createProjectData(null, authentication);
         });
     }
 
     @Test
-    void shouldUpdateCandidateCourseSuccessfully() {
+    void shouldUpdateCandidateProjectSuccessfully() {
         // Given
         when(authentication.getName()).thenReturn("test@example.com");
         when(candidateService.findCandidateByEmail("test@example.com")).thenReturn(candidate);
-        when(candidateCourseMapper.mapToDomain(candidateCourseDTO)).thenReturn(candidateCourse);
+        when(candidateProjectMapper.mapToDomain(candidateProjectDTO)).thenReturn(candidateProject);
 
         // When
-        candidateCourseService.updateCandidateCourse(candidateCourseDTO, authentication);
+        candidateProjectService.updateCandidateProject(candidateProjectDTO, authentication);
 
         // Then
         verify(candidateService, times(1)).findCandidateByEmail("test@example.com");
-        verify(candidateCourseMapper, times(1)).mapToDomain(candidateCourseDTO);
-        verify(candidateCourseDAO, times(1)).updateCandidateCourse(candidateCourse, 1);
+        verify(candidateProjectMapper, times(1)).mapToDomain(candidateProjectDTO);
+        verify(candidateProjectDAO, times(1)).updateCandidateProject(candidateProject, 1);
     }
 
     @Test
-    void shouldThrowExceptionWhenCandidateCourseDTOIsNullOnUpdate() {
-
+    void shouldThrowExceptionWhenCandidateProjectDTOIsNullOnUpdate() {
         // When & Then
         assertThrows(NullPointerException.class, () -> {
-            candidateCourseService.updateCandidateCourse(null, authentication);
+            candidateProjectService.updateCandidateProject(null, authentication);
         });
     }
 
     @Test
     void shouldThrowExceptionWhenCandidateNotFoundOnUpdate() {
         // Given
-
         when(authentication.getName()).thenReturn("test@example.com");
         when(candidateService.findCandidateByEmail("test@example.com")).thenReturn(null);
 
         // When & Then
         assertThrows(NullPointerException.class, () -> {
-            candidateCourseService.updateCandidateCourse(candidateCourseDTO, authentication);
+            candidateProjectService.updateCandidateProject(candidateProjectDTO, authentication);
         });
     }
 
@@ -183,38 +180,37 @@ class CandidateCourseServiceTest {
         // Given
         when(authentication.getName()).thenReturn("test@example.com");
         when(candidateService.findCandidateByEmail("test@example.com")).thenReturn(candidate);
-        when(candidateCourseMapper.mapToDomain(candidateCourseDTO)).thenReturn(null);
+        when(candidateProjectMapper.mapToDomain(candidateProjectDTO)).thenReturn(null);
 
         // When & Then
         assertThrows(NullPointerException.class, () -> {
-            candidateCourseService.updateCandidateCourse(candidateCourseDTO, authentication);
+            candidateProjectService.updateCandidateProject(candidateProjectDTO, authentication);
         });
     }
 
     @Test
     void shouldThrowExceptionWhenUpdateFails() {
         // Given
-
         when(authentication.getName()).thenReturn("test@example.com");
         when(candidateService.findCandidateByEmail("test@example.com")).thenReturn(candidate);
-        when(candidateCourseMapper.mapToDomain(candidateCourseDTO)).thenReturn(candidateCourse);
-        doThrow(new RuntimeException("Database error")).when(candidateCourseDAO).updateCandidateCourse(candidateCourse, 1);
+        when(candidateProjectMapper.mapToDomain(candidateProjectDTO)).thenReturn(candidateProject);
+        doThrow(new RuntimeException("Database error")).when(candidateProjectDAO).updateCandidateProject(candidateProject, 1);
 
         // When & Then
         assertThrows(RuntimeException.class, () -> {
-            candidateCourseService.updateCandidateCourse(candidateCourseDTO, authentication);
+            candidateProjectService.updateCandidateProject(candidateProjectDTO, authentication);
         });
     }
 
     @Test
-    void shouldDeleteCandidateCourseById() {
+    void shouldDeleteCandidateProjectById() {
         // Given
-        Integer candidateCourseId = 1;
+        Integer candidateProjectId = 1;
 
         // When
-        candidateCourseService.deleteCandidateCourseById(candidateCourseId);
+        candidateProjectService.deleteCandidateProjectById(candidateProjectId);
 
         // Then
-        verify(candidateCourseDAO, times(1)).deleteById(candidateCourseId);
+        verify(candidateProjectDAO, times(1)).deleteById(candidateProjectId);
     }
 }

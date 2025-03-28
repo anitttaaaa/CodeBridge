@@ -34,9 +34,7 @@ public class CandidateEducationDTO {
         return degree;
     }
 
-    public String getFieldOfStudy() {
-        return fieldOfStudy;
-    }
+    public String getFieldOfStudy() {return fieldOfStudy;}
 
     public LocalDate getFromDate() {
         return fromDate;

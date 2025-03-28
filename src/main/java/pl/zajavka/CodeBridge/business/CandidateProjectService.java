@@ -36,16 +36,26 @@ public class CandidateProjectService {
 
         CandidateProject candidateProject = candidateProjectMapper.mapToDomain(candidateProjectFromRequest);
 
+        if (candidateProject == null) {
+            throw new NullPointerException("Mapping CandidateProjectDTO to CandidateProject failed");
+        }
+
         candidateProjectDAO.createProject(candidateProject, candidateId);
     }
 
 
-    public void updateCandidateProject(CandidateProjectDTO candidateProjectDTO, Authentication authentication) throws AccessDeniedException {
-
+    public void updateCandidateProject(CandidateProjectDTO candidateProjectDTO, Authentication authentication)  {
+        if (candidateProjectDTO == null) {
+            throw new NullPointerException("CandidateProjectDTO cannot be null");
+        }
         Candidate candidate = candidateService.findCandidateByEmail(authentication.getName());
         Integer candidateId = candidate.getCandidateId();
 
         CandidateProject candidateProject = candidateProjectMapper.mapToDomain(candidateProjectDTO);
+
+        if (candidateProject == null) {
+            throw new NullPointerException("Mapping to CandidateProject failed");
+        }
 
         candidateProjectDAO.updateCandidateProject(candidateProject, candidateId);
     }

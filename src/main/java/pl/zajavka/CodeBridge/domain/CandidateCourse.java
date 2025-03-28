@@ -15,6 +15,19 @@ public class CandidateCourse {
     private final LocalDate toDate;
     private final Integer candidateId;
 
+    public CandidateCourse(Integer candidateCourseId, String institution, String courseTitle,
+                           String description, String technologies, LocalDate fromDate,
+                           LocalDate toDate, Integer candidateId) {
+        this.candidateCourseId = candidateCourseId;
+        this.institution = institution;
+        this.courseTitle = courseTitle;
+        this.description = description;
+        this.technologies = technologies;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.candidateId = candidateId;
+    }
+
     private CandidateCourse(Builder builder) {
         this.candidateCourseId = builder.candidateCourseId;
         this.institution = builder.institution;
