@@ -194,6 +194,7 @@ public class Candidate {
         }
 
     }
+
     public static Builder builder() {
         return new Builder();
     }

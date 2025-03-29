@@ -11,9 +11,8 @@ public class CandidateEducationDTO {
     private final LocalDate fromDate;
     private final LocalDate toDate;
 
-
     public CandidateEducationDTO(Integer candidateEducationId, String institution, String degree, String fieldOfStudy,
-                                 LocalDate fromDate, LocalDate toDate) {
+                                  LocalDate fromDate, LocalDate toDate) {
         this.candidateEducationId = candidateEducationId;
         this.institution = institution;
         this.degree = degree;
@@ -34,7 +33,9 @@ public class CandidateEducationDTO {
         return degree;
     }
 
-    public String getFieldOfStudy() {return fieldOfStudy;}
+    public String getFieldOfStudy() {
+        return fieldOfStudy;
+    }
 
     public LocalDate getFromDate() {
         return fromDate;
@@ -52,7 +53,54 @@ public class CandidateEducationDTO {
                 ", degree='" + degree + '\'' +
                 ", fieldOfStudy='" + fieldOfStudy + '\'' +
                 ", fromDate=" + fromDate +
-                ", toDate=" + toDate;
+                ", toDate=" + toDate +
+                '}';
     }
 
+    public static class Builder {
+        private Integer candidateEducationId;
+        private String institution;
+        private String degree;
+        private String fieldOfStudy;
+        private LocalDate fromDate;
+        private LocalDate toDate;
+
+        public Builder candidateEducationId(Integer candidateEducationId) {
+            this.candidateEducationId = candidateEducationId;
+            return this;
+        }
+
+        public Builder institution(String institution) {
+            this.institution = institution;
+            return this;
+        }
+
+        public Builder degree(String degree) {
+            this.degree = degree;
+            return this;
+        }
+
+        public Builder fieldOfStudy(String fieldOfStudy) {
+            this.fieldOfStudy = fieldOfStudy;
+            return this;
+        }
+
+        public Builder fromDate(LocalDate fromDate) {
+            this.fromDate = fromDate;
+            return this;
+        }
+
+        public Builder toDate(LocalDate toDate) {
+            this.toDate = toDate;
+            return this;
+        }
+
+        public CandidateEducationDTO build() {
+            return new CandidateEducationDTO(candidateEducationId, institution, degree, fieldOfStudy, fromDate, toDate);
+        }
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
 }

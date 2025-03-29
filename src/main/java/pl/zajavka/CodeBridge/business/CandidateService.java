@@ -1,6 +1,5 @@
 package pl.zajavka.CodeBridge.business;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,7 +32,6 @@ public class CandidateService {
     public CandidateService(CandidateDAO candidateDAO, CandidateMapper candidateMapper) {
         this.candidateDAO = candidateDAO;
         this.candidateMapper = candidateMapper;
-
     }
 
     @Transactional(readOnly = true)
@@ -187,6 +185,38 @@ public class CandidateService {
         }
     }
 
+    public void deleteCandidateProfilePhoto(Authentication authentication) {
+
+        Candidate candidate = findCandidateByEmail(authentication.getName());
+        Integer candidateId = candidate.getCandidateId();
+        Integer userId = candidate.getUserId();
+
+        if (!Objects.isNull(candidate.getProfilePhoto())) {
+            Candidate candidateToUpdate = Candidate.builder()
+                    .candidateId(candidateId)
+                    .name(candidate.getName())
+                    .surname(candidate.getSurname())
+                    .email(candidate.getEmail())
+                    .phone(candidate.getPhone())
+                    .userId(userId)
+                    .status(candidate.getStatus())
+                    .linkedIn(candidate.getLinkedIn())
+                    .gitHub(candidate.getGitHub())
+                    .techSpecialization(candidate.getTechSpecialization())
+                    .aboutMe(candidate.getAboutMe())
+                    .hobby(candidate.getHobby())
+                    .profilePhoto(null)
+                    .candidateSkills(candidate.getCandidateSkills())
+                    .candidateExperiences(candidate.getCandidateExperiences())
+                    .candidateProjects(candidate.getCandidateProjects())
+                    .candidateEducationStages(candidate.getCandidateEducationStages())
+                    .candidateCourses(candidate.getCandidateCourses())
+                    .build();
+
+            candidateDAO.updateCandidate(candidateToUpdate);
+        }
+    }
+
     public void updateCandidateBasicInfo(Authentication authentication, String name,
                                          String surname, String phone, String linkedIn, String gitHub) {
 
@@ -286,38 +316,6 @@ public class CandidateService {
         candidateDAO.updateCandidate(candidateToUpdate);
     }
 
-    public void deleteCandidateProfilePhoto(Authentication authentication) {
-
-        Candidate candidate = findCandidateByEmail(authentication.getName());
-        Integer candidateId = candidate.getCandidateId();
-        Integer userId = candidate.getUserId();
-
-        if (!Objects.isNull(candidate.getProfilePhoto())) {
-            Candidate candidateToUpdate = Candidate.builder()
-                    .candidateId(candidateId)
-                    .name(candidate.getName())
-                    .surname(candidate.getSurname())
-                    .email(candidate.getEmail())
-                    .phone(candidate.getPhone())
-                    .userId(userId)
-                    .status(candidate.getStatus())
-                    .linkedIn(candidate.getLinkedIn())
-                    .gitHub(candidate.getGitHub())
-                    .techSpecialization(candidate.getTechSpecialization())
-                    .aboutMe(candidate.getAboutMe())
-                    .hobby(candidate.getHobby())
-                    .profilePhoto(null)
-                    .candidateSkills(candidate.getCandidateSkills())
-                    .candidateExperiences(candidate.getCandidateExperiences())
-                    .candidateProjects(candidate.getCandidateProjects())
-                    .candidateEducationStages(candidate.getCandidateEducationStages())
-                    .candidateCourses(candidate.getCandidateCourses())
-                    .build();
-
-            candidateDAO.updateCandidate(candidateToUpdate);
-        }
-    }
-
     public CandidateDTO getCandidateDetailsByEmployer(String email) {
 
         Candidate candidate = findCandidateByEmail(email);
@@ -340,7 +338,7 @@ public class CandidateService {
                 .sorted(Comparator.comparing(CandidateCourseDTO::getFromDate)).collect(Collectors.toList());
 
 
-        CandidateDTO candidateDetails = CandidateDTO.builder()
+        return CandidateDTO.builder()
                 .candidateId(candidate.getCandidateId())
                 .name(candidate.getName())
                 .surname(candidate.getSurname())
@@ -359,7 +357,6 @@ public class CandidateService {
                 .candidateEducationStages(sortedCandidateEducationStages)
                 .candidateCourses(sortedCourses)
                 .build();
-        return candidateDetails;
     }
 
     @Transactional
@@ -384,7 +381,7 @@ public class CandidateService {
                 .sorted(Comparator.comparing(CandidateCourseDTO::getFromDate)).collect(Collectors.toList());
 
 
-        CandidateDTO candidateDetails = CandidateDTO.builder()
+        return CandidateDTO.builder()
                 .candidateId(candidateDTO.getCandidateId())
                 .name(candidateDTO.getName())
                 .surname(candidateDTO.getSurname())
@@ -403,7 +400,6 @@ public class CandidateService {
                 .candidateEducationStages(sortedCandidateEducationStages)
                 .candidateCourses(sortedCourses)
                 .build();
-        return candidateDetails;
     }
 }
 

@@ -10,8 +10,6 @@ import pl.zajavka.CodeBridge.business.dao.CandidateExperienceDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.CandidateExperience;
 
-import java.nio.file.AccessDeniedException;
-
 @Service
 public class CandidateExperienceService {
     @Autowired
@@ -29,7 +27,7 @@ public class CandidateExperienceService {
 
 
     @Transactional
-    public void createExperienceData(CandidateExperienceDTO candidateExperienceFromRequest, Authentication authentication){
+    public void createExperienceData(CandidateExperienceDTO candidateExperienceFromRequest, Authentication authentication) {
 
         String candidateEmail = authentication.getName();
         Integer candidateId = candidateService.findCandidateByEmail(candidateEmail).getCandidateId();

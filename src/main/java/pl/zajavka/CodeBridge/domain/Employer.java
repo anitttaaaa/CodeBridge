@@ -128,4 +128,8 @@ public class Employer {
             return new Employer(this);
         }
     }
+    public static EmployerBuilder builder() {
+        return new EmployerBuilder();
+    }
+
 }

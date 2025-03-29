@@ -13,7 +13,6 @@ import pl.zajavka.CodeBridge.business.dao.CandidateProjectDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.CandidateProject;
 
-import java.nio.file.AccessDeniedException;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

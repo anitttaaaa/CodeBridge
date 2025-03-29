@@ -41,10 +41,11 @@ public class EmployerService {
         this.candidateMapper = candidateMapper;
     }
 
-    @Transactional
-    public void createJobOffer(JobOffer employerAddJobOffer) {
-        employerDAO.createJobOffer(employerAddJobOffer);
-
+    @Transactional(readOnly = true)
+    public Employer findLoggedInEmployer() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        return findEmployerByEmail(email);
     }
 
     @Transactional
@@ -54,6 +55,11 @@ public class EmployerService {
             throw new NotFoundException("Could not find employer by email: [%s]".formatted(employerByEmail));
         }
         return employerByEmail.get();
+    }
+
+    @Transactional
+    public void createJobOffer(JobOffer employerAddJobOffer) {
+        employerDAO.createJobOffer(employerAddJobOffer);
     }
 
     @Transactional
@@ -82,13 +88,6 @@ public class EmployerService {
 
 
     @Transactional(readOnly = true)
-    public Employer findLoggedInEmployer() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        return findEmployerByEmail(email);
-    }
-
-    @Transactional(readOnly = true)
     public EmployerDTO getLoggedInEmployerDetails() {
         Employer employer = findLoggedInEmployer();
         return employerMapper.mapToDto(employer);
@@ -101,6 +100,7 @@ public class EmployerService {
         CandidateDTO candidateDTO = candidateMapper.mapToDto(candidateDetails);
         return candidateDTO.getProfilePhoto();
     }
+
 }
 
 

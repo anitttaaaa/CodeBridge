@@ -95,6 +95,7 @@ class CandidateEducationServiceTest {
             candidateEducationService.createEducationData(candidateEducationDTO, authentication);
         });
     }
+
     @Test
     void shouldThrowExceptionWhenCandidateEducationDTOIsNullForCreate() {
         // Given
@@ -106,6 +107,7 @@ class CandidateEducationServiceTest {
             candidateEducationService.createEducationData(null, authentication);
         });
     }
+
     @Test
     void shouldThrowExceptionWhenCreateFails() {
         // Given

@@ -13,7 +13,6 @@ import pl.zajavka.CodeBridge.api.dto.mapper.CandidateCVMapper;
 import pl.zajavka.CodeBridge.api.enums.TechSpecializationsEnum;
 import pl.zajavka.CodeBridge.domain.Candidate;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 

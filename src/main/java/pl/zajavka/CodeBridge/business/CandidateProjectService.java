@@ -10,8 +10,6 @@ import pl.zajavka.CodeBridge.business.dao.CandidateProjectDAO;
 import pl.zajavka.CodeBridge.domain.Candidate;
 import pl.zajavka.CodeBridge.domain.CandidateProject;
 
-import java.nio.file.AccessDeniedException;
-
 @Service
 public class CandidateProjectService {
 
@@ -44,7 +42,7 @@ public class CandidateProjectService {
     }
 
 
-    public void updateCandidateProject(CandidateProjectDTO candidateProjectDTO, Authentication authentication)  {
+    public void updateCandidateProject(CandidateProjectDTO candidateProjectDTO, Authentication authentication) {
         if (candidateProjectDTO == null) {
             throw new NullPointerException("CandidateProjectDTO cannot be null");
         }
